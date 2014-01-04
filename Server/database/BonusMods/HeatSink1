@@ -1,0 +1,12 @@
+[Bonus]
+name Heat Sink 1
+fit Mech 300
+
+{bonus}
+bonusbeamdmg 10
+
+{item}
+texture Electronic/HeatSink
+buildtime 15
+mass = 10
+buildCost Denite:100 Morganite:2

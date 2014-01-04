@@ -1,0 +1,8 @@
+[AstoroidType]
+
+Name    VeldSpar
+texture Asteroids/HedenbergiteRoid
+size 15
+minquan 50
+maxquan 90
+itemtype Hedenbergite

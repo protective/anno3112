@@ -1,0 +1,28 @@
+[Weapon]
+name Mining lazer II
+
+fit Mini 200
+recoil 20
+
+maxamo 100
+amocost 1
+amorechargerate 1
+amotype energy
+sequence 1
+sequencemax 10
+cooldown 180
+
+damage 300 300
+dmgtype mining
+range 200
+resolution 10
+
+{projectile}
+speed 500
+texture ionbeam1
+
+
+{item}
+texture Weapons/PlasmaGun
+buildtime 1
+mass = 10

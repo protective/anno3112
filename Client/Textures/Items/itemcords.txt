@@ -1,0 +1,180 @@
+case 1:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::ItemSheet]);
+	uvx1 = 0;
+	uvy1 = 0;
+	break;
+}
+case 2:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::ItemSheet]);
+	uvx1 = 40;
+	uvy1 = 0;
+	break;
+}
+case 3:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::ItemSheet]);
+	uvx1 = 80;
+	uvy1 = 0;
+	break;
+}
+case 4:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::ItemSheet]);
+	uvx1 = 120;
+	uvy1 = 0;
+	break;
+}
+case 5:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::ItemSheet]);
+	uvx1 = 160;
+	uvy1 = 0;
+	break;
+}
+case 6:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::ItemSheet]);
+	uvx1 = 200;
+	uvy1 = 0;
+	break;
+}
+case 7:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::ItemSheet]);
+	uvx1 = 240;
+	uvy1 = 0;
+	break;
+}
+case 8:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::ItemSheet]);
+	uvx1 = 280;
+	uvy1 = 0;
+	break;
+}
+case 9:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::ItemSheet]);
+	uvx1 = 320;
+	uvy1 = 0;
+	break;
+}
+case 10:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::ItemSheet]);
+	uvx1 = 360;
+	uvy1 = 0;
+	break;
+}
+case 11:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::ItemSheet]);
+	uvx1 = 400;
+	uvy1 = 0;
+	break;
+}
+case 12:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::ItemSheet]);
+	uvx1 = 440;
+	uvy1 = 0;
+	break;
+}
+case 13:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::ItemSheet]);
+	uvx1 = 480;
+	uvy1 = 0;
+	break;
+}
+case 14:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::ItemSheet]);
+	uvx1 = 520;
+	uvy1 = 0;
+	break;
+}
+case 15:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::ItemSheet]);
+	uvx1 = 560;
+	uvy1 = 0;
+	break;
+}
+case 16:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::ItemSheet]);
+	uvx1 = 600;
+	uvy1 = 0;
+	break;
+}
+case 17:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::ItemSheet]);
+	uvx1 = 640;
+	uvy1 = 0;
+	break;
+}
+case 18:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::ItemSheet]);
+	uvx1 = 680;
+	uvy1 = 0;
+	break;
+}
+case 19:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::ItemSheet]);
+	uvx1 = 720;
+	uvy1 = 0;
+	break;
+}
+case 20:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::ItemSheet]);
+	uvx1 = 760;
+	uvy1 = 0;
+	break;
+}
+case 21:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::ItemSheet]);
+	uvx1 = 0;
+	uvy1 = 40;
+	break;
+}
+case 22:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::ItemSheet]);
+	uvx1 = 40;
+	uvy1 = 40;
+	break;
+}
+case 23:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::ItemSheet]);
+	uvx1 = 80;
+	uvy1 = 40;
+	break;
+}
+case 24:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::ItemSheet]);
+	uvx1 = 120;
+	uvy1 = 40;
+	break;
+}
+case 25:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::ItemSheet]);
+	uvx1 = 160;
+	uvy1 = 40;
+	break;
+}
+case 26:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::ItemSheet]);
+	uvx1 = 200;
+	uvy1 = 40;
+	break;
+}
+case 27:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::ItemSheet]);
+	uvx1 = 240;
+	uvy1 = 40;
+	break;
+}
+case 28:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::ItemSheet]);
+	uvx1 = 280;
+	uvy1 = 40;
+	break;
+}
+case 29:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::ItemSheet]);
+	uvx1 = 320;
+	uvy1 = 40;
+	break;
+}
+case 30:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::ItemSheet]);
+	uvx1 = 360;
+	uvy1 = 40;
+	break;
+}

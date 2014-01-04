@@ -1,0 +1,31 @@
+[Weapon]
+name Fusion Gun I
+
+fit MWep 400
+recoil 900
+
+maxamo 100
+amocost 6
+amorechargerate 1
+amotype energy
+sequence 1
+sequencemax 5
+cooldown 30
+
+damage 22 22
+
+range 700
+resolution 70
+
+keys turret projectile fusion
+
+{projectile}
+speed 1600
+texture fusion1
+spread 70
+
+{item}
+texture Weapons/FusionCannon
+buildtime 8
+mass = 10
+buildCost Tritanium:50 Denite:56 Andorite:15

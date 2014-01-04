@@ -1,0 +1,10 @@
+[RefineryType]
+name Refinery
+
+cooldown 150
+
+fit Lfac 200
+refine VeldSpar Nephrite Cerussite Neptunite Hedenbergite
+{item}
+texture Shields/Shield1
+buildtime 2

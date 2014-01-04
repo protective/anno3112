@@ -1,0 +1,32 @@
+[Weapon]
+name Laser 2
+
+fit MWep 200
+recoil 500
+
+maxamo 250
+amocost 25
+energycost 25
+amorechargerate 3
+amotype energy
+sequence 1
+sequencemax 8
+cooldown 60
+
+damage 15 20
+
+range 900
+resolution 80
+
+keys turret beam laser
+
+{projectile}
+speed 2300
+texture laser2
+spread 80
+
+{item}
+texture Weapons/LaserI
+buildtime 8
+mass = 10
+buildCost Tritanium:270 Pyrite:170

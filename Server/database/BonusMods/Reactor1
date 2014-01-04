@@ -1,0 +1,11 @@
+[Bonus]
+name Reactor 1
+fit Mech 300
+{bonus}
+bonuserecharge 40
+
+{item}
+texture Mechanical/Reactor
+buildtime 15
+mass = 10
+buildCost Pyrite:350 Morganite:2

@@ -1,0 +1,9 @@
+[Material]
+
+//level 2
+name Nephrite
+{item}
+texture Ore/Veldspar
+mass 15
+refineBatch 100 
+refineResult Tritanium:100 Pyrite:300 Denite:50

@@ -1,0 +1,6 @@
+[Material]
+//level 6
+name Morganite
+{item}
+texture Minerals/Morganite
+mass 50

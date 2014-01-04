@@ -1,0 +1,207 @@
+case ParticalTex::eks1:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::EffectSheet]);
+	uvx1 = 10 * this->_tick;
+	uvy1 = 0;
+	size2 = 10;
+	break;
+}
+case ParticalTex::eks2:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::EffectSheet]);
+	uvx1 = 14 * this->_tick;
+	uvy1 = 10;
+	size2 = 14;
+	break;
+}
+case ParticalTex::eks3:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::EffectSheet]);
+	uvx1 = 17 * this->_tick;
+	uvy1 = 24;
+	size2 = 17;
+	break;
+}
+case ParticalTex::eks4:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::EffectSheet]);
+	uvx1 = 21 * this->_tick;
+	uvy1 = 41;
+	size2 = 21;
+	break;
+}
+case ParticalTex::eks5:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::EffectSheet]);
+	uvx1 = 25 * this->_tick;
+	uvy1 = 62;
+	size2 = 25;
+	break;
+}
+case ParticalTex::eks6:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::EffectSheet]);
+	uvx1 = 29 * this->_tick;
+	uvy1 = 87;
+	size2 = 29;
+	break;
+}
+case ParticalTex::eks4l:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::EffectSheet]);
+	uvx1 = 21 * this->_tick;
+	uvy1 = 116;
+	size2 = 21;
+	break;
+}
+case ParticalTex::eks5l:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::EffectSheet]);
+	uvx1 = 25 * this->_tick;
+	uvy1 = 137;
+	size2 = 25;
+	break;
+}
+case ParticalTex::eks6l:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::EffectSheet]);
+	uvx1 = 29 * this->_tick;
+	uvy1 = 162;
+	size2 = 29;
+	break;
+}
+case ParticalTex::eks7l:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::EffectSheet]);
+	uvx1 = 33 * this->_tick;
+	uvy1 = 191;
+	size2 = 33;
+	break;
+}
+case ParticalTex::eksshc1:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::EffectSheet]);
+	uvx1 = 10 * this->_tick;
+	uvy1 = 224;
+	size2 = 10;
+	break;
+}
+case ParticalTex::eksshc2:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::EffectSheet]);
+	uvx1 = 14 * this->_tick;
+	uvy1 = 234;
+	size2 = 14;
+	break;
+}
+case ParticalTex::eksshc3:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::EffectSheet]);
+	uvx1 = 17 * this->_tick;
+	uvy1 = 248;
+	size2 = 17;
+	break;
+}
+case ParticalTex::eksshc4:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::EffectSheet]);
+	uvx1 = 21 * this->_tick;
+	uvy1 = 265;
+	size2 = 21;
+	break;
+}
+case ParticalTex::eksshc5:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::EffectSheet]);
+	uvx1 = 25 * this->_tick;
+	uvy1 = 286;
+	size2 = 25;
+	break;
+}
+case ParticalTex::eksshc6:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::EffectSheet]);
+	uvx1 = 29 * this->_tick;
+	uvy1 = 311;
+	size2 = 29;
+	break;
+}
+case ParticalTex::eksshc7:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::EffectSheet]);
+	uvx1 = 33 * this->_tick;
+	uvy1 = 340;
+	size2 = 33;
+	break;
+}
+case ParticalTex::eksshc4l:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::EffectSheet]);
+	uvx1 = 21 * this->_tick;
+	uvy1 = 373;
+	size2 = 21;
+	break;
+}
+case ParticalTex::eksshc5l:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::EffectSheet]);
+	uvx1 = 25 * this->_tick;
+	uvy1 = 394;
+	size2 = 25;
+	break;
+}
+case ParticalTex::eksshc6l:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::EffectSheet]);
+	uvx1 = 29 * this->_tick;
+	uvy1 = 419;
+	size2 = 29;
+	break;
+}
+case ParticalTex::eksshc7l:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::EffectSheet]);
+	uvx1 = 33 * this->_tick;
+	uvy1 = 448;
+	size2 = 33;
+	break;
+}
+case ParticalTex::LaserTail1:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::EffectSheet]);
+	uvx1 = 5 * this->_tick;
+	uvy1 = 481;
+	size2 = 5;
+	break;
+}
+case ParticalTex::MissileTail1:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::EffectSheet]);
+	uvx1 = 7 * this->_tick;
+	uvy1 = 486;
+	size2 = 7;
+	break;
+}
+case ParticalTex::eksship1:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::EffectSheet2]);
+	if(this->_tick<10){
+		uvx1 = 100 * (this->_tick - 0);
+		uvy1 = 0;
+		size2 = 100;
+		break;
+	}
+	if(this->_tick<20){
+		uvx1 = 100 * (this->_tick - 10);
+		uvy1 = 100;
+		size2 = 100;
+		break;
+	}
+	if(this->_tick<30){
+		uvx1 = 100 * (this->_tick - 20);
+		uvy1 = 200;
+		size2 = 100;
+		break;
+	}
+	if(this->_tick<40){
+		uvx1 = 100 * (this->_tick - 30);
+		uvy1 = 300;
+		size2 = 100;
+		break;
+	}
+	if(this->_tick<50){
+		uvx1 = 100 * (this->_tick - 40);
+		uvy1 = 400;
+		size2 = 100;
+		break;
+	}
+	if(this->_tick<60){
+		uvx1 = 100 * (this->_tick - 50);
+		uvy1 = 500;
+		size2 = 100;
+		break;
+	}
+}
+case ParticalTex::plasma1:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::EffectSheet]);
+	uvx1 = 10 * this->_tick;
+	uvy1 = 493;
+	size2 = 10;
+	break;
+}

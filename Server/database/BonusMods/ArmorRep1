@@ -1,0 +1,22 @@
+[Boost]
+name Armor Rep 1
+fit Armo 300
+
+{boost}
+maxamo 1000
+amocost 100
+amorechargerate 10
+amotype energy
+cooldown 80
+boosttype armor
+boostvalue 10
+
+{bonus}
+bonusarmor 350
+
+{item}
+texture Armor/ArmorRep
+buildtime 8
+mass = 10
+
+buildCost Tritanium:300 Denite:100

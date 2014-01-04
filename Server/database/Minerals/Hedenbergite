@@ -1,0 +1,9 @@
+[Material]
+
+//level 5
+name Hedenbergite
+{item}
+texture Ore/Veldspar
+mass 200
+refineBatch 10 
+refineResult Morganite:2

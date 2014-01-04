@@ -1,0 +1,32 @@
+[Weapon]
+name Plasma Gun I
+
+fit HWep 600
+recoil 4000
+
+maxamo 400
+amorechargerate 10
+amocost 100
+energycost 40
+amotype energy
+
+sequence 1
+sequencemax 30
+cooldown 160
+
+damage 180 230
+range 1500
+resolution 140
+
+keys turret projectile plasma
+
+{projectile}
+speed 800
+texture plasma1
+spread 140
+
+{item}
+texture Weapons/PlasmaGun
+buildtime 14
+mass = 10
+buildCost Tritanium:150 Denite:150 Morganite:3

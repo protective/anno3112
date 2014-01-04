@@ -1,0 +1,56 @@
+[ShipType]
+Name    Destroyer
+cargo 50
+hull 100
+armor 30
+deflector 200
+speed 400
+mass 100
+agility 290
+recoilrecharge 40
+energy 300
+recharge 3
+scanrange 1400
+scanprange 300
+texture Ships/DD
+size 50
+targettype lightsupport
+
+//M aft
+{sub1}
+type MWep
+mount 400
+uicord 60 300
+cord -1500 0
+firedir FW_L_R
+
+//M center
+{sub2}
+type LWep
+mount 400
+uicord 270 300
+cord 1500 0
+firedir FW_L_R
+
+//C ShEl
+{sub3}
+type ShEl
+mount 300
+uicord 220 300
+cord 600 0
+firedir FW
+
+//C Engi
+{sub4}
+type Engi
+mount 200
+uicord 170 300
+cord -500 0
+firedir FW
+
+
+{item}
+buildtime 10
+texture Ships/DD
+mass = 1000
+buildCost Tritanium:1000 Pyrite:600

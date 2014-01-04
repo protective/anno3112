@@ -1,0 +1,10 @@
+[Bonus]
+name Armor 1
+fit Armo 200
+{bonus}
+bonusarmor 1
+
+{item}
+texture Shields/Shield1
+buildtime 5
+mass = 10

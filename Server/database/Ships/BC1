@@ -1,0 +1,157 @@
+[ShipType]
+Name    Battle Cruiser
+cargo 1000
+hull 600
+armor 220
+deflector 300
+speed 75
+mass 1000
+agility 80
+recoilrecharge 300
+energy 1800
+recharge 16
+scanrange 1200
+scanprange 200
+texture Ships/BattleCruiser
+size 120
+targettype capital
+shieldFw 60
+shieldFR 20
+shieldFL 20
+shieldStr 800
+
+
+//M rear
+{sub1}
+type HWep
+mount 1200
+uicord 75 280
+cord -4000 -500
+firedir FWS
+
+//M rear
+{sub2}
+type HWep
+mount 1200
+uicord 75 320
+cord -4000 500
+firedir FWS
+
+//M fw
+{sub3}
+type HWep
+mount 1000
+uicord 230 260
+cord 1000 -1200
+firedir FWS
+
+//M fw
+{sub4}
+type HWep
+mount 1000
+uicord 230 340
+cord 1000 1200
+firedir FWS
+
+//S aft
+{sub5}
+type MWep
+mount 300
+uicord 50 240
+cord -4700 -1100
+firedir FL_AL
+
+//S aft
+{sub6}
+type MWep
+mount 300
+uicord 50 360
+cord -4700 1100
+firedir FR_AR
+
+//M center
+{sub7}
+type MWep
+mount 800;
+uicord 148 300
+cord -1500 0
+firedir ALL
+
+//S fw
+{sub8}
+type MwSh
+mount 500
+uicord 360 280
+cord 4700 -800
+firedir FR_L
+
+//S fw
+{sub9}
+type MwSh
+mount 500
+uicord 360 320
+cord 4700 800
+firedir FL_R
+
+//P fw
+{sub10}
+type Mech
+mount 300
+uicord 300 280
+cord 2800 700
+firedir FW
+
+//P fw
+{sub11}
+type Elec
+mount 300
+uicord 300 320
+cord 2800 -700
+firedir FW
+
+
+//M armor
+{sub12}
+type Armo
+mount 600
+uicord 230 300
+cord 1000 0
+firedir FWS
+
+//Shie Aft
+{sub13}
+type Shie
+mount 900;
+uicord 148 245
+cord -1500 -1100
+firedir ALL
+
+//Shie Aft
+{sub14}
+type Shie
+mount 900;
+uicord 148 355
+cord -1500 1100
+firedir ALL
+
+//Engi rear
+{sub15}
+type Engi
+mount 1200
+uicord 25 280
+cord -5000 -500
+
+//Engi rear
+{sub16}
+type Engi
+mount 1200
+uicord 25 320
+cord -5000 500
+
+
+
+{item}
+buildtime 70
+texture Ships/BattleCruiser
+mass = 1000
+buildCost Tritanium:22000 Pyrite:3800 Denite:400 Andorite:100

@@ -1,0 +1,8 @@
+[AstoroidType]
+
+Name    Neptunite
+texture Asteroids/NeptuniteRoid
+size 15
+minquan 500
+maxquan 600
+itemtype Neptunite

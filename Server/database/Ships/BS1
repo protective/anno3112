@@ -1,0 +1,174 @@
+[ShipType]
+Name    Battle Ship 1
+cargo 1500
+hull 2000
+armor 1420
+deflector 1300
+speed 55
+mass 1000
+agility 70
+recoilrecharge 400
+energy 3000
+recharge 35
+scanrange 1200
+scanprange 200
+texture Ships/BattleShip1
+size 140
+targettype supercapital
+
+shieldFR 30
+shieldFL 30
+shieldAR 30
+shieldAL 30
+shieldStr 800
+
+
+//M rear 1
+{sub1}
+type HWep
+mount 1400
+uicord 20 300
+cord -6000 0
+firedir ALL
+
+//M rear 2
+{sub2}
+type HWep
+mount 1400
+uicord 70 300
+cord -4500 0
+firedir ALL
+
+//M rear 3
+{sub3}
+type HWep
+mount 1400
+uicord 120 300
+cord -3000 0
+firedir ALL
+
+//M fw
+{sub4}
+type HWep
+mount 1200
+uicord 300 300
+cord 3500 0
+firedir ALL
+
+//M fw
+{sub5}
+type HWep
+mount 1200
+uicord 350 300
+cord 5000 0
+firedir ALL
+
+//S aft L
+{sub6}
+type MWep
+mount 300;
+uicord 70 260
+cord -4500 -1200
+firedir FL_AL
+
+//S aft R
+{sub7}
+type MWep
+mount 300
+uicord 70 340
+cord -4500 1200
+firedir FR_AR
+
+//S fw L
+{sub8}
+type MWep
+mount 300
+uicord 300 260
+cord 3500 -600
+firedir FL_AL
+
+//S fw R
+{sub9}
+type MWep
+mount 300
+uicord 300 340
+cord 3500 600
+firedir FR_AR
+
+//S ffw L
+{sub10}
+type MwEl
+mount 600
+uicord 350 260
+cord 5500 -1000
+firedir FW_AL
+
+//S ffw
+{sub11}
+type MwSh
+mount 600
+uicord 350 340
+cord 5500 1000
+firedir FW_AR
+
+//P fw L
+{sub12}
+type Mech
+mount 300
+uicord 250 280
+cord 2000 -500
+firedir FW
+
+//P fw R
+{sub13}
+type ElMe
+mount 300
+uicord 250 320
+cord 2000 500
+firedir FW
+
+//M def
+{sub14}
+type ShAr
+mount 900
+uicord 190 300
+cord -500 0
+firedir FW
+
+//L def
+{sub15}
+type Armo
+mount 900;
+uicord 190 260
+cord -500 -1100
+firedir FW
+
+//R def
+{sub16}
+type Armo
+mount 900;
+uicord 190 340
+cord -500 1100
+firedir FW
+
+//Engi rear L
+{sub17}
+type Engi
+mount 1200
+uicord 20 260
+cord -6000 -500
+
+//Engi rear R
+{sub18}
+type Engi
+mount 1200
+uicord 20 340
+cord -6000 500
+
+
+
+{item}
+buildtime 90
+texture Ships/BattleShip1
+mass = 1000
+buildCost Tritanium:22000 Pyrite:3800 Denite:400 Andorite:100

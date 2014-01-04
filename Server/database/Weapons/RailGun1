@@ -1,0 +1,32 @@
+[Weapon]
+name Rail Gun 1
+
+fit MWep 150
+recoil 300
+
+maxamo 1000
+amocost 1
+amorechargerate 100
+amotype Tritanium
+sequence 1 3 5
+sequencemax 10
+cooldown 50
+
+damage 2 3
+
+range 2000
+resolution 60
+
+keys projectile
+
+{projectile}
+speed 2400
+spread 40
+texture rail2
+
+
+{item}
+texture Weapons/RailGunI
+buildtime 6
+mass = 10
+buildCost Tritanium:200 Pyrite:200 Morganite:1

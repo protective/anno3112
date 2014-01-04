@@ -1,0 +1,8 @@
+[AstoroidType]
+
+Name    VeldSpar
+texture Asteroids/CerussiteRoid
+size 15
+minquan 500
+maxquan 900
+itemtype Cerussite

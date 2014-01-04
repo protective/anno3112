@@ -1,0 +1,6 @@
+[Material]
+//level 4
+name Andorite
+{item}
+texture Minerals/Andorite
+mass 15

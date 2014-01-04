@@ -1,0 +1,32 @@
+[Weapon]
+name Laser 3
+
+fit HWep 400
+recoil 1500
+
+maxamo 800
+amocost 100
+energycost 100
+amorechargerate 5
+amotype energy
+sequence 1
+sequencemax 15
+cooldown 120
+
+damage 70 90
+
+range 1000
+resolution 120
+
+keys turret beam laser
+
+{projectile}
+speed 2300
+texture laser3
+spread 120
+
+{item}
+texture Weapons/LaserI
+buildtime 12
+mass = 10
+buildCost Tritanium:350 Pyrite:280

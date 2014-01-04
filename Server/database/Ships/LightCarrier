@@ -1,0 +1,96 @@
+[ShipType]
+Name    Light Carrier
+cargo 3000
+hull 200
+armor 70
+deflector 500
+speed 170
+mass 200
+agility 170
+recoilrecharge 100
+energy 300
+recharge 6
+scanrange 1600
+scanprange 300
+texture Ships/LightCarrier
+size 70
+targettype heavysupport
+
+
+//M aft L
+{sub1}
+type MWep
+mount 300
+uicord 100 240
+cord -1800 -1300
+firedir FWS_L_AFS
+
+//M aft R 
+{sub2}
+type MWep
+mount 300
+uicord 100 360
+cord -1800 1300
+firedir FWS_R_AFS
+
+//M front L
+{sub3}
+type MWep
+mount 300
+uicord 200 240
+cord 0 -1300
+firedir FWS_L_AFS
+
+//M front R
+{sub4}
+type MWep
+mount 300
+uicord 200 360
+cord 0 1300
+firedir FWS_R_AFS
+
+//C
+{sub5}
+type Mech
+mount 300
+uicord 250 280
+cord 1000 -500
+firedir FW
+
+//C
+{sub6}
+type ElMe
+mount 300
+uicord 250 320
+cord 1000 500
+firedir FW
+
+//C fw shield
+{sub7}
+type ShEl
+mount 300
+uicord 320 300
+cord 2500 0
+firedir FW
+
+//Engi L
+{sub8}
+type Engi
+mount 100
+uicord 60 280
+cord -2800 -500
+firedir FW
+
+//Engi R
+{sub9}
+type Engi
+mount 100
+uicord 60 320
+cord -2800 500
+firedir FW
+
+{item}
+buildtime 40
+texture Ships/LightCarrier
+mass = 1000
+buildCost Tritanium:4000 Pyrite:1600

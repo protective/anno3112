@@ -1,0 +1,8 @@
+[AstoroidType]
+
+Name    VeldSpar
+texture Asteroids/NephriteRoid
+size 15
+minquan 200
+maxquan 900
+itemtype Nephrite

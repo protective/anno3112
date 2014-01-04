@@ -1,0 +1,9 @@
+[FactoryType]
+name Ship factory
+
+fit Lfac 1000
+builds FusionGun1 PlasmaGun1 IonGun1 FusionGun1 Missile1 Torpedo1 RailGun1 GatlingLaser1 Laser1 Laser2 Laser3 Minglaz1 Minglaz2
+
+{item}
+texture Shields/Shield1
+

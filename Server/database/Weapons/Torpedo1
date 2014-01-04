@@ -1,0 +1,33 @@
+[Weapon]
+name Torpedo 1
+
+fit HWep 400
+recoil 2000
+
+maxamo 10
+amocost 1
+amorechargerate 1
+amotype Tritanium
+sequence 1
+sequencemax 20
+cooldown 110
+
+damage 60 80
+range 1500
+resolution 90
+
+trackingtime 10
+trackingspeed 50
+
+keys bay guided
+
+{projectile}
+speed 400
+texture missile1
+
+
+{item}
+texture Weapons/Torp1
+buildtime 2
+mass = 10
+buildCost Tritanium:290 Andorite:12

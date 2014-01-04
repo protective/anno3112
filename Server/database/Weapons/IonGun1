@@ -1,0 +1,31 @@
+[Weapon]
+name Ion Gun I
+
+fit HWep 500
+recoil 2200
+
+maxamo 600
+amocost 100
+amorechargerate 5
+amotype energy
+
+sequence 1
+sequencemax 30
+cooldown 50
+
+damage 80 90
+range 400
+resolution 120
+
+keys keys turret beam ion
+
+{projectile}
+speed 2000
+texture ionbeam1
+spread 120
+
+{item}
+texture Weapons/IonGun
+buildtime 12
+mass = 10
+buildCost Tritanium:50 Morganite:2

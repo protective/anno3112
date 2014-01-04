@@ -1,0 +1,13 @@
+[Bonus]
+name Tracking Computer 1
+fit Elec 300
+
+
+{bonus}
+bonusturretscanres 10
+
+{item}
+texture Electronic/TargetComputer
+buildtime 15
+mass = 10
+buildCost Denite:100 Morganite:2

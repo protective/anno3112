@@ -1,0 +1,57 @@
+case 1:{ //ion
+	uvx1 = 0;
+	uvy1 = 0;
+	hight = 5;
+	wight = 128;
+	break;
+}
+case 2:{//laz1
+	uvx1 = 0;
+	uvy1 = 6;
+	hight = 3;
+	wight = 72;
+	break;
+}
+case 3:{//laz2
+	uvx1 = 0;
+	uvy1 = 10;
+	hight = 3;
+	wight = 106;
+	break;
+}
+case 4:{//laz3
+	uvx1 = 0;
+	uvy1 = 14;
+	hight = 5;
+	wight = 120;
+	break;
+}
+case 5:{//fusion
+	uvx1 = 0;
+	uvy1 = 20;
+	hight = 4;
+	wight = 22;
+	break;
+}
+case 6:{
+	uvx1 = 0;
+	uvy1 = 33;
+	hight = 4;
+	wight = 11;
+	break;
+}
+
+case 7:{
+	uvx1 = 11;
+	uvy1 = 20;
+	hight = 4;
+	wight = 8;
+	break;
+}
+case 8:{
+	uvx1 = 0;
+	uvy1 = 0;
+	hight = 1;
+	wight = 1;
+	break;
+}

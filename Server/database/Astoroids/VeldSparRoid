@@ -1,0 +1,8 @@
+[AstoroidType]
+
+Name    VeldSpar
+texture Asteroids/A1
+size 15
+minquan 800
+maxquan 1000
+itemtype VeldSpar

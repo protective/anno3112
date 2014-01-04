@@ -1,0 +1,22 @@
+[Boost]
+name Deflector Boost 1
+fit Shie 300
+
+{boost}
+maxamo 1000
+amocost 200
+amorechargerate 10
+amotype energy
+cooldown 140
+boosttype deflector
+boostvalue 90
+
+{bonus}
+bonusdeflector 100
+
+{item}
+texture Shields/Shield1
+buildtime 8
+mass = 10
+
+buildCost Tritanium:300 Denite:75 Andorite:5

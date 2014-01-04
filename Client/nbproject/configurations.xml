@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="80">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Resource Files"
+                   projectFiles="true">
+      <itemPath>Textures/obj/cords.txt</itemPath>
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <logicalFolder name="f3" displayName="Grafic" projectFiles="true">
+        <itemPath>Grafic/CEmitter.cpp</itemPath>
+        <itemPath>Grafic/CEmitter.h</itemPath>
+        <itemPath>Grafic/CPartical.cpp</itemPath>
+        <itemPath>Grafic/CPartical.h</itemPath>
+        <itemPath>Grafic/Grafic.cpp</itemPath>
+        <itemPath>Grafic/Grafic.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f2" displayName="Gshare" projectFiles="true">
+        <itemPath>../GShare/Enums.h</itemPath>
+        <itemPath>../GShare/GCommands.cpp</itemPath>
+        <itemPath>../GShare/GCommands.h</itemPath>
+        <itemPath>../GShare/GFunctions.cpp</itemPath>
+        <itemPath>../GShare/GFunctions.h</itemPath>
+        <itemPath>../GShare/GGlobals.cpp</itemPath>
+        <itemPath>../GShare/GGlobals.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f6" displayName="Items" projectFiles="true">
+        <itemPath>Items/CItemType.cpp</itemPath>
+        <itemPath>Items/CItemType.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f1" displayName="Network" projectFiles="true">
+        <itemPath>../Network/Serialize.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f4" displayName="spaceobjects" projectFiles="true">
+        <logicalFolder name="f2" displayName="cargo" projectFiles="true">
+          <itemPath>spaceobjects/cargo/CCargoBay.cpp</itemPath>
+          <itemPath>spaceobjects/cargo/CCargoBay.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="f1" displayName="subsystems" projectFiles="true">
+          <itemPath>spaceobjects/subsystems/CLoadout.cpp</itemPath>
+          <itemPath>spaceobjects/subsystems/CLoadout.h</itemPath>
+          <itemPath>spaceobjects/subsystems/CShipTypeSlotData.cpp</itemPath>
+          <itemPath>spaceobjects/subsystems/CShipTypeSlotData.h</itemPath>
+          <itemPath>spaceobjects/subsystems/CSingleFac.cpp</itemPath>
+          <itemPath>spaceobjects/subsystems/CSingleFac.h</itemPath>
+          <itemPath>spaceobjects/subsystems/CSingleRef.cpp</itemPath>
+          <itemPath>spaceobjects/subsystems/CSingleRef.h</itemPath>
+          <itemPath>spaceobjects/subsystems/CSingleWep.cpp</itemPath>
+          <itemPath>spaceobjects/subsystems/CSingleWep.h</itemPath>
+          <itemPath>spaceobjects/subsystems/CSlotNode.cpp</itemPath>
+          <itemPath>spaceobjects/subsystems/CSlotNode.h</itemPath>
+          <itemPath>spaceobjects/subsystems/CSubSystem.cpp</itemPath>
+          <itemPath>spaceobjects/subsystems/CSubSystem.h</itemPath>
+          <itemPath>spaceobjects/subsystems/CSubSystemBonus.cpp</itemPath>
+          <itemPath>spaceobjects/subsystems/CSubSystemBonus.h</itemPath>
+          <itemPath>spaceobjects/subsystems/CSubSystemBoost.cpp</itemPath>
+          <itemPath>spaceobjects/subsystems/CSubSystemBoost.h</itemPath>
+          <itemPath>spaceobjects/subsystems/CSubSystemFac.cpp</itemPath>
+          <itemPath>spaceobjects/subsystems/CSubSystemFac.h</itemPath>
+          <itemPath>spaceobjects/subsystems/CSubSystemRef.cpp</itemPath>
+          <itemPath>spaceobjects/subsystems/CSubSystemRef.h</itemPath>
+          <itemPath>spaceobjects/subsystems/CSubSystemW.cpp</itemPath>
+          <itemPath>spaceobjects/subsystems/CSubSystemW.h</itemPath>
+          <itemPath>spaceobjects/subsystems/CSubType.cpp</itemPath>
+          <itemPath>spaceobjects/subsystems/CSubType.h</itemPath>
+          <itemPath>spaceobjects/subsystems/CSubTypeBonus.cpp</itemPath>
+          <itemPath>spaceobjects/subsystems/CSubTypeBonus.h</itemPath>
+          <itemPath>spaceobjects/subsystems/CSubTypeBoost.cpp</itemPath>
+          <itemPath>spaceobjects/subsystems/CSubTypeBoost.h</itemPath>
+          <itemPath>spaceobjects/subsystems/CSubTypeFac.cpp</itemPath>
+          <itemPath>spaceobjects/subsystems/CSubTypeFac.h</itemPath>
+          <itemPath>spaceobjects/subsystems/CSubTypeRef.cpp</itemPath>
+          <itemPath>spaceobjects/subsystems/CSubTypeRef.h</itemPath>
+          <itemPath>spaceobjects/subsystems/CSubTypeWep.cpp</itemPath>
+          <itemPath>spaceobjects/subsystems/CSubTypeWep.h</itemPath>
+        </logicalFolder>
+        <itemPath>spaceobjects/CAstoroid.cpp</itemPath>
+        <itemPath>spaceobjects/CAstoroid.h</itemPath>
+        <itemPath>spaceobjects/CAstoroidType.cpp</itemPath>
+        <itemPath>spaceobjects/CAstoroidType.h</itemPath>
+        <itemPath>spaceobjects/CMovable.cpp</itemPath>
+        <itemPath>spaceobjects/CMovable.h</itemPath>
+        <itemPath>spaceobjects/CObj.cpp</itemPath>
+        <itemPath>spaceobjects/CObj.h</itemPath>
+        <itemPath>spaceobjects/COrdres.cpp</itemPath>
+        <itemPath>spaceobjects/COrdres.h</itemPath>
+        <itemPath>spaceobjects/CPos.cpp</itemPath>
+        <itemPath>spaceobjects/CPos.h</itemPath>
+        <itemPath>spaceobjects/CShip.cpp</itemPath>
+        <itemPath>spaceobjects/CShip.h</itemPath>
+        <itemPath>spaceobjects/CShipType.cpp</itemPath>
+        <itemPath>spaceobjects/CShipType.h</itemPath>
+        <itemPath>spaceobjects/CShot.cpp</itemPath>
+        <itemPath>spaceobjects/CShot.h</itemPath>
+        <itemPath>spaceobjects/CSubAble.cpp</itemPath>
+        <itemPath>spaceobjects/CSubAble.h</itemPath>
+        <itemPath>spaceobjects/CTargetable.cpp</itemPath>
+        <itemPath>spaceobjects/CTargetable.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f5" displayName="UI" projectFiles="true">
+        <logicalFolder name="f3" displayName="BuildFrame" projectFiles="true">
+          <itemPath>UI/Build/CUIBuildFrame.cpp</itemPath>
+          <itemPath>UI/Build/CUIBuildFrame.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="f1" displayName="Buttons" projectFiles="true">
+          <itemPath>UI/Buttons/CUIButtonBuild.cpp</itemPath>
+          <itemPath>UI/Buttons/CUIButtonBuild.h</itemPath>
+          <itemPath>UI/Buttons/CUIButtonCancel.cpp</itemPath>
+          <itemPath>UI/Buttons/CUIButtonCancel.h</itemPath>
+          <itemPath>UI/Buttons/CUIButtonChangeOrdre.cpp</itemPath>
+          <itemPath>UI/Buttons/CUIButtonChangeOrdre.h</itemPath>
+          <itemPath>UI/Buttons/CUIButtonChangeTG.cpp</itemPath>
+          <itemPath>UI/Buttons/CUIButtonChangeTG.h</itemPath>
+          <itemPath>UI/Buttons/CUIButtonChangeView.cpp</itemPath>
+          <itemPath>UI/Buttons/CUIButtonChangeView.h</itemPath>
+          <itemPath>UI/Buttons/CUIButtonCreateFit.cpp</itemPath>
+          <itemPath>UI/Buttons/CUIButtonCreateFit.h</itemPath>
+          <itemPath>UI/Buttons/CUIButtonFitLoadout.cpp</itemPath>
+          <itemPath>UI/Buttons/CUIButtonFitLoadout.h</itemPath>
+          <itemPath>UI/Buttons/CUIButtonItem.cpp</itemPath>
+          <itemPath>UI/Buttons/CUIButtonItem.h</itemPath>
+          <itemPath>UI/Buttons/CUIButtonOK.cpp</itemPath>
+          <itemPath>UI/Buttons/CUIButtonOK.h</itemPath>
+          <itemPath>UI/Buttons/CUIButtonOpenCargo.cpp</itemPath>
+          <itemPath>UI/Buttons/CUIButtonOpenCargo.h</itemPath>
+          <itemPath>UI/Buttons/CUIButtonSetUnitPos.cpp</itemPath>
+          <itemPath>UI/Buttons/CUIButtonSetUnitPos.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="f2" displayName="ComboBox" projectFiles="true">
+          <itemPath>UI/ComboBox/CUIComboOrdreChange.cpp</itemPath>
+          <itemPath>UI/ComboBox/CUIComboOrdreChange.h</itemPath>
+          <itemPath>UI/ComboBox/CUIComboTgChange.cpp</itemPath>
+          <itemPath>UI/ComboBox/CUIComboTgChange.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="f6" displayName="Forms" projectFiles="true">
+          <itemPath>UI/Forms/CUICreateFitForm.cpp</itemPath>
+          <itemPath>UI/Forms/CUICreateFitForm.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="f4" displayName="ListBox" projectFiles="true">
+          <itemPath>UI/ListBox/CUIListBox.cpp</itemPath>
+          <itemPath>UI/ListBox/CUIListBox.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="f5" displayName="RightClickMenus" projectFiles="true">
+          <itemPath>UI/RightClickMenus/CUIRCMenuLoadout.cpp</itemPath>
+          <itemPath>UI/RightClickMenus/CUIRCMenuLoadout.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="f7" displayName="Scrolls" projectFiles="true">
+          <itemPath>UI/Scrolls/CUIVScroll.cpp</itemPath>
+          <itemPath>UI/Scrolls/CUIVScroll.h</itemPath>
+        </logicalFolder>
+        <itemPath>UI/CUIBaseFrame.cpp</itemPath>
+        <itemPath>UI/CUIBaseFrame.h</itemPath>
+        <itemPath>UI/CUIButton.cpp</itemPath>
+        <itemPath>UI/CUIButton.h</itemPath>
+        <itemPath>UI/CUIButtonFrame.cpp</itemPath>
+        <itemPath>UI/CUIButtonFrame.h</itemPath>
+        <itemPath>UI/CUICargoViewer.cpp</itemPath>
+        <itemPath>UI/CUICargoViewer.h</itemPath>
+        <itemPath>UI/CUIComboBox.cpp</itemPath>
+        <itemPath>UI/CUIComboBox.h</itemPath>
+        <itemPath>UI/CUIDragDrop.cpp</itemPath>
+        <itemPath>UI/CUIDragDrop.h</itemPath>
+        <itemPath>UI/CUIFrame.cpp</itemPath>
+        <itemPath>UI/CUIFrame.h</itemPath>
+        <itemPath>UI/CUIMainFrame.cpp</itemPath>
+        <itemPath>UI/CUIMainFrame.h</itemPath>
+        <itemPath>UI/CUIMoveCloseBar.cpp</itemPath>
+        <itemPath>UI/CUIMoveCloseBar.h</itemPath>
+        <itemPath>UI/CUIRightClickMenu.cpp</itemPath>
+        <itemPath>UI/CUIRightClickMenu.h</itemPath>
+        <itemPath>UI/CUIShipDetailFrame.cpp</itemPath>
+        <itemPath>UI/CUIShipDetailFrame.h</itemPath>
+        <itemPath>UI/CUISubSystem.cpp</itemPath>
+        <itemPath>UI/CUISubSystem.h</itemPath>
+        <itemPath>UI/CUITextInputField.cpp</itemPath>
+        <itemPath>UI/CUITextInputField.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f7" displayName="world" projectFiles="true">
+        <itemPath>world/CGrid.cpp</itemPath>
+        <itemPath>world/CGrid.h</itemPath>
+        <itemPath>world/CWorld.cpp</itemPath>
+        <itemPath>world/CWorld.h</itemPath>
+      </logicalFolder>
+      <itemPath>CDatabase.cpp</itemPath>
+      <itemPath>CDatabase.h</itemPath>
+      <itemPath>CFunctions.cpp</itemPath>
+      <itemPath>CFunctions.h</itemPath>
+      <itemPath>CGlobals.cpp</itemPath>
+      <itemPath>CGlobals.h</itemPath>
+      <itemPath>CPlayerObjHandle.cpp</itemPath>
+      <itemPath>CPlayerObjHandle.h</itemPath>
+      <itemPath>mainClient.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="1">
+      <toolsSet>
+        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
+        <compilerSet>GNU|GNU</compilerSet>
+      </toolsSet>
+      <compileType>
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/freetype2</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <linkerLibItems>
+            <linkerLibStdlibItem>PosixThreads</linkerLibStdlibItem>
+            <linkerLibLibItem>SDL</linkerLibLibItem>
+            <linkerLibLibItem>SDLmain</linkerLibLibItem>
+            <linkerLibLibItem>SDL_ttf</linkerLibLibItem>
+            <linkerLibLibItem>SDL_image</linkerLibLibItem>
+            <linkerLibLibItem>GL</linkerLibLibItem>
+            <linkerLibLibItem>ftgl</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+    </conf>
+    <conf name="Release" type="1">
+      <toolsSet>
+        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
+        <compilerSet>GNU|GNU</compilerSet>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+      </compileType>
+    </conf>
+  </confs>
+</configurationDescriptor>

@@ -1,0 +1,9 @@
+[Material]
+
+//level 4
+name Neptunite
+{item}
+texture Ore/Veldspar
+mass 25
+refineBatch 100 
+refineResult Tritanium:500 Denite:100 Andorite:40

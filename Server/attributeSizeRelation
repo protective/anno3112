@@ -1,0 +1,55 @@
+cooldown 1000 = 1 sec
+energy 1000 to 1
+shield 1000 to 1
+armor 1000 to 1
+hull 1000 to 1
+deflector 1000 to 1
+amo 100 to 1
+
+
+double a =  range(Me.pos, ObjectID.pos)
+	If a < ObjectID.Size Then
+
+		Dim x1 As Integer = Me.pos.X - ObjectID.pos.X
+		Dim y1 As Integer = Me.pos.Y - ObjectID.pos.Y
+		Dim x2 As Integer = Me.pos.X + (Me.Bmovement.X) - ObjectID.pos.X
+		Dim y2 As Integer = Me.pos.Y + (Me.Bmovement.Y) - ObjectID.pos.Y
+
+		Dim dx As Integer = x2 - x1
+		Dim dy As Integer = y2 - y1
+		Dim dr As Double = Math.Sqrt(dx ^ 2 + dy ^ 2)
+		Dim D As Double = x1 * y2 - x2 * y1
+
+		Dim dis As Double = ((ObjectID.Size / 2) ^ 2) * (dr ^ 2) - (D ^ 2)
+
+
+
+		If dis >= 0 Then
+
+
+			Dim hitx As Double = (D * dy - dx * (Math.Sqrt((ObjectID.Size / 2) ^ 2 * dr ^ 2 - D ^ 2))) / dr ^ 2
+			Dim hity As Double = (-D * dx - dy * (Math.Sqrt((ObjectID.Size / 2) ^ 2 * dr ^ 2 - D ^ 2))) / dr ^ 2
+
+			Dim hit2x As Double = (D * dy + dx * (Math.Sqrt((ObjectID.Size / 2) ^ 2 * dr ^ 2 - D ^ 2))) / dr ^ 2
+			Dim hit2y As Double = (-D * dx + dy * (Math.Sqrt((ObjectID.Size / 2) ^ 2 * dr ^ 2 - D ^ 2))) / dr ^ 2
+
+			'we are gona hit roll the die
+			Me.BMissedThees.Add(ObjectID)
+			Dim i As Integer = (Me.Bres * ObjectID.Size / 100)
+			Dim cha As Integer = Rand(0, 100)
+			If cha < i Then
+				If dr = 0 Then
+					Me.Hit(ObjectID, 1, 1, -1, -1)
+				Else
+					Me.Hit(ObjectID, hitx, hity, hit2x, hit2y)
+				End If
+
+				Me.BHasHit = True
+				Return True
+			Else
+				Return False
+			End If
+		End If
+
+
+

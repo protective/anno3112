@@ -1,0 +1,95 @@
+[ShipType]
+Name    Asult Cruiser
+cargo 1000
+hull 280
+armor 70
+deflector 500
+speed 200
+mass 200
+agility 190
+recoilrecharge 100
+energy 800
+recharge 8
+scanrange 1400
+scanprange 300
+texture Ships/AC
+size 70
+targettype heavysupport
+
+//M aft
+{sub1}
+type HWep
+mount 600
+uicord 60 300
+cord -2000 0
+firedir FW_FL_FR
+
+//M L
+{sub2}
+type HWep
+mount 400
+uicord 270 240
+cord 1500 -1000
+firedir FW_FL
+
+//M R
+{sub3}
+type HWep
+mount 400
+uicord 270 360
+cord 1500 1000
+firedir FW_FR
+
+//M center
+{sub4}
+type MWep
+mount 400
+uicord 270 300
+cord 1500 0
+firedir FW_L_R
+
+//C ElMe
+{sub5}
+type ElMe
+mount 300
+uicord 220 300
+cord 600 0
+firedir L
+
+//C armor
+{sub6}
+type Armo
+mount 300
+uicord 170 300
+cord -400 0
+firedir L
+
+//C fw shield
+{sub7}
+type Shie
+mount 300
+uicord 320 300
+cord 2500 0
+firedir L
+
+//Engi L
+{sub8}
+type Engi
+mount 200
+uicord 100 240
+cord -1500 -1000
+firedir FW
+
+//Engi R
+{sub9}
+type Engi
+mount 200
+uicord 100 360
+cord -1500 1000
+firedir R
+
+{item}
+buildtime 40
+texture Ships/AC
+mass = 1000
+buildCost Tritanium:3000 Pyrite:1300

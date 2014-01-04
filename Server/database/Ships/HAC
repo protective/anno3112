@@ -1,0 +1,127 @@
+[ShipType]
+Name    Heavy Asult Cruiser
+cargo 1000
+hull 320
+armor 580
+deflector 120
+speed 180
+mass 300
+agility 170
+recoilrecharge 120
+energy 1200
+recharge 10
+scanrange 1200
+scanprange 200
+texture Ships/HAC
+size 80
+targettype heavysupport
+
+//M L
+{sub1}
+type HWep
+mount 800
+uicord 220 280
+cord 400 -500
+firedir FW_L
+
+//M R
+{sub2}
+type HWep
+mount 800
+uicord 220 320
+cord 400 500
+firedir FW_R
+
+//S aft L
+{sub3}
+type MWep
+mount 300
+uicord 220 240
+cord 400 -1000
+firedir FL_AF
+
+//S aft R
+{sub4}
+type MWep
+mount 300
+uicord 220 360
+cord 400 1000
+firedir FR_AF
+
+//S fw L
+{sub5}
+type MWep
+mount 300
+uicord 270 240
+cord 1500 -1000
+firedir FW_AL
+
+//S fw R
+{sub6}
+type MWep
+mount 300
+uicord 270 360
+cord 1500 1000
+firedir FW_AR
+
+//L Armo
+{sub7}
+type Armo
+mount 600
+uicord 270 280
+cord 1500 -500
+firedir L
+
+//R Armo
+{sub8}
+type Armo
+mount 600
+uicord 270 320
+cord 1500 500
+firedir L
+
+//C fw Elec
+{sub9}
+type ShEl
+mount 300
+uicord 320 300
+cord 3000 0
+firedir L
+
+//L Mech
+{sub10}
+type Mech
+mount 300
+uicord 170 280
+cord -1000 -400
+firedir L
+
+//R Mech
+{sub11}
+type Mech
+mount 300
+uicord 170 320
+cord -1000 400
+firedir L
+
+//Engi L
+{sub12}
+type Engi
+mount 300
+uicord 60 280
+cord -3000 -500
+firedir FW
+
+//Engi R
+{sub13}
+type Engi
+mount 300
+uicord 60 320
+cord -3000 500
+firedir R
+
+{item}
+buildtime 45
+texture Ships/HACs
+mass = 1000
+buildCost Tritanium:4500 Pyrite:1650

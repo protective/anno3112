@@ -1,0 +1,12 @@
+[Bonus]
+name Scanner 1
+fit Elec 300
+
+{bonus}
+bonusscanrange 300
+
+{item}
+texture Electronic/Scanner
+buildtime 15
+mass = 10
+buildCost Denite:100 Morganite:2

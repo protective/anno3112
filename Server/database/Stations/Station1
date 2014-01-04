@@ -1,0 +1,45 @@
+[ShipType]
+Name    Station I
+cargo 5000000
+hull 10000
+armor 10
+speed 0
+agility 0
+energy 500
+recharge 8
+scanrange 500
+scanprange 200
+texture Ships/Station1
+size 120
+targettype heavysupport
+
+{sub1}
+type Hfac
+mount 1000
+uicord 100 240
+cord -1500 -1000
+
+{sub2}
+type Lfac
+mount 1000
+uicord 100 360
+cord -1500 1000
+
+{sub3}
+type Lfac
+mount 1000
+uicord 280 240
+cord 1500 -1000
+
+{sub4}
+type Lfac
+mount 1000
+uicord 220 360
+cord 1500 1000
+
+
+{item}
+buildtime 3
+texture Shields/Shield1
+mass = 1000
+buildCost VeldSpar:2

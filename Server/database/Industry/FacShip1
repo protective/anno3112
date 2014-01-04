@@ -1,0 +1,9 @@
+[FactoryType]
+name Ship factory
+
+fit Lfac 1000
+builds HAC AC BC1 Freighter1 LightCarrier BS1 DD
+
+{item}
+texture Shields/Shield1
+

@@ -1,0 +1,11 @@
+[Material]
+
+//level 1
+name VeldSpar
+{item}
+texture Ore/Veldspar
+mass 10
+buildtime 1
+buildbatch 10
+refineBatch 100 
+refineResult Tritanium:500

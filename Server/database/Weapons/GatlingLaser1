@@ -1,0 +1,32 @@
+[Weapon]
+name Gatling Laser 1
+
+fit LWep 300
+recoil 100
+
+maxamo 200
+amocost 25
+energycost 25
+amorechargerate 5
+amotype energy
+sequence 1 6 11 16 21 26 31 36
+sequencemax 40
+cooldown 50
+
+damage 2 3
+
+range 600
+resolution 50
+
+keys turret beam laser
+
+{projectile}
+speed 2300
+texture laser1
+spread 200
+
+{item}
+texture Weapons/GLaserI
+buildtime 4
+mass = 10
+buildCost Tritanium:130 Pyrite:300

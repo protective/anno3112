@@ -1,0 +1,34 @@
+[Weapon]
+name Missile 1
+
+fit MWep 250
+recoil 400
+
+maxamo 100
+amocost 10
+amorechargerate 10
+amotype Tritanium
+sequence 1
+sequencemax 5
+cooldown 30
+
+damage 8 11
+range 1500
+resolution 50
+
+trackingtime 15
+trackingspeed 70
+
+
+keys bay guided
+
+{projectile}
+speed 1000
+texture missile1
+
+
+{item}
+texture Weapons/Missile1
+buildtime 8
+mass = 10
+buildCost Tritanium:250 Andorite:10

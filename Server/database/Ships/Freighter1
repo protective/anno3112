@@ -1,0 +1,53 @@
+[ShipType]
+Name    Freighter
+cargo 4000
+hull 80
+armor 50
+deflector 20
+speed 160
+mass 200
+agility 140
+recoilrecharge 10
+energy 500
+recharge 8
+scanrange 100
+scanprange 50
+texture Ships/Freighter1
+size 60
+targettype freighter
+
+//M center
+{sub1}
+type Mini
+mount 400
+uicord 270 300
+cord 2000 0
+
+//L mech
+{sub2}
+type Mech
+mount 200
+uicord 220 280
+cord 500 -500
+
+//R mech
+{sub3}
+type Mech
+mount 200
+uicord 220 320
+cord 500 500
+
+//Engi
+{sub4}
+type Engi
+mount 300
+uicord 100 300
+cord -2000 0
+
+
+
+{item}
+buildtime 20
+texture Ships/Freighter1
+mass = 1000
+buildCost Tritanium:400 Pyrite:150

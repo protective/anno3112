@@ -1,0 +1,50 @@
+		case ParticalTex::eks1:{
+			this->_tickmin = 0;this->_tickmax = 10;break;}
+		case ParticalTex::eks2:{
+			this->_tickmin = 0;this->_tickmax = 10;break;}
+		case ParticalTex::eks3:{
+			this->_tickmin = 0;this->_tickmax = 10;break;}
+		case ParticalTex::eks4:{
+			this->_tickmin = 0;this->_tickmax = 10;break;}
+		case ParticalTex::eks5:{
+			this->_tickmin = 0;this->_tickmax = 10;break;}
+		case ParticalTex::eks6:{
+			this->_tickmin = 0;this->_tickmax = 10;break;}
+		case ParticalTex::eks4l:{
+			this->_tickmin = 0;this->_tickmax = 14;break;}
+		case ParticalTex::eks5l:{
+			this->_tickmin = 0;this->_tickmax = 14;break;}
+		case ParticalTex::eks6l:{
+			this->_tickmin = 0;this->_tickmax = 14;break;}
+		case ParticalTex::eks7l:{
+			this->_tickmin = 0;this->_tickmax = 14;break;}
+		case ParticalTex::eksshc1:{
+			this->_tickmin = 0;this->_tickmax = 10;break;}
+		case ParticalTex::eksshc2:{
+			this->_tickmin = 0;this->_tickmax = 10;break;}
+		case ParticalTex::eksshc3:{
+			this->_tickmin = 0;this->_tickmax = 10;break;}
+		case ParticalTex::eksshc4:{
+			this->_tickmin = 0;this->_tickmax = 10;break;}
+		case ParticalTex::eksshc5:{
+			this->_tickmin = 0;this->_tickmax = 10;break;}
+		case ParticalTex::eksshc6:{
+			this->_tickmin = 0;this->_tickmax = 10;break;}
+		case ParticalTex::eksshc7:{
+			this->_tickmin = 0;this->_tickmax = 10;break;}
+		case ParticalTex::eksshc4l:{
+			this->_tickmin = 0;this->_tickmax = 15;break;}
+		case ParticalTex::eksshc5l:{
+			this->_tickmin = 0;this->_tickmax = 15;break;}
+		case ParticalTex::eksshc6l:{
+			this->_tickmin = 0;this->_tickmax = 15;break;}
+		case ParticalTex::eksshc7l:{
+			this->_tickmin = 0;this->_tickmax = 15;break;}
+		case ParticalTex::LaserTail1:{
+			this->_tickmin = 0;this->_tickmax = 7;break;}
+		case ParticalTex::MissileTail1:{
+			this->_tickmin = 0;this->_tickmax = 9;break;}
+		case ParticalTex::eksship1:{
+			this->_tickmin = 0;this->_tickmax = 60;break;}
+		case ParticalTex::plasma1:{
+			this->_tickmin = 0;this->_tickmax = 10;break;}

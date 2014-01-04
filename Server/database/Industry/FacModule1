@@ -1,0 +1,9 @@
+[FactoryType]
+name Ship factory
+
+fit Lfac 1000
+builds Engine1 Refinery1 ArmorRep1 Reactor1 Scanner1 DeflectorBoost1 ShieldBoost1 HeatSink1 Trackingcomputer1
+
+{item}
+texture Shields/Shield1
+

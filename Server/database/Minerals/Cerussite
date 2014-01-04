@@ -1,0 +1,11 @@
+[Material]
+
+//level 3
+name Cerussite
+{item}
+texture Ore/Veldspar
+mass 20
+buildtime 1
+buildbatch 10
+refineBatch 100 
+refineResult Pyrite:100 Denite:110 Andorite:8

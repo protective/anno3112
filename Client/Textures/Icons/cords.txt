@@ -1,0 +1,32 @@
+case Icontex::cancel:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::IconSheet]);
+	uvx1 = 0;
+	uvy1 = 0;
+	wight = 45;
+	hight = 30;
+	break;
+}
+case Icontex::Cargo:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::IconSheet]);
+	uvx1 = 150;
+	uvy1 = 0;
+	wight = 60;
+	hight = 36;
+	break;
+}
+case Icontex::CreateLoadOut:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::IconSheet]);
+	uvx1 = 300;
+	uvy1 = 0;
+	wight = 60;
+	hight = 36;
+	break;
+}
+case Icontex::ok:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::IconSheet]);
+	uvx1 = 450;
+	uvy1 = 0;
+	wight = 45;
+	hight = 30;
+	break;
+}

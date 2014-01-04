@@ -1,0 +1,6 @@
+[Material]
+//level 1
+name Tritanium
+{item}
+texture Minerals/Tritanium
+mass 1

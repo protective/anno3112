@@ -1,0 +1,6 @@
+[Material]
+//level 3
+name Denite
+{item}
+texture Minerals/Denite
+mass 5

@@ -1,0 +1,108 @@
+case 1:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::SlotSheet]);
+	uvx1 = 0;
+	uvy1 = 0;
+	break;
+}
+case 2:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::SlotSheet]);
+	uvx1 = 45;
+	uvy1 = 0;
+	break;
+}
+case 3:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::SlotSheet]);
+	uvx1 = 90;
+	uvy1 = 0;
+	break;
+}
+case 4:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::SlotSheet]);
+	uvx1 = 135;
+	uvy1 = 0;
+	break;
+}
+case 5:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::SlotSheet]);
+	uvx1 = 180;
+	uvy1 = 0;
+	break;
+}
+case 6:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::SlotSheet]);
+	uvx1 = 0;
+	uvy1 = 36;
+	break;
+}
+case 7:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::SlotSheet]);
+	uvx1 = 45;
+	uvy1 = 36;
+	break;
+}
+case 8:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::SlotSheet]);
+	uvx1 = 90;
+	uvy1 = 36;
+	break;
+}
+case 9:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::SlotSheet]);
+	uvx1 = 135;
+	uvy1 = 36;
+	break;
+}
+case 10:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::SlotSheet]);
+	uvx1 = 180;
+	uvy1 = 36;
+	break;
+}
+case 11:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::SlotSheet]);
+	uvx1 = 0;
+	uvy1 = 72;
+	break;
+}
+case 12:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::SlotSheet]);
+	uvx1 = 45;
+	uvy1 = 72;
+	break;
+}
+case 13:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::SlotSheet]);
+	uvx1 = 90;
+	uvy1 = 72;
+	break;
+}
+case 14:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::SlotSheet]);
+	uvx1 = 135;
+	uvy1 = 72;
+	break;
+}
+case 15:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::SlotSheet]);
+	uvx1 = 180;
+	uvy1 = 72;
+	break;
+}
+case 16:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::SlotSheet]);
+	uvx1 = 0;
+	uvy1 = 108;
+	break;
+}
+case 17:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::SlotSheet]);
+	uvx1 = 45;
+	uvy1 = 108;
+	break;
+}
+case 18:{
+	glBindTexture( GL_TEXTURE_2D, textures[Textures::SlotSheet]);
+	uvx1 = 90;
+	uvy1 = 108;
+	break;
+}

@@ -1,0 +1,59 @@
+Client***
+
+
+	UI show weapon damage, amo
+
+	Grafic make some shots --work in progres
+		
+
+Server***
+
+
+ BUG 
+
+Recived ********************
+	type 24
+	size 28
+Recived SerialReqFit*******
+	From 9
+	To 11
+	subid 13
+	itemId 27
+	quantity 1
+
+server seq fault
+
+	implement stay at range ordre tactic
+
+	implement ordres
+		event
+		conditions
+		actions
+
+	load itemlist from file
+
+	multible grids
+	warp
+
+	implement resists on specific weapon vs specific defence
+	ordres
+		parse from file
+	
+	fix remove clients properly -- bug location found need fix
+	fighters
+
+AI***
+
+create some system for ai to know what items is missing on ships
+
+Gameplay*** 
+
+add role bonus to ships-- posibly by a pasive not visible subsystem
+
+Do more ships
+	destroyer -- closerange fast suport
+	tactical destroyer -- longrange misselboat
+
+questions
+	should there be resist mods to diffrent dmg types ?
+

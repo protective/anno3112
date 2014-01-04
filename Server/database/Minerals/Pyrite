@@ -1,0 +1,6 @@
+[Material]
+//level 2
+name Pyrite
+{item}
+texture Minerals/Pyrite
+mass 2

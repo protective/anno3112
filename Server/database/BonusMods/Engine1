@@ -1,0 +1,12 @@
+[Bonus]
+name Engine 1
+fit Engi 100
+{bonus}
+bonuserecharge 8
+speedthruster 5
+{item}
+texture Engines/Engine1
+buildtime 12
+mass = 10
+
+buildCost Tritanium:400 Pyrite:250 Denite:230

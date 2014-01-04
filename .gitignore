@@ -1,0 +1,7 @@
+Server/build/
+Server/dist/
+Client/build/
+Client/dist
+/AI/nbproject/private/
+AI/build/
+AI/dist
