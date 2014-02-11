@@ -17,6 +17,7 @@
 #include "Sspacebjects/subsystems/SSubTypeBonus.h"
 #include "Sspacebjects/subsystems/SSubTypeBoost.h"
 #include "Sspacebjects/subsystems/SSubTypeRef.h"
+#include "Sspacebjects/subsystems/SSubTypeFighter.h"
 #include "Sspacebjects/Ordres/SOrdreAction.h"
 #include "Sspacebjects/subsystems/SSubTypeRef.h"
 #include "Sspacebjects/SAstoroid.h"
@@ -367,6 +368,7 @@ int parseShottex(string str){
 int parseobjtextureid(string str){
 
 	#include "database/objtexname.txt"
+#include "Sspacebjects/subsystems/SSubTypeFighter.h"
 
 
 	cerr<<"WARNING SDatabase::parseobjtextureid Not found"<<endl;
@@ -476,7 +478,7 @@ void ParseGame(ifstream* file,string filename){
 							SPos temppos(x,y,0);
 							temppos.grid = world->getGrids()[1];
 							SShip* ship = new SShip(getFreeID(), temppos, *st,team);
-							world->getGrids()[1]->addShip(ship);
+							world->getGrids()[1]->addUnit(ship);
 
 		
 							for (int i = 4; i < 30; i++){
@@ -533,7 +535,7 @@ void ParseData(ifstream* file,string filename) {
 	if (filename.find("shottexname.txt", 0) != string::npos)
 		return;
 	if (!id){
-		cerr<<"WARNING Sdatabase::parsedata itemfilename not found"<<endl;
+		cerr<<"WARNING Sdatabase::parsedata itemfilename not found>"<<filename<<"<"<<endl;
 	}
 	uint32_t beginint = 0;
 	uint32_t lenint = 0;
@@ -564,6 +566,17 @@ void ParseData(ifstream* file,string filename) {
 			parseSubState = "base";
 			SItemType* itemt = itemlist[id];
 			subtype = new SSubTypeWep();
+			itemt->setSubType(subtype);
+			itemlist[id] = itemt;
+		}else if (line.find("[Fighter]", 0) != string::npos) {
+			cerr<<"fighter"<<endl;
+			parseState = "FighterType";
+			parseSubState = "base";
+			shiptype = new SShipType(id);
+			shipTypes[id] = shiptype;
+			SItemType* itemt = itemlist[id];
+			itemt->setShipType(shiptype);	
+			subtype = new SSubTypeFighter();
 			itemt->setSubType(subtype);
 			itemlist[id] = itemt;
 		}else if (line.find("[Bonus]", 0) != string::npos) {
@@ -612,7 +625,7 @@ void ParseData(ifstream* file,string filename) {
 			astoroidTypes[id] = astoroidtype;
 		}
 
-		if (parseState == "ShipType") {
+		if (parseState == "ShipType" || parseState == "FighterType") {
 			for (int i = 0; i < 20; i++) {
 				std::stringstream ss;
 				ss << "{sub" << i << "}";
@@ -624,10 +637,13 @@ void ParseData(ifstream* file,string filename) {
 
 				}
 			}
+			if (line.find("{FighterSub}") != string::npos) {
+				parseSubState = "FighterSub";
+			}
+			
 			if (line.find("{item}") != string::npos) {
 				parseSubState = "item";
 			}
-
 			if (parseSubState == "base") {
 				if (line.find("name") != string::npos) {
 					getAllparameter(line, "name", &beginint, &lenint);
@@ -700,7 +716,18 @@ void ParseData(ifstream* file,string filename) {
 					shiptype->setShield(strToInt(line.substr(beginint, lenint)),5);
 				}
 
-			} else {
+			}else if (parseSubState == "FighterSub"){
+				if (line.find("baycount") != string::npos) {
+					getAllparameter(line, "baycount", &beginint, &lenint);
+					(subtype)->isFighter()->setBayCount(strToInt(line.substr(beginint, lenint)));
+				} else if (line.find("fit") != string::npos) {
+					getparameter(line, "fit", 0, &beginint, &lenint);
+					(subtype)->setMountType(parseSlotType(line.substr(beginint, lenint)));
+					getparameter(line, "fit", 1, &beginint, &lenint);
+					(subtype)->setMount(strToInt(line.substr(beginint, lenint)));
+					cerr<<"FIT FIGHTER"<<endl;
+				}
+			}else {
 				for (int i = 0; i < 20; i++) {
 					std::stringstream ss;
 					ss << "sub" << i;
@@ -1142,21 +1169,6 @@ void SDatabase::LoadGame() {
 		cerr << "ERROR dir not found" << endl;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 void SDatabase::ReadSubDir(DIR *dp, string datapath){
 	struct dirent *ep;

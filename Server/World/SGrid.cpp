@@ -28,15 +28,14 @@ SGrid::SGrid(uint32_t id, uint32_t spaceWight, uint32_t spaceHight) {
 	pthread_mutex_init(&this->lockgrid, NULL);
 	cerr<<"init grid"<<endl;
 }
-void SGrid::addShip(SShip* ship){
-	this->addObj((SObj*)ship);
+void SGrid::addUnit(SUnit* unit){
+	this->addObj((SObj*)unit);
 	pthread_mutex_lock(&locksubscriber);
 	for(ClientI it = this->subscriber.begin(); it != this->subscriber.end(); it++){
-		if (ship->getVisibleTo().find((*it)->getTeamId()) != ship->getVisibleTo().end()){
-			if (ship->getVisibleTo()[(*it)->getTeamId()] == Visibility::Visible){
-
-				this->SendShipFull(*it,ship);
-				this->ReportObjHpUdate(*it,ship);
+		if (unit->getVisibleTo().find((*it)->getTeamId()) != unit->getVisibleTo().end()){
+			if (unit->getVisibleTo()[(*it)->getTeamId()] == Visibility::Visible){
+				unit->sendFull();
+				unit->sendHpUdate();
 			}
 		}
 	}
@@ -111,6 +110,8 @@ void SGrid::UnSubscribe(Client* cli){
 
 void SGrid::Subscribe(Client* cli)
 {
+	//TODO SUBSCR
+	/*
 	pthread_mutex_lock(&locksubscriber);
 	this->subscriber.push_back(cli);
 	pthread_mutex_unlock(&locksubscriber);
@@ -129,6 +130,7 @@ void SGrid::Subscribe(Client* cli)
 			this->SendAstoroidFull(cli,so->second->isAstoroid());
 		}
 	}
+	 * */
 }
 
 void SGrid::Proces(uint32_t thead_id){
@@ -194,11 +196,14 @@ void SGrid::SendObjInfoToClients(){
 				for(list<uint8_t>::iterator i = allteams.begin(); i != allteams.end(); i++){
 					if (so->second->getVisibleTo().find(*i) != so->second->getVisibleTo().end()){
 						if (so->second->getVisibleTo()[*i] == Visibility::PreVisible){
+							//TODO SUBSCR
+							/*
 							for(ClientI it = this->subscriber.begin(); it != this->subscriber.end(); it++){
 								if((*it)->getTeamId() == *i){
 									this->SendShipFull(*it,so->second->isShip());
 								}
 							}
+							 * */
 							so->second->getVisibleTo()[*i] = Visibility::Visible;
 						}else if (so->second->getVisibleTo()[*i] == Visibility::PreInvisible){
 							for(ClientI it = this->subscriber.begin(); it != this->subscriber.end(); it++){
@@ -260,56 +265,7 @@ void SGrid::SendObjInfoToClients(){
 	}
 	pthread_mutex_unlock(&locksubscriber);
 }
-void SGrid::SendShipPosUpdate(SShip* ship){
 
-	char message[sizeof(SerialShipTargetPosUpdate)];
-	memset(message,0,sizeof(SerialShipTargetPosUpdate));
-	SerialShipTargetPosUpdate* data = (SerialShipTargetPosUpdate*)(message);
-	data->_type = SerialType::SerialShipTargetPosUpdate;
-	data->_size = sizeof(SerialShipTargetPosUpdate);
-	data->_Id = ship->getId();
-	data->_Pos_x = ship->getPos().x;
-	data->_Pos_y = ship->getPos().y;
-	data->_Pos_d = ship->getPos().d;
-	data->_TargetPos_x = ship->getTargetPos().x;
-	data->_TargetPos_y = ship->getTargetPos().y;
-	data->_TargetPos_d = ship->getTargetPos().d;
-	data->_MovementStatus = ship->getMovementStatus();
-	data->_Speed = ship->getSpeed();
-	pthread_mutex_lock(&locksubscriber);
-	for(ClientI it = this->subscriber.begin(); it != this->subscriber.end(); it++){
-		sendtoC(*it,message,sizeof(SerialShipTargetPosUpdate));
-	}
-	
-	pthread_mutex_unlock(&locksubscriber);
-
-}
-void SGrid::SendShipFull(Client* cli,SShip* ship){
-	//NETWORK*********
-	char message[sizeof(SerialShipFullUpdate)];
-	memset(message,0,sizeof(SerialShipFullUpdate));
-
-	SerialShipFullUpdate* data = (SerialShipFullUpdate*)(message);
-	data->_type = SerialType::SerialShipFullUpdate;
-	data->_size = sizeof(SerialShipFullUpdate);
-	data->_Id = ship->getId();
-	data->_playerOwner = ship->getPlayerId();
-	data->_ShipType = ship->getShipType()->getId();
-	data->_Pos_x = ship->getPos().x;
-	data->_Pos_y = ship->getPos().y;
-	data->_Pos_d = ship->getPos().d;
-	sendtoC(cli,message,sizeof(SerialShipFullUpdate));
-	for (map<SItemType*,uint32_t>::iterator it = ship->getCargoBay()->getContent().begin(); it != ship->getCargoBay()->getContent().end();it++){
-		SendCargoUpdate(ship,it->first,it->second);
-	}
-	for(SSlotNodeI it = ship->getSlots().begin(); it != ship->getSlots().end(); it++){
-		SSubSystem* subs = it->second->getSS();
-		SendShipSubsystem(cli,subs);
-	}
-	SendObjTargetPrio(cli,ship);
-	this->ReportObjHpUdate(cli,ship);
-
-}
 
 void SGrid::SendObjTargetPrio(Client* cli,SObj* obj){
 
@@ -489,35 +445,16 @@ void SGrid::ReportCharge(SSubSystem* subs,bool ToAll){
 	
 }
 void SGrid::BroadCastReportObjHpUdate(SObj* obj){
+	//TODO SUBSCR
+	/*
 	pthread_mutex_lock(&this->locksubscriber);
 	for(ClientI it = this->subscriber.begin(); it != this->subscriber.end(); it++){
 		ReportObjHpUdate(*it,obj);
 	}
 	pthread_mutex_unlock(&this->locksubscriber);
+	*/
 }
 
-void SGrid::ReportObjHpUdate(Client* cli, SObj* obj){
-	if (obj->isShip()){
-		//NETWORK*********
-		char message[sizeof(SerialObjHpUpdate)];
-		memset(message,0,sizeof(SerialObjHpUpdate));
-
-		SerialObjHpUpdate* data = (SerialObjHpUpdate*)(message);
-		data->_type = SerialType::SerialObjHpUpdate;
-		data->_size = sizeof(SerialObjHpUpdate);
-		data->_Id = obj->getId();
-		for(int i = 0; i < 6;i++)
-			data->_shield[i] = obj->isShip()->getShield(i);
-		data->_deflector= obj->isShip()->getDeflector();
-		data->_armor= obj->isShip()->getArmor();
-		data->_hull= obj->isShip()->getHull();
-
-		sendtoC(cli,message,sizeof(SerialObjHpUpdate));
-
-	}
-
-
-}
 
 void SGrid::ReportHit(STargetable* target, SShot* shot,ParticalTex::Enum tex, int32_t x, int32_t y){
 		//***************
@@ -533,13 +470,15 @@ void SGrid::ReportHit(STargetable* target, SShot* shot,ParticalTex::Enum tex, in
 		data2->_hitPos_y = y;
 		data2->_hitPos_d = 0;
 		data2->_textype = (uint32_t)tex;
+		//TODO SUBSCR
+		/*
 		pthread_mutex_lock(&locksubscriber);
 		for(ClientI it = this->subscriber.begin(); it != this->subscriber.end(); it++){
 			sendtoC(*it,message2,sizeof(SerialShotHitTarget));
 			this->ReportObjHpUdate(*it,target->obj());
 		}
 		pthread_mutex_unlock(&locksubscriber);
-
+		*/
 	
 }
 

@@ -268,6 +268,7 @@ namespace SubSystemClass{
 		bonus = 3,
 		boost = 4,
 		Ref = 5,
+		Fighter,
 	};
 }
 

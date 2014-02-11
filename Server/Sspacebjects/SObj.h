@@ -11,7 +11,9 @@
 #include "SPos.h"
 
 class SShot;
+class SUnit;
 class SShip;
+class SFighter;
 class SAstoroid;
 class SSubAble;
 class STargetable;
@@ -29,7 +31,9 @@ public:
 	virtual void postProces(){};
 	virtual void announceRemovalOf(SObj* obj){};
 	virtual bool canBeRemoved(){return false;}
+	virtual SUnit* isUnit(){return NULL;}
 	virtual SShip* isShip(){return NULL;}
+	virtual SFighter* isFighter(){return NULL;}
 	virtual SAstoroid* isAstoroid(){return NULL;}
 	virtual SShot* isShot(){return NULL;}
 	virtual SMovable* isMovable(){return NULL;}

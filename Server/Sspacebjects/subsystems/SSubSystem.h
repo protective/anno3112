@@ -16,6 +16,7 @@
 class SSlotNode;
 class SSubSystemW;
 class SSubSystemBonus;
+class SSubSystemFighter;
 class SSubSystem {
 public:
 	SSubSystem(SObj& owner,SSlotNode& slotnode,uint32_t id);
@@ -46,6 +47,7 @@ public:
 	virtual SSubSystemW* isWeapon(){return NULL;}
 	virtual SSubSystemBonus* isBonus(){return NULL;}
 	virtual SSubSystemBonus* isBoost(){return NULL;}
+	virtual SSubSystemFighter* isFighter(){return NULL;}
 	virtual void reset(){}
 	virtual ~SSubSystem();
 protected:

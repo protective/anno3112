@@ -1,0 +1,29 @@
+[Fighter]
+name Fighter 1
+
+cargo 50
+hull 100
+armor 30
+deflector 200
+speed 400
+mass 100
+agility 290
+recoilrecharge 40
+energy 300
+recharge 3
+scanrange 1400
+scanprange 300
+texture Ships/DD
+size 50
+targettype lightsupport
+
+{FighterSub}
+fit MWep 400
+baycount 3
+
+
+{item}
+texture Weapons/FusionCannon
+buildtime 8
+mass = 10
+buildCost Tritanium:1

@@ -37,21 +37,24 @@ OBJECTFILES= \
 	${OBJECTDIR}/SDatabase.o \
 	${OBJECTDIR}/Sspacebjects/SAstoroidType.o \
 	${OBJECTDIR}/Sspacebjects/SMovable.o \
-	${OBJECTDIR}/Sspacebjects/Ordres/SOrdreConditionUnitEqTo.o \
-	${OBJECTDIR}/Sspacebjects/Ordres/SOrdreRule.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSubTypeFac.o \
 	${OBJECTDIR}/Sspacebjects/Ordres/SOrdreActionMoveTo.o \
+	${OBJECTDIR}/Sspacebjects/Ordres/SOrdreConditionUnitEqTo.o \
+	${OBJECTDIR}/Sspacebjects/Ordres/SOrdreRule.o \
 	${OBJECTDIR}/Sspacebjects/SPos.o \
 	${OBJECTDIR}/Sspacebjects/Ordres/SOrdreConditionStatOp.o \
+	${OBJECTDIR}/Sspacebjects/subsystems/SSubSystemFighter.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSubType.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSubTypeBonus.o \
 	${OBJECTDIR}/Sspacebjects/Ordres/SOrdreConditionAND.o \
 	${OBJECTDIR}/mainServer.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSubSystem.o \
+	${OBJECTDIR}/Sspacebjects/SFighterType.o \
 	${OBJECTDIR}/Sspacebjects/SShip.o \
 	${OBJECTDIR}/Sspacebjects/STargetable.o \
 	${OBJECTDIR}/Sspacebjects/SShipType.o \
 	${OBJECTDIR}/Sspacebjects/Ordres/SOrdreCondition.o \
+	${OBJECTDIR}/Sspacebjects/SFighter.o \
 	${OBJECTDIR}/SItems/SItem.o \
 	${OBJECTDIR}/Client.o \
 	${OBJECTDIR}/Sspacebjects/Ordres/SOrdreConditionOR.o \
@@ -69,6 +72,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/SGlobals.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSlotNode.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSubSystemW.o \
+	${OBJECTDIR}/Sspacebjects/SUnit.o \
 	${OBJECTDIR}/World/SGrid.o \
 	${OBJECTDIR}/Sspacebjects/SObj.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SLoadout.o \
@@ -82,7 +86,9 @@ OBJECTFILES= \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSubSystemRef.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSingleRef.o \
 	${OBJECTDIR}/_ext/2098112761/GFunctions.o \
+	${OBJECTDIR}/Sspacebjects/SUnitType.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSubSystemFac.o \
+	${OBJECTDIR}/Sspacebjects/subsystems/SSubTypeFighter.o \
 	${OBJECTDIR}/Sspacebjects/SAstoroidBelt.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSingleFac.o
 
@@ -126,16 +132,6 @@ ${OBJECTDIR}/Sspacebjects/SMovable.o: Sspacebjects/SMovable.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/SMovable.o Sspacebjects/SMovable.cpp
 
-${OBJECTDIR}/Sspacebjects/Ordres/SOrdreConditionUnitEqTo.o: Sspacebjects/Ordres/SOrdreConditionUnitEqTo.cpp 
-	${MKDIR} -p ${OBJECTDIR}/Sspacebjects/Ordres
-	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/Ordres/SOrdreConditionUnitEqTo.o Sspacebjects/Ordres/SOrdreConditionUnitEqTo.cpp
-
-${OBJECTDIR}/Sspacebjects/Ordres/SOrdreRule.o: Sspacebjects/Ordres/SOrdreRule.cpp 
-	${MKDIR} -p ${OBJECTDIR}/Sspacebjects/Ordres
-	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/Ordres/SOrdreRule.o Sspacebjects/Ordres/SOrdreRule.cpp
-
 ${OBJECTDIR}/Sspacebjects/subsystems/SSubTypeFac.o: Sspacebjects/subsystems/SSubTypeFac.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects/subsystems
 	${RM} $@.d
@@ -146,6 +142,16 @@ ${OBJECTDIR}/Sspacebjects/Ordres/SOrdreActionMoveTo.o: Sspacebjects/Ordres/SOrdr
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/Ordres/SOrdreActionMoveTo.o Sspacebjects/Ordres/SOrdreActionMoveTo.cpp
 
+${OBJECTDIR}/Sspacebjects/Ordres/SOrdreConditionUnitEqTo.o: Sspacebjects/Ordres/SOrdreConditionUnitEqTo.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Sspacebjects/Ordres
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/Ordres/SOrdreConditionUnitEqTo.o Sspacebjects/Ordres/SOrdreConditionUnitEqTo.cpp
+
+${OBJECTDIR}/Sspacebjects/Ordres/SOrdreRule.o: Sspacebjects/Ordres/SOrdreRule.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Sspacebjects/Ordres
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/Ordres/SOrdreRule.o Sspacebjects/Ordres/SOrdreRule.cpp
+
 ${OBJECTDIR}/Sspacebjects/SPos.o: Sspacebjects/SPos.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects
 	${RM} $@.d
@@ -155,6 +161,11 @@ ${OBJECTDIR}/Sspacebjects/Ordres/SOrdreConditionStatOp.o: Sspacebjects/Ordres/SO
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects/Ordres
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/Ordres/SOrdreConditionStatOp.o Sspacebjects/Ordres/SOrdreConditionStatOp.cpp
+
+${OBJECTDIR}/Sspacebjects/subsystems/SSubSystemFighter.o: Sspacebjects/subsystems/SSubSystemFighter.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Sspacebjects/subsystems
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/subsystems/SSubSystemFighter.o Sspacebjects/subsystems/SSubSystemFighter.cpp
 
 ${OBJECTDIR}/Sspacebjects/subsystems/SSubType.o: Sspacebjects/subsystems/SSubType.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects/subsystems
@@ -181,6 +192,11 @@ ${OBJECTDIR}/Sspacebjects/subsystems/SSubSystem.o: Sspacebjects/subsystems/SSubS
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/subsystems/SSubSystem.o Sspacebjects/subsystems/SSubSystem.cpp
 
+${OBJECTDIR}/Sspacebjects/SFighterType.o: Sspacebjects/SFighterType.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Sspacebjects
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/SFighterType.o Sspacebjects/SFighterType.cpp
+
 ${OBJECTDIR}/Sspacebjects/SShip.o: Sspacebjects/SShip.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects
 	${RM} $@.d
@@ -200,6 +216,11 @@ ${OBJECTDIR}/Sspacebjects/Ordres/SOrdreCondition.o: Sspacebjects/Ordres/SOrdreCo
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects/Ordres
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/Ordres/SOrdreCondition.o Sspacebjects/Ordres/SOrdreCondition.cpp
+
+${OBJECTDIR}/Sspacebjects/SFighter.o: Sspacebjects/SFighter.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Sspacebjects
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/SFighter.o Sspacebjects/SFighter.cpp
 
 ${OBJECTDIR}/SItems/SItem.o: SItems/SItem.cpp 
 	${MKDIR} -p ${OBJECTDIR}/SItems
@@ -286,6 +307,11 @@ ${OBJECTDIR}/Sspacebjects/subsystems/SSubSystemW.o: Sspacebjects/subsystems/SSub
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/subsystems/SSubSystemW.o Sspacebjects/subsystems/SSubSystemW.cpp
 
+${OBJECTDIR}/Sspacebjects/SUnit.o: Sspacebjects/SUnit.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Sspacebjects
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/SUnit.o Sspacebjects/SUnit.cpp
+
 ${OBJECTDIR}/World/SGrid.o: World/SGrid.cpp 
 	${MKDIR} -p ${OBJECTDIR}/World
 	${RM} $@.d
@@ -351,10 +377,20 @@ ${OBJECTDIR}/_ext/2098112761/GFunctions.o: ../GShare/GFunctions.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/2098112761/GFunctions.o ../GShare/GFunctions.cpp
 
+${OBJECTDIR}/Sspacebjects/SUnitType.o: Sspacebjects/SUnitType.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Sspacebjects
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/SUnitType.o Sspacebjects/SUnitType.cpp
+
 ${OBJECTDIR}/Sspacebjects/subsystems/SSubSystemFac.o: Sspacebjects/subsystems/SSubSystemFac.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects/subsystems
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/subsystems/SSubSystemFac.o Sspacebjects/subsystems/SSubSystemFac.cpp
+
+${OBJECTDIR}/Sspacebjects/subsystems/SSubTypeFighter.o: Sspacebjects/subsystems/SSubTypeFighter.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Sspacebjects/subsystems
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/subsystems/SSubTypeFighter.o Sspacebjects/subsystems/SSubTypeFighter.cpp
 
 ${OBJECTDIR}/Sspacebjects/SAstoroidBelt.o: Sspacebjects/SAstoroidBelt.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects

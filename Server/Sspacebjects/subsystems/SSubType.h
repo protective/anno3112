@@ -14,6 +14,7 @@ class SSubTypeWep;
 class SSubTypeBoost;
 class SSubTypeBonus;
 class SSubTypeRef;
+class SSubTypeFighter;
 class SSubType {
 public:
 	SSubType();
@@ -24,6 +25,7 @@ public:
 	virtual SSubTypeFac* isFac(){return NULL;}
 	virtual SSubTypeBonus* isBonus(){return NULL;}
 	virtual SSubTypeBoost* isBoost(){return NULL;}
+	virtual SSubTypeFighter* isFighter(){return NULL;}
 	virtual SSubTypeRef* isRef(){return NULL;}
 	void setMount(uint32_t value){_mount = value;}
 	uint32_t getMount(){return _mount;}

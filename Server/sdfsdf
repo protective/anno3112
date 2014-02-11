@@ -17,13 +17,13 @@ belt 180 110 100 HedenbergiteRoid:2:8000
 belt -180 110 100 HedenbergiteRoid:2:8000
 
 {playerUnits}
-Unit 1 Station1 -240 -40 cargo:Tritanium:20000 cargo:Pyrite:5000 cargo:Denite:1000 cargo:Andorite:100 cargo:Morganite:100 1:FacShip1:1 2:Refinery1:4 3:FacWep1:1 4:FacModule1:1
+Unit 1 Station1 -240 -40 cargo:Tritanium:2000 cargo:Pyrite:500 cargo:Denite:100 cargo:Andorite:10 cargo:Morganite:10 1:FacShip1:1 2:Refinery1:4 3:FacWep1:1 4:FacModule1:1
 Unit 1 Freighter1 -241 -60
 Unit 1 AC -241 -50
 
 
-Unit 2 Station1 -260 -40 cargo:Tritanium:2000 cargo:Pyrite:500 cargo:Denite:100 cargo:Andorite:10 cargo:Morganite:1000 1:FacShip1:1 2:Refinery1:4 3:FacWep1:1 4:FacModule1:1
-Unit 2 AC 245 -50 1:Fighter1:1
+Unit 2 Station1 240 -40 cargo:Tritanium:2000 cargo:Pyrite:500 cargo:Denite:100 cargo:Andorite:10 cargo:Morganite:1000 1:FacShip1:1 2:Refinery1:4 3:FacWep1:1 4:FacModule1:1
+Unit 2 AC 245 -50
 Unit 2 Freighter1 241 -60
 
 

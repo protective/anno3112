@@ -44,7 +44,7 @@ void SSingleFac::proces(){
 			}else if(this->subsys->getCurBuild()->getShipType()){
 				cerr<<"INFO SSingleFac::proces we are building ship"<<endl;
 				SShip* ship = new SShip(getFreeID(), *temppos, *this->subsys->getCurBuild()->getShipType(),this->subsys->getOwner().getPlayerId());
-				world->getGrids()[1]->addShip(ship);
+				world->getGrids()[1]->addUnit(ship);
 			}
 		}else
 			cerr<<"WARNING SSingleFac::proces we are not building anything?"<<endl;

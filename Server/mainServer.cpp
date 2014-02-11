@@ -122,6 +122,7 @@ int main(int argc, char** argv) {
 	itemlistFileNames["DD"] = 46;
 	itemlistFileNames["FacModule1"] = 47;
 	itemlistFileNames["FacWep1"] = 48;
+	itemlistFileNames["Fighter1"] = 49;
 	data.LoadAllItems();
 	cerr<<"done load data"<<endl;
 

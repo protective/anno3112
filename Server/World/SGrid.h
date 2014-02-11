@@ -10,7 +10,9 @@
 #include "../SFunctions.h"
 #include "../Sspacebjects/SObj.h"
 #include "../Sspacebjects/SShot.h"
+#include "../Sspacebjects/SShip.h"
 #include "../Sspacebjects/subsystems/SSubSystem.h"
+
 class Client;
 class SGrid {
 public:
@@ -19,7 +21,7 @@ public:
 	void addObj(SObj* obj);
 	void removeObj(SObj* obj);
 	void addShot(SShot* shot);
-	void addShip(SShip* ship);
+	void addUnit(SUnit* unit);
 	void addAstoroid(SAstoroid* asto);
 	uint32_t _id;
 	map<uint32_t,SObj*>& getObjInGrid(){return objInGrid;}
@@ -29,7 +31,6 @@ public:
 	void SendAstoroidDestroyd(Client* cli,SAstoroid* asto, DestroyMode::Enum mode);
 	void SendObjTargetPrio(Client* cli, SObj* obj);
 	void SendShipDetails(Client* cli,SShip* ship);
-	void SendShipPosUpdate(SShip* ship);
 	void SendShipSubsystem(Client* cli, SSubSystem* subs);
 	void SendAstoroidFull(Client* cli,SAstoroid* astoroid);
 	void ReportHit(STargetable* target, SShot* shot, ParticalTex::Enum tex, int32_t x, int32_t y);

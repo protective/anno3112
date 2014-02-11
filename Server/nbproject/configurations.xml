@@ -75,6 +75,8 @@
           <itemPath>Sspacebjects/subsystems/SSubSystemBoost.h</itemPath>
           <itemPath>Sspacebjects/subsystems/SSubSystemFac.cpp</itemPath>
           <itemPath>Sspacebjects/subsystems/SSubSystemFac.h</itemPath>
+          <itemPath>Sspacebjects/subsystems/SSubSystemFighter.cpp</itemPath>
+          <itemPath>Sspacebjects/subsystems/SSubSystemFighter.h</itemPath>
           <itemPath>Sspacebjects/subsystems/SSubSystemRef.cpp</itemPath>
           <itemPath>Sspacebjects/subsystems/SSubSystemRef.h</itemPath>
           <itemPath>Sspacebjects/subsystems/SSubSystemW.cpp</itemPath>
@@ -87,6 +89,8 @@
           <itemPath>Sspacebjects/subsystems/SSubTypeBoost.h</itemPath>
           <itemPath>Sspacebjects/subsystems/SSubTypeFac.cpp</itemPath>
           <itemPath>Sspacebjects/subsystems/SSubTypeFac.h</itemPath>
+          <itemPath>Sspacebjects/subsystems/SSubTypeFighter.cpp</itemPath>
+          <itemPath>Sspacebjects/subsystems/SSubTypeFighter.h</itemPath>
           <itemPath>Sspacebjects/subsystems/SSubTypeRef.cpp</itemPath>
           <itemPath>Sspacebjects/subsystems/SSubTypeRef.h</itemPath>
           <itemPath>Sspacebjects/subsystems/SSubTypeWep.cpp</itemPath>
@@ -98,6 +102,10 @@
         <itemPath>Sspacebjects/SAstoroidBelt.h</itemPath>
         <itemPath>Sspacebjects/SAstoroidType.cpp</itemPath>
         <itemPath>Sspacebjects/SAstoroidType.h</itemPath>
+        <itemPath>Sspacebjects/SFighter.cpp</itemPath>
+        <itemPath>Sspacebjects/SFighter.h</itemPath>
+        <itemPath>Sspacebjects/SFighterType.cpp</itemPath>
+        <itemPath>Sspacebjects/SFighterType.h</itemPath>
         <itemPath>Sspacebjects/SMovable.cpp</itemPath>
         <itemPath>Sspacebjects/SMovable.h</itemPath>
         <itemPath>Sspacebjects/SObj.cpp</itemPath>
@@ -116,6 +124,10 @@
         <itemPath>Sspacebjects/SSubAble.h</itemPath>
         <itemPath>Sspacebjects/STargetable.cpp</itemPath>
         <itemPath>Sspacebjects/STargetable.h</itemPath>
+        <itemPath>Sspacebjects/SUnit.cpp</itemPath>
+        <itemPath>Sspacebjects/SUnit.h</itemPath>
+        <itemPath>Sspacebjects/SUnitType.cpp</itemPath>
+        <itemPath>Sspacebjects/SUnitType.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f3" displayName="World" projectFiles="true">
         <itemPath>World/SGrid.cpp</itemPath>

@@ -537,6 +537,8 @@ uint32_t parseBuffer(Client* client, uint32_t len){
 				}
 
 				case SerialType::SerialSubscribeObj:{
+					//TODO SUBSCR
+					/*
 					SerialSubscribeObj* st = (SerialSubscribeObj*)(buffer+offset);
 					SObjI it = world->getObjs().find(st->_Id);
 					if(it != world->getObjs().end()){
@@ -547,6 +549,7 @@ uint32_t parseBuffer(Client* client, uint32_t len){
 							it->second->isShip()->getPos().grid->SendShipFull(client,it->second->isShip());
 						}
 					}
+					*/
 					break;
 				}
 				case SerialType::SerialUnSubscribeObj:{
