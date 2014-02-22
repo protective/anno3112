@@ -21,6 +21,11 @@ map<uint32_t, SObj*>& SWorld::getObjs(){
 	return this->objInWorld;
 }
 
+void SWorld::proces(uint32_t deltaT){
+	_time = SDL_GetTicks();
+	
+}
+/*
 void SWorld::proces(uint32_t thead_id){
 	pthread_barrier_wait(&procesBar);
 	
@@ -119,6 +124,8 @@ void SWorld::proces(uint32_t thead_id){
 	}
 	pthread_barrier_wait(&procesBar);
 }
+*/
+
 
 SWorld::~SWorld() {
 }

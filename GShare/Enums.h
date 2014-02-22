@@ -93,6 +93,14 @@ namespace Visibility{
 	};
 }
 
+namespace SubscriptionLevel{
+	enum Enum{
+		lowFreq = 0,
+		highFreq = 1,
+		details = 2,
+	};
+}
+
 namespace OrdresConditionUnits{
 	enum Enum{
 		invalid = 0,

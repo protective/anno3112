@@ -12,9 +12,9 @@
 class SWorld {
 public:
 	SWorld();
+	uint32_t getTime(){return _time;}
 	void addGrid(SGrid* grid);
-	void proces(uint32_t thead_id);
-
+	void proces(uint32_t deltaD);
 	map<uint32_t, SGrid*>& getGrids();
 	map<uint32_t, SObj*>& getObjs();
 
@@ -22,6 +22,7 @@ public:
 private:
 	map<uint32_t, SGrid*> grids;
 	map<uint32_t, SObj*> objInWorld;
+	uint32_t _time;
 };
 
 #endif	/* SWORLD_H */

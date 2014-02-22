@@ -11,6 +11,7 @@
 #include "SShot.h"
 #include "SSubAble.h"
 #include "../World/SGrid.h"
+#include "../NetworkLayer/SShotNetworkLayer.h"
 
 SShot::SShot(uint32_t id, SPos& pos, SSubAble* owner, STargetable* target, SSubTypeWep* type):
 SObj(id,pos,owner->obj()->getTeam(),owner->obj()->getPlayerId()) ,SMovable(this,0,0)
@@ -197,6 +198,9 @@ void SShot::MovePos(int32_t x, int32_t y, int32_t z){
 	this->_pos.z+= z;
 }
 
+void SShot::sendFull(SubscriptionLevel::Enum level){
+	sendShotFull(_subscriptions[level],this);
+}
 
 SShot::~SShot() {
 }

@@ -7,7 +7,7 @@
 
 #include "SUnit.h"
 #include "../World/SGrid.h"
-
+#include "../NetworkLayer/SShipNetworkLayer.h"
 SUnit::SUnit(uint32_t id, SPos& pos, SUnitType& stype, uint32_t playerId):
 SObj(id,pos,teamlist[playerId],playerId),SSubAble(this,stype.getEnergy(),stype.getRecharge(),stype.getScanRange(),stype.getScanPRange(),stype.getCargo()),STargetable(this),SMovable(this, stype.getTopSpeed(), stype.getAgility()) {
 	this->_autoMoveCounter = 0;
@@ -133,17 +133,22 @@ void SUnit::postProces(){
 				//we are invisible
 				if (Rangeobj(so->second->getPos(),this->getPos()) < so->second->isUnit()->getScanRange()/100){
 					found = true;
-					if(_visibleTo.find(so->second->getTeam()) == _visibleTo.end() || _visibleTo[so->second->getTeam()] == Visibility::Invisible){
+					//TODO SUBSCR
+					/*if(_visibleTo.find(so->second->getTeam()) == _visibleTo.end() || _visibleTo[so->second->getTeam()] == Visibility::Invisible){
 						_visibleTo[*it] = Visibility::PreVisible;
 					}
+					 * */
 					break;
 				}			
 			}
 		}
 		if(!found){
+			//TODO SUBSCR
+			/*
 			if(_visibleTo.find(*it) != _visibleTo.end() && _visibleTo[*it] == Visibility::Visible){
 				_visibleTo[*it] = Visibility::PreInvisible;
 			}
+			 * */
 		}
 	}
 	if(this->_order){
@@ -385,7 +390,7 @@ void SUnit::setTargetPos(SPos& pos){
 	this->_targetPos.d = pos.d;
 	this->_updateCounter = 0;
 	pthread_mutex_unlock(&this->lockUnit);
-	this->sendPosUpdate();
+	this->sendPosUpdate(SubscriptionLevel::lowFreq);
 }
 
 void SUnit::setTargetPos(int32_t x, int32_t y, int32_t d){
@@ -432,7 +437,7 @@ uint32_t SUnit::AddSub(SItemType* type, uint32_t slot, uint32_t Xitem){
 					SSubSystem* temp = new SSubSystemW(*((SObj*)this),*this->slots[slot],slot,type,Xitem);
 					if(temp->Xitem()){
 						this->slots[slot]->setSS(temp);
-						this->getPos().grid->ReportCharge(this->slots[slot]->getSS(),true);
+						this->slots[slot]->getSS()->reportCharge(SubscriptionLevel::lowFreq);
 					}else{
 						delete temp;
 						return 0;
@@ -443,7 +448,7 @@ uint32_t SUnit::AddSub(SItemType* type, uint32_t slot, uint32_t Xitem){
 					SSubSystem* temp = new SSubSystemFighter(*((SObj*)this),*this->slots[slot],slot,type,Xitem);
 					if(temp->Xitem()){
 						this->slots[slot]->setSS(temp);
-						this->getPos().grid->ReportCharge(this->slots[slot]->getSS(),true);
+						this->slots[slot]->getSS()->reportCharge(SubscriptionLevel::lowFreq);
 					}else{
 						delete temp;
 						return 0;
@@ -454,7 +459,7 @@ uint32_t SUnit::AddSub(SItemType* type, uint32_t slot, uint32_t Xitem){
 					SSubSystem* temp = new SSubSystemFac(*((SObj*)this),*this->slots[slot],slot,type,Xitem);
 					if(temp->Xitem()){
 						this->slots[slot]->setSS(temp);
-						this->getPos().grid->ReportCharge(this->slots[slot]->getSS(),true);
+						this->slots[slot]->getSS()->reportCharge(SubscriptionLevel::lowFreq);
 					}else{
 						delete temp;
 						return 0;
@@ -465,7 +470,7 @@ uint32_t SUnit::AddSub(SItemType* type, uint32_t slot, uint32_t Xitem){
 					SSubSystem* temp = new SSubSystemRef(*((SObj*)this),*this->slots[slot],slot,type,Xitem);
 					if(temp->Xitem()){
 						this->slots[slot]->setSS(temp);
-						this->getPos().grid->ReportCharge(this->slots[slot]->getSS(),true);
+						this->slots[slot]->getSS()->reportCharge(SubscriptionLevel::lowFreq);
 					}else{
 						delete temp;
 						return 0;
@@ -476,7 +481,7 @@ uint32_t SUnit::AddSub(SItemType* type, uint32_t slot, uint32_t Xitem){
 					SSubSystem* temp = new SSubSystemBonus(*((SObj*)this),*this->slots[slot],slot,type,Xitem);
 					if(temp->Xitem()){
 						this->slots[slot]->setSS(temp);
-						this->getPos().grid->ReportCharge(this->slots[slot]->getSS(),true);
+						this->slots[slot]->getSS()->reportCharge(SubscriptionLevel::lowFreq);
 					}else{
 						delete temp;
 						return 0;
@@ -487,7 +492,7 @@ uint32_t SUnit::AddSub(SItemType* type, uint32_t slot, uint32_t Xitem){
 					SSubSystem* temp = new SSubSystemBoost(*((SObj*)this),*this->slots[slot],slot,type,Xitem);
 					if(temp->Xitem()){
 						this->slots[slot]->setSS(temp);
-						this->getPos().grid->ReportCharge(this->slots[slot]->getSS(),true);
+						this->slots[slot]->getSS()->reportCharge(SubscriptionLevel::lowFreq);
 					}else{
 						delete temp;
 						return 0;
@@ -499,7 +504,7 @@ uint32_t SUnit::AddSub(SItemType* type, uint32_t slot, uint32_t Xitem){
 		}
 		if (this->slots[slot]->getSS()){
 			uint32_t t = this->slots[slot]->getSS()->AddItem(Xitem);
-			this->getPos().grid->ReportCharge(this->slots[slot]->getSS(),true);
+			this->slots[slot]->getSS()->reportCharge(SubscriptionLevel::lowFreq);
 			return t;
 		}else{
 			cerr<<"WARNING Ship::ADDSub no subsystem created"<<endl;
@@ -516,7 +521,7 @@ uint32_t SUnit::RemoveSub(uint32_t slot, uint32_t Xitem){
 
 		uint32_t t = this->slots[slot]->getSS()->RemoveItem(Xitem);
 		cerr<<"reprot change "<<endl;
-		this->getPos().grid->ReportCharge(this->slots[slot]->getSS(),true);
+		this->slots[slot]->getSS()->reportCharge(SubscriptionLevel::lowFreq);
 		if (this->slots[slot]->getSS()->Xitem() == 0){
 			delete this->slots[slot]->getSS();
 			this->slots[slot]->setSS(NULL);
@@ -703,89 +708,23 @@ void SUnit::announceRemovalOf(SObj* obj){
 }
 
 
-void SUnit::sendPosUpdate(){
-
-	char message[sizeof(SerialShipTargetPosUpdate)];
-	memset(message,0,sizeof(SerialShipTargetPosUpdate));
-	SerialShipTargetPosUpdate* data = (SerialShipTargetPosUpdate*)(message);
-	data->_type = SerialType::SerialShipTargetPosUpdate;
-	data->_size = sizeof(SerialShipTargetPosUpdate);
-	data->_Id = this->getId();
-	data->_Pos_x = this->getPos().x;
-	data->_Pos_y = this->getPos().y;
-	data->_Pos_d = this->getPos().d;
-	data->_TargetPos_x = this->getTargetPos().x;
-	data->_TargetPos_y = this->getTargetPos().y;
-	data->_TargetPos_d = this->getTargetPos().d;
-	data->_MovementStatus = this->getMovementStatus();
-	data->_Speed = this->getSpeed();
-	
-	//TODO SUBSCR
-	//pthread_mutex_lock(&locksubscriber);
-	//for(ClientI it = client->getsubscribes().begin(); it != client->getsubscribes().end(); it++){
-	//	sendtoC(*it,message,sizeof(SerialShipTargetPosUpdate));
-	//}
-	
-	//pthread_mutex_unlock(&locksubscriber);
-
-
+void SUnit::sendPosUpdate(SubscriptionLevel::Enum level){
+	sendUnitPosUpdate(_subscriptions[level],this);
 }
 
-
-void SUnit::sendFull(){
-	//NETWORK*********
-	char message[sizeof(SerialShipFullUpdate)];
-	memset(message,0,sizeof(SerialShipFullUpdate));
-
-	SerialShipFullUpdate* data = (SerialShipFullUpdate*)(message);
-	data->_type = SerialType::SerialShipFullUpdate;
-	data->_size = sizeof(SerialShipFullUpdate);
-	data->_Id = this->getId();
-	data->_playerOwner = this->getPlayerId();
-	data->_ShipType = this->getUnitType()->getId();
-	data->_Pos_x = this->getPos().x;
-	data->_Pos_y = this->getPos().y;
-	data->_Pos_d = this->getPos().d;
-	
-	//TODO SUBSCR
-	/*
-	sendtoC(cli,message,sizeof(SerialShipFullUpdate));
-	for (map<SItemType*,uint32_t>::iterator it = ship->getCargoBay()->getContent().begin(); it != ship->getCargoBay()->getContent().end();it++){
-		SendCargoUpdate(ship,it->first,it->second);
-	}
-	for(SSlotNodeI it = ship->getSlots().begin(); it != ship->getSlots().end(); it++){
-		SSubSystem* subs = it->second->getSS();
-		SendShipSubsystem(cli,subs);
-	}
-	SendObjTargetPrio(cli,ship);
-	this->ReportObjHpUdate(cli,ship);
-	*/
+void SUnit::sendFull(Client* client){
+	list<Client*> temp;
+	temp.push_back(client);
+	sendUnitFull(temp,this);
+}
+void SUnit::sendFull(SubscriptionLevel::Enum level){
+	sendUnitFull(_subscriptions[level],this);
 }
 
-void SUnit::sendHpUdate(){
-	
-	//TODO SUBSCR
-	/*
-	if (this->isShip()){
-		//NETWORK*********
-		char message[sizeof(SerialObjHpUpdate)];
-		memset(message,0,sizeof(SerialObjHpUpdate));
-
-		SerialObjHpUpdate* data = (SerialObjHpUpdate*)(message);
-		data->_type = SerialType::SerialObjHpUpdate;
-		data->_size = sizeof(SerialObjHpUpdate);
-		data->_Id = obj->getId();
-		for(int i = 0; i < 6;i++)
-			data->_shield[i] = obj->isShip()->getShield(i);
-		data->_deflector= obj->isShip()->getDeflector();
-		data->_armor= obj->isShip()->getArmor();
-		data->_hull= obj->isShip()->getHull();
-
-		sendtoC(cli,message,sizeof(SerialObjHpUpdate));
-
-	}
-	 * */
+void SUnit::sendRemoved(SubscriptionLevel::Enum level, DestroyMode::Enum mode){
+	sendUnitRemoved(_subscriptions[level],this, mode);
 }
+
 
 
 SUnit::~SUnit() {

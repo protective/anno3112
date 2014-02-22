@@ -9,6 +9,9 @@
 #include "../World/SGrid.h"
 #include "SShip.h"
 #include "subsystems/SSubSystemW.h"
+
+#include "../NetworkLayer/SSubableNetworkLayer.h"
+
 SSubAble::SSubAble(SObj* obj, uint32_t energy, uint32_t recharge, uint32_t scanRange, uint32_t scanPRange, uint32_t cargo) {
 	this->_obj = obj;
 	this->_cargoBay = new SCargoBay(this,cargo);
@@ -120,7 +123,8 @@ void SSubAble::updateTargetsPrio(){
 		if(subsys->getTarget() != oldTarget){
 			subsys->resetLockPower();
 			if(!oldTarget)
-				obj()->getPos().grid->ReportCharge(subsys,false);
+				subsys->reportCharge(SubscriptionLevel::details);
+
 		}
 	}
 }
@@ -173,6 +177,8 @@ uint32_t SSubAble::useEnergy(uint32_t energy){
 		return energy;
 	}
 }
+
+
 
 SSubAble::~SSubAble() {
 	for(SSlotNodeI it = this->slots.begin(); it != this->slots.end(); it++){

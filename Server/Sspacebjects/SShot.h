@@ -38,6 +38,8 @@ public:
 	virtual uint32_t getTrackingTime(){return this->_trackingTime;}
 	virtual STargetable* getTarget(){return this->_target;}
 	virtual void announceRemovalOf(SObj* obj){if(_target && _target->obj() == obj)_target = NULL; if(_owner && _owner->obj() == obj)_owner = NULL;};
+	
+	virtual void sendFull(SubscriptionLevel::Enum level);
 
 	virtual ~SShot();
 private:

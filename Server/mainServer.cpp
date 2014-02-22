@@ -39,6 +39,7 @@
 #include "Sspacebjects/subsystems/SLoadout.h"
 #include "Sspacebjects/SAstoroidBelt.h"
 #include "Sspacebjects/Ordres/SOrdreActionTrasfereCargo.h"
+#include "Commands/Processor.h"
 using namespace std;
 
 
@@ -46,8 +47,9 @@ using namespace std;
 	pthread_cond_t  procesConBegin = PTHREAD_COND_INITIALIZER;
 	pthread_cond_t  procesConallReady = PTHREAD_COND_INITIALIZER;
 	pthread_t procesThreads[NRTHREADS];
+	Processor processors[NRTHREADS];
 	int threadsReady;
-void* procesworldThread(uint32_t id);
+//void* procesworldThread(uint32_t id);
 
 int main(int argc, char** argv) {
 	for(int i = 0 ; i< 360; i++){
@@ -308,7 +310,7 @@ int main(int argc, char** argv) {
 	pthread_barrier_init(&procesBar,NULL,NRTHREADS);
 
 	for (int i = 0 ; i< NRTHREADS; i++){
-		pthread_create(&procesThreads[i], NULL, (void*(*)(void*))procesworldThread, (void*)i);
+		pthread_create(&procesThreads[i], NULL, &Processor::workThreadFunction, &processors[i]);
 	}
 	//GAME LOOP************************
 	uint32_t timer;
@@ -324,15 +326,7 @@ int main(int argc, char** argv) {
 				ReadBuffer((*ci));
 				(*ci)->proces();
 			}
-				//world->prepairProces();
 
-			
-			pthread_mutex_lock(&procesLock);
-
-			while(threadsReady != NRTHREADS){
-
-				pthread_cond_wait(&procesConallReady, &procesLock);
-			}
 
 		pthread_mutex_unlock(&lockClientList);
 		//************
@@ -367,19 +361,3 @@ int main(int argc, char** argv) {
 	cerr<<"SERVER EXIT"<<endl;
 	return 0;
 }
-
-void* procesworldThread(uint32_t id){
-
-	while (true){
-		pthread_mutex_lock(&procesLock);
-		threadsReady++;
-		pthread_cond_signal(&procesConallReady);
-
-		pthread_cond_wait(&procesConBegin, &procesLock);
-		pthread_mutex_unlock(&procesLock);
-		world->proces(id);
-		
-
-	}
-}
-

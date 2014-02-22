@@ -44,6 +44,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Sspacebjects/SPos.o \
 	${OBJECTDIR}/Sspacebjects/Ordres/SOrdreConditionStatOp.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSubSystemFighter.o \
+	${OBJECTDIR}/Commands/Command.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSubType.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSubTypeBonus.o \
 	${OBJECTDIR}/Sspacebjects/Ordres/SOrdreConditionAND.o \
@@ -72,7 +73,9 @@ OBJECTFILES= \
 	${OBJECTDIR}/SGlobals.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSlotNode.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSubSystemW.o \
+	${OBJECTDIR}/Commands/Processor.o \
 	${OBJECTDIR}/Sspacebjects/SUnit.o \
+	${OBJECTDIR}/Commands/Processable.o \
 	${OBJECTDIR}/World/SGrid.o \
 	${OBJECTDIR}/Sspacebjects/SObj.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SLoadout.o \
@@ -166,6 +169,11 @@ ${OBJECTDIR}/Sspacebjects/subsystems/SSubSystemFighter.o: Sspacebjects/subsystem
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects/subsystems
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/subsystems/SSubSystemFighter.o Sspacebjects/subsystems/SSubSystemFighter.cpp
+
+${OBJECTDIR}/Commands/Command.o: Commands/Command.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Commands
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Commands/Command.o Commands/Command.cpp
 
 ${OBJECTDIR}/Sspacebjects/subsystems/SSubType.o: Sspacebjects/subsystems/SSubType.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects/subsystems
@@ -307,10 +315,20 @@ ${OBJECTDIR}/Sspacebjects/subsystems/SSubSystemW.o: Sspacebjects/subsystems/SSub
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/subsystems/SSubSystemW.o Sspacebjects/subsystems/SSubSystemW.cpp
 
+${OBJECTDIR}/Commands/Processor.o: Commands/Processor.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Commands
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Commands/Processor.o Commands/Processor.cpp
+
 ${OBJECTDIR}/Sspacebjects/SUnit.o: Sspacebjects/SUnit.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/SUnit.o Sspacebjects/SUnit.cpp
+
+${OBJECTDIR}/Commands/Processable.o: Commands/Processable.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Commands
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Commands/Processable.o Commands/Processable.cpp
 
 ${OBJECTDIR}/World/SGrid.o: World/SGrid.cpp 
 	${MKDIR} -p ${OBJECTDIR}/World

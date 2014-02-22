@@ -24,6 +24,7 @@ public:
 	uint32_t AddReturn(SItemType* item, uint32_t quan);
 	SSubAble* getOwner(){return _owner;}
 	map<SItemType*,uint32_t>& getContent(){return this-> _content;}
+	virtual void sendCargoUpdate(SubscriptionLevel::Enum level, SItemType* item,uint32_t quan);
 	virtual ~SCargoBay();
 private:
 	SSubAble* _owner;

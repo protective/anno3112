@@ -31,7 +31,6 @@ public:
 	void SendAstoroidDestroyd(Client* cli,SAstoroid* asto, DestroyMode::Enum mode);
 	void SendObjTargetPrio(Client* cli, SObj* obj);
 	void SendShipDetails(Client* cli,SShip* ship);
-	void SendShipSubsystem(Client* cli, SSubSystem* subs);
 	void SendAstoroidFull(Client* cli,SAstoroid* astoroid);
 	void ReportHit(STargetable* target, SShot* shot, ParticalTex::Enum tex, int32_t x, int32_t y);
 	void ReportObjHpUdate(Client* cli, SObj* obj);

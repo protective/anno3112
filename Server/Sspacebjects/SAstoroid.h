@@ -22,6 +22,8 @@ public:
 	virtual bool canBeRemoved();
 	virtual void announceRemovalOf(SObj* obj);
 	SAstoroidType* getAstoroidType(){return this->_type;}
+	virtual void sendDepleted(SubscriptionLevel::Enum level);
+	virtual void sendFull(SubscriptionLevel::Enum level);
 	virtual ~SAstoroid();
 private:
 	SAstoroidType* _type;

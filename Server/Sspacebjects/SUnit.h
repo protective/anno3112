@@ -72,9 +72,10 @@ public:
 	bool IsOutOfCombat(){if(_lastCombat > 1000)return true; return false;}
 	
 	//networking
-	virtual void sendPosUpdate();
-	virtual void sendFull();
-	virtual void sendHpUdate();
+	virtual void sendPosUpdate(SubscriptionLevel::Enum level);
+	virtual void sendFull(Client* client);
+	virtual void sendFull(SubscriptionLevel::Enum level);
+	virtual void sendRemoved(SubscriptionLevel::Enum level, DestroyMode::Enum mode);
 	virtual ~SUnit();
 protected:
 	

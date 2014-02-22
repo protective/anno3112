@@ -314,7 +314,7 @@ uint32_t parseBuffer(Client* client, uint32_t len){
 						break;
 					
 					slotnode->second->getSS()->setTargetGroup((TargetGroup::Enum)st->_TargetGroup);
-					shipit->second->getPos().grid->ReportCharge(slotnode->second->getSS(),false);
+					slotnode->second->getSS()->reportCharge(SubscriptionLevel::details);
 					break;
 				}
 
@@ -376,7 +376,7 @@ uint32_t parseBuffer(Client* client, uint32_t len){
 					}else if(slotnode->second->getSS()->isBoost()){
 						slotnode->second->getSS()->setRecharge(st->_StatusField & BitF_rechargin);
 					}
-					shipit->second->getPos().grid->ReportCharge(slotnode->second->getSS(),false);
+					slotnode->second->getSS()->reportCharge(SubscriptionLevel::details);
 					break;
 				}
 				case SerialType::SerialReqCreateLoadOut:{
@@ -537,29 +537,24 @@ uint32_t parseBuffer(Client* client, uint32_t len){
 				}
 
 				case SerialType::SerialSubscribeObj:{
-					//TODO SUBSCR
-					/*
 					SerialSubscribeObj* st = (SerialSubscribeObj*)(buffer+offset);
 					SObjI it = world->getObjs().find(st->_Id);
 					if(it != world->getObjs().end()){
-						pthread_mutex_lock(&client->getlocksubscriber());
-						client->getsubscribes()[st->_Id] = it->second;
-						pthread_mutex_unlock(&client->getlocksubscriber());
-						if (it->second->isShip()){
-							it->second->isShip()->getPos().grid->SendShipFull(client,it->second->isShip());
+						it->second->getSubscribers()[SubscriptionLevel::details].push_back(client);
+						if (it->second->isUnit()){
+							it->second->isUnit()->sendFull(client);
 						}
 					}
-					*/
+
 					break;
 				}
 				case SerialType::SerialUnSubscribeObj:{
 					SerialUnSubscribeObj* st = (SerialUnSubscribeObj*)(buffer+offset);
-					pthread_mutex_lock(&client->getlocksubscriber());
-					SObjI it = client->getsubscribes().find(st->_Id);
-					if(it != client->getsubscribes().end()){
-						client->getsubscribes().erase(it);
+					SObjI it = world->getObjs().find(st->_Id);
+					if(it != world->getObjs().end()){
+						it->second->getSubscribers()[SubscriptionLevel::details].remove(client);
 					}
-					pthread_mutex_unlock(&client->getlocksubscriber());
+
 					break;
 				}
 				

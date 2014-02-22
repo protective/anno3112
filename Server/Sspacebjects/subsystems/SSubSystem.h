@@ -8,11 +8,13 @@
 #ifndef SSUBSYSTEM_H
 #define	SSUBSYSTEM_H
 
-#include "../SObj.h"
-#include "../STargetable.h"
+
 #include "../../SItems/SItemType.h"
 #include "SSingleWep.h"
 
+class SObj;
+class STargetable;
+class SSubAble;
 class SSlotNode;
 class SSubSystemW;
 class SSubSystemBonus;
@@ -48,6 +50,7 @@ public:
 	virtual SSubSystemBonus* isBonus(){return NULL;}
 	virtual SSubSystemBonus* isBoost(){return NULL;}
 	virtual SSubSystemFighter* isFighter(){return NULL;}
+	void reportCharge(SubscriptionLevel::Enum level);
 	virtual void reset(){}
 	virtual ~SSubSystem();
 protected:

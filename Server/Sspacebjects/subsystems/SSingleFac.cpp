@@ -58,7 +58,8 @@ void SSingleFac::proces(){
 					this->subsys->getQueue().front()._quantity -=1;
 					
 					this->_cur = this->subsys->getCurBuild()->getBuildTime();
-					this->subsys->getOwner().getPos().grid->ReportCharge(this->subsys,false);
+					this->subsys->reportCharge(SubscriptionLevel::details);
+
 				}else{
 				this->subsys->getQueue().pop_front();
 				}

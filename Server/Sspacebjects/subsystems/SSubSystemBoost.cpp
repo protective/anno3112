@@ -117,7 +117,8 @@ void SSubSystemBoost::proces(){
 					this->_cooldown = this->getTypeBoost()->getMaxCd();
 					this->useAmo(this->getTypeBoost()->getamoCost()*_xItems);
 					this->getOwner().getsubable()->useEnergy(this->getTypeBoost()->getenegyCost()*_xItems);
-					this->getOwner().getPos().grid->ReportCharge(this,false);
+					this->reportCharge(SubscriptionLevel::details);
+
 				}//else
 				//	cerr<<"out of ener"<<endl;
 			}//else
@@ -150,7 +151,7 @@ void SSubSystemBoost::proces(){
 				else
 					_recharge = false;
 			}
-			this->getOwner().getPos().grid->ReportCharge(this,false);
+			this->reportCharge(SubscriptionLevel::details);
 
 		}else if(_recharge) {
 			//_recharge = false;

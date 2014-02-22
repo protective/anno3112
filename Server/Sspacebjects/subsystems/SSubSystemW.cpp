@@ -36,7 +36,7 @@ void SSubSystemW::resetLockPower(){
 	reset();
 	for(map<uint32_t,SSingleWep*>::iterator it = _weps.begin(); it != _weps.end();it++){it->second->resetLockPower();}
 	if(!this->getTarget())
-		_owner->getPos().grid->ReportCharge(this,false);
+		this->reportCharge(SubscriptionLevel::details);
 }
 void SSubSystemW::reset(){
 {	
@@ -110,11 +110,11 @@ void SSubSystemW::proces(){
 				else
 					_recharge = false;
 			}
-			this->getOwner().getPos().grid->ReportCharge(this,false);
+			this->reportCharge(SubscriptionLevel::details);
 
 		}else if(_recharge && this->getTypeWep()->getAmoCostType() != NULL) {
 			_recharge = false;
-			this->getOwner().getPos().grid->ReportCharge(this,false);
+			this->reportCharge(SubscriptionLevel::details);
 		}
 	}
 }

@@ -68,7 +68,7 @@ void SSingleRef::Refine(SItemType* item){
 	if(this->_cur <= 0 && this->_charge == 0 ){
 		this->_cur = this->subsys->getItemType()->getSubType()->isRef()->getCooldown();
 		this->_curitem = item;
-		this->subsys->getOwner().getPos().grid->ReportCharge(this->subsys,false);
+		this->subsys->reportCharge(SubscriptionLevel::details);
 	}
 }
 

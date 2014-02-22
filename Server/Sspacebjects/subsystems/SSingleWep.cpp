@@ -76,7 +76,7 @@ void SSingleWep::proces(){
 					this->_cur = this->subsys->getTypeWep()->getMaxCd();
 					this->subsys->useAmo(this->subsys->getTypeWep()->getamoCost());
 					this->subsys->getOwner().getsubable()->useEnergy(this->subsys->getTypeWep()->getenegyCost());
-					this->subsys->getOwner().getPos().grid->ReportCharge(this->subsys,false);
+					this->subsys->reportCharge(SubscriptionLevel::details);
 					if(this->subsys->getTypeWep()->getamoCost() > this->subsys->getAmo())
 						this->subsys->setRecharge(true);
 				}

@@ -89,6 +89,7 @@ public:
 	virtual void AddDeflector(uint32_t value){}
 	virtual void AddArmor(uint32_t value){}
 	virtual void AddHull(uint32_t value){}
+
 	virtual ~SSubAble();
 protected:
 	map<uint32_t, SSlotNode*> slots;

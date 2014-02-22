@@ -10,6 +10,7 @@
 #include "../SSubAble.h"
 #include "../../World/SGrid.h"
 #include "../SShip.h"
+#include "../../NetworkLayer/SCargoBayNetworkLayer.h"
 SCargoBay::SCargoBay(SSubAble* owner, uint32_t maxCargo) {
 	this->_owner = owner;
 	this->_maxCargo = maxCargo;
@@ -33,7 +34,7 @@ uint32_t SCargoBay::AddReturn(SItemType* item, uint32_t quan){
 	else
 		this->_content[item] = quan;
 
-	this->_owner->obj()->getPos().grid->SendCargoUpdate(this->_owner,item,this->_content[item]);
+	this->sendCargoUpdate(SubscriptionLevel::lowFreq, item, this->_content[item]);
 	if(this->_owner->obj()->isShip() && this->_owner->obj()->isShip()->getOrdres())
 		this->_owner->obj()->isShip()->getOrdres()->proces(OrdreEvent::CargoChange,this->_owner->obj());
 	return quan;
@@ -80,7 +81,7 @@ uint32_t SCargoBay::RemoveReturn(SItemType* item, uint32_t quan){
 	
 	this->_content[item] -= quan;
 	this->_curCargo -= quan*item->getMass();
-	this->_owner->obj()->getPos().grid->SendCargoUpdate(this->_owner,item,this->_content[item]);
+	this->sendCargoUpdate(SubscriptionLevel::lowFreq,item,this->_content[item]);
 	if(this->_owner->obj()->isShip() && this->_owner->obj()->isShip()->getOrdres())
 		this->_owner->obj()->isShip()->getOrdres()->proces(OrdreEvent::CargoChange,this->_owner->obj());
 	return quan;
@@ -93,9 +94,13 @@ uint32_t SCargoBay::TransfereCargo(SCargoBay* bay,SItemType* item, uint32_t quan
 
 	quan = bay->AddReturn(item,RemoveReturn(item,bay->GetAddReturn(item,quan)));
 	
-	this->_owner->obj()->getPos().grid->SendCargoUpdate(this->_owner,item,this->_content[item]);
-	bay->_owner->obj()->getPos().grid->SendCargoUpdate(bay->getOwner() ,item,bay->getContent()[item]);
+	this->sendCargoUpdate(SubscriptionLevel::lowFreq,item,this->_content[item]);
+	bay->sendCargoUpdate(SubscriptionLevel::lowFreq,item,bay->getContent()[item]);
 	return quan;
+}
+
+void SCargoBay::sendCargoUpdate(SubscriptionLevel::Enum level, SItemType* item, uint32_t quan){
+	SendCargoUpdate(this->getOwner()->obj()->getSubscribers()[level],this->getOwner(), item, quan);
 }
 
 SCargoBay::~SCargoBay() {
