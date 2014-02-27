@@ -11,10 +11,11 @@
 #include "SObj.h"
 #include "SMovable.h"
 #include "STargetable.h"
+#include "../Commands/Processable.h"
 #include "subsystems/SSingleWep.h"
 #include "subsystems/SSubTypeWep.h"
 #include "SSubAble.h"
-class SShot : public SObj , public SMovable{
+class SShot : public SObj , public SMovable, public Processable{
 public:
 	//SShot(uint32_t id, SPos& pos, SSubAble* owner, STargetable* target, uint32_t texId, int32_t speed, uint32_t mindmg, uint32_t maxdmg);
 	//SShot(uint32_t id, SPos& pos, SSubAble* owner, STargetable* target, uint32_t texId, int32_t speed, uint32_t mindmg, uint32_t maxdmg, DmgTypes::Enum);

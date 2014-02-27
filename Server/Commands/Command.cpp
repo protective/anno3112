@@ -7,8 +7,9 @@
 
 #include "Command.h"
 
-Command::Command(Processable* obj) {
-	_obj = obj;
+Command::Command(Processor* processor, uint32_t time) {
+	_time = time;
+	_processor = processor;
 }
 
 Command::~Command() {

@@ -21,8 +21,8 @@ class SMovable;
 class Client;
 class SObj {
 public:
-	SObj(uint32_t id, SPos& pos, uint8_t team, uint32_t playerId);
-	uint32_t getId();
+	SObj(SPos& pos, uint8_t team, uint32_t playerId);
+	
 	SPos& getPos();
 	SPos& getOldPos();
 	uint32_t getSize(){return _size;}
@@ -48,16 +48,16 @@ public:
 	virtual map<uint32_t, SPos*>& getOrdrePos(){return this->_ordrePos;}
 	virtual map<uint32_t, SObj*>& getOrdreObj(){return this->_ordreObj;}
 	virtual bool IsOutOfCombat() {return false;}
-	virtual map<SubscriptionLevel::Enum, list<Client*> >& getSubscribers(){return this->_subscriptions;}
+	virtual map<SubscriptionLevel::Enum, list<uint32_t> >& getSubscribers(){return this->_subscriptions;}
 	virtual ~SObj();
 protected:
 	SPos _pos;
 	SPos _oldPos;
-	uint32_t _id;
+	
 	uint32_t _size;
 	uint8_t _team;
 
-	map<SubscriptionLevel::Enum, list<Client*> > _subscriptions;
+	map<SubscriptionLevel::Enum, list<uint32_t> > _subscriptions;
 	uint32_t _playerId;
 	uint32_t _updateCounter;
 	pthread_mutex_t lockUnit;

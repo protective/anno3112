@@ -8,7 +8,8 @@
 #include "Processable.h"
 #include "../World/SWorld.h"
 
-Processable::Processable() {
+Processable::Processable(uint32_t id) {
+	this->_id = id;
 }
 
 uint32_t Processable::addCommand(Command* cmd){

@@ -307,11 +307,11 @@ int main(int argc, char** argv) {
 
 	//tempU->ActivateAI();
 
-	pthread_barrier_init(&procesBar,NULL,NRTHREADS);
-
 	for (int i = 0 ; i< NRTHREADS; i++){
 		pthread_create(&procesThreads[i], NULL, &Processor::workThreadFunction, &processors[i]);
 	}
+	
+	networkControl = new NetworkControler();
 	//GAME LOOP************************
 	uint32_t timer;
 	uint32_t fpstimer = 0;

@@ -14,7 +14,7 @@
 #include "../NetworkLayer/SShotNetworkLayer.h"
 
 SShot::SShot(uint32_t id, SPos& pos, SSubAble* owner, STargetable* target, SSubTypeWep* type):
-SObj(id,pos,owner->obj()->getTeam(),owner->obj()->getPlayerId()) ,SMovable(this,0,0)
+SObj(pos,owner->obj()->getTeam(),owner->obj()->getPlayerId()), SMovable(this,0,0), Processable(id)
 {
 
 	this->_owner = owner;

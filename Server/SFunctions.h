@@ -23,7 +23,7 @@ void* thread_Recive(Client* client);
 uint32_t parseBuffer(Client* client,uint32_t len);
 void* ReadBuffer(Client* client);
 void sendtoC(Client* cli, char* buffer, uint32_t len);
-uint32_t getFreeID();
+
 
 uint32_t Rangeobj(SPos& pos1, SPos& pos2);
 

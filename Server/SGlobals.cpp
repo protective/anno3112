@@ -9,13 +9,11 @@
 #include "World/SWorld.h"
 #include "SFunctions.h"
 
-list<Client*> clients;
+NetworkControler* networkControl;
 pthread_mutex_t lockNetInput  = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t lockClientList= PTHREAD_MUTEX_INITIALIZER;
-pthread_mutex_t lockFreeID= PTHREAD_MUTEX_INITIALIZER;
-uint32_t freeIdCount = 1;
+
 SWorld* world = new SWorld();
-pthread_barrier_t  procesBar;
 
 map<uint32_t,SItemType*> itemlist;
 map<string,uint32_t> itemlistFileNames;

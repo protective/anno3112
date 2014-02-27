@@ -16,6 +16,8 @@
 #include <SDL/SDL.h>
 #include <list>
 #include <map>
+
+#include "NetworkControler.h"
 //#include "Sspacebjects/subsystems/SSubType.h"
 
 #define NRTHREADS 1
@@ -24,7 +26,7 @@
 #ifndef SGLOBALS_H
 #define	SGLOBALS_H
 using namespace std;
-class Client;
+
 class SWorld;
 class SSubType;
 class SItemType;
@@ -32,13 +34,12 @@ class SShipType;
 class SAstoroidType;
 class SOrdres;
 class SLoadout;
+class NetworkControler;
 extern SWorld* world;
-extern list<Client*> clients;
+extern NetworkControler* networkControl;
 extern pthread_mutex_t lockNetInput;
 extern pthread_mutex_t lockClientList;
-extern uint32_t freeIdCount;
-extern pthread_mutex_t lockFreeID;
-extern pthread_barrier_t  procesBar;
+
 extern map<uint32_t,SItemType*> itemlist;
 extern map<string,uint32_t> itemlistFileNames;
 extern map<uint32_t, SShipType*> shipTypes;

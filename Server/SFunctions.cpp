@@ -22,14 +22,6 @@ void sendtoC(Client* cli, char* buffer, uint32_t len){
 	pthread_mutex_unlock(&cli->networkSendLock);
 }
 
-uint32_t getFreeID(){
-	uint32_t ret;
-	pthread_mutex_lock(&lockFreeID);
-		freeIdCount++;
-		ret = freeIdCount;
-	pthread_mutex_unlock(&lockFreeID);
-	return ret;
-}
 
 void* thread_Listen(){
 	struct sockaddr_in stSockAddr;

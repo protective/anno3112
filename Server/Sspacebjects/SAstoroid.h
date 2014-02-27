@@ -11,7 +11,7 @@
 #include "SSubAble.h"
 #include "SAstoroidType.h"
 class SAstoroidBelt;
-class SAstoroid : public SObj, public STargetable {
+class SAstoroid : public SObj, public STargetable , public Processable {
 public:
 	SAstoroid(uint32_t id, SPos& pos, SAstoroidType& atype, SAstoroidBelt* belt);
 	virtual STargetable* getTargetable(){return (STargetable*)this;}

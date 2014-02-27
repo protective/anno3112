@@ -9,8 +9,8 @@
 
 #include "SObj.h"
 
-SObj::SObj(uint32_t id, SPos& pos, uint8_t team, uint32_t playerId) {
-	this->_id = id;
+SObj::SObj(SPos& pos, uint8_t team, uint32_t playerId) {
+	
 
 	this->_team = team;
 	this->_playerId = playerId;

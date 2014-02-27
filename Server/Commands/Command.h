@@ -9,17 +9,18 @@
 #define	COMMAND_H
 #include "../SFunctions.h"
 #include "Processor.h"
-
+#define COMMAND_FINAL 0
+#define COMMAND_CONTINUE 1
 class Processable;
 class Command {
 public:
-	Command(Processable* obj);
+	Command(Processor* processor, uint32_t time);
 	uint32_t getTime(){return _time;}
 	virtual uint32_t execute(){}
 	virtual ~Command();
 private:
 	uint32_t _time;
-	Processable* _obj;
+	Processor* _processor;
 };
 
 #endif	/* COMMAND_H */

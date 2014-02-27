@@ -25,7 +25,7 @@
 #include "subsystems/SSubSystemFighter.h"
 #include "subsystems/SSlotNode.h"
 
-class SUnit : public SObj , public SMovable , public STargetable, public SSubAble {
+class SUnit : public SObj , public SMovable , public STargetable, public SSubAble , public Processable{
 public:
 	SUnit(uint32_t id, SPos& pos, SUnitType& stype, uint32_t playerId);
 	

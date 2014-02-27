@@ -16,6 +16,10 @@
       <logicalFolder name="f7" displayName="Commands" projectFiles="true">
         <itemPath>Commands/Command.cpp</itemPath>
         <itemPath>Commands/Command.h</itemPath>
+        <itemPath>Commands/CommandAdd.cpp</itemPath>
+        <itemPath>Commands/CommandAdd.h</itemPath>
+        <itemPath>Commands/CommandTransfere.cpp</itemPath>
+        <itemPath>Commands/CommandTransfere.h</itemPath>
         <itemPath>Commands/Processable.cpp</itemPath>
         <itemPath>Commands/Processable.h</itemPath>
         <itemPath>Commands/Processor.cpp</itemPath>
@@ -124,6 +128,8 @@
         <itemPath>Sspacebjects/SFighter.h</itemPath>
         <itemPath>Sspacebjects/SFighterType.cpp</itemPath>
         <itemPath>Sspacebjects/SFighterType.h</itemPath>
+        <itemPath>Sspacebjects/SMetaObj.cpp</itemPath>
+        <itemPath>Sspacebjects/SMetaObj.h</itemPath>
         <itemPath>Sspacebjects/SMovable.cpp</itemPath>
         <itemPath>Sspacebjects/SMovable.h</itemPath>
         <itemPath>Sspacebjects/SObj.cpp</itemPath>
@@ -155,6 +161,8 @@
       </logicalFolder>
       <itemPath>Client.cpp</itemPath>
       <itemPath>Client.h</itemPath>
+      <itemPath>NetworkControler.cpp</itemPath>
+      <itemPath>NetworkControler.h</itemPath>
       <itemPath>SDatabase.cpp</itemPath>
       <itemPath>SDatabase.h</itemPath>
       <itemPath>SFunctions.cpp</itemPath>

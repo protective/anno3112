@@ -8,13 +8,14 @@
 #ifndef SGRID_H
 #define	SGRID_H
 #include "../SFunctions.h"
+#include "../Commands/Processable.h"
 #include "../Sspacebjects/SObj.h"
 #include "../Sspacebjects/SShot.h"
 #include "../Sspacebjects/SShip.h"
 #include "../Sspacebjects/subsystems/SSubSystem.h"
 
 class Client;
-class SGrid {
+class SGrid : public Processable{
 public:
 	SGrid(uint32_t id);
 	SGrid(uint32_t id, uint32_t spaceWight, uint32_t spaceHight);

@@ -9,7 +9,7 @@
 #include "../World/SGrid.h"
 #include "../NetworkLayer/SShipNetworkLayer.h"
 SUnit::SUnit(uint32_t id, SPos& pos, SUnitType& stype, uint32_t playerId):
-SObj(id,pos,teamlist[playerId],playerId),SSubAble(this,stype.getEnergy(),stype.getRecharge(),stype.getScanRange(),stype.getScanPRange(),stype.getCargo()),STargetable(this),SMovable(this, stype.getTopSpeed(), stype.getAgility()) {
+SObj(pos,teamlist[playerId],playerId),SSubAble(this,stype.getEnergy(),stype.getRecharge(),stype.getScanRange(),stype.getScanPRange(),stype.getCargo()),STargetable(this),SMovable(this, stype.getTopSpeed(), stype.getAgility()), Processable(id) {
 	this->_autoMoveCounter = 0;
 	this->_autoMovePoint = 0;
 	this->_targetPos.x = pos.x;

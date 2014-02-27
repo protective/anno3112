@@ -8,8 +8,19 @@
 #include "Processor.h"
 
 Processor::Processor() {
+	
 	pthread_cond_init(&_workCond,NULL);
 	pthread_mutex_init(&_workMutex,NULL);
+	pthread_mutex_init(&_lockFreeID, NULL);
+}
+
+uint32_t Processor::getFreeID(){
+	uint32_t ret;
+	pthread_mutex_lock(&_lockFreeID);
+		_freeIdCount++;
+		ret = _freeIdCount | (_id << 24); //add the 8 bit processor id
+	pthread_mutex_unlock(&_lockFreeID);
+	return ret;
 }
 
 void* Processor::workThreadFunction(void* context){
@@ -29,7 +40,7 @@ void Processor::work(){
 			//get next command that are ready
 			tempCommand = procesFirstReadyCommand(); 
 			if(tempCommand){
-				if (! tempCommand->execute()); 
+				if (tempCommand->execute() == COMMAND_FINAL); 
 					delete tempCommand;  //comand return 0 (DONE) delete it
 			}else{
 				break;

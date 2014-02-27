@@ -10,12 +10,13 @@
 #include "Command.h"
 class Processable {
 public:
-	Processable();
+	Processable(uint32_t id);
 	uint32_t addCommand(Command* cmd);
 	uint32_t removeCommand(Command* cmd);
-
+	uint32_t getId();
 	virtual ~Processable();
-private:
+protected:
+	uint32_t _id;
 	Processor* _processor;
 
 };
