@@ -62,13 +62,14 @@ public:
 	uint32_t addRecoil(uint32_t recoil);
 	uint32_t getMaxRecoil();
 	void donelocktarget(STargetable* target){this->_lockedTargets.push_back(target);}
-	void updateTargetsPrio();
-	void updateTargetList();
+	void updateTargetsPrio(Processor* processor);
+	void updateTargetList(Processor* processor);
 	void updateSubTarget(SSubSystem* subsys);
 	map<uint32_t, SSlotNode*>& getSlots(){return this->slots;}
 	SCargoBay* getCargoBay(){return this->_cargoBay;}
-	STargetable* getPrimeTarget(){return this->_primeTarget;}
-	void setPrimeTarget(STargetable* target){this->_primeTarget = target;}
+	uint32_t* getPrimeTarget(){return _havePrime ? &_primeTarget : NULL;}
+	void setPrimeTarget(uint32_t target){_primeTarget = target; _havePrime = true;}
+	void clearPrimeTarget(){_havePrime = false;}
 	map<BonusTypes::Enum, int32_t>& getBonusList(){return this->_bonuslist;}
 
 
@@ -93,10 +94,11 @@ public:
 	virtual ~SSubAble();
 protected:
 	map<uint32_t, SSlotNode*> slots;
-	list<STargetable*> _lockedTargets;
+	list<uint32_t> _lockedTargets;
 	SCargoBay* _cargoBay;
 	map<BonusTypes::Enum, int32_t> _bonuslist;
-	STargetable* _primeTarget;
+	uint32_t _primeTarget;
+	bool _havePrime;
 	int32_t _energy;
 	int32_t _maxEnergy;
 	int32_t _recharge;
@@ -109,7 +111,7 @@ private:
 	SObj* _obj;
 	bool sortTargetsFunction(TempSort s1, TempSort s2);
 };
-typedef list<STargetable*>::iterator STarI;
+//typedef list<STargetable*>::iterator STarI;
 
 
 #endif	/* SSUBABLE_H */

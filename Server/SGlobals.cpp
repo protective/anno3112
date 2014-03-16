@@ -13,7 +13,7 @@ NetworkControler* networkControl;
 pthread_mutex_t lockNetInput  = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t lockClientList= PTHREAD_MUTEX_INITIALIZER;
 
-SWorld* world = new SWorld();
+SWorld* world = NULL;
 
 map<uint32_t,SItemType*> itemlist;
 map<string,uint32_t> itemlistFileNames;

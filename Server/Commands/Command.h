@@ -8,15 +8,20 @@
 #ifndef COMMAND_H
 #define	COMMAND_H
 #include "../SFunctions.h"
-#include "Processor.h"
+
 #define COMMAND_FINAL 0
 #define COMMAND_CONTINUE 1
-class Processable;
+#include "Processable.h"
+#include "Processor.h"
+
 class Command {
 public:
-	Command(Processor* processor, uint32_t time);
+	Command(uint32_t time);
 	uint32_t getTime(){return _time;}
+	void setProcessor(Processor* processor){_processor = processor;}
+	virtual Processable* getProcessable(){return NULL;}
 	virtual uint32_t execute(){}
+	virtual void serialize(){}
 	virtual ~Command();
 private:
 	uint32_t _time;

@@ -12,10 +12,10 @@
 
 class CommandAdd : public Command {
 public:
-	CommandAdd(Processor* processor, Processable* obj,list<Command*> commands);
+	CommandAdd(uint32_t time, Processable* obj,list<Command*> commands);
 	virtual uint32_t execute(){}
 	virtual ~CommandAdd();
-private:
+protected:
 	Processable* _obj;
 	list<Command*> _commands;
 };

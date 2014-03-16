@@ -9,17 +9,27 @@
 #define	PROCESSOR_H
 
 #include "../SFunctions.h"
-#include "Command.h"
+#include "Processable.h"
+#include "CommandAddSubscriptions.h"
+#include "CommandUpdateMetas.h"
+#include "CommandTimedSubscribeUpdate.h"
 
-
+class Command;
 class Processor {
 public:
+	friend CommandAddSubscriptions;
+	friend CommandTimedSubscribeUpdate;
+	friend CommandUpdateMetas;
 	Processor();
-	
+	uint8_t getId(){return _id;}
 	uint32_t addCommand(Command* cmd);
 	uint32_t removeCommand(Command* cmd);
+	list<Command*> removeByProcessable(Processable* proc);
+
 	static void* workThreadFunction(void* context);
 	map<uint32_t, Processable*>& getLocalProcssable(){return _localObjects;}
+	map<uint32_t, SMetaObj*>& getLocalMetas(){return _metaObjs;}
+	SMetaObj* getMeta(uint32_t id){return _metaObjs.find(id) != _metaObjs.end() ? _metaObjs[id] : NULL;}
 	uint32_t getFreeID();
 	
 	virtual ~Processor();
@@ -42,6 +52,9 @@ private:
 	
 	map<uint32_t, SMetaObj*> _metaObjs;
 	
+	map<Processor*, list<uint32_t> > _lowFrec;
+	map<Processor*, list<uint32_t> > _medFrec;
+	map<Processor*, list<uint32_t> > _highFrec;
 };
 
 #endif	/* PROCESSOR_H */

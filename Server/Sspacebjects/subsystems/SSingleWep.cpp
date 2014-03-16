@@ -59,8 +59,7 @@ void SSingleWep::proces(){
 				int32_t x = owner->x+ ((this->subsys->getSlotNode()->getST()->gX()*(VektorUnitX(owner->d/100)) + (this->subsys->getSlotNode()->getST()->gY()*(VektorUnitY(owner->d/100)))));
 				int32_t y = owner->y+ ((this->subsys->getSlotNode()->getST()->gX()*(-VektorUnitY(owner->d/100)) + (this->subsys->getSlotNode()->getST()->gY()*(VektorUnitX(owner->d/100)))));
 				SPos temppos(x,y,0);
-				//SShot* shot = new SShot(getFreeID(),temppos,this->subsys->getOwner().getsubable(),this->subsys->getSeqTarget(),this->subsys->getTypeWep()->getTexId(),this->subsys->getTypeWep()->getSpeed(),this->subsys->getTypeWep()->getDmgMin(),this->subsys->getTypeWep()->getDmgMax(),this->subsys->getTypeWep()->getDmgTypes());
-				SShot* shot = new SShot(getFreeID(),temppos,this->subsys->getOwner().getsubable(), this->subsys->getSeqTarget(), this->subsys->getTypeWep());
+				SShot* shot = new SShot(this->subsys->getOwner(),temppos,this->subsys->getOwner().getsubable(), this->subsys->getSeqTarget(), this->subsys->getTypeWep());
 				this->subsys->getOwner().getPos().grid->addShot(shot);
 				if(this->subsys->getOwner().isShip())
 					this->subsys->getOwner().isShip()->ResetLastCombat();

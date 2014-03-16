@@ -33,7 +33,7 @@ SObj(pos,teamlist[playerId],playerId),SSubAble(this,stype.getEnergy(),stype.getR
 	_lastCombat = 0;
 }
 
-void SUnit::proces(){
+void SUnit::proces(uint32_t delta){
 	if(_lastCombat < 1000000)
 		_lastCombat++;
 	
@@ -61,12 +61,12 @@ void SUnit::proces(){
 	
 	if (_targetUpdateCounter % 5 == 0){
 		//pthread_mutex_lock(&this->lockUnit);
-			this->updateTargetsPrio();
+			this->updateTargetsPrio(_processor);
 			this->addEnergy(_recharge/5);
 		//pthread_mutex_unlock(&this->lockUnit);
 	}
 	if (_targetUpdateCounter % 25 == 0){
-		updateTargetList();
+		updateTargetList(_processor);
 		this->updateAutoMove();
 
 		

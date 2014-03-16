@@ -18,8 +18,16 @@
         <itemPath>Commands/Command.h</itemPath>
         <itemPath>Commands/CommandAdd.cpp</itemPath>
         <itemPath>Commands/CommandAdd.h</itemPath>
+        <itemPath>Commands/CommandAddSubscriptions.cpp</itemPath>
+        <itemPath>Commands/CommandAddSubscriptions.h</itemPath>
+        <itemPath>Commands/CommandProcessor.cpp</itemPath>
+        <itemPath>Commands/CommandProcessor.h</itemPath>
+        <itemPath>Commands/CommandTimedSubscribeUpdate.cpp</itemPath>
+        <itemPath>Commands/CommandTimedSubscribeUpdate.h</itemPath>
         <itemPath>Commands/CommandTransfere.cpp</itemPath>
         <itemPath>Commands/CommandTransfere.h</itemPath>
+        <itemPath>Commands/CommandUpdateMetas.cpp</itemPath>
+        <itemPath>Commands/CommandUpdateMetas.h</itemPath>
         <itemPath>Commands/Processable.cpp</itemPath>
         <itemPath>Commands/Processable.h</itemPath>
         <itemPath>Commands/Processor.cpp</itemPath>

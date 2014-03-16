@@ -7,12 +7,20 @@
 
 #ifndef PROCESSABLE_H
 #define	PROCESSABLE_H
-#include "Command.h"
+#include "../SFunctions.h"
+
+class Command;
+class SMetaObj;
+
 class Processable {
 public:
 	Processable(uint32_t id);
 	uint32_t addCommand(Command* cmd);
 	uint32_t removeCommand(Command* cmd);
+	Processor* getProcessor(){return _processor;}
+	virtual bool isMetable(){return false;}
+	virtual void getMetaObj(SMetaObj* metaobj){}
+	virtual void proces(uint32_t delta){}
 	uint32_t getId();
 	virtual ~Processable();
 protected:

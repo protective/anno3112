@@ -11,10 +11,13 @@
 #include "SGrid.h"
 class SWorld {
 public:
-	SWorld();
+	SWorld(Processor* processors);
 	uint32_t getTime(){return _time;}
 	void addGrid(SGrid* grid);
 	void proces(uint32_t deltaD);
+	
+	void add(Processable* process);
+	
 	map<uint32_t, SGrid*>& getGrids();
 	map<uint32_t, SObj*>& getObjs();
 

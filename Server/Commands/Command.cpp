@@ -7,10 +7,12 @@
 
 #include "Command.h"
 
-Command::Command(Processor* processor, uint32_t time) {
+Command::Command(uint32_t time) {
 	_time = time;
-	_processor = processor;
+	_processor = NULL;
 }
+
+
 
 Command::~Command() {
 }

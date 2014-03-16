@@ -66,7 +66,7 @@ int main(int argc, char** argv) {
 	allteams.push_back(2);
 	allteams.push_back(3);
 	printbufferbool = true;
-	
+	world = new SWorld(processors);
 	SDL_Init(SDL_INIT_TIMER);
 
 	pthread_t listenThread;

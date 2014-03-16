@@ -35,7 +35,7 @@ public:
 	uint32_t RemoveSub(uint32_t slot, uint32_t Xitem);
 	void Move(uint32_t deltaT);
 	void MovePos(int32_t x, int32_t y);
-	virtual void proces();
+	virtual void proces(uint32_t delta);
 	virtual void postProces();
 	virtual void setTargetPos(SPos& pos);
 	virtual void setTargetPos(int32_t x, int32_t y, int32_t d);

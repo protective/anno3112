@@ -36,6 +36,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/SDatabase.o \
 	${OBJECTDIR}/Sspacebjects/SAstoroidType.o \
+	${OBJECTDIR}/Commands/CommandProcessor.o \
 	${OBJECTDIR}/Sspacebjects/SMovable.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSubTypeFac.o \
 	${OBJECTDIR}/Sspacebjects/Ordres/SOrdreActionMoveTo.o \
@@ -59,9 +60,11 @@ OBJECTFILES= \
 	${OBJECTDIR}/SItems/SItem.o \
 	${OBJECTDIR}/NetworkControler.o \
 	${OBJECTDIR}/Sspacebjects/SMetaObj.o \
+	${OBJECTDIR}/Commands/CommandUpdateMetas.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSubTypeRef.o \
 	${OBJECTDIR}/Client.o \
 	${OBJECTDIR}/Sspacebjects/Ordres/SOrdreConditionOR.o \
+	${OBJECTDIR}/Commands/CommandAddSubscriptions.o \
 	${OBJECTDIR}/Sspacebjects/SShot.o \
 	${OBJECTDIR}/World/SWorld.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSubSystemBoost.o \
@@ -92,6 +95,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSubSystemRef.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSingleRef.o \
 	${OBJECTDIR}/_ext/2098112761/GFunctions.o \
+	${OBJECTDIR}/Commands/CommandTimedSubscribeUpdate.o \
 	${OBJECTDIR}/Sspacebjects/SUnitType.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSubSystemFac.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSubTypeFighter.o \
@@ -133,6 +137,11 @@ ${OBJECTDIR}/Sspacebjects/SAstoroidType.o: Sspacebjects/SAstoroidType.cpp
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/SAstoroidType.o Sspacebjects/SAstoroidType.cpp
+
+${OBJECTDIR}/Commands/CommandProcessor.o: Commands/CommandProcessor.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Commands
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Commands/CommandProcessor.o Commands/CommandProcessor.cpp
 
 ${OBJECTDIR}/Sspacebjects/SMovable.o: Sspacebjects/SMovable.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects
@@ -249,6 +258,11 @@ ${OBJECTDIR}/Sspacebjects/SMetaObj.o: Sspacebjects/SMetaObj.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/SMetaObj.o Sspacebjects/SMetaObj.cpp
 
+${OBJECTDIR}/Commands/CommandUpdateMetas.o: Commands/CommandUpdateMetas.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Commands
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Commands/CommandUpdateMetas.o Commands/CommandUpdateMetas.cpp
+
 ${OBJECTDIR}/Sspacebjects/subsystems/SSubTypeRef.o: Sspacebjects/subsystems/SSubTypeRef.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects/subsystems
 	${RM} $@.d
@@ -263,6 +277,11 @@ ${OBJECTDIR}/Sspacebjects/Ordres/SOrdreConditionOR.o: Sspacebjects/Ordres/SOrdre
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects/Ordres
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/Ordres/SOrdreConditionOR.o Sspacebjects/Ordres/SOrdreConditionOR.cpp
+
+${OBJECTDIR}/Commands/CommandAddSubscriptions.o: Commands/CommandAddSubscriptions.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Commands
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Commands/CommandAddSubscriptions.o Commands/CommandAddSubscriptions.cpp
 
 ${OBJECTDIR}/Sspacebjects/SShot.o: Sspacebjects/SShot.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects
@@ -413,6 +432,11 @@ ${OBJECTDIR}/_ext/2098112761/GFunctions.o: ../GShare/GFunctions.cpp
 	${MKDIR} -p ${OBJECTDIR}/_ext/2098112761
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/2098112761/GFunctions.o ../GShare/GFunctions.cpp
+
+${OBJECTDIR}/Commands/CommandTimedSubscribeUpdate.o: Commands/CommandTimedSubscribeUpdate.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Commands
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Commands/CommandTimedSubscribeUpdate.o Commands/CommandTimedSubscribeUpdate.cpp
 
 ${OBJECTDIR}/Sspacebjects/SUnitType.o: Sspacebjects/SUnitType.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects

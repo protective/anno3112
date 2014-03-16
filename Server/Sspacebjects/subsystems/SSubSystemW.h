@@ -23,10 +23,13 @@ public:
 	virtual int32_t cooldown(uint16_t index){if(_weps.find(index) != _weps.end())return _weps[index]->getDuration(); return 0;}
 	virtual int32_t maxcooldown(uint16_t index){return this->_maxcooldown;}
 
-	virtual STargetable* getTarget(){return _target;}
+	
 	virtual STargetable* getSeqTarget(){return _seqTarget;}
 
-	virtual void setTarget(STargetable* target){this->_target = target;}
+	virtual void setTarget(uint32_t target){_target = target; _haveTarget = true;}
+	virtual void clearTarget(){this->_haveTarget = false;}
+	virtual uint32_t* getTarget(){return _haveTarget ? &_target : NULL;}
+	
 	virtual void setSeqTarget(STargetable* seqTarget){this->_seqTarget = seqTarget;}
 	virtual void announceRemovalOf(SObj* obj);
 	virtual bool canTarget(){return true;}
@@ -47,8 +50,9 @@ private:
 	uint32_t _amo;
 	uint32_t _rechargeCounter;
 	
-	STargetable* _target;
-	STargetable* _seqTarget; //target dont change when fireing
+	uint32_t _target;
+	bool _haveTarget;
+	uint32_t _seqTarget; //target dont change when fireing
 	uint32_t _fireseq;
 	uint32_t _lockingAgainstPower;
 };

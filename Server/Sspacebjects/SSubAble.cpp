@@ -11,6 +11,7 @@
 #include "subsystems/SSubSystemW.h"
 
 #include "../NetworkLayer/SSubableNetworkLayer.h"
+#include "SMetaObj.h"
 
 SSubAble::SSubAble(SObj* obj, uint32_t energy, uint32_t recharge, uint32_t scanRange, uint32_t scanPRange, uint32_t cargo) {
 	this->_obj = obj;
@@ -24,55 +25,58 @@ SSubAble::SSubAble(SObj* obj, uint32_t energy, uint32_t recharge, uint32_t scanR
 }
 
 
-void SSubAble::updateTargetList(){
+void SSubAble::updateTargetList(Processor* processor){
 
-
-
-	map<uint32_t,SObj*>& targets = _obj->getPos().grid->getObjInGrid();
-	for(SObjI it = targets.begin(); it!= targets.end();it++){
+	map<uint32_t,SMetaObj*>& targets = processor->getLocalMetas();
+	for(map<uint32_t,SMetaObj*>::iterator it = targets.begin(); it!= targets.end();it++){
 		if ((it->second->isAstoroid())||(it->second->getTeam() != _obj->getTeam() && it->second->getVisibleTo().find(_obj->getTeam()) != it->second->getVisibleTo().end() && it->second->getVisibleTo()[_obj->getTeam()] == Visibility::Visible)){
-			if(it->second->getTargetable()){
-				if (find(_lockedTargets.begin(),_lockedTargets.end(),it->second->getTargetable()) == _lockedTargets.end()){
-					_lockedTargets.push_back(it->second->getTargetable());
+			if(it->second->isTargetable()){
+				if (find(_lockedTargets.begin(),_lockedTargets.end(), it->first) == _lockedTargets.end()){
+					_lockedTargets.push_back(it->first);
 				}
 			}
 		}else{
-			if(it->second->getTargetable()){
-				_lockedTargets.remove(it->second->getTargetable());
+			if(it->second->isTargetable()){
+				_lockedTargets.remove(it->first);
 			}
 		}
 
 	}
 
-		list<TempSort> tempsort;
-		for( list<STargetable*>::iterator it = _lockedTargets.begin(); it != _lockedTargets.end(); it++){
-			tempsort.push_back(TempSort(*it,Rangeobj((*it)->obj()->getPos(),this->obj()->getPos()),this->obj()->getPlayerId()));
-		}
-		tempsort.sort();
-		_lockedTargets.clear();
-		for( list<TempSort>::iterator it = tempsort.begin(); it != tempsort.end(); it++){
-			_lockedTargets.push_back((*it)._target);
-		}
-
+	list<TempSort> tempsort;
+	for( list<STargetable*>::iterator it = _lockedTargets.begin(); it != _lockedTargets.end(); it++){
+		tempsort.push_back(TempSort(*it,Rangeobj((*it)->obj()->getPos(),this->obj()->getPos()),this->obj()->getPlayerId()));
+	}
+	tempsort.sort();
+	_lockedTargets.clear();
+	for( list<TempSort>::iterator it = tempsort.begin(); it != tempsort.end(); it++){
+		_lockedTargets.push_back((*it)._target);
+	}
 }
 
-void SSubAble::updateTargetsPrio(){
+void SSubAble::updateTargetsPrio(Processor* processor){
 	if (!this->_obj->isShip())
 		return;
 	if (!this->_obj->isShip()->getOrdres())
 		return;
-
+	map<uint32_t, SMetaObj*> _cache;
+	for(list<uint32_t>::iterator SO = this->_lockedTargets.begin(); SO != this->_lockedTargets.end();SO++){
+		SMetaObj tempMeta = processor->getMeta(*SO);
+		if(tempMeta)
+			_cache[*SO] = tempMeta;
+	}
+	
 	SOrdres* tempO = this->_obj->isShip()->getOrdres();
-	this->_primeTarget = NULL;
+	this->clearPrimeTarget();
 	for(list<TargetType::Enum>::iterator tt = tempO->getPrimary().begin(); tt!= tempO->getPrimary().end();tt++){
-		for(list<STargetable*>::iterator SO = this->_lockedTargets.begin(); SO != this->_lockedTargets.end();SO++){
-			if((*tt) == (*SO)->getTargetType() || ((*tt) == TargetType::All && (*SO)->getTargetType() != TargetType::Astoroid)){
-				this->_primeTarget = (*SO);
+		for(map<uint32_t, SMetaObj*>::iterator SO = _cache.begin(); SO != _cache.end();SO++){
+			if((*tt) == SO->second->getTargetType() || ((*tt) == TargetType::All && SO->second->getTargetType() != TargetType::Astoroid)){
+				setPrimeTarget(SO->first);
 				break;
 			}
 
 		}
-		if(this->_primeTarget)
+		if(this->getPrimeTarget())
 			break;
 	}
 	for(SSlotNodeI it = slots.begin(); it != slots.end();it++){
@@ -84,8 +88,8 @@ void SSubAble::updateTargetsPrio(){
 			continue;
 
 		SSubSystemW* subsys = it->second->getSS()->isWeapon();
-		STargetable* oldTarget = it->second->getSS()->getTarget();
-		it->second->getSS()->setTarget(NULL);
+		uint32_t* oldTarget = it->second->getSS()->getTarget();
+		it->second->getSS()->clearTarget();
 		list<TargetType::Enum> curTargetList;
 
 		switch(it->second->getSS()->getTargetGroup()){
@@ -102,29 +106,32 @@ void SSubAble::updateTargetsPrio(){
 			}
 		}
 		for(list<TargetType::Enum>::iterator tt = curTargetList.begin(); tt!= curTargetList.end();tt++){
-			for(list<STargetable*>::iterator SO = this->_lockedTargets.begin(); SO != this->_lockedTargets.end();SO++){
-				if(subsys->getTargetGroup() != TargetGroup::Primary && ((*tt) == (*SO)->getTargetType() || ((*tt) == TargetType::All && (*SO)->getTargetType() != TargetType::Astoroid))){
-					if (1000*Rangeobj(this->obj()->getPos(),(*SO)->obj()->getPos()) <= subsys->getTypeWep()->getRange()){
-						int32_t temp = Direction(subsys->getOwner().getPos(),(*SO)->obj()->getPos())-(subsys->getOwner().getPos().d/100) ;
+			for(map<uint32_t, SMetaObj*>::iterator SO = _cache.begin(); SO != _cache.end();SO++){
+				if(subsys->getTargetGroup() != TargetGroup::Primary && ((*tt) == SO->second->getTargetType() || ((*tt) == TargetType::All && SO->second->getTargetType() != TargetType::Astoroid))){
+					if (1000*Rangeobj(this->obj()->getPos(),SO->second->getPos()) <= subsys->getTypeWep()->getRange()){
+						int32_t temp = Direction(subsys->getOwner().getPos(),SO->second->getPos())-(subsys->getOwner().getPos().d/100) ;
 						if(temp < 0) temp+=360;
-						if(InAngle(temp,it->second->getST()->getFireDir())){
-							subsys->setTarget((*SO));
+						if(InAngle(temp,it->second->getST()->getFireDir())){ //found target break
+							subsys->setTarget(SO->first);
 							break;
 						}
 					}
-				}else if(subsys->getTargetGroup() == TargetGroup::Primary && ( (*tt) == (*SO)->getTargetType() || ((*tt) == TargetType::All && (*SO)->getTargetType() != TargetType::Astoroid))){
-					subsys->setTarget((*SO));
+				}else if(subsys->getTargetGroup() == TargetGroup::Primary && ( (*tt) == SO->second->getTargetType() || ((*tt) == TargetType::All && SO->second->getTargetType() != TargetType::Astoroid))){
+					subsys->setTarget(SO->first);
 					break;
 				}
 			}
-			if(subsys->getTarget())
+			if(subsys->getTarget()) //we have a target break;
 				break;
 		}
-		if(subsys->getTarget() != oldTarget){
-			subsys->resetLockPower();
-			if(!oldTarget)
-				subsys->reportCharge(SubscriptionLevel::details);
+		
+		if(subsys->getTarget()){ //we have a target
+			if(!oldTarget || *subsys->getTarget() != *oldTarget){ //reset lock if not the same as old target
+				subsys->resetLockPower();
+				if(!oldTarget) //we did not have a target before report new charge
+					subsys->reportCharge(SubscriptionLevel::details);
 
+			}
 		}
 	}
 }

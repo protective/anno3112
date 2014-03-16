@@ -36,8 +36,9 @@ public:
 	virtual uint16_t Xitem(){return this->_xItems;}
 	virtual uint32_t AddItem(uint32_t Xitem){}
 	virtual uint32_t RemoveItem(uint32_t Xitem){}
-	virtual STargetable* getTarget(){return NULL;}
-	virtual void setTarget(STargetable* target){}
+	virtual uint32_t* getTarget(){return NULL;}
+	virtual void setTarget(uint32_t* target){}
+	virtual void clearTarget(){}
 	virtual void announceRemovalOf(SObj* obj){}
 	virtual bool canTarget(){return false;}
 	virtual SItemType* getItemType(){return this->_type;}

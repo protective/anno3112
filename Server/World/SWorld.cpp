@@ -7,7 +7,7 @@
 
 #include "SWorld.h"
 
-SWorld::SWorld() {
+SWorld::SWorld(Processor* processors) {
 }
 
 void SWorld::addGrid(SGrid* grid){
@@ -20,6 +20,15 @@ map<uint32_t, SGrid*>& SWorld::getGrids(){
 map<uint32_t, SObj*>& SWorld::getObjs(){
 	return this->objInWorld;
 }
+
+void SWorld::add(SUnit* unit){
+	list<Command*> tempL;
+	CommandProcessor* unitProces = new CommandProcessor(unit,1000/FRAMERATE,0);
+	tempL.push_back(unitProces);
+	CommandAdd temp = new CommandAdd(getTime(),unit,tempL);
+	processors[0].addCommand(temp);
+}
+
 
 void SWorld::proces(uint32_t deltaT){
 	_time = SDL_GetTicks();

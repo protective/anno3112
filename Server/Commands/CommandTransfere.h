@@ -12,10 +12,12 @@
 
 class CommandTransfere : public Command {
 public:
-	CommandTransfere(Processor* processor, Processable* obj);
+	CommandTransfere(uint32_t time, Processor* toProcessor, Processable* toTransfere);
+	virtual uint32_t execute();
 	virtual ~CommandTransfere();
 private:
-
+	Processable* _toTransfere;
+	Processor* _toProcessor;
 };
 
 #endif	/* COMMANDTRANSFERE_H */

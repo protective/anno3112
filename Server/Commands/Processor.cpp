@@ -23,6 +23,22 @@ uint32_t Processor::getFreeID(){
 	return ret;
 }
 
+list<Command*> Processor::removeByProcessable(Processable* proc){
+	list<Command*> temp;
+	pthread_mutex_lock(&this->_lockCommands);
+		for(list<Command*>::iterator it = _commands.begin(); it != _commands.end();){
+			if(*it->getProcessable() == proc)
+			{
+				temp.push_back(*it);
+				*it->setProcessor(NULL);
+				_commands.erase(it++);
+			}else
+				 it++;
+		}
+	pthread_mutex_unlock(&this->_lockCommands);
+	return temp;
+}
+
 void* Processor::workThreadFunction(void* context){
 	((Processor*)context)->work(); //cast the thread att to the class function
 }
@@ -81,12 +97,14 @@ uint32_t Processor::addCommand(Command* cmd){
 	while (true){
 		if(it != _commands.end()){
 			if (cmd->getTime() <= (*it)->getTime()){
+				cmd->setProcessor(this);
 				_commands.insert(it,cmd);
 				break;
 			}else{
 				it++;
 			}
 		}else{
+			cmd->setProcessor(this);
 			_commands.push_back(cmd);
 			break;
 		}
@@ -107,6 +125,7 @@ uint32_t Processor::removeCommand(Command* cmd){
 	list<Command*>::iterator it = _commands.begin();
 	while(it != _commands.end()){
 		if(*it == cmd){
+			cmd->setProcessor(NULL);
 			_commands.remove(cmd);
 			pthread_mutex_unlock(&this->_lockCommands);
 			return 1;
