@@ -8,11 +8,12 @@
 #ifndef SSINGLEWEP_H
 #define	SSINGLEWEP_H
 #include "../../SFunctions.h"
+#include "../../Commands/Processor.h"
 class SSubSystemW;
 class SSingleWep {
 public:
 	SSingleWep(SSubSystemW* subsys);
-	void proces();
+	void proces(Processor* processor);
 	//bool InAngle(int32_t angle, FireDir::Enum fd);
 	int32_t getDuration(){return _cur;}
 	void resetLockPower(){_lockingPower = 0;}

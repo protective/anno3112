@@ -8,8 +8,9 @@
 #ifndef SSUBSYSTEMNETWORKLAYER_H
 #define	SSUBSYSTEMNETWORKLAYER_H
 #include <list>
+using namespace std;
 
-inline void SendSubsystem(list<Client*>& clients, SSubSystem* subs){
+inline void SendSubsystem(list<uint32_t>& clients, SSubSystem* subs){
 	if (subs){
 		char message[sizeof(SerialShipSub)+(sizeof(SerialShipSubIndu)*subs->Xitem())];
 		memset(message,0,sizeof(SerialShipSub)+(sizeof(SerialShipSubIndu)*subs->Xitem()));
@@ -41,8 +42,8 @@ inline void SendSubsystem(list<Client*>& clients, SSubSystem* subs){
 			data3->_maxdurration = subs->maxcooldown(i);
 			data3->_hp = 1; //TODO implement hp
 		}
-		for(list<Client*>::iterator it = clients.begin(); it != clients.end();it++  ){
-			sendtoC(*it, message,sizeof(SerialShipSub)+(sizeof(SerialShipSubIndu)*subs->Xitem()));
+		for(list<uint32_t>::iterator it = clients.begin(); it != clients.end();it++  ){
+			networkControl->sendToC(*it, message,sizeof(SerialShipSub)+(sizeof(SerialShipSubIndu)*subs->Xitem()));
 		}
 	}
 }

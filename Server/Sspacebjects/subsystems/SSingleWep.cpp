@@ -11,6 +11,7 @@
 #include "../SShip.h"
 #include "../SShot.h"
 #include "../../World/SGrid.h"
+#include "../SMetaObj.h"
 SSingleWep::SSingleWep(SSubSystemW* subsys) {
 	this->subsys = subsys;
 	this->_cur = -1;
@@ -18,7 +19,7 @@ SSingleWep::SSingleWep(SSubSystemW* subsys) {
 	_lockingPower = 0;
 }
 
-void SSingleWep::proces(){
+void SSingleWep::proces(Processor* processor){
 	if(_lockingPower< 100000)
 		_lockingPower++;
 	if (this->subsys->getOwner().getsubable() == NULL){
@@ -52,17 +53,22 @@ void SSingleWep::proces(){
 		
 		if (it != this->_tempseq.end() && (*it) == this->subsys->getfireseq()){
 			this->_tempseq.pop_front();
-			int32_t temp = Direction(this->subsys->getOwner().getPos(),this->subsys->getSeqTarget()->obj()->getPos())-(this->subsys->getOwner().getPos().d/100) ;
-			if(temp < 0) temp+=360;
-			if(InAngle(temp,this->subsys->getSlotNode()->getST()->getFireDir())){//TODO fix
-				SPos* owner = &this->subsys->getOwner().getPos();
-				int32_t x = owner->x+ ((this->subsys->getSlotNode()->getST()->gX()*(VektorUnitX(owner->d/100)) + (this->subsys->getSlotNode()->getST()->gY()*(VektorUnitY(owner->d/100)))));
-				int32_t y = owner->y+ ((this->subsys->getSlotNode()->getST()->gX()*(-VektorUnitY(owner->d/100)) + (this->subsys->getSlotNode()->getST()->gY()*(VektorUnitX(owner->d/100)))));
-				SPos temppos(x,y,0);
-				SShot* shot = new SShot(this->subsys->getOwner(),temppos,this->subsys->getOwner().getsubable(), this->subsys->getSeqTarget(), this->subsys->getTypeWep());
-				this->subsys->getOwner().getPos().grid->addShot(shot);
-				if(this->subsys->getOwner().isShip())
-					this->subsys->getOwner().isShip()->ResetLastCombat();
+			SMetaObj* tempMeta = processor->getMeta(this->subsys->getSeqTarget());
+			if(tempMeta){
+				SPos tempTargetPos = tempMeta->pos;
+				int32_t temp = Direction(this->subsys->getOwner().getPos(),tempTargetPos)-(this->subsys->getOwner().getPos().d/100) ;
+				if(temp < 0) temp+=360;
+				if(InAngle(temp,this->subsys->getSlotNode()->getST()->getFireDir())){//TODO fix
+					SPos* owner = &this->subsys->getOwner().getPos();
+					int32_t x = owner->x+ ((this->subsys->getSlotNode()->getST()->gX()*(VektorUnitX(owner->d/100)) + (this->subsys->getSlotNode()->getST()->gY()*(VektorUnitY(owner->d/100)))));
+					int32_t y = owner->y+ ((this->subsys->getSlotNode()->getST()->gX()*(-VektorUnitY(owner->d/100)) + (this->subsys->getSlotNode()->getST()->gY()*(VektorUnitX(owner->d/100)))));
+					SPos temppos(x,y,0);
+					//SShot* shot = new SShot();
+					processor->createShot(temppos,this->subsys->getOwner().getsubable(), this->subsys->getSeqTarget(), this->subsys->getTypeWep());
+					//this->subsys->getOwner().getPos().grid->addShot(shot);
+					if(this->subsys->getOwner().isShip())
+						this->subsys->getOwner().isShip()->ResetLastCombat();
+				}
 			}
 		}
 	}

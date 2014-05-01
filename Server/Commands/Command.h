@@ -11,9 +11,9 @@
 
 #define COMMAND_FINAL 0
 #define COMMAND_CONTINUE 1
-#include "Processable.h"
-#include "Processor.h"
 
+class Processor;
+class Processable;
 class Command {
 public:
 	Command(uint32_t time);
@@ -23,7 +23,7 @@ public:
 	virtual uint32_t execute(){}
 	virtual void serialize(){}
 	virtual ~Command();
-private:
+protected:
 	uint32_t _time;
 	Processor* _processor;
 };

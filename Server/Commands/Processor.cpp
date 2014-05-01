@@ -6,12 +6,22 @@
  */
 
 #include "Processor.h"
+#include "CommandProcessor.h"
+#include "CommandAdd.h"
+#include "../World/SWorld.h"
+#include <sys/time.h>
 
 Processor::Processor() {
 	
+	cerr<<"init processor"<<endl;
 	pthread_cond_init(&_workCond,NULL);
 	pthread_mutex_init(&_workMutex,NULL);
 	pthread_mutex_init(&_lockFreeID, NULL);
+	pthread_mutex_init(&_lockCommands, NULL);
+	addCommand(new CommandTimedSubscribeUpdate(1));
+	_workReady = false;
+	_freeIdCount = 1;
+	_id = 0;
 }
 
 uint32_t Processor::getFreeID(){
@@ -25,12 +35,13 @@ uint32_t Processor::getFreeID(){
 
 list<Command*> Processor::removeByProcessable(Processable* proc){
 	list<Command*> temp;
+	cerr<<"in remove by processable"<<endl;
 	pthread_mutex_lock(&this->_lockCommands);
 		for(list<Command*>::iterator it = _commands.begin(); it != _commands.end();){
-			if(*it->getProcessable() == proc)
+			if((*it)->getProcessable() == proc)
 			{
 				temp.push_back(*it);
-				*it->setProcessor(NULL);
+				(*it)->setProcessor(NULL);
 				_commands.erase(it++);
 			}else
 				 it++;
@@ -44,35 +55,35 @@ void* Processor::workThreadFunction(void* context){
 }
 
 void Processor::work(){
+	struct timespec timeToWait;
+	struct timeval now;
 	Command* tempCommand = NULL;
-	while(true){	
-		pthread_mutex_lock(&_workMutex);
-		while(!_workReady) //IF no work go to sleep
-			pthread_cond_wait(&_workCond,&_workMutex);
-		_workReady = false; //we are going to do all the work
-		pthread_mutex_unlock(&_workMutex);
-		
-		while(true){
-			//get next command that are ready
-			tempCommand = procesFirstReadyCommand(); 
-			if(tempCommand){
-				if (tempCommand->execute() == COMMAND_FINAL); 
-					delete tempCommand;  //comand return 0 (DONE) delete it
-			}else{
-				break;
+
+	
+	while(true){
+		//get next command that are ready
+		tempCommand = procesFirstReadyCommand(); 
+		if(tempCommand){
+			if (tempCommand->execute() == COMMAND_FINAL)
+				delete tempCommand;  //comand return 0 (DONE) delete it
+		}else{
+			clock_gettime(CLOCK_REALTIME, &timeToWait);
+			timeToWait.tv_nsec+=25000000;  //25ms
+			if(timeToWait.tv_nsec >= 1000000000) {
+				timeToWait.tv_nsec -= 1000000000;
+				timeToWait.tv_sec++;
 			}
-		}		
+			pthread_mutex_lock(&_workMutex);
+			pthread_cond_timedwait(&_workCond,&_workMutex,&timeToWait);
+			pthread_mutex_unlock(&_workMutex);
+		}
 	}
 }
 
-
-
-
 Command* Processor::procesFirstReadyCommand(){
-		Command* temp = NULL;		
+		Command* temp = NULL;
 		//lock commandList
 		pthread_mutex_lock(&this->_lockCommands);
-		
 		if(_commands.size()){
 			if(_commands.front()->getTime() <= world->getTime()){
 				temp = _commands.front();
@@ -81,16 +92,11 @@ Command* Processor::procesFirstReadyCommand(){
 		}
 		//we are done Unlock list
 		pthread_mutex_unlock(&this->_lockCommands);
-		
 		//return the command found if any
 		return temp;
-
 }
 
-
-
 uint32_t Processor::addCommand(Command* cmd){
-	
 	//lock commandlist
 	pthread_mutex_lock(&this->_lockCommands);
 	list<Command*>::iterator it = _commands.begin();
@@ -111,16 +117,16 @@ uint32_t Processor::addCommand(Command* cmd){
 	}
 	//we are done adding
 	pthread_mutex_unlock(&this->_lockCommands);
-	
-	
 	//we have work to do signal! 
 	pthread_mutex_lock(&_workMutex);
 	this->_workReady = true;
 	pthread_mutex_unlock(&_workMutex);
 	pthread_cond_signal(&this->_workCond);
+	return 0;
 }
 
 uint32_t Processor::removeCommand(Command* cmd){
+	cerr<<"remove command"<<endl;
 	pthread_mutex_lock(&this->_lockCommands);
 	list<Command*>::iterator it = _commands.begin();
 	while(it != _commands.end()){
@@ -136,6 +142,59 @@ uint32_t Processor::removeCommand(Command* cmd){
 	return 0;
 }
 
+
+SShot* Processor::createShot(SPos& pos, SSubAble* owner, uint32_t target, SSubTypeWep* type){
+	SShot* shot = new SShot(getFreeID(), pos, owner, target, type);
+	CommandProcessor* proces = new CommandProcessor(shot,1000/FRAMERATE,0);
+	list<Command*> cmdlist;
+	cmdlist.push_back(proces);
+	CommandAdd* add = new CommandAdd(world->getTime(), shot, cmdlist);
+	this->addCommand(add);
+	return shot;
+}
+
+SShip* Processor::createShip(SPos& pos, SShipType& stype, uint32_t playerId){
+	cerr<<"create ship"<<endl;
+	SShip* ship = new SShip(getFreeID(), pos, stype, playerId);
+	CommandProcessor* proces = new CommandProcessor(ship,1000/FRAMERATE,0);
+	list<Command*> cmdlist;
+	cmdlist.push_back(proces);
+	CommandAdd* add = new CommandAdd(world->getTime(), ship, cmdlist);
+	this->addCommand(add);
+	return ship;
+}
+
+SAstoroid* Processor::createAsteroid(SPos& pos, SAstoroidType& atype, SAstoroidBelt* belt){
+	SAstoroid* asteroid = new SAstoroid(getFreeID(), pos, atype, belt);
+	CommandProcessor* proces = new CommandProcessor(asteroid,1000/FRAMERATE, 0);
+	list<Command*> cmdlist;
+	cmdlist.push_back(proces);
+	CommandAdd* add = new CommandAdd(world->getTime(), asteroid, cmdlist);
+	this->addCommand(add);
+	return asteroid;
+}
+
+
+SAstoroidBelt* Processor::createAsteroidBelt(SPos& pos){
+	SAstoroidBelt* asteroid = new SAstoroidBelt(getFreeID(), pos);
+	CommandProcessor* proces = new CommandProcessor(asteroid,1000/FRAMERATE, 0);
+	list<Command*> cmdlist;
+	cmdlist.push_back(proces);
+	CommandAdd* add = new CommandAdd(world->getTime(), asteroid, cmdlist);
+	this->addCommand(add);
+	return asteroid;
+}
+
+SGrid* Processor::createGrid(){
+	cerr<<"create grid"<<endl;
+	SGrid* grid = new SGrid(0); //TODO FIX SOON ON CLIENT
+	CommandProcessor* proces = new CommandProcessor(grid,1000/FRAMERATE, 0);
+	list<Command*> cmdlist;
+	cmdlist.push_back(proces);
+	CommandAdd* add = new CommandAdd(world->getTime(), grid, cmdlist);
+	this->addCommand(add);
+	return grid;
+}
 
 Processor::~Processor() {
 }

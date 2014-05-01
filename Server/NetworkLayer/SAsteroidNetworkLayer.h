@@ -8,7 +8,8 @@
 #ifndef SASTEROIDNETWORKLAYER_H
 #define	SASTEROIDNETWORKLAYER_H
 #include <list>
-inline void SendAstoroidDestroyd(list<Client*>& clients, SAstoroid* asto, DestroyMode::Enum mode){
+using namespace std;
+inline void SendAstoroidDestroyd(list<uint32_t>& clients, SAstoroid* asto, DestroyMode::Enum mode){
 
 	//NETWORK*********
 	char message[sizeof(SerialAstoroidDestroy)];
@@ -20,12 +21,12 @@ inline void SendAstoroidDestroyd(list<Client*>& clients, SAstoroid* asto, Destro
 	data->_Id = asto->getId();
 	data->_mode = (uint32_t)mode;
 	
-	for(list<Client*>::iterator it = clients.begin(); it != clients.end();it++  ){
-		sendtoC(*it,message,sizeof(SerialAstoroidDestroy));
+	for(list<uint32_t>::iterator it = clients.begin(); it != clients.end(); it++){
+		networkControl->sendToC(*it,message,sizeof(SerialAstoroidDestroy));
 	}
 }
 
-inline void SendAstoroidFull(list<Client*>& clients, SAstoroid* astoroid){
+inline void SendAstoroidFull(list<uint32_t>& clients, SAstoroid* astoroid){
 	//NETWORK*********
 	char message[sizeof(SerialAstoroidFullUpdate)];
 	memset(message,0,sizeof(SerialAstoroidFullUpdate));
@@ -39,9 +40,8 @@ inline void SendAstoroidFull(list<Client*>& clients, SAstoroid* astoroid){
 	data->_Pos_y = astoroid->getPos().y;
 	data->_Pos_d = astoroid->getPos().d;
 	
-	for(list<Client*>::iterator it = clients.begin(); it != clients.end();it++  ){
-
-		sendtoC(*it, message,sizeof(SerialAstoroidFullUpdate));
+	for(list<uint32_t>::iterator it = clients.begin(); it != clients.end(); it++){
+		networkControl->sendToC(*it, message,sizeof(SerialAstoroidFullUpdate));
 	}
 }
 

@@ -16,16 +16,17 @@ public:
 	void addGrid(SGrid* grid);
 	void proces(uint32_t deltaD);
 	
-	void add(Processable* process);
+	void add(SUnit* unit);
 	
 	map<uint32_t, SGrid*>& getGrids();
 	map<uint32_t, SObj*>& getObjs();
-
+	Processor* getProcessor(){return _processors;}
 	virtual ~SWorld();
 private:
 	map<uint32_t, SGrid*> grids;
 	map<uint32_t, SObj*> objInWorld;
 	uint32_t _time;
+	Processor* _processors;
 };
 
 #endif	/* SWORLD_H */

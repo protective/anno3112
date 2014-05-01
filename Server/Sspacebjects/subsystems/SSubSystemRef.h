@@ -10,7 +10,7 @@
 #include "SSubSystem.h"
 #include "SSubTypeRef.h"
 #include "SSingleRef.h"
-
+#include "../../Commands/Processor.h"
 class SSubSystemRef : public SSubSystem{
 public:
 	SSubSystemRef(SObj& owner,SSlotNode& slotnode,uint32_t id, SItemType* item, uint32_t Xitem);
@@ -20,7 +20,7 @@ public:
 	virtual int32_t maxcooldown(uint16_t index){return _type->getSubType()->isRef()->getCooldown();}
 	virtual list<SItemType*>& getQueue(){return this->_refinequeue;}
 
-	virtual void proces();
+	virtual void proces(Processor* processor);
 	virtual ~SSubSystemRef();
 private:
 	map<uint32_t,SSingleRef*> _ref;

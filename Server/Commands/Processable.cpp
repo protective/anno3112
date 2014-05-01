@@ -8,13 +8,16 @@
 #include "Processable.h"
 #include "../World/SWorld.h"
 
-Processable::Processable(uint32_t id) {
-	this->_id = id;
+Processable::Processable() {
+	_processor = NULL;
 }
 
 uint32_t Processable::addCommand(Command* cmd){
-	if(_processor)
+	if(_processor){
 		_processor->addCommand(cmd);
+	}else{
+		_localQueue.push_back(cmd);
+	}
 			
 }
 uint32_t Processable::removeCommand(Command* cmd){

@@ -14,8 +14,6 @@
 class SMetaObj {
 public:
 	SMetaObj();
-	friend CommandUpdateMetas;
-	friend CommandTimedSubscribeUpdate;
 	SMetaObj(const SMetaObj& orig);
 	SPos* getPos(){return &pos;}
 	TargetType::Enum getTargetType(){return targetType;}
@@ -24,7 +22,7 @@ public:
 	bool isTargetable(){return targetType==TargetType::Invalid ? false: true;}
 	bool isAstoroid(){return targetType== TargetType::Astoroid? true:false;}
 	virtual ~SMetaObj();
-private:
+
 	uint8_t varfreq;
 	//static
 	uint32_t size;

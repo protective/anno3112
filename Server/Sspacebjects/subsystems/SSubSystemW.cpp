@@ -17,8 +17,8 @@ SSubSystem(owner,slotnode,id)
 	
 	this->_rechargeCounter = 0;
 	this->_targetGroup = TargetGroup::Heavy;
-	this->_target = NULL;
-	this->_seqTarget =NULL;
+	this->_target = 0;
+	this->_seqTarget = 0;
 	this->_maxcooldown = this->getTypeWep()->getMaxCd();
 	this->_fireseq = this->getTypeWep()->getmaxseq();
 
@@ -39,7 +39,9 @@ void SSubSystemW::resetLockPower(){
 		this->reportCharge(SubscriptionLevel::details);
 }
 void SSubSystemW::reset(){
-{	
+	
+	//TODO FIX
+	/*
 	if(this->getTarget()){
 		double res = (double)this->getTypeWep()->getResolution(getOwner().getsubable()->getBonusList());
 		double sig = this->getTarget()->obj()->getSize()/100;
@@ -51,13 +53,19 @@ void SSubSystemW::reset(){
 		_lockingAgainstPower = 0;
 
 	}
+	 * */
 }
 
 void SSubSystemW::announceRemovalOf(SObj* obj){
+		//TODO FIX
+	/*
+
 	if (_target && obj == _target->obj())
 		_target = NULL;
 	if(_seqTarget && obj == _seqTarget->obj())
 		_seqTarget = NULL;
+	 
+	 */
 }
 
 uint32_t SSubSystemW::addAmo(uint32_t amo){
@@ -84,13 +92,13 @@ uint32_t SSubSystemW::useAmo(uint32_t amo){
 	}
 }
 
-void SSubSystemW::proces(){
+void SSubSystemW::proces(Processor* processor){
 
 	if (this->_fireseq < this->getTypeWep()->getmaxseq())
 		this->_fireseq++;
 
 	for(SSingleWI it = _weps.begin();it != _weps.end(); it++){
-		it->second->proces();
+		it->second->proces(processor);
 	}
 
 	this->_rechargeCounter++;

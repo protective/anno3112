@@ -23,6 +23,7 @@
 #include "Sspacebjects/SAstoroid.h"
 #include "Sspacebjects/SAstoroidBelt.h"
 #include "Sspacebjects/SAstoroidType.h"
+#include "Commands/CommandEnterGrid.h"
 #include "World/SGrid.h"
 #include "World/SWorld.h"
 #include "sys/stat.h"
@@ -369,6 +370,7 @@ int parseobjtextureid(string str){
 
 	#include "database/objtexname.txt"
 #include "Sspacebjects/subsystems/SSubTypeFighter.h"
+#include "Commands/CommandEnterGrid.h"
 
 
 	cerr<<"WARNING SDatabase::parseobjtextureid Not found"<<endl;
@@ -402,7 +404,7 @@ void ParseGame(ifstream* file,string filename){
 	SAstoroidBelt* astobelttemp = NULL;
 	cerr<<"fname "<<filename<<endl;
 	while (std::getline((*file), line)) {
-
+		cerr<<line<<endl;
 		if (line.find("//") != string::npos)
 			continue;
 		if (line.find("[Game]", 0) != string::npos) {
@@ -414,7 +416,7 @@ void ParseGame(ifstream* file,string filename){
 		if (parseState == "Game") {
 			if (line.find("{map}") != string::npos) {
 				parseSubState = "map";
-				gridtemp = new SGrid(1);
+				gridtemp = world->getProcessor()->createGrid();
 				world->addGrid(gridtemp);
 			}else if (line.find("{playerUnits}") != string::npos) {
 				parseSubState = "playerUnits";
@@ -435,18 +437,16 @@ void ParseGame(ifstream* file,string filename){
 					getparameter(line, "belt", 1, &beginint, &lenint);
 					int32_t y = (1000*strToInt(line.substr(beginint, lenint)));
 					SPos temppos(x,y,0);
-					temppos.grid = world->getGrids()[1];
-					astobelttemp = new SAstoroidBelt(getFreeID(),temppos);
+					//temppos.grid = world->getGrids()[1];
+					astobelttemp = world->getProcessor()->createAsteroidBelt(temppos);
 					getparameter(line, "belt", 2, &beginint, &lenint);
 					astobelttemp->setSize((100*strToInt(line.substr(beginint, lenint))));
-					world->getGrids()[1]->addObj(astobelttemp);
-
+					//world->getGrids()[1]->addObj(astobelttemp);
 					for (int i = 3; i < 30; i++){
 						if (getparameter(line, "belt", i,0, &beginint, &lenint)){
 						SAstoroidType* at = NULL;
 							if(astoroidTypes.find(itemlistFileNames.find(line.substr(beginint, lenint))->second) != astoroidTypes.end()){
 								at = astoroidTypes.find(itemlistFileNames.find(line.substr(beginint, lenint))->second)->second;
-
 								getparameter(line, "belt", i,1, &beginint, &lenint);
 								uint32_t acounter = strToInt(line.substr(beginint, lenint));
 
@@ -459,7 +459,6 @@ void ParseGame(ifstream* file,string filename){
 								break;
 						}
 					}
-					
 				}
 			}else if (parseSubState == "playerUnits") {
 				if (line.find("Unit") != string::npos) {
@@ -470,17 +469,17 @@ void ParseGame(ifstream* file,string filename){
 						SShipType* st = NULL;
 						if(shipTypes.find(itemlistFileNames.find(line.substr(beginint, lenint))->second) != shipTypes.end()){
 							st = shipTypes.find(itemlistFileNames.find(line.substr(beginint, lenint))->second)->second;
-						
 							getparameter(line, "Unit", 2, &beginint, &lenint);
 							int32_t x = 1000 * strToInt(line.substr(beginint, lenint));
 							getparameter(line, "Unit", 3, &beginint, &lenint);
 							int32_t y = 1000 * strToInt(line.substr(beginint, lenint));
 							SPos temppos(x,y,0);
-							temppos.grid = world->getGrids()[1];
-							SShip* ship = new SShip(getFreeID(), temppos, *st,team);
-							world->getGrids()[1]->addUnit(ship);
-
-		
+							temppos.grid = world->getGrids().begin()->second; //TODO FIX
+							
+							SShip* ship = world->getProcessor()->createShip(temppos, *st,team);
+							CommandEnterGrid* tempCmd = new CommandEnterGrid(0,temppos.grid,ship);
+							temppos.grid->addCommand(tempCmd);
+							//world->getGrids()[1]->addUnit(ship);
 							for (int i = 4; i < 30; i++){
 								if (getparameter(line, "Unit", i,0, &beginint, &lenint)){
 									for (int j = 1; j < 25; j++){

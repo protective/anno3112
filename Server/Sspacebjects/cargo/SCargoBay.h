@@ -25,6 +25,7 @@ public:
 	SSubAble* getOwner(){return _owner;}
 	map<SItemType*,uint32_t>& getContent(){return this-> _content;}
 	virtual void sendCargoUpdate(SubscriptionLevel::Enum level, SItemType* item,uint32_t quan);
+	virtual void sendCargoBay(list<uint32_t>& clients);
 	virtual ~SCargoBay();
 private:
 	SSubAble* _owner;

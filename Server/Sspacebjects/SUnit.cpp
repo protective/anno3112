@@ -8,8 +8,9 @@
 #include "SUnit.h"
 #include "../World/SGrid.h"
 #include "../NetworkLayer/SShipNetworkLayer.h"
+
 SUnit::SUnit(uint32_t id, SPos& pos, SUnitType& stype, uint32_t playerId):
-SObj(pos,teamlist[playerId],playerId),SSubAble(this,stype.getEnergy(),stype.getRecharge(),stype.getScanRange(),stype.getScanPRange(),stype.getCargo()),STargetable(this),SMovable(this, stype.getTopSpeed(), stype.getAgility()), Processable(id) {
+SObj(id, pos,teamlist[playerId],playerId),SSubAble(this,stype.getEnergy(),stype.getRecharge(),stype.getScanRange(),stype.getScanPRange(),stype.getCargo()),STargetable(this),SMovable(this, stype.getTopSpeed(), stype.getAgility()), Processable() {
 	this->_autoMoveCounter = 0;
 	this->_autoMovePoint = 0;
 	this->_targetPos.x = pos.x;
@@ -30,101 +31,20 @@ SObj(pos,teamlist[playerId],playerId),SSubAble(this,stype.getEnergy(),stype.getR
 	this->_armor = stype.getArmor()*1000;
 	this->_hull = stype.getHull()*1000;
 	this->_order = globalOrders[playerId][0];
+	
 	_lastCombat = 0;
 }
-
-void SUnit::proces(uint32_t delta){
-	if(_lastCombat < 1000000)
-		_lastCombat++;
-	
-	if(this->_updateCounter)
-		this->_updateCounter--;
-	for(SSlotNodeI it = this->slots.begin(); it != this->slots.end(); it++){
-		if (it->second->getSS())
-			it->second->getSS()->proces();
-	}
-
-	if(_order){
-		if(_targetUpdateCounter % 5 == 0){
-			_order->proces(OrdreEvent::Tick5,this);
-		}
-		if(_targetUpdateCounter % 10 == 0){
-			_order->proces(OrdreEvent::Tick10,this);
-		}
-		if(_targetUpdateCounter % 25 == 0){
-			_order->proces(OrdreEvent::Tick25,this);
-		}
-	}
-
-	_targetUpdateCounter++;
-	this->addRecoil(getUnitType()->getRecoilRecharge());
-	
-	if (_targetUpdateCounter % 5 == 0){
-		//pthread_mutex_lock(&this->lockUnit);
-			this->updateTargetsPrio(_processor);
-			this->addEnergy(_recharge/5);
-		//pthread_mutex_unlock(&this->lockUnit);
-	}
-	if (_targetUpdateCounter % 25 == 0){
-		updateTargetList(_processor);
-		this->updateAutoMove();
-
-		
-		this->_bonuslist.clear();
-		for(SSlotNodeI it = this->slots.begin(); it != this->slots.end(); it++){
-			if (it->second->getSS()){
-				if (it->second->getSS()->isBonus()){
-					it->second->getSS()->isBonus()->procesBonus(this);
-				}
-			}
-
-		}
-		this->_recharge = getUnitType()->getRecharge() * 1000;
-		this->_maxEnergy = getUnitType()->getEnergy() * 1000;
-		this->_maxdeflector = getUnitType()->getDeflector()*1000;
-		//this->_deflector = stype.getDeflector()*1000;
-		for (int i = 0; i< 6; i++){
-			this->_maxshield[i] = getUnitType()->getShield(i) * getUnitType()->getShieldStr() * 10;
-		}
-		this->_maxarmor = getUnitType()->getArmor()*1000;
-		this->_maxhull = getUnitType()->getHull()*1000;
-
-		this->_scanRange = getUnitType()->getScanRange() * 100;
-		this->_scanPRange = getUnitType()->getScanPRange() * 100;
-		_topSpeed = getUnitType()->getTopSpeed() * 100;
-		_agility = getUnitType()->getAgility();
-		for (map<BonusTypes::Enum, int32_t>::iterator it = this->_bonuslist.begin(); it != this->_bonuslist.end();it++){
-			switch(it->first){
-				case BonusTypes::Armor:{this->_maxarmor+= it->second;break;}
-				case BonusTypes::Deflector:{this->_maxdeflector+= it->second;break;}
-				case BonusTypes::Hull:{this->_maxhull+= it->second;break;}
-				case BonusTypes::ShieldStr:{
-					for(uint32_t i = 0; i < 6 ; i++){
-						this->_maxshield[i] += (this->getUnitType()->getShield(i) * it->second)/100;
-					}
-					break;
-				}
-				case BonusTypes::ERecharge:{this->_recharge+= it->second;break;}
-				case BonusTypes::Energy:{this->_maxEnergy+= it->second;break;}
-				case BonusTypes::ScanRange:{this->_scanRange+= (it->second/10);break;}
-				case BonusTypes::ScanPRange:{this->_scanPRange+= (it->second/10);break;}
-				case BonusTypes::SpeedThruster:{this->_topSpeed+= (it->second/(getUnitType()->getMass()/10));break;}
-				case BonusTypes::ManuvereThruster:{this->_agility+= (it->second/(getUnitType()->getMass()*10));break;}			
-			}
-		}
-		for(SSlotNodeI it = this->slots.begin(); it != this->slots.end(); it++){
-			if (it->second->getSS())
-				it->second->getSS()->reset();
-		}
-		//cerr<<"this->_topSpeed"<<this->_topSpeed<<endl;
-	}
-	if (_targetUpdateCounter == 100)
-		_targetUpdateCounter = 0;
+void SUnit::subscribeClient(uint32_t clientId, SubscriptionLevel::Enum level){
+	cerr<<"subscribe unit"<<endl;
+	if(this->isShip())
+		this->isShip()->sendFull(clientId);
+	_subscriptions[level].push_back(clientId);
 }
 
-void SUnit::postProces(){
+
+void SUnit::postProces(uint32_t delta){
 	
-	
+	Move(delta);
 
 	for (list<uint8_t>::iterator it = allteams.begin(); it != allteams.end(); it++){
 		bool found = false;
@@ -165,6 +85,7 @@ void SUnit::postProces(){
 }
 
 void SUnit::updateAutoMove(){
+
 	_MovementStatus = 0;
 	if(this->_order){
 		
@@ -172,7 +93,7 @@ void SUnit::updateAutoMove(){
 			case OrdresTactice::Front:{
 				if(_rangeToTargetPos <= 10){
 					if (this->_primeTarget){	
-						this->setTargetPos(_targetPos.x,_targetPos.y,100* Direction(this->_pos,this->_primeTarget->obj()->getPos()));
+						//this->setTargetPos(_targetPos.x,_targetPos.y,100* Direction(this->_pos,this->_primeTarget->obj()->getPos()));
 					}else{
 						this->setTargetPos(_targetPos.x,_targetPos.y,(100 * Deg(this->_targetPos.x-this->_pos.x,this->_targetPos.y-this->_pos.y)));
 					}
@@ -181,6 +102,7 @@ void SUnit::updateAutoMove(){
 				}
 				break;
 			}
+			/*
 			case OrdresTactice::FrontMinRange:{
 				
 				if (this->_primeTarget){
@@ -286,6 +208,7 @@ void SUnit::updateAutoMove(){
 				}
 				break;
 			}
+			 * */
 			case OrdresTactice::No_move:{
 				this->setTargetPos(_targetPos.x,_targetPos.y,(100 * Deg(this->_targetPos.x-this->_pos.x,this->_targetPos.y-this->_pos.y)));
 
@@ -384,17 +307,15 @@ void SUnit::MovePos(int32_t x, int32_t y){
 }
 
 void SUnit::setTargetPos(SPos& pos){
-	pthread_mutex_lock(&this->lockUnit);
+	cerr<<"set target pos"<<endl;
 	this->_targetPos.x = pos.x;
 	this->_targetPos.y = pos.y;
 	this->_targetPos.d = pos.d;
 	this->_updateCounter = 0;
-	pthread_mutex_unlock(&this->lockUnit);
 	this->sendPosUpdate(SubscriptionLevel::lowFreq);
 }
 
 void SUnit::setTargetPos(int32_t x, int32_t y, int32_t d){
-	pthread_mutex_lock(&this->lockUnit);
 	if(this->getPos().grid
 		&& (int32_t)0 - ((int32_t)this->getPos().grid->getWight()/2) < x
 		&& (int32_t)0 - ((int32_t)this->getPos().grid->getHight()/2) < y
@@ -406,7 +327,6 @@ void SUnit::setTargetPos(int32_t x, int32_t y, int32_t d){
 			this->_targetPos.d = d;
 			this->_updateCounter = 0;
 		}
-	pthread_mutex_unlock(&this->lockUnit);
 }
 
 uint32_t SUnit::FitAddSub(SItemType* type, uint32_t slot, uint32_t Xitem, SCargoBay* cargobay){
@@ -691,29 +611,12 @@ bool SUnit::canBeRemoved(){
 		return false;
 }
 
-void SUnit::announceRemovalOf(SObj* obj){
-
-	for (list<STargetable*>::iterator it = this->_lockedTargets.begin(); it != this->_lockedTargets.end();){
-		if ((*it)->obj() == obj)
-			this->_lockedTargets.erase(it++);
-		else
-			it++;
-	}
-
-
-	for(SSlotNodeI it = this->slots.begin(); it != this->slots.end(); it++){
-		if (it->second->getSS())
-			it->second->getSS()->announceRemovalOf(obj);
-	}
-}
-
-
 void SUnit::sendPosUpdate(SubscriptionLevel::Enum level){
 	sendUnitPosUpdate(_subscriptions[level],this);
 }
 
-void SUnit::sendFull(Client* client){
-	list<Client*> temp;
+void SUnit::sendFull(uint32_t client){
+	list<uint32_t> temp;
 	temp.push_back(client);
 	sendUnitFull(temp,this);
 }

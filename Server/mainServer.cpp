@@ -40,14 +40,14 @@
 #include "Sspacebjects/SAstoroidBelt.h"
 #include "Sspacebjects/Ordres/SOrdreActionTrasfereCargo.h"
 #include "Commands/Processor.h"
+
 using namespace std;
 
 
-	pthread_mutex_t  procesLock = PTHREAD_MUTEX_INITIALIZER;
 	pthread_cond_t  procesConBegin = PTHREAD_COND_INITIALIZER;
 	pthread_cond_t  procesConallReady = PTHREAD_COND_INITIALIZER;
 	pthread_t procesThreads[NRTHREADS];
-	Processor processors[NRTHREADS];
+	list<Processor*> processors;
 	int threadsReady;
 //void* procesworldThread(uint32_t id);
 
@@ -66,7 +66,16 @@ int main(int argc, char** argv) {
 	allteams.push_back(2);
 	allteams.push_back(3);
 	printbufferbool = true;
-	world = new SWorld(processors);
+	
+	for(int i = 0; i < NRTHREADS;i++)
+	{
+		cerr<<"create processor"<<endl;
+		Processor* temp = new Processor();
+		cerr<<"p "<<temp<<endl;
+		processors.push_back(temp);
+	}	
+	world = new SWorld(processors.front());
+	
 	SDL_Init(SDL_INIT_TIMER);
 
 	pthread_t listenThread;
@@ -295,47 +304,33 @@ int main(int argc, char** argv) {
 
 	SPos* temppos =  NULL;
 
-
-	//temppos =  new SPos(-40000,-90000,0);
-	//temppos->grid = world->getGrids()[1];
-	//SAstoroidBelt* astob = new SAstoroidBelt(getFreeID(), *temppos);
-	//world->getGrids()[1]->addObj(astob);
-	//astob->AddRoid(astoroidTypes[8],220);
-	//astob->AddRoid(astoroidTypes[8],220);
 	cerr<<"done init"<<endl;
 	//INIT GAME
 
 	//tempU->ActivateAI();
-
+	list<Processor*>::iterator it = processors.begin();
 	for (int i = 0 ; i< NRTHREADS; i++){
-		pthread_create(&procesThreads[i], NULL, &Processor::workThreadFunction, &processors[i]);
+		Processor* temp = *it++;
+		pthread_create(&procesThreads[i], NULL, &Processor::workThreadFunction, temp);
 	}
-	
 	networkControl = new NetworkControler();
+
 	//GAME LOOP************************
 	uint32_t timer;
 	uint32_t fpstimer = 0;
 	uint32_t fpscounter= 0;
 	uint32_t fpswait = 1000/FRAMERATE; // 25 fps men korigere lidt for skeduleren
-	pthread_mutex_lock(&lockClientList);
 	while(true){
 
 		timer = SDL_GetTicks();
-		
-			for (list<Client*>::iterator ci = clients.begin(); ci != clients.end(); ++ci){
-				ReadBuffer((*ci));
-				(*ci)->proces();
-			}
-
-
-		pthread_mutex_unlock(&lockClientList);
+		networkControl->readBuffers();
 		//************
 		if ( SDL_GetTicks() > fpstimer +10000){
 			fpstimer = SDL_GetTicks();
 			cerr<<"fps "<<fpscounter/10<<endl;
 			fpscounter = 0;
 		}
-
+		world->proces(0);
 		while (SDL_GetTicks() < timer+fpswait)
 			usleep(100);
 		//*************
@@ -343,19 +338,14 @@ int main(int argc, char** argv) {
 
 			threadsReady = 0;
 			//cerr<<"done"<<endl;
-			pthread_mutex_lock(&lockClientList);
-			pthread_cond_broadcast(&procesConBegin);
 
-			pthread_mutex_unlock(&procesLock);
-		
-		
 
 		fpscounter +=1;
 
 
 	}
-	pthread_mutex_unlock(&lockClientList);
 
+	cerr<<"end do join join"<<endl;
 	//END GAME LOOP********************
 	pthread_join(listenThread, NULL);
 	cerr<<"SERVER EXIT"<<endl;

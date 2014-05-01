@@ -21,7 +21,7 @@ SSingleRef::SSingleRef(SSubSystemRef* subsys) {
 }
 
 
-void SSingleRef::proces(){
+void SSingleRef::proces(Processor* processor){
 
 	if (this->subsys->getOwner().getsubable() == NULL){
 		cerr<<"WARNING SSingleFac::proces Not Subable"<<endl;

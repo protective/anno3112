@@ -10,6 +10,7 @@
 
 #include "SObj.h"
 #include "SAstoroid.h"
+#include "../Commands/Processor.h"
 struct SAstoroidBeltRoid{
 	SAstoroidBeltRoid(SAstoroidType* type, uint32_t counter){
 		_type = type;
@@ -23,12 +24,14 @@ struct SAstoroidBeltRoid{
 	uint32_t _maxcounter;
 };
 
-class SAstoroidBelt : public  SObj{
+class SAstoroidBelt : public  SObj , public Processable{
 public:
 	SAstoroidBelt(uint32_t id, SPos& pos);
-	virtual void proces();
+	virtual uint32_t getId(){return _id;}
+	virtual SObj* isObj(){return this;}
+	virtual void proces(uint32_t delta, Processor* processor );
+	void subscribeClient(uint32_t clientId, SubscriptionLevel::Enum level);
 	void AddRoid(SAstoroidType* type, uint32_t counter);
-	virtual void announceRemovalOf(SObj* obj);
 	void setSize(uint32_t size){this->_size = size;}
 	virtual ~SAstoroidBelt();
 private:

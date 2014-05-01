@@ -6,6 +6,8 @@
  */
 
 #include "CommandProcessor.h"
+#include "Processable.h"
+#include "../World/SWorld.h"
 
 CommandProcessor::CommandProcessor(Processable* processable, uint32_t interval, uint32_t firstExecuteTime):
 Command(firstExecuteTime){
@@ -14,13 +16,13 @@ Command(firstExecuteTime){
 	_lastExecuteTime = firstExecuteTime;
 }
 
-void CommandProcessor::execute(){
+uint32_t CommandProcessor::execute(){
 	uint32_t time = world->getTime();
-	_processable->proces(time - _lastExecuteTime);
+	_processable->proces(time - _lastExecuteTime, _processor);
 	_lastExecuteTime = time;
+	_time+=_interval;
 	_processable->addCommand(this);
 	return COMMAND_CONTINUE;
-	
 }
 
 

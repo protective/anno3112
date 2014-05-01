@@ -10,11 +10,17 @@
 
 #include "../SFunctions.h"
 #include "Processable.h"
-#include "CommandAddSubscriptions.h"
-#include "CommandUpdateMetas.h"
-#include "CommandTimedSubscribeUpdate.h"
 
-class Command;
+class SShot;
+class SShip;
+class SPos;
+class SSubAble;
+class STargetable;
+class SSubTypeWep;
+class SShipType;
+class SAstoroid;
+class SAstoroidType;
+class SAstoroidBelt;
 class Processor {
 public:
 	friend CommandAddSubscriptions;
@@ -31,7 +37,11 @@ public:
 	map<uint32_t, SMetaObj*>& getLocalMetas(){return _metaObjs;}
 	SMetaObj* getMeta(uint32_t id){return _metaObjs.find(id) != _metaObjs.end() ? _metaObjs[id] : NULL;}
 	uint32_t getFreeID();
-	
+	SShot* createShot(SPos& pos, SSubAble* owner, uint32_t target, SSubTypeWep* type);
+	SShip* createShip(SPos& pos, SShipType& stype, uint32_t playerId);
+	SAstoroid* createAsteroid(SPos& pos, SAstoroidType& atype, SAstoroidBelt* belt);
+	SAstoroidBelt* createAsteroidBelt(SPos& pos);
+	SGrid* createGrid();
 	virtual ~Processor();
 private:
 	

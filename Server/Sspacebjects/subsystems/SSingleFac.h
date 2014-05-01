@@ -8,11 +8,12 @@
 #ifndef SSINGLEFAC_H
 #define	SSINGLEFAC_H
 #include "../../SFunctions.h"
+#include "../../Commands/Processor.h"
 class SSubSystemFac;
 class SSingleFac {
 public:
 	SSingleFac(SSubSystemFac* subsys);
-	void proces();
+	void proces(Processor* processor);
 	int32_t getDuration(){return _cur;}
 	virtual ~SSingleFac();
 private:

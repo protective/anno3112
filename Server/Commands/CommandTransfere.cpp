@@ -7,7 +7,7 @@
 
 #include "CommandTransfere.h"
 #include "CommandAdd.h"
-
+#include "Processor.h"
 CommandTransfere::CommandTransfere(uint32_t time, Processor* toProcessor, Processable* toTransfere) :
 Command(time){
 	_toTransfere = toTransfere;
@@ -15,7 +15,8 @@ Command(time){
 }
 
 uint32_t CommandTransfere::execute(){
-	CommandAdd* temp = new CommandAdd(_toTransfere,_toTransfere->getProcessor()->removeByProcessable(_toTransfere));
+	cerr<<"execure CommandTransfere"<<endl;
+	CommandAdd* temp = new CommandAdd(0,_toTransfere,_toTransfere->getProcessor()->removeByProcessable(_toTransfere));
 	_toProcessor->addCommand(temp);
 	return COMMAND_FINAL;
 }

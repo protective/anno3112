@@ -154,7 +154,7 @@ void* thread_Recive(){
 
 uint32_t parseBuffer(char* buffer, uint32_t len){
 	uint32_t offset = 0;
-	//printBuffer(buffer,len);
+	printBuffer(buffer,len);
 	while (offset < len){
 		SerialData* meta = (SerialData*)(buffer + offset);
 

@@ -18,7 +18,7 @@ SSubSystem(owner,slotnode,id)
 	this->setOnline(true);
 }
 
-void SSubSystemFac::proces(){
+void SSubSystemFac::proces(Processor* processor){
 	bool buildnext = true;
 	for(SSingleFacI it = _fac.begin();it != _fac.end(); it++){
 		if (it->second->getDuration() != -1)
@@ -39,7 +39,7 @@ void SSubSystemFac::proces(){
 	}
 
 	for(SSingleFacI it = _fac.begin();it != _fac.end(); it++){
-		it->second->proces();
+		it->second->proces(processor);
 	}
 
 

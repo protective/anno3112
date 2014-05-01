@@ -8,25 +8,32 @@
 #ifndef PROCESSABLE_H
 #define	PROCESSABLE_H
 #include "../SFunctions.h"
-
-class Command;
+#include "Command.h"
+#include "CommandAddSubscriptions.h"
+#include "CommandUpdateMetas.h"
+#include "CommandTimedSubscribeUpdate.h"
 class SMetaObj;
-
+class Processor;
+class SUnit;
 class Processable {
 public:
-	Processable(uint32_t id);
+	Processable();
 	uint32_t addCommand(Command* cmd);
 	uint32_t removeCommand(Command* cmd);
 	Processor* getProcessor(){return _processor;}
+	void setProcessor(Processor* processor){_processor = processor;}
 	virtual bool isMetable(){return false;}
+	virtual SUnit* isUnit(){return NULL;}
+	virtual SObj* isObj(){return NULL;}
 	virtual void getMetaObj(SMetaObj* metaobj){}
-	virtual void proces(uint32_t delta){}
-	uint32_t getId();
+	virtual void proces(uint32_t delta, Processor* processor ) = 0;
+	virtual void subscribeClient(uint32_t clientId, SubscriptionLevel::Enum level) = 0;
+	virtual uint32_t getId() = 0;
+	virtual list<Command*>& getLocalQueue(){return _localQueue;}
 	virtual ~Processable();
 protected:
-	uint32_t _id;
 	Processor* _processor;
-
+	list<Command*> _localQueue;
 };
 
 #endif	/* PROCESSABLE_H */

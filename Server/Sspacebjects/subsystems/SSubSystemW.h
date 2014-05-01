@@ -19,18 +19,17 @@ public:
 	SSubTypeWep* getTypeWep(){return (SSubTypeWep*)this->_type->getSubType();}
 	virtual uint32_t AddItem(uint32_t Xitem);
 	virtual uint32_t RemoveItem(uint32_t Xitem);
-	virtual void proces();
+	virtual void proces(Processor* processor);
 	virtual int32_t cooldown(uint16_t index){if(_weps.find(index) != _weps.end())return _weps[index]->getDuration(); return 0;}
 	virtual int32_t maxcooldown(uint16_t index){return this->_maxcooldown;}
 
 	
-	virtual STargetable* getSeqTarget(){return _seqTarget;}
-
-	virtual void setTarget(uint32_t target){_target = target; _haveTarget = true;}
-	virtual void clearTarget(){this->_haveTarget = false;}
-	virtual uint32_t* getTarget(){return _haveTarget ? &_target : NULL;}
+	virtual uint32_t getSeqTarget(){return _seqTarget;}
+	virtual void setSeqTarget(uint32_t seqTarget){this->_seqTarget = seqTarget;}
+	virtual uint32_t getTarget(){return _target;}
+	virtual void setTarget(uint32_t target){_target = target;}
 	
-	virtual void setSeqTarget(STargetable* seqTarget){this->_seqTarget = seqTarget;}
+	
 	virtual void announceRemovalOf(SObj* obj);
 	virtual bool canTarget(){return true;}
 	virtual ~SSubSystemW();
@@ -51,7 +50,6 @@ private:
 	uint32_t _rechargeCounter;
 	
 	uint32_t _target;
-	bool _haveTarget;
 	uint32_t _seqTarget; //target dont change when fireing
 	uint32_t _fireseq;
 	uint32_t _lockingAgainstPower;

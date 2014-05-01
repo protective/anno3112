@@ -11,7 +11,7 @@
 #include "SSubSystemNetworkLayer.h"
 using namespace std;
 
-inline void sendUnitHpUdate(list<Client*>& clients, SUnit* unit){
+inline void sendUnitHpUdate(list<uint32_t>& clients, SUnit* unit){
 	//NETWORK*********
 	char message[sizeof(SerialObjHpUpdate)];
 	memset(message,0,sizeof(SerialObjHpUpdate));
@@ -26,13 +26,14 @@ inline void sendUnitHpUdate(list<Client*>& clients, SUnit* unit){
 	data->_armor= unit->isShip()->getArmor();
 	data->_hull= unit->isShip()->getHull();
 	
-	for(list<Client*>::iterator it = clients.begin(); it != clients.end();it++  ){
-		sendtoC(*it,message,sizeof(SerialObjHpUpdate));
+	for(list<uint32_t>::iterator it = clients.begin(); it != clients.end();it++  ){
+		networkControl->sendToC(*it,message,sizeof(SerialObjHpUpdate));
 	}
 	
 }
 
-inline void sendUnitFull(list<Client*>& clients, SUnit* unit){
+inline void sendUnitFull(list<uint32_t>& clients, SUnit* unit){
+	cerr<<"send unit full"<<endl;
 	//NETWORK*********
 	char message[sizeof(SerialShipFullUpdate)];
 	memset(message,0,sizeof(SerialShipFullUpdate));
@@ -47,17 +48,20 @@ inline void sendUnitFull(list<Client*>& clients, SUnit* unit){
 	data->_Pos_y = unit->getPos().y;
 	data->_Pos_d = unit->getPos().d;
 
-	for(list<Client*>::iterator it = clients.begin(); it != clients.end();it++  ){
-		sendtoC(*it,message,sizeof(SerialShipFullUpdate));
+	for(list<uint32_t>::iterator it = clients.begin(); it != clients.end();it++  ){
+		networkControl->sendToC(*it,message,sizeof(SerialShipFullUpdate));
 	}
 	for(SSlotNodeI it = unit->getSlots().begin(); it != unit->getSlots().end(); it++){
 		SSubSystem* subs = it->second->getSS();
 		SendSubsystem(clients,subs);
 	}
+	cerr<<"cargobay ="<<unit->getCargoBay()<<endl;
+	if(unit->getCargoBay())
+		unit->getCargoBay()->sendCargoBay(clients);
 	sendUnitHpUdate(clients,unit);
 }
 
-inline void sendUnitPosUpdate(list<Client*>& clients, SUnit* unit){
+inline void sendUnitPosUpdate(list<uint32_t>& clients, SUnit* unit){
 	char message[sizeof(SerialShipTargetPosUpdate)];
 	memset(message,0,sizeof(SerialShipTargetPosUpdate));
 	SerialShipTargetPosUpdate* data = (SerialShipTargetPosUpdate*)(message);
@@ -73,13 +77,14 @@ inline void sendUnitPosUpdate(list<Client*>& clients, SUnit* unit){
 	data->_MovementStatus = unit->getMovementStatus();
 	data->_Speed = unit->getSpeed();
 	
-	for(list<Client*>::iterator it = clients.begin(); it != clients.end();it++  ){
-		sendtoC(*it,message,sizeof(SerialShipTargetPosUpdate));
+	for(list<uint32_t>::iterator it = clients.begin(); it != clients.end();it++  ){
+
+		networkControl->sendToC(*it,message,sizeof(SerialShipTargetPosUpdate));
 	}
 
 }
 
-inline void sendUnitRemoved(list<Client*>& clients, SUnit* unit, DestroyMode::Enum mode){
+inline void sendUnitRemoved(list<uint32_t>& clients, SUnit* unit, DestroyMode::Enum mode){
 
 	//NETWORK*********
 	char message[sizeof(SerialShipDestroy)];
@@ -90,8 +95,8 @@ inline void sendUnitRemoved(list<Client*>& clients, SUnit* unit, DestroyMode::En
 	data->_size = sizeof(SerialShipDestroy);
 	data->_Id = unit->getId();
 	data->_mode = (uint32_t)mode;
-	for(list<Client*>::iterator it = clients.begin(); it != clients.end();it++  ){
-		sendtoC(*it, message,sizeof(SerialShipDestroy));
+	for(list<uint32_t>::iterator it = clients.begin(); it != clients.end();it++  ){
+		networkControl->sendToC(*it, message,sizeof(SerialShipDestroy));
 	}
 }
 	

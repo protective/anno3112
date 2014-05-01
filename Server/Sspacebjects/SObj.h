@@ -21,14 +21,14 @@ class SMovable;
 class Client;
 class SObj {
 public:
-	SObj(SPos& pos, uint8_t team, uint32_t playerId);
-	
+	SObj(uint32_t id, SPos& pos, uint8_t team, uint32_t playerId);
+	virtual uint32_t getId() = 0;
 	SPos& getPos();
 	SPos& getOldPos();
 	uint32_t getSize(){return _size;}
 	virtual uint32_t getTargetSize(){return _size;}
 	virtual SpaceTypes::Enum getmyType();
-	virtual void proces(){};
+	//virtual void proces(){};
 	virtual void postProces(){};
 	virtual void announceRemovalOf(SObj* obj){};
 	virtual bool canBeRemoved(){return false;}
@@ -52,6 +52,7 @@ public:
 	virtual ~SObj();
 protected:
 	SPos _pos;
+	uint32_t _id;
 	SPos _oldPos;
 	
 	uint32_t _size;

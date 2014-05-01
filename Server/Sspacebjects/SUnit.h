@@ -8,6 +8,7 @@
 #ifndef SUNIT_H
 #define	SUNIT_H
 
+#include "../Commands/Processor.h"
 #include "STargetable.h"
 #include "SMovable.h"
 #include "SObj.h"
@@ -28,26 +29,26 @@
 class SUnit : public SObj , public SMovable , public STargetable, public SSubAble , public Processable{
 public:
 	SUnit(uint32_t id, SPos& pos, SUnitType& stype, uint32_t playerId);
-	
+	virtual uint32_t getId(){return _id;}
 	uint32_t FitAddSub(SItemType* type, uint32_t slot, uint32_t Xitem, SCargoBay* cargobay);
 	uint32_t AddSub(SItemType* type, uint32_t slot, uint32_t Xitem);
 	uint32_t FitRemoveSub(uint32_t slot, uint32_t Xitem, SCargoBay* cargobay);
 	uint32_t RemoveSub(uint32_t slot, uint32_t Xitem);
 	void Move(uint32_t deltaT);
 	void MovePos(int32_t x, int32_t y);
-	virtual void proces(uint32_t delta);
-	virtual void postProces();
+	void subscribeClient(uint32_t clientId, SubscriptionLevel::Enum level);
+	virtual void postProces(uint32_t delta);
 	virtual void setTargetPos(SPos& pos);
 	virtual void setTargetPos(int32_t x, int32_t y, int32_t d);
 	virtual SUnitType* getUnitType(){return NULL;}
 	
 	virtual SMovable* isMovable(){return this;}
+	virtual SObj* isObj(){return this;}
 	virtual SSubAble* getsubable(){return (SSubAble*)this;};
 	virtual STargetable* getTargetable(){return (STargetable*)this;}
 	virtual SUnit* isUnit(){return this;}
 	
 	virtual bool canBeRemoved();
-	virtual void announceRemovalOf(SObj* obj);
 	SOrdres* getOrdres(){return this->_order;}
 	void setOrdres(SOrdres* ordres){this->_order = ordres;}
 	virtual TargetType::Enum getTargetType(){return TargetType::Invalid;}
@@ -73,7 +74,7 @@ public:
 	
 	//networking
 	virtual void sendPosUpdate(SubscriptionLevel::Enum level);
-	virtual void sendFull(Client* client);
+	virtual void sendFull(uint32_t client);
 	virtual void sendFull(SubscriptionLevel::Enum level);
 	virtual void sendRemoved(SubscriptionLevel::Enum level, DestroyMode::Enum mode);
 	virtual ~SUnit();

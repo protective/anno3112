@@ -9,12 +9,13 @@
 #define	SSINGLEREF_H
 #include "../../SFunctions.h"
 #include "../../SItems/SItemType.h"
+#include "../../Commands/Processor.h"
 class SSubSystemRef;
 
 class SSingleRef {
 public:
 	SSingleRef(SSubSystemRef* subsys);
-	void proces();
+	void proces(Processor* processor);
 	int32_t getDuration(){return _cur;}
 	void Refine(SItemType* item);
 	virtual ~SSingleRef();

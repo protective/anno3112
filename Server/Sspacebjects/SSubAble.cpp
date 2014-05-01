@@ -26,7 +26,8 @@ SSubAble::SSubAble(SObj* obj, uint32_t energy, uint32_t recharge, uint32_t scanR
 
 
 void SSubAble::updateTargetList(Processor* processor){
-
+	//TODO fix
+	/*
 	map<uint32_t,SMetaObj*>& targets = processor->getLocalMetas();
 	for(map<uint32_t,SMetaObj*>::iterator it = targets.begin(); it!= targets.end();it++){
 		if ((it->second->isAstoroid())||(it->second->getTeam() != _obj->getTeam() && it->second->getVisibleTo().find(_obj->getTeam()) != it->second->getVisibleTo().end() && it->second->getVisibleTo()[_obj->getTeam()] == Visibility::Visible)){
@@ -52,9 +53,12 @@ void SSubAble::updateTargetList(Processor* processor){
 	for( list<TempSort>::iterator it = tempsort.begin(); it != tempsort.end(); it++){
 		_lockedTargets.push_back((*it)._target);
 	}
+	 * */
 }
 
 void SSubAble::updateTargetsPrio(Processor* processor){
+	//TODO FIX
+	/*
 	if (!this->_obj->isShip())
 		return;
 	if (!this->_obj->isShip()->getOrdres())
@@ -134,11 +138,12 @@ void SSubAble::updateTargetsPrio(Processor* processor){
 			}
 		}
 	}
+	 * */
 }
 
 void SSubAble::updateSubTarget(SSubSystem* subsys){
 	if (subsys->canTarget()){
-		subsys->setTarget(NULL);
+		subsys->setTarget(0);
 		//for(STarI it = _primary.begin();it!= _primary.end();it++){
 		//	subsys->setTarget(*it);
 		//	break;

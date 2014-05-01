@@ -10,11 +10,12 @@
 
 #include "Command.h"
 
-
+class Processor;
 class CommandAddSubscriptions : public Command {
 public:
 	CommandAddSubscriptions(Processor* subscriber, uint8_t level, list<uint32_t> procesables);
-	virtual uint32_t execute(){}
+	CommandAddSubscriptions(Processor* subscriber, uint8_t level, uint32_t procesables);
+	virtual uint32_t execute();
 	virtual ~CommandAddSubscriptions();
 private:
 	Processor* _subscriber;

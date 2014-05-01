@@ -9,9 +9,9 @@
 
 #include "SObj.h"
 
-SObj::SObj(SPos& pos, uint8_t team, uint32_t playerId) {
+SObj::SObj(uint32_t id, SPos& pos, uint8_t team, uint32_t playerId) {
 	
-
+	this->_id = id;
 	this->_team = team;
 	this->_playerId = playerId;
 	this->_pos.x = pos.x;
@@ -32,9 +32,6 @@ SPos& SObj::getOldPos(){
 	return this->_oldPos;
 }
 
-uint32_t SObj::getId(){
-	return this->_id;
-}
 
 SpaceTypes::Enum SObj::getmyType(){
 	return SpaceTypes::Invalid;

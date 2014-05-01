@@ -6,8 +6,11 @@
  */
 
 #include "SWorld.h"
-
+#include "../Commands/Processor.h"
+#include "../Commands/CommandProcessor.h"
+#include "../Commands/CommandAdd.h"
 SWorld::SWorld(Processor* processors) {
+	_processors = processors;
 }
 
 void SWorld::addGrid(SGrid* grid){
@@ -25,8 +28,8 @@ void SWorld::add(SUnit* unit){
 	list<Command*> tempL;
 	CommandProcessor* unitProces = new CommandProcessor(unit,1000/FRAMERATE,0);
 	tempL.push_back(unitProces);
-	CommandAdd temp = new CommandAdd(getTime(),unit,tempL);
-	processors[0].addCommand(temp);
+	CommandAdd* temp = new CommandAdd(getTime(),unit,tempL);
+	_processors[0].addCommand(temp);
 }
 
 

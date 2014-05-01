@@ -13,12 +13,14 @@ SSubSystemFighter::SSubSystemFighter(SObj& owner,SSlotNode& slotnode,uint32_t id
 SSubSystem(owner,slotnode,id)
 {
 	for(int i = 0; i < getTypeFighter()->getBayCount(); i++){
-			SFighter* fighter = new SFighter(getFreeID(), owner.getPos(), *getTypeFighter()->getFighterType(),owner.getPlayerId());
+		
+				//TODO FIX id 
+			SFighter* fighter = new SFighter(0, owner.getPos(), *getTypeFighter()->getFighterType(),owner.getPlayerId());
 			world->getGrids()[1]->addUnit(fighter);
 	}
 }
 
-void SSubSystemFighter::proces(){
+void SSubSystemFighter::proces(Processor* processor){
 
 }
 

@@ -11,7 +11,7 @@
 #include "../NetworkLayer/SAsteroidNetworkLayer.h"
 
 SAstoroid::SAstoroid(uint32_t id, SPos& pos, SAstoroidType& atype, SAstoroidBelt* belt):
-SObj(pos,0,0),STargetable(this), Processable(id){
+SObj(id, pos,0,0),STargetable(this), Processable(){
 
 	this->_oldPos = pos;
 	_quan = myrandom(atype.getMminQuan(),atype.getMaxQuan());

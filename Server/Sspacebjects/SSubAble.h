@@ -61,7 +61,7 @@ public:
 	uint32_t addEnergy(uint32_t energy);
 	uint32_t addRecoil(uint32_t recoil);
 	uint32_t getMaxRecoil();
-	void donelocktarget(STargetable* target){this->_lockedTargets.push_back(target);}
+	void donelocktarget(uint32_t* target){this->_lockedTargets.push_back(*target);}
 	void updateTargetsPrio(Processor* processor);
 	void updateTargetList(Processor* processor);
 	void updateSubTarget(SSubSystem* subsys);

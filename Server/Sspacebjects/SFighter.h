@@ -17,7 +17,8 @@ public:
 	virtual SFighter* isFighter(){return this;}
 	virtual TargetType::Enum getTargetType(){return this->_fType->getTargetType();}
 	SFighterType* getFighterType(){return this->_fType;}
-
+	virtual SUnitType* getUnitType(){return _fType;}
+	virtual void proces(uint32_t delta, Processor* processor);
 	virtual ~SFighter();
 protected:
 	SFighterType* _fType;

@@ -11,7 +11,7 @@
 #include "SObj.h"
 #include "SMovable.h"
 #include "STargetable.h"
-#include "../Commands/Processable.h"
+#include "../Commands/Processor.h"
 #include "subsystems/SSingleWep.h"
 #include "subsystems/SSubTypeWep.h"
 #include "SSubAble.h"
@@ -20,13 +20,16 @@ public:
 	//SShot(uint32_t id, SPos& pos, SSubAble* owner, STargetable* target, uint32_t texId, int32_t speed, uint32_t mindmg, uint32_t maxdmg);
 	//SShot(uint32_t id, SPos& pos, SSubAble* owner, STargetable* target, uint32_t texId, int32_t speed, uint32_t mindmg, uint32_t maxdmg, DmgTypes::Enum);
 
-	SShot(uint32_t id, SPos& pos, SSubAble* owner, STargetable* target, SSubTypeWep* type);
-
+	SShot(uint32_t id, SPos& pos, SSubAble* owner, uint32_t target, SSubTypeWep* type);
+	virtual uint32_t getId(){return _id;}
+	virtual void proces(uint32_t delta, Processor* processor){}
+	virtual void subscribeClient(uint32_t clientId, SubscriptionLevel::Enum level);
 	void Move(uint32_t deltaT);
 	void MovePos(int32_t x, int32_t y, int32_t z);
 	void TestHit();
-	void Hit(STargetable* target, Shields::Enum shield, int32_t x, int32_t y);
+	void Hit(uint32_t target, Shields::Enum shield, int32_t x, int32_t y);
 	virtual SShot* isShot(){return this;}
+	virtual SObj* isObj(){return this;}
 	virtual bool canBeRemoved();
 	virtual SMovable* isMovable(){return this;}
 	virtual void setTargetPos(SPos& pos);
@@ -37,11 +40,10 @@ public:
 	virtual DmgTypes::Enum getDmgTypes(){return this->_dmgType;}
 	virtual uint32_t getTracking(){return this->_tracking;}
 	virtual uint32_t getTrackingTime(){return this->_trackingTime;}
-	virtual STargetable* getTarget(){return this->_target;}
-	virtual void announceRemovalOf(SObj* obj){if(_target && _target->obj() == obj)_target = NULL; if(_owner && _owner->obj() == obj)_owner = NULL;};
-	
-	virtual void sendFull(SubscriptionLevel::Enum level);
+	virtual uint32_t getTarget(){return this->_target;}
 
+	virtual void sendFull(SubscriptionLevel::Enum level);
+	virtual uint32_t getProcId(){return _id;}
 	virtual ~SShot();
 private:
 	bool _hasHit;
@@ -52,7 +54,7 @@ private:
 	uint32_t _resolution;
 	double _moveZ;
 	SSubAble* _owner;
-	STargetable* _target;
+	uint32_t _target;
 	uint32_t _texId;
 	uint32_t _dmgMin;
 	uint32_t _dmgMax;

@@ -8,7 +8,7 @@
 #ifndef CLIENT_H
 #define	CLIENT_H
 #include "SGlobals.h"
-#include "Sspacebjects/SObj.h"
+class SObj;
 
 struct NetworkBuffer{
     uint32_t recived;
@@ -40,6 +40,7 @@ public:
     }
 	void setPlayerId(uint32_t id){this->playerID = id;this->_teamId = teamlist[id];}
 	uint32_t getPlayerId(){return this->playerID;}
+	uint32_t getId(){return _id;}
 	uint8_t getTeamId(){return this->_teamId;}
 	bool parsingoutput;
     NetworkBuffer* inputnetworkBuf;
@@ -58,6 +59,8 @@ private:
 	void sendLoadOuts();
 	void sendGrids();
 	void sendTeams();
+	
+	uint32_t _id;
 	uint32_t procescounter;
 	uint32_t playerID;
 	uint8_t _teamId;

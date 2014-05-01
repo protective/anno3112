@@ -17,7 +17,7 @@ SSingleFac::SSingleFac(SSubSystemFac* subsys) {
 	this->_charge = 0;
 }
 
-void SSingleFac::proces(){
+void SSingleFac::proces(Processor* processor){
 
 	if (this->subsys->getOwner().getsubable() == NULL){
 		cerr<<"WARNING SSingleFac::proces Not Subable"<<endl;
@@ -43,8 +43,10 @@ void SSingleFac::proces(){
 					cerr<<"WARNING SSingleFac::proces owner not subable and have no cargobay"<<endl;
 			}else if(this->subsys->getCurBuild()->getShipType()){
 				cerr<<"INFO SSingleFac::proces we are building ship"<<endl;
-				SShip* ship = new SShip(getFreeID(), *temppos, *this->subsys->getCurBuild()->getShipType(),this->subsys->getOwner().getPlayerId());
-				world->getGrids()[1]->addUnit(ship);
+				
+				//SShip* ship = new SShip(getFreeID(),);
+				processor->createShip(*temppos, *this->subsys->getCurBuild()->getShipType(),this->subsys->getOwner().getPlayerId());
+				//world->getGrids()[1]->addUnit(ship);
 			}
 		}else
 			cerr<<"WARNING SSingleFac::proces we are not building anything?"<<endl;

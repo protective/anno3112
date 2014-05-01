@@ -12,17 +12,20 @@
 #include "SSubAble.h"
 #include "../World/SGrid.h"
 #include "../NetworkLayer/SShotNetworkLayer.h"
+#include "SMetaObj.h"
 
-SShot::SShot(uint32_t id, SPos& pos, SSubAble* owner, STargetable* target, SSubTypeWep* type):
-SObj(pos,owner->obj()->getTeam(),owner->obj()->getPlayerId()), SMovable(this,0,0), Processable(id)
+SShot::SShot(uint32_t id, SPos& pos, SSubAble* owner, uint32_t target, SSubTypeWep* type):
+SObj(id, pos,owner->obj()->getTeam(),owner->obj()->getPlayerId()), SMovable(this,0,0), Processable()
 {
 
 	this->_owner = owner;
 	this->_target = target;
 	this->_texId = type->getTexId();
 	this->_resolution = type->getResolution(owner->getBonusList());
-
-	uint32_t r = Rangeobj(this->_pos,target->obj()->getPos());
+	/*
+	SMetaObj* metaTarget;
+	if(metaTarget = _processor->getMeta(target)){
+	uint32_t r = Rangeobj(this->_pos,metaTarget->getPos());
 	uint32_t m = (r * type->getSpread()*50)/(type->getRange()/1000);
 
 	m = myrandom(0,m);
@@ -33,11 +36,14 @@ SObj(pos,owner->obj()->getTeam(),owner->obj()->getPlayerId()), SMovable(this,0,0
 	int32_t rz = m * MyCos[gamma];
 
 	int32_t expFlightTime = (((r*100)/type->getSpeed()))+1;
-	int32_t preX = target->obj()->getPos().x; 
-	int32_t preY = target->obj()->getPos().y;
-	if(target->obj()->isMovable()){
-		int32_t td = target->obj()->getPos().d;  
-		int32_t tspeed = target->obj()->isMovable()->getSpeed() * expFlightTime;
+	int32_t preX = metaTarget->getPos().x; 
+	int32_t preY = metaTarget->getPos().y;
+	
+	//TODO HMM problem
+	
+	if(metaTarget->isMovable()){
+		int32_t td = metaTarget->getPos().d;  
+		int32_t tspeed = metaTarget->isMovable()->getSpeed() * expFlightTime;
 		preX += (VektorUnitX(td/100) * tspeed)/100;
 		preY += -((VektorUnitY(td/100)* tspeed)/100);
 	}
@@ -47,10 +53,11 @@ SObj(pos,owner->obj()->getTeam(),owner->obj()->getPlayerId()), SMovable(this,0,0
 	this->_targetPos.y = preY + ry;
 	this->_targetPos.d = 0;
 	this->_targetPos.z = 0;
-	this->_targetPos.grid = target->obj()->getPos().grid;
+	this->_targetPos.grid = metaTarget->getPos().grid;
 	this->_pos.d = (100 * Deg(this->_targetPos.x-this->_pos.x,this->_targetPos.y-this->_pos.y));
 	this->_moveZ = Deg(r*100,rz);
 
+	}
 	_hasHit = false;
 	_dmgMin = type->getDmgMin(owner->getBonusList());
 	_dmgMax = type->getDmgMax(owner->getBonusList());
@@ -60,15 +67,22 @@ SObj(pos,owner->obj()->getTeam(),owner->obj()->getPlayerId()), SMovable(this,0,0
 	_trackingTime = type->getTrackingTime();
 	_flightTime = 0;
 	_maxFlightTime = ((type->getRange()/type->getSpeed())/10)+1;
+	*/
+}
+
+void SShot::subscribeClient(uint32_t clientId, SubscriptionLevel::Enum level){
 
 }
 
 
 void SShot::Move(uint32_t deltaT){
-	if(_trackingTime && _target){
+	SMetaObj* targetMeta = NULL;
+	if(_trackingTime && (targetMeta = _processor->getMeta(_target))){
+		
+		
 		int32_t targetDir = 0;
 		int32_t b;
-		targetDir = (100 * Deg(_target->obj()->getPos().x -this->_pos.x,_target->obj()->getPos().y -this->_pos.y));
+		targetDir = (100 * Deg(targetMeta->getPos()->x -this->_pos.x,targetMeta->getPos()->y -this->_pos.y));
 		if (targetDir >= this->_pos.d)
 			b = targetDir - this->_pos.d;
 		else
@@ -93,6 +107,7 @@ bool SShot::canBeRemoved(){
 }
 
 void SShot::TestHit(){
+	/*
 	if (!_hasHit){
 		
 		for(SObjI it = this->_pos.grid->getObjInGrid().begin(); it != this->_pos.grid->getObjInGrid().end();it++){
@@ -170,9 +185,11 @@ void SShot::TestHit(){
 			}
 		}
 	}
+	 * */
 }
 
-void SShot::Hit(STargetable* target, Shields::Enum shield, int32_t x, int32_t y){
+void SShot::Hit(uint32_t target, Shields::Enum shield, int32_t x, int32_t y){
+	/*
 	_hasHit = true;
 	uint32_t tarRes = target->obj()->getSize()/100;
 	double mod = 1;
@@ -180,6 +197,7 @@ void SShot::Hit(STargetable* target, Shields::Enum shield, int32_t x, int32_t y)
 		mod =  (double)tarRes / _resolution;
 	}
 	target->Hit(this,mod * myrandom(_dmgMin,_dmgMax),_dmgType,shield,x,y);
+	*/
 
 }
 
@@ -199,6 +217,7 @@ void SShot::MovePos(int32_t x, int32_t y, int32_t z){
 }
 
 void SShot::sendFull(SubscriptionLevel::Enum level){
+	
 	sendShotFull(_subscriptions[level],this);
 }
 

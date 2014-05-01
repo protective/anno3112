@@ -43,7 +43,7 @@ uint32_t SSubSystemBoost::useAmo(uint32_t amo){
 	}
 }
 
-void SSubSystemBoost::proces(){
+void SSubSystemBoost::proces(Processor* processor){
 
 
 	if(this->_cooldown == 0){

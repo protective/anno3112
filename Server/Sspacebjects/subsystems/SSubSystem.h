@@ -22,7 +22,7 @@ class SSubSystemFighter;
 class SSubSystem {
 public:
 	SSubSystem(SObj& owner,SSlotNode& slotnode,uint32_t id);
-	virtual void proces(){}
+	virtual void proces(Processor* processor){}
 	virtual uint32_t getId(){return this->_id;}
 	virtual int32_t cooldown(uint16_t index){return this->_cooldown;}
 	virtual int32_t maxcooldown(uint16_t index){return this->_maxcooldown;}
@@ -36,9 +36,8 @@ public:
 	virtual uint16_t Xitem(){return this->_xItems;}
 	virtual uint32_t AddItem(uint32_t Xitem){}
 	virtual uint32_t RemoveItem(uint32_t Xitem){}
-	virtual uint32_t* getTarget(){return NULL;}
-	virtual void setTarget(uint32_t* target){}
-	virtual void clearTarget(){}
+	virtual uint32_t getTarget(){return 0;}
+	virtual void setTarget(uint32_t target){}
 	virtual void announceRemovalOf(SObj* obj){}
 	virtual bool canTarget(){return false;}
 	virtual SItemType* getItemType(){return this->_type;}

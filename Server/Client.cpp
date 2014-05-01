@@ -19,12 +19,15 @@
 #include "Sspacebjects/SOrdres.h"
 #include "Sspacebjects/subsystems/SLoadout.h"
 #include "Sspacebjects/subsystems/SSubTypeRef.h"
+#include "Commands/CommandClientSubscription.h"
 //#include "Sspacebjects/subsystems/SShipTypeSlotData.h"
 
 Client::Client(int socket) {
 
 	this->socket = socket;
+	_id = 0;
 	playerID = 0;
+	
 	_teamId = 2;
 	this->parsingoutput = false;
 	this->active_buffer = 1;
@@ -49,18 +52,29 @@ Client::Client(int socket) {
 
 
 void Client::initTransfere(){
+	cerr<<"init transfere"<<endl;
+	cerr<<"send teams"<<endl;
 	this->sendTeams();
-	this->sendGrids();
+	cerr<<"send grid"<<endl;
+	//this->sendGrids();
+	cerr<<"send itemtypes"<<endl;
 	this->sendItemTypes();
+	cerr<<"send shiptypes"<<endl;
 	this->sendShipTypes();
-	this->sendAstoroidTypes();
-	this->sendOrdres();
-	this->sendLoadOuts();
-
+	cerr<<"send astoroidstype"<<endl;
+	//this->sendAstoroidTypes();
+	cerr<<"send orders"<<endl;
+	//this->sendOrdres();
+	cerr<<"send loadouts"<<endl;
+	//this->sendLoadOuts();
+	cerr<<"send done"<<endl;
 	if (world) {
-		if (world->getGrids()[1]) {
-			world->getGrids()[1]->Subscribe(this); //TODO FIX This
+		for(map<uint32_t,SGrid*>::iterator it = world->getGrids().begin(); it != world->getGrids().end();it++){
+			CommandClientSubscription* cmd= new CommandClientSubscription(0,this->getId(),it->second,SubscriptionLevel::lowFreq);
+			it->second->addCommand(cmd); //TODO FIX This
+		
 		}
+		
 	}
 	cerr<<"data sendt"<<endl;
 }
@@ -73,7 +87,7 @@ void Client::sendItemTypes() {
 			cerr << "WARNING Client:senditemtype undefined item in itemlist itemid >"<<it->first<< endl;
 			continue;
 		}
-		
+	
 		//**********************
 		//send subsystemdata
 		if (it->second->getSubType()) {
@@ -530,19 +544,7 @@ void Client::sendAstoroidTypes() {
 
 void Client::sendGrids() {
 	for (map<uint32_t, SGrid*>::iterator it = world->getGrids().begin(); it != world->getGrids().end(); it++) {
-
-		char message[sizeof (SerialGrid)];
-		memset(message, 0, sizeof (SerialGrid));
-
-		SerialGrid* data = (SerialGrid*) (message);
-		data->_type = SerialType::SerialGrid;
-		data->_size = sizeof (SerialGrid);
-		data->_Id = it->second->_id;
-		data->_wight = it->second->getWight();
-		data->_hight = it->second->getHight();
-
-		send(this->getSocket(), message, sizeof (SerialGrid), 0);
-
+		it->second->sendFull(this);
 	}
 
 }

@@ -9,6 +9,7 @@
 #define	SSUBSYSTEMFIGHTER_H
 #include "SSubSystem.h"
 class SSubTypeFighter;
+class SFighter;
 class SSubSystemFighter : public SSubSystem  {
 public:
 	SSubSystemFighter(SObj& owner,SSlotNode& slotnode,uint32_t id,SItemType* item, uint32_t Xitem);
@@ -16,7 +17,7 @@ public:
 	virtual SSubSystemFighter* isFighter(){return this;}
 	virtual uint32_t AddItem(uint32_t Xitem);
 	virtual uint32_t RemoveItem(uint32_t Xitem);
-	virtual void proces();
+	virtual void proces(Processor* processor);
 	virtual int32_t cooldown(uint16_t index){return 0;}
 	virtual int32_t maxcooldown(uint16_t index){return 0;}
 

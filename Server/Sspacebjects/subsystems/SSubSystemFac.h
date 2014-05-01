@@ -25,7 +25,7 @@ public:
 	virtual int32_t cooldown(uint16_t index){if(_fac.find(index) != _fac.end())return _fac[index]->getDuration(); return 0;}
 	virtual int32_t maxcooldown(uint16_t index){return this->_maxcooldown;}
 	virtual uint32_t buildItem(SItemType* item,uint32_t quantity);
-	virtual void proces();
+	virtual void proces(Processor* processor);
 	virtual SItemType* getCurBuild(){return this->_curentBuild;}
 	virtual list<SSubSystemFacQueue>& getQueue(){return this->_queue;}
 	virtual ~SSubSystemFac();

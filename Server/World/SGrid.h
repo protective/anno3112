@@ -8,10 +8,11 @@
 #ifndef SGRID_H
 #define	SGRID_H
 #include "../SFunctions.h"
-#include "../Commands/Processable.h"
+#include "../Commands/Processor.h"
 #include "../Sspacebjects/SObj.h"
 #include "../Sspacebjects/SShot.h"
 #include "../Sspacebjects/SShip.h"
+#include "../Sspacebjects/SAstoroidBelt.h"
 #include "../Sspacebjects/subsystems/SSubSystem.h"
 
 class Client;
@@ -19,6 +20,8 @@ class SGrid : public Processable{
 public:
 	SGrid(uint32_t id);
 	SGrid(uint32_t id, uint32_t spaceWight, uint32_t spaceHight);
+	virtual uint32_t getId(){return _id;}
+
 	void addObj(SObj* obj);
 	void removeObj(SObj* obj);
 	void addShot(SShot* shot);
@@ -26,13 +29,18 @@ public:
 	void addAstoroid(SAstoroid* asto);
 	uint32_t _id;
 	map<uint32_t,SObj*>& getObjInGrid(){return objInGrid;}
-	void Proces(uint32_t thead_id);
+	
+	virtual void proces(uint32_t delta, Processor* processor );
+	virtual void subscribeClient(uint32_t clientId, SubscriptionLevel::Enum);
+	
 	void SendShipFull(Client* cli,SShip* ship);
 	void SendShipShipDestroyd(Client* cli,SShip* ship, DestroyMode::Enum mode);
 	void SendAstoroidDestroyd(Client* cli,SAstoroid* asto, DestroyMode::Enum mode);
 	void SendObjTargetPrio(Client* cli, SObj* obj);
 	void SendShipDetails(Client* cli,SShip* ship);
 	void SendAstoroidFull(Client* cli,SAstoroid* astoroid);
+	virtual void sendFull(SubscriptionLevel::Enum level);
+	virtual void sendFull(Client* cli);
 	void ReportHit(STargetable* target, SShot* shot, ParticalTex::Enum tex, int32_t x, int32_t y);
 	void ReportObjHpUdate(Client* cli, SObj* obj);
 	void BroadCastReportObjHpUdate(SObj* obj);
@@ -57,6 +65,7 @@ private:
 	pthread_mutex_t lockgrid;
 	pthread_mutex_t locksubscriber;
 
+	map<uint32_t , SubscriptionLevel::Enum> _clientSubscriptions;
 	uint32_t _spaceWight;
 	uint32_t _spaceHight;
 };

@@ -8,8 +8,8 @@
 #ifndef SSHOTNETWORKLAYER_H
 #define	SSHOTNETWORKLAYER_H
 #include <list>
-
-inline void sendShotFull(list<Client*>& clients, SShot* shot){
+using namespace std;
+inline void sendShotFull(list<uint32_t>& clients, SShot* shot){
 
 	//NETWORK*********
 	char message[sizeof(SerialShotFullUpdate)];
@@ -20,7 +20,7 @@ inline void sendShotFull(list<Client*>& clients, SShot* shot){
 	data->_size = sizeof(SerialShotFullUpdate);
 	data->_Id = shot->getId();
 	if(shot->getTarget()){
-		data->_targetId = shot->getTarget()->obj()->getId();
+		data->_targetId = shot->getTarget();
 	}else
 		data->_targetId = 0;
 	data->_speed = shot->getSpeed();
@@ -38,8 +38,10 @@ inline void sendShotFull(list<Client*>& clients, SShot* shot){
 	data->_tracking = shot->getTracking();
 	data->_trackingTime = shot->getTrackingTime();
 
-	for(list<Client*>::iterator it = clients.begin(); it != clients.end();it++  ){
-		sendtoC(*it,message,sizeof(SerialShotFullUpdate));
+	
+	for(list<uint32_t>::iterator it = clients.begin(); it != clients.end();it++  ){
+		networkControl->sendToC(*it,message,sizeof(SerialShotFullUpdate));
+		//sendtoC(*it,message,sizeof(SerialShotFullUpdate));
 	}
 
 }

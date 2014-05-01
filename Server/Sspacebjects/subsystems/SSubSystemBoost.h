@@ -17,7 +17,7 @@ public:
 	SSubSystemBoost(SObj& owner,SSlotNode& slotnode,uint32_t id,SItemType* item, uint32_t Xitem);
 	SSubTypeBoost* getTypeBoost(){return (SSubTypeBoost*)this->_type->getSubType();}
 	virtual SSubSystemBonus* isBoost(){return this;}
-	virtual void proces();
+	virtual void proces(Processor* processor);
 	virtual uint32_t getAmo(){return this->_amo;}
 	virtual uint32_t getMaxAmo(){return this->getTypeBoost()->getMaxAmo()*_xItems;}
 	virtual void setAmo(uint32_t amo){this->_amo = amo;}

@@ -20,6 +20,7 @@ SSubSystem::SSubSystem(SObj& owner,SSlotNode& slotnode,uint32_t id) {
 }
 
 void SSubSystem::reportCharge(SubscriptionLevel::Enum level){
+	cerr<<"report charge"<<endl;
 	SendSubsystem(this->getOwner().getSubscribers()[level], this);
 }
 

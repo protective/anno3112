@@ -14,14 +14,28 @@
                    displayName="Source Files"
                    projectFiles="true">
       <logicalFolder name="f7" displayName="Commands" projectFiles="true">
+        <logicalFolder name="f1" displayName="InputCommands" projectFiles="true">
+          <itemPath>Commands/inputCommands/CommandIFit.cpp</itemPath>
+          <itemPath>Commands/inputCommands/CommandIFit.h</itemPath>
+          <itemPath>Commands/inputCommands/CommandISubStatusField.cpp</itemPath>
+          <itemPath>Commands/inputCommands/CommandISubStatusField.h</itemPath>
+          <itemPath>Commands/inputCommands/CommandIUnfit.cpp</itemPath>
+          <itemPath>Commands/inputCommands/CommandIUnfit.h</itemPath>
+        </logicalFolder>
         <itemPath>Commands/Command.cpp</itemPath>
         <itemPath>Commands/Command.h</itemPath>
         <itemPath>Commands/CommandAdd.cpp</itemPath>
         <itemPath>Commands/CommandAdd.h</itemPath>
         <itemPath>Commands/CommandAddSubscriptions.cpp</itemPath>
         <itemPath>Commands/CommandAddSubscriptions.h</itemPath>
+        <itemPath>Commands/CommandClientSubscription.cpp</itemPath>
+        <itemPath>Commands/CommandClientSubscription.h</itemPath>
+        <itemPath>Commands/CommandEnterGrid.cpp</itemPath>
+        <itemPath>Commands/CommandEnterGrid.h</itemPath>
         <itemPath>Commands/CommandProcessor.cpp</itemPath>
         <itemPath>Commands/CommandProcessor.h</itemPath>
+        <itemPath>Commands/CommandTargetPosUpdate.cpp</itemPath>
+        <itemPath>Commands/CommandTargetPosUpdate.h</itemPath>
         <itemPath>Commands/CommandTimedSubscribeUpdate.cpp</itemPath>
         <itemPath>Commands/CommandTimedSubscribeUpdate.h</itemPath>
         <itemPath>Commands/CommandTransfere.cpp</itemPath>
@@ -53,6 +67,7 @@
         <itemPath>NetworkLayer/SAsteroidNetworkLayer.h</itemPath>
         <itemPath>NetworkLayer/SCargoBayNetworkLayer.h</itemPath>
         <itemPath>NetworkLayer/SFighterNetworkLayer.h</itemPath>
+        <itemPath>NetworkLayer/SGridNetworkLayer.h</itemPath>
         <itemPath>NetworkLayer/SShipNetworkLayer.h</itemPath>
         <itemPath>NetworkLayer/SShotNetworkLayer.h</itemPath>
         <itemPath>NetworkLayer/SSubSystemNetworkLayer.h</itemPath>

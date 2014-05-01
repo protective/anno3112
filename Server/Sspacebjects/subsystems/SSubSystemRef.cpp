@@ -24,7 +24,7 @@ SSubSystem(owner,slotnode,id)
 	this->setOnline(true);
 }
 
-void SSubSystemRef::proces(){
+void SSubSystemRef::proces(Processor* processor){
 	if(_online){
 		for(SSingleRefI it = _ref.begin();it != _ref.end(); it++){
 			if (it->second->getDuration() == -1){
@@ -49,7 +49,7 @@ void SSubSystemRef::proces(){
 		}
 	}
 	for(SSingleRefI it = _ref.begin();it != _ref.end(); it++){
-		it->second->proces();
+		it->second->proces(processor);
 	}
 }
 

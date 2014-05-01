@@ -15,6 +15,9 @@
 #include "Sspacebjects/subsystems/SSubSystemFac.h"
 #include "Sspacebjects/subsystems/SSubSystemW.h"
 #include "Sspacebjects/subsystems/SLoadout.h"
+#include "Commands/CommandTargetPosUpdate.h"
+#include "Commands/inputCommands/CommandISubStatusField.h"
+#include "Commands/CommandClientSubscription.h"
 void sendtoC(Client* cli, char* buffer, uint32_t len){
 	pthread_mutex_lock(&cli->networkSendLock);
 		if (cli->networkSendLockBool)
@@ -68,9 +71,8 @@ void* thread_Listen(){
 		
 		Client* cli = new Client(ConnectFD);
 		cerr<<"connected "<<endl;
-		pthread_mutex_lock(&lockClientList);
-		clients.push_back(cli);
-		pthread_mutex_unlock(&lockClientList);
+		networkControl->addClient(cli);
+
 
 		cerr<<"added to clients"<<endl;
 		pthread_create(&(cli->listenThread), NULL, (void*(*)(void*))thread_Recive, cli);
@@ -129,24 +131,22 @@ void* thread_Recive(Client* client){
 	pthread_mutex_lock(&client->networkSendLock);
 		client->networkSendLockBool = false;
 	pthread_mutex_unlock(&client->networkSendLock);
-	pthread_mutex_lock(&lockClientList);
+	
 	shutdown(client->getSocket(), SHUT_RDWR);
 
 	close(client->getSocket());
-
-	clients.remove(client);
+	networkControl->removeClient(client);
 	for(map<uint32_t, SGrid*>::iterator it = world->getGrids().begin(); it != world->getGrids().end();it++){
 		it->second->UnSubscribe(client);
 	}
 	cerr<<"Delete"<<endl;
 	delete client;
-	pthread_mutex_unlock(&lockClientList);
+	
 	pthread_exit(0);
 }
 
 
 void* ReadBuffer(Client* client){
-
 		if (client->outputnetworkBuf->recived > 0){
 			//************************************
 			//CRITICAL
@@ -177,7 +177,7 @@ void* ReadBuffer(Client* client){
 uint32_t parseBuffer(Client* client, uint32_t len){
 	char* buffer = client->outputnetworkBuf->networkBuf;
 	uint32_t offset = 0;
-	//printBuffer(buffer,len);
+	printBuffer(buffer,len);
 	while (offset < len){
 		SerialData* temp = (SerialData*)(buffer + offset);
 		if (len - offset >= sizeof(uint32_t)*2 && temp->_size <= len - offset){
@@ -210,25 +210,14 @@ uint32_t parseBuffer(Client* client, uint32_t len){
 				}
 				case SerialType::SerialPCShipTargetPosUpdate:{
 					SerialPCShipTargetPosUpdate* st = (SerialPCShipTargetPosUpdate*)(buffer+offset);
-					SObjI it = world->getObjs().find(st->_Id);
+					Processor* processor = networkControl->getProcessor(st->_Id);
 					
-					if(it != world->getObjs().end()){
-						if (it->second->isShip() && it->second->getTeam() == client->getTeamId() && !(it->second->isShip()->getMovementStatus() & MoveBitF::TargetPosLock)){
-							SShip* ss = (SShip*)it->second;
-							SPos sp;
-							if(ss->getPos().grid
-									&& (int32_t)0 - ((int32_t)ss->getPos().grid->getWight()/2) < st->_TargetPos_x
-									&& (int32_t)0 - ((int32_t)ss->getPos().grid->getHight()/2) < st->_TargetPos_y
-									&& st->_TargetPos_x < (int32_t)ss->getPos().grid->getWight()/2
-									&& st->_TargetPos_y < (int32_t)ss->getPos().grid->getHight()/2 ){
-
-							sp.x = st->_TargetPos_x;
-							sp.y = st->_TargetPos_y;
-							sp.d = st->_TargetPos_d;
-							ss->setTargetPos(sp);
-							}
-						}
+					if(!processor){
+						cerr<<"ERROR SFUNCTION SerialType::SerialPCShipTargetPosUpdate processor not found"<<endl;
+						break;
 					}
+					processor->addCommand(new CommandTargetPosUpdate(0,st,client->getId()));
+					
 					break;
 				}
 
@@ -343,32 +332,15 @@ uint32_t parseBuffer(Client* client, uint32_t len){
 
 				case SerialType::SerialReqChangeSubStatus:{
 					SerialReqChangeSubStatus* st = (SerialReqChangeSubStatus*)(buffer+offset);
-					SObjI shipit = world->getObjs().find(st->_ShipId);
-					map<uint32_t, SSlotNode*>::iterator slotnode;
-					if(shipit == world->getObjs().end())
+					
+					Processor* processor = networkControl->getProcessor(st->_ShipId);
+					
+					if(!processor){
+						cerr<<"ERROR SFUNCTION SerialType::SerialPCShipTargetPosUpdate processor not found"<<endl;
 						break;
-
-					if (!shipit->second->getsubable())
-						break;
-					if(shipit->second->getTeam() != client->getTeamId())
-						break;
-					slotnode = shipit->second->getsubable()->getSlots().find(st->_SubId);
-					if (slotnode == shipit->second->getsubable()->getSlots().end())
-						break;
-
-					if (!slotnode->second->getSS())
-						break;
-
-					slotnode->second->getSS()->setOnline(st->_StatusField & BitF_online);
-					if(slotnode->second->getSS()->isWeapon()){
-						if(slotnode->second->getSS()->isWeapon()->getTypeWep()->getAmoCostType() == NULL)
-							slotnode->second->getSS()->setRecharge(st->_StatusField & BitF_rechargin);
-						else if(st->_StatusField & BitF_rechargin)
-							slotnode->second->getSS()->setRecharge(true);
-					}else if(slotnode->second->getSS()->isBoost()){
-						slotnode->second->getSS()->setRecharge(st->_StatusField & BitF_rechargin);
 					}
-					slotnode->second->getSS()->reportCharge(SubscriptionLevel::details);
+					processor->addCommand(new CommandISubStatusField(st->_ShipId,st->_SubId,st->_StatusField, client->getId()));
+
 					break;
 				}
 				case SerialType::SerialReqCreateLoadOut:{
@@ -529,6 +501,19 @@ uint32_t parseBuffer(Client* client, uint32_t len){
 				}
 
 				case SerialType::SerialSubscribeObj:{
+					
+					SerialSubscribeObj* st = (SerialSubscribeObj*)(buffer+offset);
+					Processor* processor = networkControl->getProcessor(st->_Id);
+					
+					if(!processor){
+						cerr<<"ERROR SFUNCTION SerialType::SerialPCShipTargetPosUpdate processor not found"<<endl;
+						break;
+					}
+					processor->addCommand(new CommandClientSubscription(0,client->getId(),processor->getLocalProcssable()[st->_Id],SubscriptionLevel::details));
+					
+					
+					//TODO fix
+					/*
 					SerialSubscribeObj* st = (SerialSubscribeObj*)(buffer+offset);
 					SObjI it = world->getObjs().find(st->_Id);
 					if(it != world->getObjs().end()){
@@ -537,16 +522,29 @@ uint32_t parseBuffer(Client* client, uint32_t len){
 							it->second->isUnit()->sendFull(client);
 						}
 					}
-
+					*/
 					break;
 				}
 				case SerialType::SerialUnSubscribeObj:{
+					
+					SerialUnSubscribeObj* st = (SerialUnSubscribeObj*)(buffer+offset);
+					Processor* processor = networkControl->getProcessor(st->_Id);
+					
+					if(!processor){
+						cerr<<"ERROR SFUNCTION SerialType::SerialPCShipTargetPosUpdate processor not found"<<endl;
+						break;
+					}
+					processor->addCommand(new CommandClientSubscription(0,client->getId(),processor->getLocalProcssable()[st->_Id],SubscriptionLevel::lowFreq));
+				
+					
+					//TODO fix
+					/*
 					SerialUnSubscribeObj* st = (SerialUnSubscribeObj*)(buffer+offset);
 					SObjI it = world->getObjs().find(st->_Id);
 					if(it != world->getObjs().end()){
 						it->second->getSubscribers()[SubscriptionLevel::details].remove(client);
 					}
-
+					*/
 					break;
 				}
 				

@@ -103,6 +103,11 @@ void SCargoBay::sendCargoUpdate(SubscriptionLevel::Enum level, SItemType* item, 
 	SendCargoUpdate(this->getOwner()->obj()->getSubscribers()[level],this->getOwner(), item, quan);
 }
 
+void SCargoBay::sendCargoBay(list<uint32_t>& clients){
+	cerr<<"send cargoBay"<<endl;
+	SendCargoUpdate(clients, this);
+}
+
 SCargoBay::~SCargoBay() {
 }
 

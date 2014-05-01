@@ -42,6 +42,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/Sspacebjects/Ordres/SOrdreActionMoveTo.o \
 	${OBJECTDIR}/Sspacebjects/Ordres/SOrdreConditionUnitEqTo.o \
 	${OBJECTDIR}/Sspacebjects/Ordres/SOrdreRule.o \
+	${OBJECTDIR}/Commands/inputCommands/CommandIFit.o \
+	${OBJECTDIR}/Commands/inputCommands/CommandIUnfit.o \
 	${OBJECTDIR}/Sspacebjects/SPos.o \
 	${OBJECTDIR}/Commands/Command.o \
 	${OBJECTDIR}/Sspacebjects/Ordres/SOrdreConditionStatOp.o \
@@ -66,6 +68,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Sspacebjects/Ordres/SOrdreConditionOR.o \
 	${OBJECTDIR}/Commands/CommandAddSubscriptions.o \
 	${OBJECTDIR}/Sspacebjects/SShot.o \
+	${OBJECTDIR}/Commands/CommandTargetPosUpdate.o \
 	${OBJECTDIR}/World/SWorld.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSubSystemBoost.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSubTypeBoost.o \
@@ -74,11 +77,13 @@ OBJECTFILES= \
 	${OBJECTDIR}/Sspacebjects/Ordres/SOrdreActionTrasfereCargo.o \
 	${OBJECTDIR}/SFunctions.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSubSystemBonus.o \
+	${OBJECTDIR}/Commands/inputCommands/CommandISubStatusField.o \
 	${OBJECTDIR}/Commands/CommandTransfere.o \
 	${OBJECTDIR}/SItems/SItemType.o \
-	${OBJECTDIR}/SGlobals.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSlotNode.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSubSystemW.o \
+	${OBJECTDIR}/Commands/CommandClientSubscription.o \
+	${OBJECTDIR}/SGlobals.o \
 	${OBJECTDIR}/Commands/Processor.o \
 	${OBJECTDIR}/Sspacebjects/SUnit.o \
 	${OBJECTDIR}/Commands/Processable.o \
@@ -88,6 +93,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Sspacebjects/Ordres/SOrdreAction.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SShipTypeSlotData.o \
 	${OBJECTDIR}/Sspacebjects/SSubAble.o \
+	${OBJECTDIR}/Commands/CommandEnterGrid.o \
 	${OBJECTDIR}/Sspacebjects/SOrdres.o \
 	${OBJECTDIR}/Sspacebjects/SAstoroid.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSubTypeWep.o \
@@ -167,6 +173,16 @@ ${OBJECTDIR}/Sspacebjects/Ordres/SOrdreRule.o: Sspacebjects/Ordres/SOrdreRule.cp
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects/Ordres
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/Ordres/SOrdreRule.o Sspacebjects/Ordres/SOrdreRule.cpp
+
+${OBJECTDIR}/Commands/inputCommands/CommandIFit.o: Commands/inputCommands/CommandIFit.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Commands/inputCommands
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Commands/inputCommands/CommandIFit.o Commands/inputCommands/CommandIFit.cpp
+
+${OBJECTDIR}/Commands/inputCommands/CommandIUnfit.o: Commands/inputCommands/CommandIUnfit.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Commands/inputCommands
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Commands/inputCommands/CommandIUnfit.o Commands/inputCommands/CommandIUnfit.cpp
 
 ${OBJECTDIR}/Sspacebjects/SPos.o: Sspacebjects/SPos.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects
@@ -288,6 +304,11 @@ ${OBJECTDIR}/Sspacebjects/SShot.o: Sspacebjects/SShot.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/SShot.o Sspacebjects/SShot.cpp
 
+${OBJECTDIR}/Commands/CommandTargetPosUpdate.o: Commands/CommandTargetPosUpdate.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Commands
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Commands/CommandTargetPosUpdate.o Commands/CommandTargetPosUpdate.cpp
+
 ${OBJECTDIR}/World/SWorld.o: World/SWorld.cpp 
 	${MKDIR} -p ${OBJECTDIR}/World
 	${RM} $@.d
@@ -328,6 +349,11 @@ ${OBJECTDIR}/Sspacebjects/subsystems/SSubSystemBonus.o: Sspacebjects/subsystems/
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/subsystems/SSubSystemBonus.o Sspacebjects/subsystems/SSubSystemBonus.cpp
 
+${OBJECTDIR}/Commands/inputCommands/CommandISubStatusField.o: Commands/inputCommands/CommandISubStatusField.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Commands/inputCommands
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Commands/inputCommands/CommandISubStatusField.o Commands/inputCommands/CommandISubStatusField.cpp
+
 ${OBJECTDIR}/Commands/CommandTransfere.o: Commands/CommandTransfere.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Commands
 	${RM} $@.d
@@ -338,11 +364,6 @@ ${OBJECTDIR}/SItems/SItemType.o: SItems/SItemType.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/SItems/SItemType.o SItems/SItemType.cpp
 
-${OBJECTDIR}/SGlobals.o: SGlobals.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/SGlobals.o SGlobals.cpp
-
 ${OBJECTDIR}/Sspacebjects/subsystems/SSlotNode.o: Sspacebjects/subsystems/SSlotNode.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects/subsystems
 	${RM} $@.d
@@ -352,6 +373,16 @@ ${OBJECTDIR}/Sspacebjects/subsystems/SSubSystemW.o: Sspacebjects/subsystems/SSub
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects/subsystems
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/subsystems/SSubSystemW.o Sspacebjects/subsystems/SSubSystemW.cpp
+
+${OBJECTDIR}/Commands/CommandClientSubscription.o: Commands/CommandClientSubscription.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Commands
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Commands/CommandClientSubscription.o Commands/CommandClientSubscription.cpp
+
+${OBJECTDIR}/SGlobals.o: SGlobals.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/SGlobals.o SGlobals.cpp
 
 ${OBJECTDIR}/Commands/Processor.o: Commands/Processor.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Commands
@@ -397,6 +428,11 @@ ${OBJECTDIR}/Sspacebjects/SSubAble.o: Sspacebjects/SSubAble.cpp
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/SSubAble.o Sspacebjects/SSubAble.cpp
+
+${OBJECTDIR}/Commands/CommandEnterGrid.o: Commands/CommandEnterGrid.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Commands
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Commands/CommandEnterGrid.o Commands/CommandEnterGrid.cpp
 
 ${OBJECTDIR}/Sspacebjects/SOrdres.o: Sspacebjects/SOrdres.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects
