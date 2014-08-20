@@ -70,7 +70,7 @@ void Client::initTransfere(){
 	cerr<<"send done"<<endl;
 	if (world) {
 		for(map<uint32_t,SGrid*>::iterator it = world->getGrids().begin(); it != world->getGrids().end();it++){
-			CommandClientSubscription* cmd= new CommandClientSubscription(0,this->getId(),it->second,SubscriptionLevel::lowFreq);
+			CommandClientSubscription* cmd= new CommandClientSubscription(0,this->getId(),it->second->getId(),SubscriptionLevel::lowFreq);
 			it->second->addCommand(cmd); //TODO FIX This
 		
 		}

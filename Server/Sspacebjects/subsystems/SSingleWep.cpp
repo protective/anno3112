@@ -11,7 +11,10 @@
 #include "../SShip.h"
 #include "../SShot.h"
 #include "../../World/SGrid.h"
+#include "../../World/SWorld.h"
 #include "../SMetaObj.h"
+#include "../../Commands/CommandEnterGrid.h"
+
 SSingleWep::SSingleWep(SSubSystemW* subsys) {
 	this->subsys = subsys;
 	this->_cur = -1;
@@ -26,6 +29,7 @@ void SSingleWep::proces(Processor* processor){
 		cerr<<"WARNING SingleWep::proces Not Subable"<<endl;
 		return;
 	}
+
 	if(this->_cur == 0){
 		this->_charge = 1;
 		this->resetLockPower();
@@ -63,9 +67,8 @@ void SSingleWep::proces(Processor* processor){
 					int32_t x = owner->x+ ((this->subsys->getSlotNode()->getST()->gX()*(VektorUnitX(owner->d/100)) + (this->subsys->getSlotNode()->getST()->gY()*(VektorUnitY(owner->d/100)))));
 					int32_t y = owner->y+ ((this->subsys->getSlotNode()->getST()->gX()*(-VektorUnitY(owner->d/100)) + (this->subsys->getSlotNode()->getST()->gY()*(VektorUnitX(owner->d/100)))));
 					SPos temppos(x,y,0);
-					//SShot* shot = new SShot();
 					processor->createShot(temppos,this->subsys->getOwner().getsubable(), this->subsys->getSeqTarget(), this->subsys->getTypeWep());
-					//this->subsys->getOwner().getPos().grid->addShot(shot);
+					
 					if(this->subsys->getOwner().isShip())
 						this->subsys->getOwner().isShip()->ResetLastCombat();
 				}

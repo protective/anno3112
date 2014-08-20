@@ -30,6 +30,7 @@ public:
 	virtual uint32_t getId(){return _id;}
 	virtual SObj* isObj(){return this;}
 	virtual void proces(uint32_t delta, Processor* processor );
+	virtual SGrid* getGrid(){return _pos.grid;}
 	void subscribeClient(uint32_t clientId, SubscriptionLevel::Enum level);
 	void AddRoid(SAstoroidType* type, uint32_t counter);
 	void setSize(uint32_t size){this->_size = size;}

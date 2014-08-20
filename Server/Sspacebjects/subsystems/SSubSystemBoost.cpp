@@ -102,8 +102,9 @@ void SSubSystemBoost::proces(Processor* processor){
 					break;
 				}
 			}
-			if(boostNow)
-				this->getOwner().getPos().grid->BroadCastReportObjHpUdate(this->_owner);
+			//TODO Fix 
+			//if(boostNow)
+			//	this->getOwner().getPos().grid->BroadCastReportObjHpUdate(this->_owner);
 
 		}
 		if(boostNow)

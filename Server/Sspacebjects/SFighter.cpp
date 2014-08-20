@@ -6,16 +6,20 @@
  */
 
 #include "SFighter.h"
-
+#include "../World/SGrid.h"
+#include "../Commands/CommandEnterGrid.h"
 
 SFighter::SFighter(uint32_t id, SPos& pos, SFighterType& stype, uint32_t playerId):
 SUnit(id,pos, stype, playerId){
+	cerr<<"hest"<<endl;
 	_fType = &stype;
+	cerr<<"stype ="<<_fType<<endl;
+	
+	this->addCommand(new CommandEnterGrid(0,pos.grid->getId(),id));
 }
 
 
 void SFighter::proces(uint32_t delta, Processor* processor){
-	cerr<<"proces SFighter"<<endl;
 	if(_lastCombat < 1000000)
 		_lastCombat++;
 	
@@ -25,7 +29,6 @@ void SFighter::proces(uint32_t delta, Processor* processor){
 		if (it->second->getSS())
 			it->second->getSS()->proces(processor);
 	}
-	cerr<<"done proces slots"<<endl;
 	if(_order){
 		if(_targetUpdateCounter % 5 == 0){
 			_order->proces(OrdreEvent::Tick5,this);
@@ -37,19 +40,15 @@ void SFighter::proces(uint32_t delta, Processor* processor){
 			_order->proces(OrdreEvent::Tick25,this);
 		}
 	}
-	cerr<<"done proces order"<<endl;
 	_targetUpdateCounter++;
 	this->addRecoil(getUnitType()->getRecoilRecharge());
-	cerr<<"done proces add recoil"<<endl;
 	if (_targetUpdateCounter % 5 == 0){
 		//pthread_mutex_lock(&this->lockUnit);
 				
 			this->updateTargetsPrio(_processor);
-			cerr<<"done updateTargetsPrio"<<endl;
 			this->addEnergy(_recharge/5);
 		//pthread_mutex_unlock(&this->lockUnit);
 	}
-	cerr<<"done update target prio"<<endl;
 	if (_targetUpdateCounter % 25 == 0){
 		updateTargetList(_processor);
 		this->updateAutoMove();
@@ -106,7 +105,12 @@ void SFighter::proces(uint32_t delta, Processor* processor){
 	if (_targetUpdateCounter == 100)
 		_targetUpdateCounter = 0;
 	
-	cerr<<"end proces SUnit"<<endl;
+}
+
+void SFighter::subscribeClient(uint32_t clientId, SubscriptionLevel::Enum level){
+	cerr<<"subscribe fighter clid ="<<clientId<<endl;
+	this->sendFull(clientId);
+	_subscriptions[level].push_back(clientId);
 }
 
 SFighter::~SFighter() {

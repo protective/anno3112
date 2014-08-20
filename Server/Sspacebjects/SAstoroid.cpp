@@ -32,7 +32,8 @@ void SAstoroid::Hit(SShot* shot, uint32_t dmg, DmgTypes::Enum dmgtype, Shields::
 			}
 			this->_quan -= shot->getOwner()->getCargoBay()->AddReturn(this->getAstoroidType()->getItemType(),dmg);
 		}
-		this->_pos.grid->ReportHit(this,shot,ParticalTex::eks1,x,y);
+		//TODO fix report hit
+		//this->_pos.grid->ReportHit(this,shot,ParticalTex::eks1,x,y);
 	}
 	pthread_mutex_unlock(&this->lockUnit);
 }

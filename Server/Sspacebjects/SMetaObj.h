@@ -10,33 +10,42 @@
 
 #include "SPos.h"
 
-
+class Processor;
 class SMetaObj {
 public:
-	SMetaObj();
-	SMetaObj(const SMetaObj& orig);
+	SMetaObj(uint32_t id);
 	SPos* getPos(){return &pos;}
+	SPos getRPos();
 	TargetType::Enum getTargetType(){return targetType;}
 	uint8_t getTeam(){return team;}
 	map<uint8_t,Visibility::Enum> getVisibleTo(){}//TODO fix
 	bool isTargetable(){return targetType==TargetType::Invalid ? false: true;}
 	bool isAstoroid(){return targetType== TargetType::Astoroid? true:false;}
+	bool isMoveable();
+	uint32_t getSpeed();
+	virtual void checkCollisions(Processor* processor){}
+	uint32_t getTargetSize(){return _size;}
 	virtual ~SMetaObj();
 
+	//updateTimers
+	uint32_t _timerLowFeq;
+	uint32_t _id;
 	uint8_t varfreq;
 	//static
-	uint32_t size;
+	uint32_t _size;
 	TargetType::Enum targetType;	
 	uint32_t owner;
 	uint8_t team;
 	//variable
+	//bool posValid;
 	SPos pos;
+	int32_t vecX;
+	int32_t vecY;
+	int32_t vecZ;
 
 	uint32_t scan, scanP;
 	uint8_t procesNodeId;
 
-	
-	
 };
 
 #endif	/* SMETAOBJ_H */

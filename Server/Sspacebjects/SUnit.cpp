@@ -6,8 +6,14 @@
  */
 
 #include "SUnit.h"
+#include "SShip.h"
+#include "SFighter.h"
 #include "../World/SGrid.h"
 #include "../NetworkLayer/SShipNetworkLayer.h"
+#include "../Commands/CommandRemove.h"
+#include "../Commands/CommandEnterGrid.h"
+#include "../Commands/CommandExitGrid.h"
+#include "../Commands/CommandHit.h"
 
 SUnit::SUnit(uint32_t id, SPos& pos, SUnitType& stype, uint32_t playerId):
 SObj(id, pos,teamlist[playerId],playerId),SSubAble(this,stype.getEnergy(),stype.getRecharge(),stype.getScanRange(),stype.getScanPRange(),stype.getCargo()),STargetable(this),SMovable(this, stype.getTopSpeed(), stype.getAgility()), Processable() {
@@ -31,11 +37,11 @@ SObj(id, pos,teamlist[playerId],playerId),SSubAble(this,stype.getEnergy(),stype.
 	this->_armor = stype.getArmor()*1000;
 	this->_hull = stype.getHull()*1000;
 	this->_order = globalOrders[playerId][0];
-	
+	cerr<<"done create unit"<<endl;
 	_lastCombat = 0;
 }
 void SUnit::subscribeClient(uint32_t clientId, SubscriptionLevel::Enum level){
-	cerr<<"subscribe unit"<<endl;
+	cerr<<"subscribe unit clid ="<<clientId<<endl;
 	if(this->isShip())
 		this->isShip()->sendFull(clientId);
 	_subscriptions[level].push_back(clientId);
@@ -46,6 +52,7 @@ void SUnit::postProces(uint32_t delta){
 	
 	Move(delta);
 
+	/*
 	for (list<uint8_t>::iterator it = allteams.begin(); it != allteams.end(); it++){
 		bool found = false;
 		for (SObjI so = this->getPos().grid->getObjInGrid().begin(); so != this->getPos().grid->getObjInGrid().end();so++){
@@ -54,10 +61,10 @@ void SUnit::postProces(uint32_t delta){
 				if (Rangeobj(so->second->getPos(),this->getPos()) < so->second->isUnit()->getScanRange()/100){
 					found = true;
 					//TODO SUBSCR
-					/*if(_visibleTo.find(so->second->getTeam()) == _visibleTo.end() || _visibleTo[so->second->getTeam()] == Visibility::Invisible){
+					if(_visibleTo.find(so->second->getTeam()) == _visibleTo.end() || _visibleTo[so->second->getTeam()] == Visibility::Invisible){
 						_visibleTo[*it] = Visibility::PreVisible;
 					}
-					 * */
+					
 					break;
 				}			
 			}
@@ -68,7 +75,7 @@ void SUnit::postProces(uint32_t delta){
 			if(_visibleTo.find(*it) != _visibleTo.end() && _visibleTo[*it] == Visibility::Visible){
 				_visibleTo[*it] = Visibility::PreInvisible;
 			}
-			 * */
+			 * 
 		}
 	}
 	if(this->_order){
@@ -81,7 +88,7 @@ void SUnit::postProces(uint32_t delta){
 		}
 	}
 
-
+	*/
 }
 
 void SUnit::updateAutoMove(){
@@ -440,7 +447,6 @@ uint32_t SUnit::RemoveSub(uint32_t slot, uint32_t Xitem){
 	if (this->slots[slot]->getSS()){
 
 		uint32_t t = this->slots[slot]->getSS()->RemoveItem(Xitem);
-		cerr<<"reprot change "<<endl;
 		this->slots[slot]->getSS()->reportCharge(SubscriptionLevel::lowFreq);
 		if (this->slots[slot]->getSS()->Xitem() == 0){
 			delete this->slots[slot]->getSS();
@@ -452,8 +458,7 @@ uint32_t SUnit::RemoveSub(uint32_t slot, uint32_t Xitem){
 	return 0;
 }
 
-void SUnit::Hit(SShot* shot, uint32_t dmg, DmgTypes::Enum dmgtype, Shields::Enum impact, int32_t x, int32_t y){
-	
+void SUnit::hit(uint32_t shot, uint32_t dmg, DmgTypes::Enum dmgtype, Shields::Enum impact, int32_t x, int32_t y){
 	pthread_mutex_lock(&this->lockUnit);
 	_lastCombat = 0;
 	ParticalTex::Enum tex = ParticalTex::eks1;
@@ -553,6 +558,7 @@ void SUnit::Hit(SShot* shot, uint32_t dmg, DmgTypes::Enum dmgtype, Shields::Enum
 				else if(dmg > 11000)
 					tex= ParticalTex::eks7l;
 			}
+
 			firsthitfound = true;
 			if(dmg <= _armor){
 				_armor -= dmg;
@@ -595,13 +601,27 @@ void SUnit::Hit(SShot* shot, uint32_t dmg, DmgTypes::Enum dmgtype, Shields::Enum
 			}else{
 				dmg -= _hull;
 				_hull = 0;
+				cerr<<"ship dead !!!!!!!!!!!!!"<<endl;
+				sendRemoved(SubscriptionLevel::lowFreq, DestroyMode::Destroy);
+				
+				this->addCommand(new CommandExitGrid(0,this->_pos.grid->getId(),_id));
+				this->_pos.grid = NULL;
+				this->addCommand(new CommandRemove(0,this));
 			}
 		}
 	}
-	this->_pos.grid->ReportHit(this,shot,tex,x,y);
+	
+	//TODO fix report hit
+	sendTargetHit(SubscriptionLevel::lowFreq, shot, tex, x, y);
+	sendHpUdate(SubscriptionLevel::lowFreq);
+	//this->_pos.grid->ReportHit(this,shot,tex,x,y);
 
 	pthread_mutex_unlock(&this->lockUnit);
 	
+}
+
+void SUnit::sendHpUdate(SubscriptionLevel::Enum level){
+	networkSendUnitHpUdate(this->getSubscribers()[level], this);
 }
 
 bool SUnit::canBeRemoved(){

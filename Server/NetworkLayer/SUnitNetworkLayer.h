@@ -11,7 +11,7 @@
 #include "SSubSystemNetworkLayer.h"
 using namespace std;
 
-inline void sendUnitHpUdate(list<uint32_t>& clients, SUnit* unit){
+inline void networkSendUnitHpUdate(list<uint32_t>& clients, SUnit* unit){
 	//NETWORK*********
 	char message[sizeof(SerialObjHpUpdate)];
 	memset(message,0,sizeof(SerialObjHpUpdate));
@@ -21,10 +21,10 @@ inline void sendUnitHpUdate(list<uint32_t>& clients, SUnit* unit){
 	data->_size = sizeof(SerialObjHpUpdate);
 	data->_Id = unit->getId();
 	for(int i = 0; i < 6;i++)
-		data->_shield[i] = unit->isShip()->getShield(i);
-	data->_deflector= unit->isShip()->getDeflector();
-	data->_armor= unit->isShip()->getArmor();
-	data->_hull= unit->isShip()->getHull();
+		data->_shield[i] = unit->getShield(i);
+	data->_deflector= unit->getDeflector();
+	data->_armor= unit->getArmor();
+	data->_hull= unit->getHull();
 	
 	for(list<uint32_t>::iterator it = clients.begin(); it != clients.end();it++  ){
 		networkControl->sendToC(*it,message,sizeof(SerialObjHpUpdate));
@@ -58,7 +58,7 @@ inline void sendUnitFull(list<uint32_t>& clients, SUnit* unit){
 	cerr<<"cargobay ="<<unit->getCargoBay()<<endl;
 	if(unit->getCargoBay())
 		unit->getCargoBay()->sendCargoBay(clients);
-	sendUnitHpUdate(clients,unit);
+	networkSendUnitHpUdate(clients,unit);
 }
 
 inline void sendUnitPosUpdate(list<uint32_t>& clients, SUnit* unit){

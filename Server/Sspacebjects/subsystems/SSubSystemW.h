@@ -11,9 +11,10 @@
 #include "SSubSystem.h"
 #include "SSubTypeWep.h"
 #include "SSingleWep.h"
+#include "SSubSystemTargetingI.h"
 
 
-class SSubSystemW : public SSubSystem {
+class SSubSystemW : public SSubSystem , public SSubSystemTargetingI {
 public:
 	SSubSystemW(SObj& owner,SSlotNode& slotnode,uint32_t id,SItemType* item, uint32_t Xitem);
 	SSubTypeWep* getTypeWep(){return (SSubTypeWep*)this->_type->getSubType();}
@@ -23,12 +24,14 @@ public:
 	virtual int32_t cooldown(uint16_t index){if(_weps.find(index) != _weps.end())return _weps[index]->getDuration(); return 0;}
 	virtual int32_t maxcooldown(uint16_t index){return this->_maxcooldown;}
 
+	virtual TargetGroup::Enum getTargetGroup(){return this->_targetGroup;}
+	virtual void setTargetGroup(TargetGroup::Enum tg){this->_targetGroup = tg;}
 	
 	virtual uint32_t getSeqTarget(){return _seqTarget;}
 	virtual void setSeqTarget(uint32_t seqTarget){this->_seqTarget = seqTarget;}
 	virtual uint32_t getTarget(){return _target;}
 	virtual void setTarget(uint32_t target){_target = target;}
-	
+	uint32_t getRange(){return getTypeWep()->getRange();}
 	
 	virtual void announceRemovalOf(SObj* obj);
 	virtual bool canTarget(){return true;}

@@ -28,6 +28,7 @@ public:
 	uint32_t getSize(){return _size;}
 	virtual uint32_t getTargetSize(){return _size;}
 	virtual SpaceTypes::Enum getmyType();
+	virtual void setGrid(SGrid* grid){_pos.grid = grid;}
 	//virtual void proces(){};
 	virtual void postProces(){};
 	virtual void announceRemovalOf(SObj* obj){};
@@ -41,7 +42,7 @@ public:
 	virtual uint8_t getTeam(){return _team;}
 	virtual uint32_t getPlayerId(){return _playerId;}
 	virtual SSubAble* getsubable(){return NULL;}
-	virtual STargetable* getTargetable(){return NULL;}
+	virtual STargetable* isTargetable(){return NULL;}
 	virtual void setUpdateCounter(uint32_t value){this->_updateCounter = value;}
 	virtual uint32_t getUpdateCounter(){return this->_updateCounter;}
 	virtual map<int8_t,Visibility::Enum>& getVisibleTo(){}

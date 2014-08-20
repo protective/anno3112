@@ -15,6 +15,7 @@ class CommandProcessor : public Command  {
 public:
 	CommandProcessor(Processable* processable, uint32_t interval, uint32_t first);
 	virtual uint32_t execute();
+	virtual Processable* getProcessable(){return _processable;}
 	virtual ~CommandProcessor();
 private:
 	Processable* _processable;

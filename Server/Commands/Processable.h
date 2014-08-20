@@ -12,9 +12,13 @@
 #include "CommandAddSubscriptions.h"
 #include "CommandUpdateMetas.h"
 #include "CommandTimedSubscribeUpdate.h"
+#include "CommandRemove.h"
 class SMetaObj;
 class Processor;
 class SUnit;
+class SShip;
+class SShot;
+class STargetable;
 class Processable {
 public:
 	Processable();
@@ -24,7 +28,11 @@ public:
 	void setProcessor(Processor* processor){_processor = processor;}
 	virtual bool isMetable(){return false;}
 	virtual SUnit* isUnit(){return NULL;}
+	virtual SShip* isShip(){return NULL;}
 	virtual SObj* isObj(){return NULL;}
+	virtual SGrid* getGrid() = 0;
+	virtual SShot* isShot(){return NULL;}
+	virtual STargetable* isTargetable(){return NULL;}
 	virtual void getMetaObj(SMetaObj* metaobj){}
 	virtual void proces(uint32_t delta, Processor* processor ) = 0;
 	virtual void subscribeClient(uint32_t clientId, SubscriptionLevel::Enum level) = 0;

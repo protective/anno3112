@@ -12,6 +12,7 @@
 
 #include "../NetworkLayer/SSubableNetworkLayer.h"
 #include "SMetaObj.h"
+#include "subsystems/SSubSystemTargetingI.h"
 
 SSubAble::SSubAble(SObj* obj, uint32_t energy, uint32_t recharge, uint32_t scanRange, uint32_t scanPRange, uint32_t cargo) {
 	this->_obj = obj;
@@ -27,10 +28,11 @@ SSubAble::SSubAble(SObj* obj, uint32_t energy, uint32_t recharge, uint32_t scanR
 
 void SSubAble::updateTargetList(Processor* processor){
 	//TODO fix
-	/*
+	
 	map<uint32_t,SMetaObj*>& targets = processor->getLocalMetas();
 	for(map<uint32_t,SMetaObj*>::iterator it = targets.begin(); it!= targets.end();it++){
-		if ((it->second->isAstoroid())||(it->second->getTeam() != _obj->getTeam() && it->second->getVisibleTo().find(_obj->getTeam()) != it->second->getVisibleTo().end() && it->second->getVisibleTo()[_obj->getTeam()] == Visibility::Visible)){
+		//if ((it->second->isAstoroid())||(it->second->getTeam() != _obj->getTeam() && it->second->getVisibleTo().find(_obj->getTeam()) != it->second->getVisibleTo().end() && it->second->getVisibleTo()[_obj->getTeam()] == Visibility::Visible)){
+		if ((it->second->isAstoroid())||(it->second->getTeam() != _obj->getTeam())){
 			if(it->second->isTargetable()){
 				if (find(_lockedTargets.begin(),_lockedTargets.end(), it->first) == _lockedTargets.end()){
 					_lockedTargets.push_back(it->first);
@@ -45,29 +47,36 @@ void SSubAble::updateTargetList(Processor* processor){
 	}
 
 	list<TempSort> tempsort;
-	for( list<STargetable*>::iterator it = _lockedTargets.begin(); it != _lockedTargets.end(); it++){
-		tempsort.push_back(TempSort(*it,Rangeobj((*it)->obj()->getPos(),this->obj()->getPos()),this->obj()->getPlayerId()));
+	for( list<uint32_t>::iterator it = _lockedTargets.begin(); it != _lockedTargets.end(); it++){
+		
+		if(*processor->getLocalMetas().find(*it) == *processor->getLocalMetas().end())
+			continue;
+		//TODO get prio
+		//GET range
+		uint32_t range = Rangeobj(*processor->getLocalMetas()[*it]->getPos(),this->obj()->getPos());
+		tempsort.push_back(TempSort(*it,0,range,this->obj()->getPlayerId()));
 	}
 	tempsort.sort();
 	_lockedTargets.clear();
 	for( list<TempSort>::iterator it = tempsort.begin(); it != tempsort.end(); it++){
 		_lockedTargets.push_back((*it)._target);
 	}
-	 * */
+	
 }
 
 void SSubAble::updateTargetsPrio(Processor* processor){
 	//TODO FIX
-	/*
+	
 	if (!this->_obj->isShip())
 		return;
 	if (!this->_obj->isShip()->getOrdres())
 		return;
 	map<uint32_t, SMetaObj*> _cache;
 	for(list<uint32_t>::iterator SO = this->_lockedTargets.begin(); SO != this->_lockedTargets.end();SO++){
-		SMetaObj tempMeta = processor->getMeta(*SO);
-		if(tempMeta)
+		SMetaObj* tempMeta = processor->getMeta(*SO);
+		if(tempMeta){
 			_cache[*SO] = tempMeta;
+		}
 	}
 	
 	SOrdres* tempO = this->_obj->isShip()->getOrdres();
@@ -88,12 +97,16 @@ void SSubAble::updateTargetsPrio(Processor* processor){
 		
 		if(!it->second->getSS())
 			continue;
-		if(!it->second->getSS()->isWeapon())
+		
+		
+		SSubSystemTargetingI* subsys = it->second->getSS()->isWeapon();
+		if(!subsys)
+			 subsys = it->second->getSS()->isFighter();
+		if(!subsys)
 			continue;
-
-		SSubSystemW* subsys = it->second->getSS()->isWeapon();
-		uint32_t* oldTarget = it->second->getSS()->getTarget();
-		it->second->getSS()->clearTarget();
+		
+		uint32_t oldTarget = it->second->getSS()->getTarget();
+		it->second->getSS()->setTarget(0);
 		list<TargetType::Enum> curTargetList;
 
 		switch(it->second->getSS()->getTargetGroup()){
@@ -112,8 +125,8 @@ void SSubAble::updateTargetsPrio(Processor* processor){
 		for(list<TargetType::Enum>::iterator tt = curTargetList.begin(); tt!= curTargetList.end();tt++){
 			for(map<uint32_t, SMetaObj*>::iterator SO = _cache.begin(); SO != _cache.end();SO++){
 				if(subsys->getTargetGroup() != TargetGroup::Primary && ((*tt) == SO->second->getTargetType() || ((*tt) == TargetType::All && SO->second->getTargetType() != TargetType::Astoroid))){
-					if (1000*Rangeobj(this->obj()->getPos(),SO->second->getPos()) <= subsys->getTypeWep()->getRange()){
-						int32_t temp = Direction(subsys->getOwner().getPos(),SO->second->getPos())-(subsys->getOwner().getPos().d/100) ;
+					if (1000*Rangeobj(this->obj()->getPos(),*SO->second->getPos()) <= subsys->getRange()){
+						int32_t temp = Direction(_obj->getPos(),*SO->second->getPos())-(_obj->getPos().d/100) ;
 						if(temp < 0) temp+=360;
 						if(InAngle(temp,it->second->getST()->getFireDir())){ //found target break
 							subsys->setTarget(SO->first);
@@ -130,15 +143,15 @@ void SSubAble::updateTargetsPrio(Processor* processor){
 		}
 		
 		if(subsys->getTarget()){ //we have a target
-			if(!oldTarget || *subsys->getTarget() != *oldTarget){ //reset lock if not the same as old target
+			if(!oldTarget || subsys->getTarget() != oldTarget){ //reset lock if not the same as old target
 				subsys->resetLockPower();
 				if(!oldTarget) //we did not have a target before report new charge
-					subsys->reportCharge(SubscriptionLevel::details);
+					it->second->getSS()->reportCharge(SubscriptionLevel::details);
 
 			}
 		}
 	}
-	 * */
+	
 }
 
 void SSubAble::updateSubTarget(SSubSystem* subsys){

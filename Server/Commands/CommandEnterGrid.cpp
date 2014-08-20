@@ -7,14 +7,18 @@
 
 #include "CommandEnterGrid.h"
 #include "../World/SGrid.h"
-CommandEnterGrid::CommandEnterGrid(uint32_t time, SGrid* grid, SUnit* unit): 	
+CommandEnterGrid::CommandEnterGrid(uint32_t time, uint32_t grid, uint32_t obj): 	
 Command(time){
 	_grid = grid;
-	_unit = unit;
+	_obj = obj;
 }
 
 uint32_t CommandEnterGrid::execute(){
-	_grid->addUnit(_unit);
+	//cerr<<"execute enter grid"<<endl;
+	Processable* temp = _processor->getLocalProcssable(_grid);
+	if (!temp || !temp->getGrid())
+		return COMMAND_FINAL;
+	temp->getGrid()->addObj(_obj);
 	return COMMAND_FINAL;
 }
 

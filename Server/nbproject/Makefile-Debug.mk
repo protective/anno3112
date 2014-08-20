@@ -35,9 +35,11 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/SDatabase.o \
+	${OBJECTDIR}/Commands/CommandProcesMetas.o \
 	${OBJECTDIR}/Sspacebjects/SAstoroidType.o \
 	${OBJECTDIR}/Commands/CommandProcessor.o \
 	${OBJECTDIR}/Sspacebjects/SMovable.o \
+	${OBJECTDIR}/Sspacebjects/SMetaShot.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSubTypeFac.o \
 	${OBJECTDIR}/Sspacebjects/Ordres/SOrdreActionMoveTo.o \
 	${OBJECTDIR}/Sspacebjects/Ordres/SOrdreConditionUnitEqTo.o \
@@ -45,13 +47,15 @@ OBJECTFILES= \
 	${OBJECTDIR}/Commands/inputCommands/CommandIFit.o \
 	${OBJECTDIR}/Commands/inputCommands/CommandIUnfit.o \
 	${OBJECTDIR}/Sspacebjects/SPos.o \
+	${OBJECTDIR}/Commands/inputCommands/CommandIChangeSubTG.o \
 	${OBJECTDIR}/Commands/Command.o \
 	${OBJECTDIR}/Sspacebjects/Ordres/SOrdreConditionStatOp.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSubSystemFighter.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSubType.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSubTypeBonus.o \
-	${OBJECTDIR}/Sspacebjects/Ordres/SOrdreConditionAND.o \
+	${OBJECTDIR}/Commands/CommandInitShot.o \
 	${OBJECTDIR}/mainServer.o \
+	${OBJECTDIR}/Sspacebjects/Ordres/SOrdreConditionAND.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSubSystem.o \
 	${OBJECTDIR}/Sspacebjects/SFighterType.o \
 	${OBJECTDIR}/Sspacebjects/SShip.o \
@@ -60,6 +64,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Sspacebjects/Ordres/SOrdreCondition.o \
 	${OBJECTDIR}/Sspacebjects/SFighter.o \
 	${OBJECTDIR}/SItems/SItem.o \
+	${OBJECTDIR}/Commands/CommandHit.o \
 	${OBJECTDIR}/NetworkControler.o \
 	${OBJECTDIR}/Sspacebjects/SMetaObj.o \
 	${OBJECTDIR}/Commands/CommandUpdateMetas.o \
@@ -86,17 +91,21 @@ OBJECTFILES= \
 	${OBJECTDIR}/SGlobals.o \
 	${OBJECTDIR}/Commands/Processor.o \
 	${OBJECTDIR}/Sspacebjects/SUnit.o \
-	${OBJECTDIR}/Commands/Processable.o \
+	${OBJECTDIR}/Commands/CommandExitGrid.o \
 	${OBJECTDIR}/World/SGrid.o \
+	${OBJECTDIR}/Sspacebjects/Ordres/SOrdreAction.o \
+	${OBJECTDIR}/Commands/Processable.o \
+	${OBJECTDIR}/Commands/CommandRemove.o \
 	${OBJECTDIR}/Sspacebjects/SObj.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SLoadout.o \
-	${OBJECTDIR}/Sspacebjects/Ordres/SOrdreAction.o \
-	${OBJECTDIR}/Sspacebjects/subsystems/SShipTypeSlotData.o \
 	${OBJECTDIR}/Sspacebjects/SSubAble.o \
+	${OBJECTDIR}/Sspacebjects/subsystems/SShipTypeSlotData.o \
 	${OBJECTDIR}/Commands/CommandEnterGrid.o \
 	${OBJECTDIR}/Sspacebjects/SOrdres.o \
-	${OBJECTDIR}/Sspacebjects/SAstoroid.o \
+	${OBJECTDIR}/Commands/inputCommands/CommandIChangeOrders.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSubTypeWep.o \
+	${OBJECTDIR}/Sspacebjects/SAstoroid.o \
+	${OBJECTDIR}/Commands/CommandMetaHit.o \
 	${OBJECTDIR}/Sspacebjects/cargo/SCargoBay.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSubSystemRef.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSingleRef.o \
@@ -139,6 +148,11 @@ ${OBJECTDIR}/SDatabase.o: SDatabase.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/SDatabase.o SDatabase.cpp
 
+${OBJECTDIR}/Commands/CommandProcesMetas.o: Commands/CommandProcesMetas.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Commands
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Commands/CommandProcesMetas.o Commands/CommandProcesMetas.cpp
+
 ${OBJECTDIR}/Sspacebjects/SAstoroidType.o: Sspacebjects/SAstoroidType.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects
 	${RM} $@.d
@@ -153,6 +167,11 @@ ${OBJECTDIR}/Sspacebjects/SMovable.o: Sspacebjects/SMovable.cpp
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/SMovable.o Sspacebjects/SMovable.cpp
+
+${OBJECTDIR}/Sspacebjects/SMetaShot.o: Sspacebjects/SMetaShot.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Sspacebjects
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/SMetaShot.o Sspacebjects/SMetaShot.cpp
 
 ${OBJECTDIR}/Sspacebjects/subsystems/SSubTypeFac.o: Sspacebjects/subsystems/SSubTypeFac.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects/subsystems
@@ -189,6 +208,11 @@ ${OBJECTDIR}/Sspacebjects/SPos.o: Sspacebjects/SPos.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/SPos.o Sspacebjects/SPos.cpp
 
+${OBJECTDIR}/Commands/inputCommands/CommandIChangeSubTG.o: Commands/inputCommands/CommandIChangeSubTG.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Commands/inputCommands
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Commands/inputCommands/CommandIChangeSubTG.o Commands/inputCommands/CommandIChangeSubTG.cpp
+
 ${OBJECTDIR}/Commands/Command.o: Commands/Command.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Commands
 	${RM} $@.d
@@ -214,15 +238,20 @@ ${OBJECTDIR}/Sspacebjects/subsystems/SSubTypeBonus.o: Sspacebjects/subsystems/SS
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/subsystems/SSubTypeBonus.o Sspacebjects/subsystems/SSubTypeBonus.cpp
 
-${OBJECTDIR}/Sspacebjects/Ordres/SOrdreConditionAND.o: Sspacebjects/Ordres/SOrdreConditionAND.cpp 
-	${MKDIR} -p ${OBJECTDIR}/Sspacebjects/Ordres
+${OBJECTDIR}/Commands/CommandInitShot.o: Commands/CommandInitShot.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Commands
 	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/Ordres/SOrdreConditionAND.o Sspacebjects/Ordres/SOrdreConditionAND.cpp
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Commands/CommandInitShot.o Commands/CommandInitShot.cpp
 
 ${OBJECTDIR}/mainServer.o: mainServer.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/mainServer.o mainServer.cpp
+
+${OBJECTDIR}/Sspacebjects/Ordres/SOrdreConditionAND.o: Sspacebjects/Ordres/SOrdreConditionAND.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Sspacebjects/Ordres
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/Ordres/SOrdreConditionAND.o Sspacebjects/Ordres/SOrdreConditionAND.cpp
 
 ${OBJECTDIR}/Sspacebjects/subsystems/SSubSystem.o: Sspacebjects/subsystems/SSubSystem.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects/subsystems
@@ -263,6 +292,11 @@ ${OBJECTDIR}/SItems/SItem.o: SItems/SItem.cpp
 	${MKDIR} -p ${OBJECTDIR}/SItems
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/SItems/SItem.o SItems/SItem.cpp
+
+${OBJECTDIR}/Commands/CommandHit.o: Commands/CommandHit.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Commands
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Commands/CommandHit.o Commands/CommandHit.cpp
 
 ${OBJECTDIR}/NetworkControler.o: NetworkControler.cpp 
 	${MKDIR} -p ${OBJECTDIR}
@@ -394,15 +428,30 @@ ${OBJECTDIR}/Sspacebjects/SUnit.o: Sspacebjects/SUnit.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/SUnit.o Sspacebjects/SUnit.cpp
 
-${OBJECTDIR}/Commands/Processable.o: Commands/Processable.cpp 
+${OBJECTDIR}/Commands/CommandExitGrid.o: Commands/CommandExitGrid.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Commands
 	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Commands/Processable.o Commands/Processable.cpp
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Commands/CommandExitGrid.o Commands/CommandExitGrid.cpp
 
 ${OBJECTDIR}/World/SGrid.o: World/SGrid.cpp 
 	${MKDIR} -p ${OBJECTDIR}/World
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/World/SGrid.o World/SGrid.cpp
+
+${OBJECTDIR}/Sspacebjects/Ordres/SOrdreAction.o: Sspacebjects/Ordres/SOrdreAction.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Sspacebjects/Ordres
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/Ordres/SOrdreAction.o Sspacebjects/Ordres/SOrdreAction.cpp
+
+${OBJECTDIR}/Commands/Processable.o: Commands/Processable.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Commands
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Commands/Processable.o Commands/Processable.cpp
+
+${OBJECTDIR}/Commands/CommandRemove.o: Commands/CommandRemove.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Commands
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Commands/CommandRemove.o Commands/CommandRemove.cpp
 
 ${OBJECTDIR}/Sspacebjects/SObj.o: Sspacebjects/SObj.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects
@@ -414,20 +463,15 @@ ${OBJECTDIR}/Sspacebjects/subsystems/SLoadout.o: Sspacebjects/subsystems/SLoadou
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/subsystems/SLoadout.o Sspacebjects/subsystems/SLoadout.cpp
 
-${OBJECTDIR}/Sspacebjects/Ordres/SOrdreAction.o: Sspacebjects/Ordres/SOrdreAction.cpp 
-	${MKDIR} -p ${OBJECTDIR}/Sspacebjects/Ordres
+${OBJECTDIR}/Sspacebjects/SSubAble.o: Sspacebjects/SSubAble.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Sspacebjects
 	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/Ordres/SOrdreAction.o Sspacebjects/Ordres/SOrdreAction.cpp
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/SSubAble.o Sspacebjects/SSubAble.cpp
 
 ${OBJECTDIR}/Sspacebjects/subsystems/SShipTypeSlotData.o: Sspacebjects/subsystems/SShipTypeSlotData.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects/subsystems
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/subsystems/SShipTypeSlotData.o Sspacebjects/subsystems/SShipTypeSlotData.cpp
-
-${OBJECTDIR}/Sspacebjects/SSubAble.o: Sspacebjects/SSubAble.cpp 
-	${MKDIR} -p ${OBJECTDIR}/Sspacebjects
-	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/SSubAble.o Sspacebjects/SSubAble.cpp
 
 ${OBJECTDIR}/Commands/CommandEnterGrid.o: Commands/CommandEnterGrid.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Commands
@@ -439,15 +483,25 @@ ${OBJECTDIR}/Sspacebjects/SOrdres.o: Sspacebjects/SOrdres.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/SOrdres.o Sspacebjects/SOrdres.cpp
 
-${OBJECTDIR}/Sspacebjects/SAstoroid.o: Sspacebjects/SAstoroid.cpp 
-	${MKDIR} -p ${OBJECTDIR}/Sspacebjects
+${OBJECTDIR}/Commands/inputCommands/CommandIChangeOrders.o: Commands/inputCommands/CommandIChangeOrders.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Commands/inputCommands
 	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/SAstoroid.o Sspacebjects/SAstoroid.cpp
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Commands/inputCommands/CommandIChangeOrders.o Commands/inputCommands/CommandIChangeOrders.cpp
 
 ${OBJECTDIR}/Sspacebjects/subsystems/SSubTypeWep.o: Sspacebjects/subsystems/SSubTypeWep.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects/subsystems
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/subsystems/SSubTypeWep.o Sspacebjects/subsystems/SSubTypeWep.cpp
+
+${OBJECTDIR}/Sspacebjects/SAstoroid.o: Sspacebjects/SAstoroid.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Sspacebjects
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Sspacebjects/SAstoroid.o Sspacebjects/SAstoroid.cpp
+
+${OBJECTDIR}/Commands/CommandMetaHit.o: Commands/CommandMetaHit.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Commands
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Commands/CommandMetaHit.o Commands/CommandMetaHit.cpp
 
 ${OBJECTDIR}/Sspacebjects/cargo/SCargoBay.o: Sspacebjects/cargo/SCargoBay.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects/cargo

@@ -45,8 +45,56 @@ void SGrid::sendFull(Client* cli){
 	sendGridFull(temp, this);
 }
 
-void SGrid::addUnit(SUnit* unit){
+/*
 
+void SGrid::add(SObj* obj){
+	cerr<<"add wrong"<<endl;
+	
+	if(obj->isUnit())
+		this->addUnit(obj->isUnit());
+	if(obj->isAstoroid())
+		this->addAsto(obj->isAstoroid());
+	if(obj->isShot())
+		this->addShot(obj->isShot());
+	
+	cerr<<"done add"<<endl;
+	//if(obj->isFighter())
+	//	this->add(obj->isFighter());
+}
+
+
+
+void SGrid::addAsto(SAstoroid* asto){
+		//TODO
+	/*
+	this->addObj((SObj*)asto);
+	for(ClientI it = this->subscriber.begin(); it != this->subscriber.end(); it++){
+		asto->getSubscribers()[SubscriptionLevel::lowFreq].push_back(*it);
+	}
+	asto->sendFull(SubscriptionLevel::lowFreq);
+	
+
+}
+
+void SGrid::addShot(SShot* shot){
+	cerr<<"grid add shot"<<endl;
+	
+	this->addObj(shot);
+	for(list<Client*>::iterator it =  subscriber.begin(); it != subscriber.end();it++){
+		shot->addCommand(new CommandClientSubscription(0,(*it)->getId(),shot,SubscriptionLevel::lowFreq));
+	}
+	//TODO
+	
+	this->addObj((SObj*)shot);
+	for(ClientI it = this->subscriber.begin(); it != this->subscriber.end(); it++){
+		shot->getSubscribers()[SubscriptionLevel::lowFreq].push_back(*it);
+	}
+	
+
+}
+
+void SGrid::addUnit(SUnit* unit){
+	
 	this->addObj((SObj*)unit);
 	for(list<Client*>::iterator it =  subscriber.begin(); it != subscriber.end();it++){
 		unit->addCommand(new CommandClientSubscription(0,(*it)->getId(),unit,SubscriptionLevel::lowFreq));
@@ -58,40 +106,26 @@ void SGrid::addUnit(SUnit* unit){
 		unit->getSubscribers()[SubscriptionLevel::lowFreq].push_back(*it);
 	}
 	unit->sendFull(SubscriptionLevel::lowFreq);
-*/
-}
 
-void SGrid::addAstoroid(SAstoroid* asto){
-		//TODO
-	/*
-	this->addObj((SObj*)asto);
-	for(ClientI it = this->subscriber.begin(); it != this->subscriber.end(); it++){
-		asto->getSubscribers()[SubscriptionLevel::lowFreq].push_back(*it);
+}	
+	*/
+
+void SGrid::addObj(uint32_t obj){
+	cerr<<"SGrid::addObj"<<obj<<endl;
+	this->objInGrid[obj] = obj;
+	
+	
+	for(map<uint32_t, SubscriptionLevel::Enum>::iterator it = _clientSubscriptions.begin(); it != _clientSubscriptions.end(); it++){
+		CommandClientSubscription* temp = new CommandClientSubscription(0,it->first, obj, it->second);
+		if(networkControl->addCommandToProcesable(temp,it->first)){
+			cerr<<"SGrid::addobj warning processer not found"<<endl;
+			delete temp;
+		}
 	}
-	asto->sendFull(SubscriptionLevel::lowFreq);
-	 * /**/
-
 }
 
-void SGrid::addShot(SShot* shot){
-	//TODO
-	/*
-	this->addObj((SObj*)shot);
-	for(ClientI it = this->subscriber.begin(); it != this->subscriber.end(); it++){
-		shot->getSubscribers()[SubscriptionLevel::lowFreq].push_back(*it);
-	}
-	 * **/
-
-}
-
-void SGrid::addObj(SObj* obj){
-
-	this->objInGrid[obj->getId()] = obj;
-
-}
-
-void SGrid::removeObj(SObj* obj){
-
+void SGrid::removeObj(uint32_t obj){
+	this->objInGrid.erase(obj);
 }
 
 void SGrid::UnSubscribe(Client* cli){
@@ -133,11 +167,14 @@ void SGrid::subscribeClient(uint32_t clientId, SubscriptionLevel::Enum level){
 	_clientSubscriptions[clientId] = level;
 	sendGridFull(clientId, this);
 	
-	for(map<uint32_t, SObj*>::iterator it = objInGrid.begin(); it != objInGrid.end(); it++){
-		if (it->second->isUnit()){
+	for(map<uint32_t, uint32_t>::iterator it = objInGrid.begin(); it != objInGrid.end(); it++){
+		if (it->second){
 			
-			CommandClientSubscription* temp = new CommandClientSubscription(0,clientId, it->second->isUnit(), SubscriptionLevel::lowFreq);
-			it->second->isUnit()->addCommand(temp);
+			CommandClientSubscription* temp = new CommandClientSubscription(0,clientId, it->second, SubscriptionLevel::lowFreq);
+			if(networkControl->addCommandToProcesable(temp,it->second)){
+				cerr<<"SGrid::subscribeClient warning processer not found"<<endl;
+				delete temp;
+			}
 		}
 	}
 	
@@ -145,6 +182,7 @@ void SGrid::subscribeClient(uint32_t clientId, SubscriptionLevel::Enum level){
 
 //command call thread safe
 void SGrid::proces(uint32_t delta, Processor* processor ){
+	/*
 	for (SObjI it = this->objToAdd.begin() ; it != this->objToAdd.end();it++){
 		it->second->getPos().grid = this;
 		this->objInGrid[it->second->getId()] = it->second;
@@ -168,6 +206,7 @@ void SGrid::proces(uint32_t delta, Processor* processor ){
 		}else
 			 it++;
 	}
+	 * */
 }
 
 void SGrid::SendObjInfoToClients(){
@@ -279,7 +318,7 @@ void SGrid::SendObjInfoToClients(){
 	pthread_mutex_unlock(&locksubscriber);
 }
 
-
+/*
 void SGrid::SendObjTargetPrio(Client* cli,SObj* obj){
 
 	//NETWORK*********
@@ -297,9 +336,9 @@ void SGrid::SendObjTargetPrio(Client* cli,SObj* obj){
 	sendtoC(cli,message,sizeof(SerialObjPrio));
 }
 
+*/
 
-
-
+/*
 void SGrid::SendShipDetails(Client* cli,SShip* ship){
 //NETWORK*********
 	if(ship){
@@ -319,7 +358,9 @@ void SGrid::SendShipDetails(Client* cli,SShip* ship){
 	}
 }
 
+*/
 
+/*
 
 void SGrid::BroadCastReportObjHpUdate(SObj* obj){
 	//TODO SUBSCR
@@ -329,9 +370,11 @@ void SGrid::BroadCastReportObjHpUdate(SObj* obj){
 		ReportObjHpUdate(*it,obj);
 	}
 	pthread_mutex_unlock(&this->locksubscriber);
-	*/
+	
 }
+*/
 
+/*
 
 void SGrid::ReportHit(STargetable* target, SShot* shot,ParticalTex::Enum tex, int32_t x, int32_t y){
 		//***************
@@ -355,9 +398,11 @@ void SGrid::ReportHit(STargetable* target, SShot* shot,ParticalTex::Enum tex, in
 			this->ReportObjHpUdate(*it,target->obj());
 		}
 		pthread_mutex_unlock(&locksubscriber);
-		*/
+		
 	
 }
+*/
+
 /*
 void SGrid::ReportShipDestroyd(SShip* ship ){
 	pthread_mutex_lock(&locksubscriber);

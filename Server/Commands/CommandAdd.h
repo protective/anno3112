@@ -13,6 +13,7 @@
 class CommandAdd : public Command {
 public:
 	CommandAdd(uint32_t time, Processable* processable,list<Command*> commands);
+	virtual Processable* getProcessable(){return _processable;}
 	virtual uint32_t execute();
 	virtual ~CommandAdd();
 protected:

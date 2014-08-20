@@ -14,33 +14,28 @@
 #include "cargo/SCargoBay.h"
 
 struct TempSort{
-	TempSort(STargetable* target, uint32_t range, uint32_t playerid){
+	TempSort(uint32_t target, uint8_t prio, uint32_t range, uint32_t playerid){
 		_target = target;
 		_range = range;
 		_playerid = playerid;
+		_prio = prio;
 	}
 	bool operator < (const TempSort& s2)
 	{
-		uint8_t s1prio = 0;
-		if (this->_target->getprio().find(this->_playerid) != this->_target->getprio().end())
-				s1prio = this->_target->getprio()[this->_playerid];
-		uint8_t s2prio = 0;
-		if (s2._target->getprio().find(this->_playerid) != s2._target->getprio().end())
-			s2prio = s2._target->getprio()[this->_playerid];
-
-		if(s1prio > s2prio){
+		if(_prio > s2._prio){
 			return true;
 		}
-		if(s1prio < s2prio){
+		if(_prio < s2._prio){
 			return false;
 		}
-		if(s1prio == s2prio && this->_range < s2._range)
+		if(_prio == s2._prio && _range < s2._range)
 			return true;
 		else
 			return false;
 		return false;
 	}
-	STargetable* _target;
+	uint32_t _target;
+	uint8_t _prio;
 	uint32_t _range;
 	uint32_t _playerid;
 };

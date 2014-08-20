@@ -18,6 +18,8 @@
 #include "Commands/CommandTargetPosUpdate.h"
 #include "Commands/inputCommands/CommandISubStatusField.h"
 #include "Commands/CommandClientSubscription.h"
+#include "Commands/inputCommands/CommandIChangeOrders.h"
+#include "Commands/inputCommands/CommandIChangeSubTG.h"
 void sendtoC(Client* cli, char* buffer, uint32_t len){
 	pthread_mutex_lock(&cli->networkSendLock);
 		if (cli->networkSendLockBool)
@@ -273,60 +275,41 @@ uint32_t parseBuffer(Client* client, uint32_t len){
 					fromit->second->getsubable()->getCargoBay()->TransfereCargo(toit->second->getsubable()->getCargoBay(),it3->second,st->_quantity);
 					break;
 				}
-
-
-
 				case SerialType::SerialReqChangeSubTG:{
 					SerialReqChangeSubTG* st = (SerialReqChangeSubTG*)(buffer+offset);
-					SObjI shipit = world->getObjs().find(st->_ShipId);
-					map<uint32_t, SSlotNode*>::iterator slotnode;
-					if(shipit == world->getObjs().end())
-						break;
-
-					if (!shipit->second->getsubable())
-						break;
-					if(shipit->second->getTeam() != client->getTeamId())
-						break;
-					slotnode = shipit->second->getsubable()->getSlots().find(st->_SubId);
-					if (slotnode == shipit->second->getsubable()->getSlots().end())
-						break;
-
-					if (!slotnode->second->getSS())
-						break;
+					Processor* processor = networkControl->getProcessor(st->_ShipId);
 					
-					slotnode->second->getSS()->setTargetGroup((TargetGroup::Enum)st->_TargetGroup);
-					slotnode->second->getSS()->reportCharge(SubscriptionLevel::details);
+					if(!processor){
+						cerr<<"ERROR SFUNCTION SerialType::SerialReqChangeSubTG processor not found"<<endl;
+						break;
+					}
+					processor->addCommand(new CommandIChangeSubTG(st->_ShipId, st->_SubId, (TargetGroup::Enum)st->_TargetGroup, client->getId()));
 					break;
 				}
-
-
 				case SerialType::SerialReqChangeOrdres:{
 					SerialReqChangeOrdres* st = (SerialReqChangeOrdres*)(buffer+offset);
-					SObjI shipit = world->getObjs().find(st->_ShipId);
-					if(shipit == world->getObjs().end())
+					Processor* processor = networkControl->getProcessor(st->_ShipId);
+					
+					if(!processor){
+						cerr<<"ERROR SFUNCTION SerialType::SerialReqChangeOrdres processor not found"<<endl;
 						break;
-
-					if (!shipit->second->isShip())
-						break;
-					if(shipit->second->getTeam() != client->getTeamId())
-						break;
-					shipit->second->isShip()->setOrdres(globalOrders[client->getPlayerId()][st->_OrdreId]);
-					shipit->second->getPos().grid->SendShipDetails(client,shipit->second->isShip());
+					}
+					processor->addCommand(new CommandIChangeOrders(st->_ShipId, st->_OrdreId, client->getId()));
 					break;
 				}
 
 				case SerialType::SerialReqChangePrio:{
 					SerialReqChangePrio* st = (SerialReqChangePrio*)(buffer+offset);
-					SObjI shipit = world->getObjs().find(st->_Id);
-					if(shipit == world->getObjs().end())
-						break;
+					
+					//Processor* processor = networkControl->getProcessor(st->_ShipId);
+					
+//					if(!processor){
+					//	cerr<<"ERROR SFUNCTION SerialType::SerialPCShipTargetPosUpdate processor not found"<<endl;
+					//	break;
+					//}
+					//processor->addCommand(new CommandISubStatusField(st->_ShipId,st->_SubId,st->_StatusField, client->getId()));
 
-					if(!shipit->second->getTargetable())
-						break;
-					if(shipit->second->getTeam() == client->getTeamId()) //no prio for teammembers
-						break;
-					shipit->second->getTargetable()->getprio()[client->getPlayerId()] = st->_prio;
-					shipit->second->getPos().grid->SendObjTargetPrio(client,shipit->second);
+					
 					break;
 				}
 
@@ -373,8 +356,6 @@ uint32_t parseBuffer(Client* client, uint32_t len){
 					break;
 				}
 
-
-
 				case SerialType::SerialReqFitLoadout:{
 					SerialReqFitLoadout* st = (SerialReqFitLoadout*)(buffer+offset);
 					SObjI fromit = world->getObjs().find(st->_FromId);
@@ -404,7 +385,6 @@ uint32_t parseBuffer(Client* client, uint32_t len){
 					loadout->fitTo(toobj,frombay);
 					break;
 				}
-
 
 				case SerialType::SerialReqFit:{
 					SerialReqFit* st = (SerialReqFit*)(buffer+offset);
@@ -503,13 +483,14 @@ uint32_t parseBuffer(Client* client, uint32_t len){
 				case SerialType::SerialSubscribeObj:{
 					
 					SerialSubscribeObj* st = (SerialSubscribeObj*)(buffer+offset);
+					
 					Processor* processor = networkControl->getProcessor(st->_Id);
 					
 					if(!processor){
 						cerr<<"ERROR SFUNCTION SerialType::SerialPCShipTargetPosUpdate processor not found"<<endl;
 						break;
 					}
-					processor->addCommand(new CommandClientSubscription(0,client->getId(),processor->getLocalProcssable()[st->_Id],SubscriptionLevel::details));
+					processor->addCommand(new CommandClientSubscription(0,client->getId(),st->_Id,SubscriptionLevel::details));
 					
 					
 					//TODO fix
@@ -534,7 +515,7 @@ uint32_t parseBuffer(Client* client, uint32_t len){
 						cerr<<"ERROR SFUNCTION SerialType::SerialPCShipTargetPosUpdate processor not found"<<endl;
 						break;
 					}
-					processor->addCommand(new CommandClientSubscription(0,client->getId(),processor->getLocalProcssable()[st->_Id],SubscriptionLevel::lowFreq));
+					processor->addCommand(new CommandClientSubscription(0,client->getId(),st->_Id,SubscriptionLevel::lowFreq));
 				
 					
 					//TODO fix

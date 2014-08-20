@@ -18,12 +18,12 @@ Command(0){
 }
 
 uint32_t CommandISubStatusField::execute(){
-	cerr<<"execute status change"<<endl;
-	if(_processor->getLocalProcssable().find(_shipId) == _processor->getLocalProcssable().end()){
+	cerr<<"execute CommandISubStatusField"<<endl;
+	if(_processor->getLocalProcssables().find(_shipId) == _processor->getLocalProcssables().end()){
 		cerr<<"CommandTargetPosUpdate target unit not on processor"<<endl;
 		return COMMAND_FINAL;
 	}
-	SUnit* unit = _processor->getLocalProcssable()[_shipId]->isUnit();
+	SUnit* unit = _processor->getLocalProcssables()[_shipId]->isUnit();
 
 	if (!unit)
 		return COMMAND_FINAL;

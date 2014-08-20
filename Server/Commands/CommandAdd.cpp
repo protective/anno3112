@@ -12,10 +12,11 @@ CommandAdd::CommandAdd(uint32_t time, Processable* processable,list<Command*> co
 Command(time){
 	_commands = commands;
 	_processable = processable;
+	cerr<<"create cmd add id="<<_processable->getId()<<endl;
 }
 
 uint32_t CommandAdd::execute(){
-	cerr<<"execure CommandAdd"<<endl;
+	cerr<<"execure CommandAdd to processor="<<_processable<<" id="<<_processable->getId()<<endl;
 	for(list<Command*>::iterator it = _commands.begin(); it != _commands.end();it++){
 		_processor->addCommand(*it);
 	}
@@ -23,7 +24,7 @@ uint32_t CommandAdd::execute(){
 		_processor->addCommand(*it);
 	}
 	_processable->setProcessor(_processor);
-	_processor->getLocalProcssable()[_processable->getId()] = _processable;
+	_processor->getLocalProcssables()[_processable->getId()] = _processable;
 	
 	//start reciveing from the network
 	networkControl->registerObj(_processable->getId(),_processor);

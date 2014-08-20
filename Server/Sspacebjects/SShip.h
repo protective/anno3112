@@ -17,8 +17,12 @@ public:
 	SShip(uint32_t id, SPos& pos, SShipType& stype, uint32_t playerId);
 	virtual SShip* isShip(){return this;}
 	SShipType* getShipType(){return (SShipType*)this->_sType;}
+	virtual TargetType::Enum getTargetType(){return this->_sType->getTargetType();}
+
 	virtual SUnitType* getUnitType(){return _sType;}
 	virtual void proces(uint32_t delta, Processor* processor);
+	virtual void subscribeClient(uint32_t clientId, SubscriptionLevel::Enum level);
+
 	virtual ~SShip();
 private:
 	SShipType* _sType;

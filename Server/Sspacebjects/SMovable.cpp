@@ -24,6 +24,7 @@ SPos& SMovable::getTargetPos(){
 }
 
 void SMovable::setTargetPos(SPos& pos){
+	cerr<<"set target pos !!!!!"<<endl;
 	this->_targetPos.x = pos.x;
 	this->_targetPos.y = pos.y;
 	this->_targetPos.d = pos.d;

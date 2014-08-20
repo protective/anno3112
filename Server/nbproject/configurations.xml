@@ -15,6 +15,10 @@
                    projectFiles="true">
       <logicalFolder name="f7" displayName="Commands" projectFiles="true">
         <logicalFolder name="f1" displayName="InputCommands" projectFiles="true">
+          <itemPath>Commands/inputCommands/CommandIChangeOrders.cpp</itemPath>
+          <itemPath>Commands/inputCommands/CommandIChangeOrders.h</itemPath>
+          <itemPath>Commands/inputCommands/CommandIChangeSubTG.cpp</itemPath>
+          <itemPath>Commands/inputCommands/CommandIChangeSubTG.h</itemPath>
           <itemPath>Commands/inputCommands/CommandIFit.cpp</itemPath>
           <itemPath>Commands/inputCommands/CommandIFit.h</itemPath>
           <itemPath>Commands/inputCommands/CommandISubStatusField.cpp</itemPath>
@@ -32,8 +36,20 @@
         <itemPath>Commands/CommandClientSubscription.h</itemPath>
         <itemPath>Commands/CommandEnterGrid.cpp</itemPath>
         <itemPath>Commands/CommandEnterGrid.h</itemPath>
+        <itemPath>Commands/CommandExitGrid.cpp</itemPath>
+        <itemPath>Commands/CommandExitGrid.h</itemPath>
+        <itemPath>Commands/CommandHit.cpp</itemPath>
+        <itemPath>Commands/CommandHit.h</itemPath>
+        <itemPath>Commands/CommandInitShot.cpp</itemPath>
+        <itemPath>Commands/CommandInitShot.h</itemPath>
+        <itemPath>Commands/CommandMetaHit.cpp</itemPath>
+        <itemPath>Commands/CommandMetaHit.h</itemPath>
+        <itemPath>Commands/CommandProcesMetas.cpp</itemPath>
+        <itemPath>Commands/CommandProcesMetas.h</itemPath>
         <itemPath>Commands/CommandProcessor.cpp</itemPath>
         <itemPath>Commands/CommandProcessor.h</itemPath>
+        <itemPath>Commands/CommandRemove.cpp</itemPath>
+        <itemPath>Commands/CommandRemove.h</itemPath>
         <itemPath>Commands/CommandTargetPosUpdate.cpp</itemPath>
         <itemPath>Commands/CommandTargetPosUpdate.h</itemPath>
         <itemPath>Commands/CommandTimedSubscribeUpdate.cpp</itemPath>
@@ -72,6 +88,7 @@
         <itemPath>NetworkLayer/SShotNetworkLayer.h</itemPath>
         <itemPath>NetworkLayer/SSubSystemNetworkLayer.h</itemPath>
         <itemPath>NetworkLayer/SSubableNetworkLayer.h</itemPath>
+        <itemPath>NetworkLayer/STargetableNetworkLayer.h</itemPath>
         <itemPath>NetworkLayer/SUnitNetworkLayer.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f4" displayName="spaceobject" projectFiles="true">
@@ -124,6 +141,7 @@
           <itemPath>Sspacebjects/subsystems/SSubSystemFighter.h</itemPath>
           <itemPath>Sspacebjects/subsystems/SSubSystemRef.cpp</itemPath>
           <itemPath>Sspacebjects/subsystems/SSubSystemRef.h</itemPath>
+          <itemPath>Sspacebjects/subsystems/SSubSystemTargetingI.h</itemPath>
           <itemPath>Sspacebjects/subsystems/SSubSystemW.cpp</itemPath>
           <itemPath>Sspacebjects/subsystems/SSubSystemW.h</itemPath>
           <itemPath>Sspacebjects/subsystems/SSubType.cpp</itemPath>
@@ -153,6 +171,8 @@
         <itemPath>Sspacebjects/SFighterType.h</itemPath>
         <itemPath>Sspacebjects/SMetaObj.cpp</itemPath>
         <itemPath>Sspacebjects/SMetaObj.h</itemPath>
+        <itemPath>Sspacebjects/SMetaShot.cpp</itemPath>
+        <itemPath>Sspacebjects/SMetaShot.h</itemPath>
         <itemPath>Sspacebjects/SMovable.cpp</itemPath>
         <itemPath>Sspacebjects/SMovable.h</itemPath>
         <itemPath>Sspacebjects/SObj.cpp</itemPath>

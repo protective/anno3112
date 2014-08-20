@@ -10,7 +10,6 @@
 #include <list>
 using namespace std;
 inline void sendShotFull(list<uint32_t>& clients, SShot* shot){
-
 	//NETWORK*********
 	char message[sizeof(SerialShotFullUpdate)];
 	memset(message,0,sizeof(SerialShotFullUpdate));
@@ -28,7 +27,6 @@ inline void sendShotFull(list<uint32_t>& clients, SShot* shot){
 	data->_Pos_x = shot->getPos().x;
 	data->_Pos_y = shot->getPos().y;
 	data->_Pos_d = shot->getPos().d;
-
 	data->_TargetPos_x = shot->getTargetPos().x;
 	data->_TargetPos_y = shot->getTargetPos().y;
 	data->_TargetPos_d = shot->getTargetPos().d;
@@ -38,13 +36,13 @@ inline void sendShotFull(list<uint32_t>& clients, SShot* shot){
 	data->_tracking = shot->getTracking();
 	data->_trackingTime = shot->getTrackingTime();
 
-	
 	for(list<uint32_t>::iterator it = clients.begin(); it != clients.end();it++  ){
 		networkControl->sendToC(*it,message,sizeof(SerialShotFullUpdate));
 		//sendtoC(*it,message,sizeof(SerialShotFullUpdate));
 	}
 
 }
+
 
 #endif	/* SSHOTNETWORKLAYER_H */
 

@@ -19,6 +19,8 @@ public:
 	SFighterType* getFighterType(){return this->_fType;}
 	virtual SUnitType* getUnitType(){return _fType;}
 	virtual void proces(uint32_t delta, Processor* processor);
+	virtual void subscribeClient(uint32_t clientId, SubscriptionLevel::Enum level);
+
 	virtual ~SFighter();
 protected:
 	SFighterType* _fType;

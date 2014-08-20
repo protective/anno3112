@@ -12,6 +12,8 @@
 #include "SDatabase.h"
 #include "Sspacebjects/SShipType.h"
 #include "Sspacebjects/SShip.h"
+#include "Sspacebjects/SFighterType.h"
+#include "Sspacebjects/SFighter.h"
 #include "Sspacebjects/subsystems/SSubTypeWep.h"
 #include "Sspacebjects/subsystems/SSubTypeFac.h"
 #include "Sspacebjects/subsystems/SSubTypeBonus.h"
@@ -477,7 +479,7 @@ void ParseGame(ifstream* file,string filename){
 							temppos.grid = world->getGrids().begin()->second; //TODO FIX
 							
 							SShip* ship = world->getProcessor()->createShip(temppos, *st,team);
-							CommandEnterGrid* tempCmd = new CommandEnterGrid(0,temppos.grid,ship);
+							CommandEnterGrid* tempCmd = new CommandEnterGrid(0,temppos.grid->getId(),ship->getId());
 							temppos.grid->addCommand(tempCmd);
 							//world->getGrids()[1]->addUnit(ship);
 							for (int i = 4; i < 30; i++){
@@ -542,7 +544,8 @@ void ParseData(ifstream* file,string filename) {
 	string parseSubState = "";
 	string line;
 
-	SShipType* shiptype = NULL;
+	SUnitType* unittype = NULL;
+	SFighterType* fightertype = NULL;
 	SAstoroidType* astoroidtype = NULL;
 	SSubType* subtype = NULL;
 	cerr<<filename<<endl;
@@ -554,10 +557,10 @@ void ParseData(ifstream* file,string filename) {
 			cerr<<"ship"<<endl;
 			parseState = "ShipType";
 			parseSubState = "base";
-			shiptype = new SShipType(id);
-			shipTypes[id] = shiptype;
+			unittype = new SShipType(id);
+			shipTypes[id] = (SShipType*)unittype;
 			SItemType* itemt = itemlist[id];
-			itemt->setShipType(shiptype);
+			itemt->setShipType((SShipType*)unittype);
 			itemlist[id] = itemt;
 		}else if (line.find("[Weapon]", 0) != string::npos) {
 			cerr<<"wep"<<endl;
@@ -571,13 +574,16 @@ void ParseData(ifstream* file,string filename) {
 			cerr<<"fighter"<<endl;
 			parseState = "FighterType";
 			parseSubState = "base";
-			shiptype = new SShipType(id);
-			shipTypes[id] = shiptype;
-			SItemType* itemt = itemlist[id];
-			itemt->setShipType(shiptype);	
+			
+			fightertype = new SFighterType(id);	
+			unittype = fightertype;
 			subtype = new SSubTypeFighter();
+			subtype->isFighter()->setFighterType(fightertype);
+			SItemType* itemt = itemlist[id];
+			
 			itemt->setSubType(subtype);
 			itemlist[id] = itemt;
+			
 		}else if (line.find("[Bonus]", 0) != string::npos) {
 			cerr<<"bonus"<<endl;
 			parseState = "BonusType";
@@ -625,6 +631,9 @@ void ParseData(ifstream* file,string filename) {
 		}
 
 		if (parseState == "ShipType" || parseState == "FighterType") {
+			cerr<<"parstate="<<parseState<<endl;
+			cerr<<"parsubstate="<<parseSubState<<endl;
+			cerr<<"line="<<line<<endl;
 			for (int i = 0; i < 20; i++) {
 				std::stringstream ss;
 				ss << "{sub" << i << "}";
@@ -632,7 +641,7 @@ void ParseData(ifstream* file,string filename) {
 					std::stringstream ss2;
 					ss2 << "sub" << i;
 					parseSubState = ss2.str();
-					shiptype->getSlots()[i] = new SShipTypeSlotData();
+					unittype->getSlots()[i] = new SShipTypeSlotData();
 
 				}
 			}
@@ -646,73 +655,73 @@ void ParseData(ifstream* file,string filename) {
 			if (parseSubState == "base") {
 				if (line.find("name") != string::npos) {
 					getAllparameter(line, "name", &beginint, &lenint);
-					shiptype->setName(line.substr(beginint, lenint));
+					unittype->setName(line.substr(beginint, lenint));
 				} else if (line.find("size") != string::npos) {
 					getparameter(line, "size", 0, &beginint, &lenint);
-					shiptype->setSize(strToInt(line.substr(beginint, lenint)));
+					unittype->setSize(strToInt(line.substr(beginint, lenint)));
 				} else if (line.find("mass") != string::npos) {
 					getparameter(line, "mass", 0, &beginint, &lenint);
-					shiptype->setMass(strToInt(line.substr(beginint, lenint)));
+					unittype->setMass(strToInt(line.substr(beginint, lenint)));
 				} else if (line.find("recoilrecharge") != string::npos) {
 					getparameter(line, "recoilrecharge", 0, &beginint, &lenint);
-					shiptype->setRecoilRecharge(strToInt(line.substr(beginint, lenint)));
+					unittype->setRecoilRecharge(strToInt(line.substr(beginint, lenint)));
 				} else if (line.find("speed") != string::npos) {
 					getparameter(line, "speed", 0, &beginint, &lenint);
-					shiptype->setTopSpeed(strToInt(line.substr(beginint, lenint)));
+					unittype->setTopSpeed(strToInt(line.substr(beginint, lenint)));
 				} else if (line.find("agility") != string::npos) {
 					getparameter(line, "agility", 0, &beginint, &lenint);
-					shiptype->setAgility(strToInt(line.substr(beginint, lenint)));
+					unittype->setAgility(strToInt(line.substr(beginint, lenint)));
 				} else if (line.find("cargo") != string::npos) {
 					getparameter(line, "cargo", 0, &beginint, &lenint);
-					shiptype->setCargo(strToInt(line.substr(beginint, lenint)));
+					unittype->setCargo(strToInt(line.substr(beginint, lenint)));
 				} else if (line.find("targettype") != string::npos) {
 					getparameter(line, "targettype", 0, &beginint, &lenint);
-					shiptype->setTargetType(parseTargetType(line.substr(beginint, lenint)));
+					unittype->setTargetType(parseTargetType(line.substr(beginint, lenint)));
 				} else if (line.find("texture") != string::npos) {
 					getparameter(line, "texture", 0, &beginint, &lenint);
-					shiptype->settexture(parseobjtextureid(line.substr(beginint, lenint)));
+					unittype->settexture(parseobjtextureid(line.substr(beginint, lenint)));
 				} else if (line.find("energy") != string::npos) {
 					getparameter(line, "energy", 0, &beginint, &lenint);
-					shiptype->setEnergy(strToInt(line.substr(beginint, lenint)));
+					unittype->setEnergy(strToInt(line.substr(beginint, lenint)));
 				} else if (line.find("scanrange") != string::npos) {
 					getparameter(line, "scanrange", 0, &beginint, &lenint);
-					shiptype->setScanRange(strToInt(line.substr(beginint, lenint)));
+					unittype->setScanRange(strToInt(line.substr(beginint, lenint)));
 				} else if (line.find("scanprange") != string::npos) {
 					getparameter(line, "scanprange", 0, &beginint, &lenint);
-					shiptype->setScanPRange(strToInt(line.substr(beginint, lenint)));
+					unittype->setScanPRange(strToInt(line.substr(beginint, lenint)));
 				} else if (line.find("recharge") != string::npos) {
 					getparameter(line, "recharge", 0, &beginint, &lenint);
-					shiptype->setRecharge(strToInt(line.substr(beginint, lenint)));
+					unittype->setRecharge(strToInt(line.substr(beginint, lenint)));
 				} else if (line.find("hull") != string::npos) {
 					getparameter(line, "hull", 0, &beginint, &lenint);
-					shiptype->setHull(strToInt(line.substr(beginint, lenint)));
+					unittype->setHull(strToInt(line.substr(beginint, lenint)));
 				} else if (line.find("armor") != string::npos) {
 					getparameter(line, "armor", 0, &beginint, &lenint);
-					shiptype->setarmor(strToInt(line.substr(beginint, lenint)));
+					unittype->setarmor(strToInt(line.substr(beginint, lenint)));
 				} else if (line.find("deflector") != string::npos) {
 					getparameter(line, "deflector", 0, &beginint, &lenint);
-					shiptype->setdeflector(strToInt(line.substr(beginint, lenint)));
+					unittype->setdeflector(strToInt(line.substr(beginint, lenint)));
 				}else if (line.find("shieldStr") != string::npos) {
 					getparameter(line, "shieldStr", 0, &beginint, &lenint);
-					shiptype->setShieldStr(strToInt(line.substr(beginint, lenint)));
+					unittype->setShieldStr(strToInt(line.substr(beginint, lenint)));
 				}else if (line.find("shieldFw") != string::npos) {
 					getparameter(line, "shieldFw", 0, &beginint, &lenint);
-					shiptype->setShield(strToInt(line.substr(beginint, lenint)),0);
+					unittype->setShield(strToInt(line.substr(beginint, lenint)),0);
 				}else if (line.find("shieldFL") != string::npos) {
 					getparameter(line, "shieldFL", 0, &beginint, &lenint);
-					shiptype->setShield(strToInt(line.substr(beginint, lenint)),1);
+					unittype->setShield(strToInt(line.substr(beginint, lenint)),1);
 				}else if (line.find("shieldFR") != string::npos) {
 					getparameter(line, "shieldFR", 0, &beginint, &lenint);
-					shiptype->setShield(strToInt(line.substr(beginint, lenint)),2);
+					unittype->setShield(strToInt(line.substr(beginint, lenint)),2);
 				}else if (line.find("shieldAf") != string::npos) {
 					getparameter(line, "shieldAf", 0, &beginint, &lenint);
-					shiptype->setShield(strToInt(line.substr(beginint, lenint)),3);
+					unittype->setShield(strToInt(line.substr(beginint, lenint)),3);
 				}else if (line.find("shieldAL") != string::npos) {
 					getparameter(line, "shieldAL", 0, &beginint, &lenint);
-					shiptype->setShield(strToInt(line.substr(beginint, lenint)),4);
+					unittype->setShield(strToInt(line.substr(beginint, lenint)),4);
 				}else if (line.find("shieldAR") != string::npos) {
 					getparameter(line, "shieldAR", 0, &beginint, &lenint);
-					shiptype->setShield(strToInt(line.substr(beginint, lenint)),5);
+					unittype->setShield(strToInt(line.substr(beginint, lenint)),5);
 				}
 
 			}else if (parseSubState == "FighterSub"){
@@ -737,31 +746,31 @@ void ParseData(ifstream* file,string filename) {
 							uint32_t uix = strToInt(line.substr(beginint, lenint));
 							getparameter(line, "uicord", 1, &beginint, &lenint);
 							uint32_t uiy = strToInt(line.substr(beginint, lenint));
-							shiptype->getSlots()[i]->setuiX(uix);
-							shiptype->getSlots()[i]->setuiY(uiy);
+							unittype->getSlots()[i]->setuiX(uix);
+							unittype->getSlots()[i]->setuiY(uiy);
 						}
 						if (line.find("cord") != string::npos){
 							getparameter(line, "cord", 0, &beginint, &lenint);
 							uint32_t gx = strToInt(line.substr(beginint, lenint));
 							getparameter(line, "cord", 1, &beginint, &lenint);
 							uint32_t gy = strToInt(line.substr(beginint, lenint));
-							shiptype->getSlots()[i]->setgX(gx);
-							shiptype->getSlots()[i]->setgY(gy);
+							unittype->getSlots()[i]->setgX(gx);
+							unittype->getSlots()[i]->setgY(gy);
 						}
 						if (line.find("type") != string::npos){
 							getparameter(line, "type", 0, &beginint, &lenint);
 							FitTypes::Enum stype = parseSlotType(line.substr(beginint, lenint));
-							shiptype->getSlots()[i]->setslotType(stype);
+							unittype->getSlots()[i]->setslotType(stype);
 						}
 						if (line.find("mount") != string::npos){
 							getparameter(line, "mount", 0, &beginint, &lenint);
 							uint32_t smount = strToInt(line.substr(beginint, lenint));
-							shiptype->getSlots()[i]->setslotMount(smount);
+							unittype->getSlots()[i]->setslotMount(smount);
 						}
 						if (line.find("firedir") != string::npos){
 							getparameter(line, "firedir", 0, &beginint, &lenint);
 							uint32_t fdir = parseFireDir(line.substr(beginint, lenint));
-							shiptype->getSlots()[i]->setFireDir((FireDir::Enum)fdir);
+							unittype->getSlots()[i]->setFireDir((FireDir::Enum)fdir);
 						}
 					}
 				}

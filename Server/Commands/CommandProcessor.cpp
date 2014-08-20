@@ -11,16 +11,22 @@
 
 CommandProcessor::CommandProcessor(Processable* processable, uint32_t interval, uint32_t firstExecuteTime):
 Command(firstExecuteTime){
+
 	_processable = processable;
 	_interval = interval;
 	_lastExecuteTime = firstExecuteTime;
+	if(!firstExecuteTime){
+		_lastExecuteTime = world->getTime();
+		_time = world->getTime();
+	}
 }
 
 uint32_t CommandProcessor::execute(){
+	
 	uint32_t time = world->getTime();
-	_processable->proces(time - _lastExecuteTime, _processor);
-	_lastExecuteTime = time;
-	_time+=_interval;
+	_processable->proces(_time - _lastExecuteTime, _processor);
+	_lastExecuteTime = _time;
+	_time += _interval;
 	_processable->addCommand(this);
 	return COMMAND_CONTINUE;
 }

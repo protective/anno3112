@@ -19,7 +19,7 @@ Command(time){
 uint32_t CommandTargetPosUpdate::execute(){
 
 	
-	if(_processor->getLocalProcssable().find(_message->_Id) == _processor->getLocalProcssable().end()){
+	if(_processor->getLocalProcssables().find(_message->_Id) == _processor->getLocalProcssables().end()){
 		cerr<<"CommandTargetPosUpdate target unit not on processor"<<endl;
 		return COMMAND_FINAL;
 	}
@@ -42,8 +42,8 @@ uint32_t CommandTargetPosUpdate::execute(){
 	}
 	*/
 	SPos temp(_message->_TargetPos_x,_message->_TargetPos_y,_message->_TargetPos_d);
-	if(_processor->getLocalProcssable()[_message->_Id]->isUnit())
-		_processor->getLocalProcssable()[_message->_Id]->isUnit()->setTargetPos(temp);
+	if(_processor->getLocalProcssables()[_message->_Id]->isUnit())
+		_processor->getLocalProcssables()[_message->_Id]->isUnit()->setTargetPos(temp);
 }
 
 CommandTargetPosUpdate::~CommandTargetPosUpdate() {

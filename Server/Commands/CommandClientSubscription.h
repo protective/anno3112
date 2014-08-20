@@ -13,12 +13,12 @@
 
 class CommandClientSubscription : public Command {
 public:
-	CommandClientSubscription(uint32_t time, uint32_t client, Processable* target, SubscriptionLevel::Enum level);
+	CommandClientSubscription(uint32_t time, uint32_t client, uint32_t target, SubscriptionLevel::Enum level);
 	virtual uint32_t execute();
 	virtual ~CommandClientSubscription();
 private:
 	uint32_t _client;
-	Processable* _target;
+	uint32_t _target;
 	SubscriptionLevel::Enum _level;
 };
 

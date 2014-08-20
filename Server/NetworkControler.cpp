@@ -8,6 +8,8 @@
 #include "NetworkControler.h"
 #include "Client.h"
 #include "Sspacebjects/SSubAble.h"
+#include "Commands/Processable.h"
+
 
 NetworkControler::NetworkControler() {
 	
@@ -24,9 +26,11 @@ void NetworkControler::readBuffers(){
 void NetworkControler::registerObj(uint32_t objId, Processor* processor){
 	pthread_mutex_lock(&_objRegistrationListLock);
 		_objRegistration[objId] = processor;
-		
+		//cerr<<"networkcontroler::register obj_id="<<objId<<" processerid="<<(uint32_t)processor->getId()<<endl;
 		//TODO GET all processores dealing with the active grid here
-		processor->addCommand(new CommandAddSubscriptions(processor,1,objId));
+		//cerr<<"register id="<<objId<<endl;
+		processor->addCommand(new CommandAddSubscriptions(processor,SubscriptionLevel::lowFreq,objId));
+		processor->addCommand(new CommandAddSubscriptions(processor,SubscriptionLevel::Init,objId));
 	pthread_mutex_unlock(&_objRegistrationListLock);
 }
 
@@ -44,6 +48,24 @@ Processor* NetworkControler::getProcessor(uint32_t objId){
 	temp = it != _objRegistration.end() ? it->second : NULL;
 	pthread_mutex_unlock(&_objRegistrationListLock);
 	return temp;
+}
+
+Processable* NetworkControler::getProcessable(uint32_t objId){
+	Processor* temp = getProcessor(objId);
+	if(!temp)
+		return NULL;
+	map<uint32_t, Processable*>::iterator it = temp->getLocalProcssables().find(objId);
+	if (it != temp->getLocalProcssables().end()){
+		return it->second;
+	}
+	return NULL;
+}
+
+uint32_t NetworkControler::addCommandToProcesable(Command* cmd, uint32_t obj){
+	Processor* temp = getProcessor(obj);
+	if(temp)
+		return temp->addCommand(cmd);
+	return 1;
 }
 
 uint32_t NetworkControler::sendToC(uint32_t id, void* block, uint32_t len){

@@ -45,15 +45,16 @@ public:
 	virtual SMovable* isMovable(){return this;}
 	virtual SObj* isObj(){return this;}
 	virtual SSubAble* getsubable(){return (SSubAble*)this;};
-	virtual STargetable* getTargetable(){return (STargetable*)this;}
+	virtual STargetable* isTargetable(){return (STargetable*)this;}
 	virtual SUnit* isUnit(){return this;}
-	
+	virtual SShip* isShip(){return NULL;}
+	virtual SGrid* getGrid(){return _pos.grid;}
 	virtual bool canBeRemoved();
 	SOrdres* getOrdres(){return this->_order;}
 	void setOrdres(SOrdres* ordres){this->_order = ordres;}
 	virtual TargetType::Enum getTargetType(){return TargetType::Invalid;}
 
-	virtual void Hit(SShot* shot,uint32_t dmg, DmgTypes::Enum dmgtype, Shields::Enum impact, int32_t x, int32_t y);
+	virtual void hit(uint32_t shot,uint32_t dmg, DmgTypes::Enum dmgtype, Shields::Enum impact, int32_t x, int32_t y);
 	int32_t getShield(uint16_t index){return _shield[index];}
 	int32_t getDeflector(){return _deflector;}
 	int32_t getArmor(){return _armor;}
@@ -77,6 +78,8 @@ public:
 	virtual void sendFull(uint32_t client);
 	virtual void sendFull(SubscriptionLevel::Enum level);
 	virtual void sendRemoved(SubscriptionLevel::Enum level, DestroyMode::Enum mode);
+	virtual void sendHpUdate(SubscriptionLevel::Enum level);
+	
 	virtual ~SUnit();
 protected:
 	

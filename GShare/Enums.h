@@ -98,6 +98,7 @@ namespace SubscriptionLevel{
 		lowFreq = 0,
 		highFreq = 1,
 		details = 2,
+		Init = 3,
 	};
 }
 
@@ -204,7 +205,10 @@ namespace ParticalTex{
 namespace SpaceTypes{
 	enum Enum{
 		Invalid = 0,
-                Ship = 1,
+        Ship = 1,
+		Fighter = 2,
+		Shot = 3,
+		Astoroid = 4		
 	};
 }
 

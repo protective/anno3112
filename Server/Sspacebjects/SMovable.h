@@ -18,6 +18,9 @@ public:
 	SObj* obj(){return this->_obj;}
 	virtual void Move(uint32_t deltaT){}
 	virtual void MovePos(int32_t x, int32_t y){}
+	virtual int32_t getMoveX(){return (VektorUnitX(this->_obj->getPos().d/100) * _speed) / 100;}
+	virtual int32_t getMoveY(){return -((VektorUnitY(this->_obj->getPos().d/100)* _speed)) / 100;}
+	virtual int32_t getMoveZ(){return 0;}
 	SPos& getTargetPos();
 	int32_t getSpeed(){return this->_speed;}
 	int32_t getTopSpeed(){return this->_topSpeed;}

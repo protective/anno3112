@@ -12,6 +12,7 @@
 #include "SMovable.h"
 #include "STargetable.h"
 #include "../Commands/Processor.h"
+#include "../Commands/CommandInitShot.h"
 #include "subsystems/SSingleWep.h"
 #include "subsystems/SSubTypeWep.h"
 #include "SSubAble.h"
@@ -19,10 +20,10 @@ class SShot : public SObj , public SMovable, public Processable{
 public:
 	//SShot(uint32_t id, SPos& pos, SSubAble* owner, STargetable* target, uint32_t texId, int32_t speed, uint32_t mindmg, uint32_t maxdmg);
 	//SShot(uint32_t id, SPos& pos, SSubAble* owner, STargetable* target, uint32_t texId, int32_t speed, uint32_t mindmg, uint32_t maxdmg, DmgTypes::Enum);
-
-	SShot(uint32_t id, SPos& pos, SSubAble* owner, uint32_t target, SSubTypeWep* type);
+	friend CommandInitShot;
+	SShot(uint32_t id, SPos& pos, SSubAble* owner, uint32_t target, SSubTypeWep* type, Processor* creator);
 	virtual uint32_t getId(){return _id;}
-	virtual void proces(uint32_t delta, Processor* processor){}
+	virtual void proces(uint32_t delta, Processor* processor);
 	virtual void subscribeClient(uint32_t clientId, SubscriptionLevel::Enum level);
 	void Move(uint32_t deltaT);
 	void MovePos(int32_t x, int32_t y, int32_t z);
@@ -30,6 +31,7 @@ public:
 	void Hit(uint32_t target, Shields::Enum shield, int32_t x, int32_t y);
 	virtual SShot* isShot(){return this;}
 	virtual SObj* isObj(){return this;}
+	virtual SGrid* getGrid(){return _pos.grid;}
 	virtual bool canBeRemoved();
 	virtual SMovable* isMovable(){return this;}
 	virtual void setTargetPos(SPos& pos);
@@ -41,9 +43,14 @@ public:
 	virtual uint32_t getTracking(){return this->_tracking;}
 	virtual uint32_t getTrackingTime(){return this->_trackingTime;}
 	virtual uint32_t getTarget(){return this->_target;}
-
+	virtual int32_t getMoveX(){return VektorUnitX(this->_pos.d/100) * _speed;}
+	virtual int32_t getMoveY(){return -VektorUnitY(this->_pos.d/100) * _speed;}
+	virtual int32_t getMoveZ(){return VektorUnitY(this->_moveZ) * _speed;}
+	
+	
 	virtual void sendFull(SubscriptionLevel::Enum level);
 	virtual uint32_t getProcId(){return _id;}
+	virtual SSubTypeWep* getType(){return _type;}
 	virtual ~SShot();
 private:
 	bool _hasHit;
@@ -59,6 +66,7 @@ private:
 	uint32_t _dmgMin;
 	uint32_t _dmgMax;
 	DmgTypes::Enum _dmgType;
+	SSubTypeWep* _type;
 	
 };
 

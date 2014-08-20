@@ -13,13 +13,13 @@
 class Processor;
 class CommandAddSubscriptions : public Command {
 public:
-	CommandAddSubscriptions(Processor* subscriber, uint8_t level, list<uint32_t> procesables);
-	CommandAddSubscriptions(Processor* subscriber, uint8_t level, uint32_t procesables);
+	CommandAddSubscriptions(Processor* subscriber, SubscriptionLevel::Enum level, list<uint32_t> procesables);
+	CommandAddSubscriptions(Processor* subscriber, SubscriptionLevel::Enum level, uint32_t procesables);
 	virtual uint32_t execute();
 	virtual ~CommandAddSubscriptions();
 private:
 	Processor* _subscriber;
-	uint8_t _level;
+	SubscriptionLevel::Enum _level;
 	list<uint32_t> _procesables;
 };
 

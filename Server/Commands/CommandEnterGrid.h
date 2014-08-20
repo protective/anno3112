@@ -14,12 +14,12 @@ class SGrid;
 class SUnit;
 class CommandEnterGrid : public Command {
 public:
-	CommandEnterGrid(uint32_t time, SGrid* grid, SUnit* unit);
+	CommandEnterGrid(uint32_t time, uint32_t grid, uint32_t obj);
 	virtual uint32_t execute();
 	virtual ~CommandEnterGrid();
 private:
-	SGrid* _grid;
-	SUnit* _unit;
+	uint32_t _grid;
+	uint32_t _obj;
 	
 };
 

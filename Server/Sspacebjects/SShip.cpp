@@ -15,6 +15,7 @@ SUnit(id,pos, stype, playerId){
 
 
 void SShip::proces(uint32_t delta, Processor* processor){
+	//cerr<<"process ship"<<endl;
 	postProces(delta);
 	if(_lastCombat < 1000000)
 		_lastCombat++;
@@ -101,6 +102,11 @@ void SShip::proces(uint32_t delta, Processor* processor){
 
 }
 
+void SShip::subscribeClient(uint32_t clientId, SubscriptionLevel::Enum level){
+	cerr<<"subscribe ship clid ="<<clientId<<endl;
+	this->sendFull(clientId);
+	_subscriptions[level].push_back(clientId);
+}
 
 SShip::~SShip() {
 

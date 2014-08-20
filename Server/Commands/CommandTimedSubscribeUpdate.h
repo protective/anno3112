@@ -11,11 +11,11 @@
 
 class CommandTimedSubscribeUpdate : public Command{
 public:
-	CommandTimedSubscribeUpdate(uint8_t freq);
+	CommandTimedSubscribeUpdate(SubscriptionLevel::Enum freq);
 	virtual uint32_t execute();
 	virtual ~CommandTimedSubscribeUpdate();
 private:
-	uint8_t _freq;
+	SubscriptionLevel::Enum _freq;
 };
 
 #endif	/* COMMANDTIMEDSUBSCRIBEUPDATE_H */

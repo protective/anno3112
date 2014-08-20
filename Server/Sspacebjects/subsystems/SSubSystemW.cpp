@@ -7,7 +7,10 @@
 
 #include "SSubSystemW.h"
 #include "../SSubAble.h"
+#include "../SUnit.h"
+#include "../SMetaObj.h"
 #include "../../World/SGrid.h"
+
 SSubSystemW::SSubSystemW(SObj& owner,SSlotNode& slotnode,uint32_t id ,SItemType* item,uint32_t Xitem):
 SSubSystem(owner,slotnode,id)
 {
@@ -38,22 +41,24 @@ void SSubSystemW::resetLockPower(){
 	if(!this->getTarget())
 		this->reportCharge(SubscriptionLevel::details);
 }
+
 void SSubSystemW::reset(){
 	
 	//TODO FIX
-	/*
+	
 	if(this->getTarget()){
 		double res = (double)this->getTypeWep()->getResolution(getOwner().getsubable()->getBonusList());
-		double sig = this->getTarget()->obj()->getSize()/100;
+		uint32_t size = this->getOwner().isUnit()->getProcessor()->getMeta(this->getTarget())->getTargetSize();
+		double sig = size/100;
 		if(res <= sig)
 			_lockingAgainstPower = 0;
 		else
 			_lockingAgainstPower = (pow((res-sig)/10,1.5)*this->getTypeWep()->getMaxCd())/1000;
-	}else
+	}else{
 		_lockingAgainstPower = 0;
 
 	}
-	 * */
+	
 }
 
 void SSubSystemW::announceRemovalOf(SObj* obj){

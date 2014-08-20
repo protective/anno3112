@@ -11,13 +11,16 @@
 #include "../SFunctions.h"
 #include "Processable.h"
 
+
 class SShot;
 class SShip;
+class SFighter;
 class SPos;
 class SSubAble;
 class STargetable;
 class SSubTypeWep;
 class SShipType;
+class SFighterType;
 class SAstoroid;
 class SAstoroidType;
 class SAstoroidBelt;
@@ -26,6 +29,7 @@ public:
 	friend CommandAddSubscriptions;
 	friend CommandTimedSubscribeUpdate;
 	friend CommandUpdateMetas;
+	friend CommandRemove;
 	Processor();
 	uint8_t getId(){return _id;}
 	uint32_t addCommand(Command* cmd);
@@ -33,12 +37,15 @@ public:
 	list<Command*> removeByProcessable(Processable* proc);
 
 	static void* workThreadFunction(void* context);
-	map<uint32_t, Processable*>& getLocalProcssable(){return _localObjects;}
+	map<uint32_t, Processable*>& getLocalProcssables(){return _localObjects;}
+	Processable* getLocalProcssable(uint32_t obj){return _localObjects.find(obj) != _localObjects.end() ? _localObjects[obj]: NULL;}
+
 	map<uint32_t, SMetaObj*>& getLocalMetas(){return _metaObjs;}
 	SMetaObj* getMeta(uint32_t id){return _metaObjs.find(id) != _metaObjs.end() ? _metaObjs[id] : NULL;}
 	uint32_t getFreeID();
 	SShot* createShot(SPos& pos, SSubAble* owner, uint32_t target, SSubTypeWep* type);
 	SShip* createShip(SPos& pos, SShipType& stype, uint32_t playerId);
+	SFighter* createFighter(SPos& pos, SFighterType& ftype, uint32_t playerId);
 	SAstoroid* createAsteroid(SPos& pos, SAstoroidType& atype, SAstoroidBelt* belt);
 	SAstoroidBelt* createAsteroidBelt(SPos& pos);
 	SGrid* createGrid();
@@ -62,6 +69,7 @@ private:
 	
 	map<uint32_t, SMetaObj*> _metaObjs;
 	
+	map<Processor*, list<uint32_t> > _initsFrec;
 	map<Processor*, list<uint32_t> > _lowFrec;
 	map<Processor*, list<uint32_t> > _medFrec;
 	map<Processor*, list<uint32_t> > _highFrec;

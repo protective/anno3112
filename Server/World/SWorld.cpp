@@ -6,6 +6,7 @@
  */
 
 #include "SWorld.h"
+#include "../Sspacebjects/SUnit.h"
 #include "../Commands/Processor.h"
 #include "../Commands/CommandProcessor.h"
 #include "../Commands/CommandAdd.h"

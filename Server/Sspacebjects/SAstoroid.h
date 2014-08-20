@@ -16,12 +16,13 @@ class SAstoroid : public SObj, public STargetable , public Processable {
 public:
 	SAstoroid(uint32_t id, SPos& pos, SAstoroidType& atype, SAstoroidBelt* belt);
 	virtual uint32_t getId(){return _id;}
-	virtual STargetable* getTargetable(){return (STargetable*)this;}
+	virtual STargetable* isTargetable(){return (STargetable*)this;}
 	virtual void Hit(SShot* shot,uint32_t dmg, DmgTypes::Enum dmgtype, Shields::Enum impact, int32_t x, int32_t y);
 	virtual uint32_t getTargetSize(){return _size+100;}
 	virtual TargetType::Enum getTargetType(){return TargetType::Astoroid;}
 	virtual SAstoroid* isAstoroid(){return this;}
 	virtual SObj* isObj(){return this;}
+	virtual SGrid* getGrid(){return _pos.grid;}
 	virtual bool canBeRemoved();
 	virtual void proces(uint32_t delta, Processor* processor ){}
 	void subscribeClient(uint32_t clientId, SubscriptionLevel::Enum level){}

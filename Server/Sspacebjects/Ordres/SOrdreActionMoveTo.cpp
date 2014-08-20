@@ -16,6 +16,7 @@ SOrdreActionMoveTo::SOrdreActionMoveTo(bool isUnit,uint32_t oindex) {
 
 
 void SOrdreActionMoveTo::execute(SObj* callUnit, SObj* triggerUnit, SGrid* triggerGrid) {
+	/*
 	if(_isUnit){
 		if(callUnit->getOrdreObj().find(_oindex) != callUnit->getOrdreObj().end())
 			callUnit->isMovable()->setTargetPos(callUnit->getOrdreObj()[_oindex]->getPos());
@@ -24,6 +25,7 @@ void SOrdreActionMoveTo::execute(SObj* callUnit, SObj* triggerUnit, SGrid* trigg
 			callUnit->isMovable()->setTargetPos(*callUnit->getOrdrePos()[_oindex]);
 		}
 	}
+	 * */
 }
 
 
