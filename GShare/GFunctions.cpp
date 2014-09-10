@@ -551,7 +551,32 @@ void printBuffer(char* buffer, uint32_t len){
 						cerr<<"****************************"<<endl;
 						break;
 					}
+					case SerialType::SerialTypeFighter:{
+						SerialTypeFighter* st = (SerialTypeFighter*)(buffer+offset);
+						cerr<<"Recived SerialTypeFighter*******"<<endl
+						<<"\tid "<<st->_item._itemId<<endl
+						<<"\tname "<<st->_item._name<<endl
+						<<"\titemTex "<<st->_item._itemtex<<endl
+						<<"\tmass "<<st->_item._mass<<endl
+						<<"\tbuildtime "<<st->_item._buildtime<<endl
+						<<"\tmatcount "<<st->_item._matcount<<endl;
 
+						for (uint16_t i = 0; i < st->_item._matcount;i++){
+							SerialPartMat* st2 = (SerialPartMat*)(buffer+offset+sizeof(SerialTypeFighter)+(sizeof(SerialPartMat)*i));
+							cerr<<"\t\t\tmatid "<<st2->_matid<<endl
+							<<"\t\t\tquantity "<<st2->_quantity<<endl;
+						}
+
+						cerr<<"\t\tcooldown "<<st->_cooldown<<endl
+						<<"\t\tbaycount "<<st->_bayCount<<endl
+						<<"\t\tfitClass "<<st->_fitClass<<endl
+						<<"\t\tmount "<<st->_mount<<endl
+
+						<<endl;
+
+						cerr<<"****************************"<<endl;
+						break;
+					}
 
 
 					case SerialType::SerialTypeFac:{

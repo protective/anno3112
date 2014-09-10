@@ -17,8 +17,6 @@ public:
 	virtual SubSystemClass::Enum getClass(){return SubSystemClass::Wep;}
 	virtual CSubTypeWep* isWeapon(){return this;}
 
-	virtual ~CSubTypeWep();
-
 	int32_t getDmgMin(){return this->_dmgMin;}
 	int32_t getDmgMax(){return this->_dmgMax;}
 	int32_t getMaxCd(){return this->_maxCd;}
@@ -30,6 +28,7 @@ public:
 	virtual void setMaxAmo(uint32_t amo){this->_maxAmo = amo;}
 	virtual void setAmoCost(uint32_t amo){this->_amoCost = amo;}
 
+	virtual ~CSubTypeWep();
 private:
 
 	int32_t _dmgMin;

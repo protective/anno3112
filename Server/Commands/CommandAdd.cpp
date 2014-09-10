@@ -12,11 +12,11 @@ CommandAdd::CommandAdd(uint32_t time, Processable* processable,list<Command*> co
 Command(time){
 	_commands = commands;
 	_processable = processable;
-	cerr<<"create cmd add id="<<_processable->getId()<<endl;
+	//cerr<<"create cmd add id="<<_processable->getId()<<endl;
 }
 
 uint32_t CommandAdd::execute(){
-	cerr<<"execure CommandAdd to processor="<<_processable<<" id="<<_processable->getId()<<endl;
+	//cerr<<"execure CommandAdd to processor="<<_processable<<" id="<<_processable->getId()<<endl;
 	for(list<Command*>::iterator it = _commands.begin(); it != _commands.end();it++){
 		_processor->addCommand(*it);
 	}

@@ -1,0 +1,17 @@
+[UserVariable]
+//UNIT unload
+
+[Init]
+String state = "IDLE"
+
+[Find]
+<event>
+	<repeating_timer time='10000'>
+<\event>
+
+<select OBJ in grid as temp>
+	<if temp is of unitType ASTOROID>
+		<ACTIONMOVE unit=this location=temp>
+		<ASSIGN variable="state" value = "MINING">
+
+

@@ -17,7 +17,7 @@ SWorld* world = NULL;
 
 map<uint32_t,SItemType*> itemlist;
 map<string,uint32_t> itemlistFileNames;
-map<uint32_t, SShipType*> shipTypes;
+map<uint32_t, SUnitType*> unitTypes;
 map<uint32_t, SAstoroidType*> astoroidTypes;
 map<uint32_t,map<uint32_t,SOrdres*> > globalOrders;
 map<uint32_t,map<uint32_t,SLoadout*> > globalLoadout;

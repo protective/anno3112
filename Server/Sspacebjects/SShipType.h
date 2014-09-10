@@ -14,6 +14,7 @@ class SShipType : public SUnitType {
 public:
 	SShipType(uint32_t id);
 	virtual SUnitType* getUnitType(){return this;}
+	virtual SShipType* isShipType(){return this;}
 	virtual ~SShipType();
 private:
 

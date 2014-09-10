@@ -35,14 +35,17 @@ public:
 	virtual void setAmo(uint32_t amo){}
 	
 	void launchFighter();
-	void recoverFighter(uint32_t id);
+	void recoverFighter(OBJID id);
+	void signalFighterReturn(uint32_t id);
 	void resetLockPower();
 	virtual ~SSubSystemFighter();
 private:
 	map<uint32_t, uint32_t> _fightersLunchTImer;
-    uint32_t _cur;
+	map<uint32_t, OBJID> _fightersId;
+	map<uint32_t, FighterSignal::Enum> _fightersSignal;
+    int32_t _cur;
 	uint32_t _charge;
-	uint32_t _lockingPower;
+	int32_t _lockingPower;
 	uint32_t _target;
 };
 

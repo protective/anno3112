@@ -52,7 +52,7 @@ public:
 	pthread_mutex_t& getlocksubscriber() {return locksubscriber;}
 
 private:
-	void sendShipTypes();
+	void sendUnitTypes();
 	void sendAstoroidTypes();
 	void sendItemTypes();
 	void sendOrdres();

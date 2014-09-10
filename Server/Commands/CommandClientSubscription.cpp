@@ -17,7 +17,7 @@ Command(time){
 }
 
 uint32_t CommandClientSubscription::execute(){
-	cerr<<"execute client subsction id="<<_client<<" objid="<<_target<<endl;
+	//cerr<<"execute client subsction id="<<_client<<" objid="<<_target<<endl;
 	Processable* temp = networkControl->getProcessable(_target);
 	
 	if(temp)

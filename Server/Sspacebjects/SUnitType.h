@@ -9,7 +9,10 @@
 #define	SUNITTYPE_H
 #include "../SFunctions.h"
 #include "subsystems/SShipTypeSlotData.h"
+#include "subsystems/SLoadout.h"
 
+class SFighterType;
+class SShipType;
 class SUnitType {
 public:
 	SUnitType(uint32_t id);
@@ -57,7 +60,8 @@ public:
 	void setAgility(uint32_t agility){this->_agility = agility;}
 	void setCargo(uint32_t cargo){this->_cargo = cargo;}
 	
-	
+	virtual SShipType* isShipType(){return NULL;}
+	virtual SFighterType* isFighterType(){return NULL;}
 	virtual ~SUnitType();
 protected:
 	

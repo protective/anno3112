@@ -38,7 +38,10 @@ public:
 	void MovePos(int32_t x, int32_t y);
 	void subscribeClient(uint32_t clientId, SubscriptionLevel::Enum level);
 	virtual void postProces(uint32_t delta);
+	virtual void proces(uint32_t delta, Processor* processor);
+
 	virtual void setTargetPos(SPos& pos);
+	virtual void setTargetPos(int32_t x, int32_t y);
 	virtual void setTargetPos(int32_t x, int32_t y, int32_t d);
 	virtual SUnitType* getUnitType(){return NULL;}
 	

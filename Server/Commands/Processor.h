@@ -24,6 +24,7 @@ class SFighterType;
 class SAstoroid;
 class SAstoroidType;
 class SAstoroidBelt;
+class SOrdreProgram;
 class Processor {
 public:
 	friend CommandAddSubscriptions;
@@ -41,11 +42,12 @@ public:
 	Processable* getLocalProcssable(uint32_t obj){return _localObjects.find(obj) != _localObjects.end() ? _localObjects[obj]: NULL;}
 
 	map<uint32_t, SMetaObj*>& getLocalMetas(){return _metaObjs;}
+	map<string,SOrdreProgram*>& getPrograms(){return _programs;}
 	SMetaObj* getMeta(uint32_t id){return _metaObjs.find(id) != _metaObjs.end() ? _metaObjs[id] : NULL;}
 	uint32_t getFreeID();
 	SShot* createShot(SPos& pos, SSubAble* owner, uint32_t target, SSubTypeWep* type);
 	SShip* createShip(SPos& pos, SShipType& stype, uint32_t playerId);
-	SFighter* createFighter(SPos& pos, SFighterType& ftype, uint32_t playerId);
+	SFighter* createFighter(SPos& pos, SFighterType& ftype, uint32_t playerId, uint32_t mothership, uint32_t motherShipSub);
 	SAstoroid* createAsteroid(SPos& pos, SAstoroidType& atype, SAstoroidBelt* belt);
 	SAstoroidBelt* createAsteroidBelt(SPos& pos);
 	SGrid* createGrid();
@@ -73,6 +75,7 @@ private:
 	map<Processor*, list<uint32_t> > _lowFrec;
 	map<Processor*, list<uint32_t> > _medFrec;
 	map<Processor*, list<uint32_t> > _highFrec;
+	map<string,SOrdreProgram*> _programs;
 };
 
 #endif	/* PROCESSOR_H */

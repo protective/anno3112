@@ -59,8 +59,8 @@ namespace SerialType{
 				SerialReqFitLoadout = 44,
 				SerialReqCreateLoadOut = 45,
 				SerialTypeRef = 46,
-				SerialAstoroidDestroy = 47
-
+				SerialAstoroidDestroy = 47,
+				SerialTypeFighter = 48
 	};
 }
 
@@ -284,6 +284,14 @@ struct SerialTypeWeapon : public SerialData{ //id = 17
 	uint32_t _amotype;
 	uint32_t _seq[10];
 	uint32_t _maxseq;
+};
+
+struct SerialTypeFighter : public SerialData{ //id = 17
+	SerialPartItem _item;
+	uint32_t _fitClass;
+	uint32_t _mount;
+	uint32_t _cooldown;
+	uint32_t _bayCount;
 };
 
 struct BonusAttri {

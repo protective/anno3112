@@ -1,0 +1,3 @@
+Conflict:
+         {expr -> varexpr [assignment] expr ~, [left_p]}
+Choose:  {argblock -> ~ [left_p] args [right_p], [comma]}

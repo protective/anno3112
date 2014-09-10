@@ -17,6 +17,7 @@ class SMetaObj;
 class Processor;
 class SUnit;
 class SShip;
+class SFighter;
 class SShot;
 class STargetable;
 class Processable {
@@ -29,6 +30,7 @@ public:
 	virtual bool isMetable(){return false;}
 	virtual SUnit* isUnit(){return NULL;}
 	virtual SShip* isShip(){return NULL;}
+	virtual SFighter* isFighter(){return NULL;}
 	virtual SObj* isObj(){return NULL;}
 	virtual SGrid* getGrid() = 0;
 	virtual SShot* isShot(){return NULL;}

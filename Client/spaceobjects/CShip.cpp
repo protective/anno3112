@@ -72,6 +72,7 @@ bool CShip::isDead(){
 }
 
 void CShip::predraw(uint32_t level){
+	/*
 	if(level == 0){
 		if(this->_scanRange && this->_team == teamlist[playerId]){
 			uint32_t actualRange = this->_scanRange/100;
@@ -107,6 +108,7 @@ void CShip::predraw(uint32_t level){
 			
 		}
 	}
+	 * */
 }
 
 void CShip::Draw(){

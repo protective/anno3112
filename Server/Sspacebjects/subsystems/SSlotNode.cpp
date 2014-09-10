@@ -12,6 +12,8 @@ SSlotNode::SSlotNode(SSubAble* owner, uint32_t id, SShipTypeSlotData* slotdata) 
 	this->_subtype = slotdata;
 	this->_id = id;
 	this->_owner = owner;
+	if(slotdata->getBaseItem())
+		this->getSS();
 }
 
 bool SSlotNode::CanFit(FitTypes::Enum type, FitTypes::Enum on){

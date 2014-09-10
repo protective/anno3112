@@ -11,6 +11,7 @@
 class CSubTypeFac;
 class CSubTypeRef;
 class CSubTypeWep;
+class CSubTypeFighter;
 class CSubTypeBonus;
 class CSubTypeBoost;
 class CSubType {
@@ -22,7 +23,7 @@ public:
 	virtual CSubTypeRef* isRef(){return NULL;}
 	virtual CSubTypeBonus* isBonus(){return NULL;}
 	virtual CSubTypeBoost* isBoost(){return NULL;}
-
+	virtual CSubTypeFighter* isFighter(){return NULL;}
 	virtual ~CSubType();
 private:
 

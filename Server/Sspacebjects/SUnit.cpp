@@ -14,6 +14,7 @@
 #include "../Commands/CommandEnterGrid.h"
 #include "../Commands/CommandExitGrid.h"
 #include "../Commands/CommandHit.h"
+#include "SMetaObj.h"
 
 SUnit::SUnit(uint32_t id, SPos& pos, SUnitType& stype, uint32_t playerId):
 SObj(id, pos,teamlist[playerId],playerId),SSubAble(this,stype.getEnergy(),stype.getRecharge(),stype.getScanRange(),stype.getScanPRange(),stype.getCargo()),STargetable(this),SMovable(this, stype.getTopSpeed(), stype.getAgility()), Processable() {
@@ -25,6 +26,8 @@ SObj(id, pos,teamlist[playerId],playerId),SSubAble(this,stype.getEnergy(),stype.
 	this->_size = stype.getSize()*100;
 	for (map<uint32_t, SShipTypeSlotData*>::iterator it = stype.getSlots().begin(); it != stype.getSlots().end(); it++){
 		this->slots[it->first] = new SSlotNode(this,it->first, it->second);
+		if(it->second->getBaseItem())
+			this->AddSub(it->second->getBaseItem(),it->first,it->second->getBaseItemCount());
 	}
 	this->_maxdeflector = stype.getDeflector()*1000;
 	this->_deflector = stype.getDeflector()*1000;
@@ -37,7 +40,6 @@ SObj(id, pos,teamlist[playerId],playerId),SSubAble(this,stype.getEnergy(),stype.
 	this->_armor = stype.getArmor()*1000;
 	this->_hull = stype.getHull()*1000;
 	this->_order = globalOrders[playerId][0];
-	cerr<<"done create unit"<<endl;
 	_lastCombat = 0;
 }
 void SUnit::subscribeClient(uint32_t clientId, SubscriptionLevel::Enum level){
@@ -45,6 +47,91 @@ void SUnit::subscribeClient(uint32_t clientId, SubscriptionLevel::Enum level){
 	if(this->isShip())
 		this->isShip()->sendFull(clientId);
 	_subscriptions[level].push_back(clientId);
+}
+void SUnit::proces(uint32_t delta, Processor* processor){
+	postProces(delta);
+	if(_lastCombat < 1000000)
+		_lastCombat++;
+	
+	if(this->_updateCounter)
+		this->_updateCounter--;
+	for(SSlotNodeI it = this->slots.begin(); it != this->slots.end(); it++){
+		if (it->second->getSS())
+			it->second->getSS()->proces(processor);
+	}
+	if(_order){
+		if(_targetUpdateCounter % 5 == 0){
+			_order->proces(OrdreEvent::Tick5,this);
+		}
+		if(_targetUpdateCounter % 10 == 0){
+			_order->proces(OrdreEvent::Tick10,this);
+		}
+		if(_targetUpdateCounter % 25 == 0){
+			_order->proces(OrdreEvent::Tick25,this);
+		}
+	}
+	_targetUpdateCounter++;
+	this->addRecoil(getUnitType()->getRecoilRecharge());
+	if (_targetUpdateCounter % 5 == 0){
+		this->updateTargetsPrio(_processor);
+		this->addEnergy(_recharge/5);
+	}
+	if (_targetUpdateCounter % 25 == 0){
+		updateTargetList(_processor);
+		this->updateAutoMove();
+		sendPosUpdate(SubscriptionLevel::lowFreq);
+
+		
+		this->_bonuslist.clear();
+		for(SSlotNodeI it = this->slots.begin(); it != this->slots.end(); it++){
+			if (it->second->getSS()){
+				if (it->second->getSS()->isBonus()){
+					it->second->getSS()->isBonus()->procesBonus(this);
+				}
+			}
+
+		}
+		this->_recharge = getUnitType()->getRecharge() * 1000;
+		this->_maxEnergy = getUnitType()->getEnergy() * 1000;
+		this->_maxdeflector = getUnitType()->getDeflector()*1000;
+		//this->_deflector = stype.getDeflector()*1000;
+		for (int i = 0; i< 6; i++){
+			this->_maxshield[i] = getUnitType()->getShield(i) * getUnitType()->getShieldStr() * 10;
+		}
+		this->_maxarmor = getUnitType()->getArmor()*1000;
+		this->_maxhull = getUnitType()->getHull()*1000;
+
+		this->_scanRange = getUnitType()->getScanRange() * 100;
+		this->_scanPRange = getUnitType()->getScanPRange() * 100;
+		_topSpeed = getUnitType()->getTopSpeed() * 100;
+		_agility = getUnitType()->getAgility();
+		for (map<BonusTypes::Enum, int32_t>::iterator it = this->_bonuslist.begin(); it != this->_bonuslist.end();it++){
+			switch(it->first){
+				case BonusTypes::Armor:{this->_maxarmor+= it->second;break;}
+				case BonusTypes::Deflector:{this->_maxdeflector+= it->second;break;}
+				case BonusTypes::Hull:{this->_maxhull+= it->second;break;}
+				case BonusTypes::ShieldStr:{
+					for(uint32_t i = 0; i < 6 ; i++){
+						this->_maxshield[i] += (this->getUnitType()->getShield(i) * it->second)/100;
+					}
+					break;
+				}
+				case BonusTypes::ERecharge:{this->_recharge+= it->second;break;}
+				case BonusTypes::Energy:{this->_maxEnergy+= it->second;break;}
+				case BonusTypes::ScanRange:{this->_scanRange+= (it->second/10);break;}
+				case BonusTypes::ScanPRange:{this->_scanPRange+= (it->second/10);break;}
+				case BonusTypes::SpeedThruster:{this->_topSpeed+= (it->second/(getUnitType()->getMass()/10));break;}
+				case BonusTypes::ManuvereThruster:{this->_agility+= (it->second/(getUnitType()->getMass()*10));break;}			
+			}
+		}
+		for(SSlotNodeI it = this->slots.begin(); it != this->slots.end(); it++){
+			if (it->second->getSS())
+				it->second->getSS()->reset();
+		}
+		//cerr<<"this->_topSpeed"<<this->_topSpeed<<endl;
+	}
+	if (_targetUpdateCounter == 100)
+		_targetUpdateCounter = 0;
 }
 
 
@@ -150,6 +237,7 @@ void SUnit::updateAutoMove(){
 				
 				break;
 			}
+			*/
 			case OrdresTactice::Evasive:{
 					
 				_autoMoveCounter++;
@@ -163,49 +251,54 @@ void SUnit::updateAutoMove(){
 					
 					_autoMovePoint = myrandom(1,8);
 				}
-				if (this->_primeTarget){
+				if(!this->_processor)
+					return;
+				SMetaObj* metaPrime = this->_processor->getMeta(this->_primeTarget);
+				
+				if (metaPrime){
+					SPos metaPrimePos; metaPrimePos = metaPrime->getRPos();
 					_MovementStatus |= MoveBitF::TargetPosLock;
 					int32_t tarx;
 					int32_t tary;
 					switch(_autoMovePoint){
 						case 1:{
-							tarx = _primeTarget->obj()->getPos().x + _order->getAutoMoveRange();
-							tary = _primeTarget->obj()->getPos().y + _order->getAutoMoveRange();
+							tarx = metaPrimePos.x + _order->getAutoMoveRange();
+							tary = metaPrimePos.y + _order->getAutoMoveRange();
 							break;
 						}
 						case 2:{
-							tarx = _primeTarget->obj()->getPos().x - _order->getAutoMoveRange();
-							tary = _primeTarget->obj()->getPos().y + _order->getAutoMoveRange();
+							tarx = metaPrimePos.x - _order->getAutoMoveRange();
+							tary = metaPrimePos.y + _order->getAutoMoveRange();
 							break;
 						}
 						case 3:{
-							tarx = _primeTarget->obj()->getPos().x + _order->getAutoMoveRange();
-							tary = _primeTarget->obj()->getPos().y - _order->getAutoMoveRange();
+							tarx = metaPrimePos.x + _order->getAutoMoveRange();
+							tary = metaPrimePos.y - _order->getAutoMoveRange();
 							break;
 						}
 						case 4:{
-							tarx = _primeTarget->obj()->getPos().x - _order->getAutoMoveRange();
-							tary = _primeTarget->obj()->getPos().y - _order->getAutoMoveRange();
+							tarx = metaPrimePos.x - _order->getAutoMoveRange();
+							tary = metaPrimePos.y - _order->getAutoMoveRange();
 							break;
 						}
 						case 5:{
-							tarx = _primeTarget->obj()->getPos().x;
-							tary = _primeTarget->obj()->getPos().y + _order->getAutoMoveRange();
+							tarx = metaPrimePos.x;
+							tary = metaPrimePos.y + _order->getAutoMoveRange();
 							break;
 						}
 						case 6:{
-							tarx = _primeTarget->obj()->getPos().x;
-							tary = _primeTarget->obj()->getPos().y - _order->getAutoMoveRange();
+							tarx = metaPrimePos.x;
+							tary = metaPrimePos.y - _order->getAutoMoveRange();
 							break;
 						}
 						case 7:{
-							tarx = _primeTarget->obj()->getPos().x + _order->getAutoMoveRange();
-							tary = _primeTarget->obj()->getPos().y;
+							tarx = metaPrimePos.x + _order->getAutoMoveRange();
+							tary = metaPrimePos.y;
 							break;
 						}
 						case 8:{
-							tarx = _primeTarget->obj()->getPos().x - _order->getAutoMoveRange();
-							tary = _primeTarget->obj()->getPos().y;
+							tarx = metaPrimePos.x - _order->getAutoMoveRange();
+							tary = metaPrimePos.y;
 							break;
 						}
 					}
@@ -215,7 +308,7 @@ void SUnit::updateAutoMove(){
 				}
 				break;
 			}
-			 * */
+			
 			case OrdresTactice::No_move:{
 				this->setTargetPos(_targetPos.x,_targetPos.y,(100 * Deg(this->_targetPos.x-this->_pos.x,this->_targetPos.y-this->_pos.y)));
 
@@ -314,7 +407,7 @@ void SUnit::MovePos(int32_t x, int32_t y){
 }
 
 void SUnit::setTargetPos(SPos& pos){
-	cerr<<"set target pos"<<endl;
+	cerr<<"set target pos x"<<pos.x<<" y "<<pos.y<<" d "<<pos.d<<endl;
 	this->_targetPos.x = pos.x;
 	this->_targetPos.y = pos.y;
 	this->_targetPos.d = pos.d;
@@ -334,6 +427,9 @@ void SUnit::setTargetPos(int32_t x, int32_t y, int32_t d){
 			this->_targetPos.d = d;
 			this->_updateCounter = 0;
 		}
+}
+void SUnit::setTargetPos(int32_t x, int32_t y){
+	this->setTargetPos(x, y, _targetPos.d);
 }
 
 uint32_t SUnit::FitAddSub(SItemType* type, uint32_t slot, uint32_t Xitem, SCargoBay* cargobay){

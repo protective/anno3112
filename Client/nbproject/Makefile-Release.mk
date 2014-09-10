@@ -63,14 +63,16 @@ OBJECTFILES= \
 	${OBJECTDIR}/UI/Build/CUIBuildFrame.o \
 	${OBJECTDIR}/UI/Buttons/CUIButtonSetUnitPos.o \
 	${OBJECTDIR}/UI/Buttons/CUIButtonBuild.o \
+	${OBJECTDIR}/UI/CUISubSystem.o \
+	${OBJECTDIR}/spaceobjects/subsystems/CSubTypeFighter.o \
 	${OBJECTDIR}/spaceobjects/subsystems/CSubTypeRef.o \
 	${OBJECTDIR}/UI/Buttons/CUIButtonChangeOrdre.o \
 	${OBJECTDIR}/spaceobjects/subsystems/CSubSystemBoost.o \
-	${OBJECTDIR}/UI/CUISubSystem.o \
 	${OBJECTDIR}/UI/Buttons/CUIButtonChangeView.o \
+	${OBJECTDIR}/spaceobjects/subsystems/CSubSystemFighter.o \
+	${OBJECTDIR}/UI/CUIDragDrop.o \
 	${OBJECTDIR}/CGlobals.o \
 	${OBJECTDIR}/spaceobjects/CSubAble.o \
-	${OBJECTDIR}/UI/CUIDragDrop.o \
 	${OBJECTDIR}/UI/Buttons/CUIButtonFitLoadout.o \
 	${OBJECTDIR}/UI/CUIBaseFrame.o \
 	${OBJECTDIR}/UI/Buttons/CUIButtonCreateFit.o \
@@ -280,6 +282,16 @@ ${OBJECTDIR}/UI/Buttons/CUIButtonBuild.o: UI/Buttons/CUIButtonBuild.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/UI/Buttons/CUIButtonBuild.o UI/Buttons/CUIButtonBuild.cpp
 
+${OBJECTDIR}/UI/CUISubSystem.o: UI/CUISubSystem.cpp 
+	${MKDIR} -p ${OBJECTDIR}/UI
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/UI/CUISubSystem.o UI/CUISubSystem.cpp
+
+${OBJECTDIR}/spaceobjects/subsystems/CSubTypeFighter.o: spaceobjects/subsystems/CSubTypeFighter.cpp 
+	${MKDIR} -p ${OBJECTDIR}/spaceobjects/subsystems
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/spaceobjects/subsystems/CSubTypeFighter.o spaceobjects/subsystems/CSubTypeFighter.cpp
+
 ${OBJECTDIR}/spaceobjects/subsystems/CSubTypeRef.o: spaceobjects/subsystems/CSubTypeRef.cpp 
 	${MKDIR} -p ${OBJECTDIR}/spaceobjects/subsystems
 	${RM} $@.d
@@ -295,15 +307,20 @@ ${OBJECTDIR}/spaceobjects/subsystems/CSubSystemBoost.o: spaceobjects/subsystems/
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/spaceobjects/subsystems/CSubSystemBoost.o spaceobjects/subsystems/CSubSystemBoost.cpp
 
-${OBJECTDIR}/UI/CUISubSystem.o: UI/CUISubSystem.cpp 
-	${MKDIR} -p ${OBJECTDIR}/UI
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/UI/CUISubSystem.o UI/CUISubSystem.cpp
-
 ${OBJECTDIR}/UI/Buttons/CUIButtonChangeView.o: UI/Buttons/CUIButtonChangeView.cpp 
 	${MKDIR} -p ${OBJECTDIR}/UI/Buttons
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/UI/Buttons/CUIButtonChangeView.o UI/Buttons/CUIButtonChangeView.cpp
+
+${OBJECTDIR}/spaceobjects/subsystems/CSubSystemFighter.o: spaceobjects/subsystems/CSubSystemFighter.cpp 
+	${MKDIR} -p ${OBJECTDIR}/spaceobjects/subsystems
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/spaceobjects/subsystems/CSubSystemFighter.o spaceobjects/subsystems/CSubSystemFighter.cpp
+
+${OBJECTDIR}/UI/CUIDragDrop.o: UI/CUIDragDrop.cpp 
+	${MKDIR} -p ${OBJECTDIR}/UI
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/UI/CUIDragDrop.o UI/CUIDragDrop.cpp
 
 ${OBJECTDIR}/CGlobals.o: CGlobals.cpp 
 	${MKDIR} -p ${OBJECTDIR}
@@ -314,11 +331,6 @@ ${OBJECTDIR}/spaceobjects/CSubAble.o: spaceobjects/CSubAble.cpp
 	${MKDIR} -p ${OBJECTDIR}/spaceobjects
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/spaceobjects/CSubAble.o spaceobjects/CSubAble.cpp
-
-${OBJECTDIR}/UI/CUIDragDrop.o: UI/CUIDragDrop.cpp 
-	${MKDIR} -p ${OBJECTDIR}/UI
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/UI/CUIDragDrop.o UI/CUIDragDrop.cpp
 
 ${OBJECTDIR}/UI/Buttons/CUIButtonFitLoadout.o: UI/Buttons/CUIButtonFitLoadout.cpp 
 	${MKDIR} -p ${OBJECTDIR}/UI/Buttons

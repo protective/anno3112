@@ -22,7 +22,7 @@ public:
 	virtual CTargetable* getTarget(){return _target;}
 	virtual void setTarget(CTargetable* target){this->_target = target;}
 	virtual bool canTarget(){return true;}
-	virtual ~CSubSystemW();
+	
 	virtual int32_t cooldown(uint16_t index){if(_weps.find(index) != _weps.end())return _weps[index]->getDuration(); return 0;}
 	virtual int32_t maxcooldown(uint16_t index){return this->_maxcooldown;}
 
@@ -38,6 +38,8 @@ public:
 	uint32_t useAmo(uint32_t amo);
 	uint32_t addAmo(uint32_t amo);
 	virtual CSubSystemW* isWeapon(){return this;}
+	
+	virtual ~CSubSystemW();
 private:
 	map<uint32_t,CSingleWep*> _weps;
 	uint32_t _amo;

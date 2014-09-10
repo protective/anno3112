@@ -67,9 +67,9 @@ void SSubAble::updateTargetList(Processor* processor){
 void SSubAble::updateTargetsPrio(Processor* processor){
 	//TODO FIX
 	
-	if (!this->_obj->isShip())
+	if (!this->_obj->isUnit())
 		return;
-	if (!this->_obj->isShip()->getOrdres())
+	if (!this->_obj->isUnit()->getOrdres())
 		return;
 	map<uint32_t, SMetaObj*> _cache;
 	for(list<uint32_t>::iterator SO = this->_lockedTargets.begin(); SO != this->_lockedTargets.end();SO++){
@@ -79,7 +79,7 @@ void SSubAble::updateTargetsPrio(Processor* processor){
 		}
 	}
 	
-	SOrdres* tempO = this->_obj->isShip()->getOrdres();
+	SOrdres* tempO = this->_obj->isUnit()->getOrdres();
 	this->clearPrimeTarget();
 	for(list<TargetType::Enum>::iterator tt = tempO->getPrimary().begin(); tt!= tempO->getPrimary().end();tt++){
 		for(map<uint32_t, SMetaObj*>::iterator SO = _cache.begin(); SO != _cache.end();SO++){

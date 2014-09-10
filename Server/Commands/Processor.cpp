@@ -14,6 +14,7 @@
 #include "../Sspacebjects/SAstoroidBelt.h"
 #include "../Sspacebjects/SShot.h"
 #include "CommandProcesMetas.h"
+#include "../Sspacebjects/Ordres/Compiler/CommandCompiler.h"
 #include <sys/time.h>
 
 Processor::Processor() {
@@ -172,25 +173,23 @@ SShip* Processor::createShip(SPos& pos, SShipType& stype, uint32_t playerId){
 	cerr<<"create ship"<<endl;
 	SShip* ship = new SShip(getFreeID(), pos, stype, playerId);
 	CommandProcessor* proces = new CommandProcessor(ship,1000/FRAMERATE,0);
+	
+	CommandCompiler* compi = new CommandCompiler("/home/karsten/anno3112/Server/OrderPrograms/test.aop");
 	list<Command*> cmdlist;
 	cmdlist.push_back(proces);
+	cmdlist.push_back(compi);
 	CommandAdd* add = new CommandAdd(world->getTime(), ship, cmdlist);
 	this->addCommand(add);
 	return ship;
 }
 
-SFighter* Processor::createFighter(SPos& pos, SFighterType& ftype, uint32_t playerId){
-	cerr<<"create fighter"<<endl;
-	cerr<<ftype.getId()<<endl;
-	cerr<<"kat1"<<endl;
-	SFighter* fighter = new SFighter(getFreeID(), pos, ftype, playerId);
-	cerr<<"hest"<<endl;
+SFighter* Processor::createFighter(SPos& pos, SFighterType& ftype, uint32_t playerId , uint32_t mothership, uint32_t motherShipSub){
+	SFighter* fighter = new SFighter(getFreeID(), pos, ftype, playerId, mothership, motherShipSub);
 	CommandProcessor* proces = new CommandProcessor(fighter,1000/FRAMERATE,0);
 	list<Command*> cmdlist;
 	cmdlist.push_back(proces);
 	CommandAdd* add = new CommandAdd(world->getTime(), fighter, cmdlist);
 	this->addCommand(add);
-	cerr<<"done create fighter"<<endl;
 	return fighter;
 }
 

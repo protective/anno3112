@@ -63,6 +63,8 @@
           <itemPath>spaceobjects/subsystems/CSubSystemBoost.h</itemPath>
           <itemPath>spaceobjects/subsystems/CSubSystemFac.cpp</itemPath>
           <itemPath>spaceobjects/subsystems/CSubSystemFac.h</itemPath>
+          <itemPath>spaceobjects/subsystems/CSubSystemFighter.cpp</itemPath>
+          <itemPath>spaceobjects/subsystems/CSubSystemFighter.h</itemPath>
           <itemPath>spaceobjects/subsystems/CSubSystemRef.cpp</itemPath>
           <itemPath>spaceobjects/subsystems/CSubSystemRef.h</itemPath>
           <itemPath>spaceobjects/subsystems/CSubSystemW.cpp</itemPath>
@@ -75,6 +77,8 @@
           <itemPath>spaceobjects/subsystems/CSubTypeBoost.h</itemPath>
           <itemPath>spaceobjects/subsystems/CSubTypeFac.cpp</itemPath>
           <itemPath>spaceobjects/subsystems/CSubTypeFac.h</itemPath>
+          <itemPath>spaceobjects/subsystems/CSubTypeFighter.cpp</itemPath>
+          <itemPath>spaceobjects/subsystems/CSubTypeFighter.h</itemPath>
           <itemPath>spaceobjects/subsystems/CSubTypeRef.cpp</itemPath>
           <itemPath>spaceobjects/subsystems/CSubTypeRef.h</itemPath>
           <itemPath>spaceobjects/subsystems/CSubTypeWep.cpp</itemPath>

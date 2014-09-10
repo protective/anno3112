@@ -342,9 +342,12 @@ uint32_t parseBuffer(Client* client, uint32_t len){
 							break;
 						}
 					}
-					if(shipTypes.find(st->_shiptype) == shipTypes.end())
+					if(unitTypes.find(st->_shiptype) == unitTypes.end())
 						break;
-					SLoadout* tload = new SLoadout(nextFreeId,string(st->_name),*shipTypes[st->_shiptype]);
+					
+					if(!(unitTypes[st->_shiptype]->isShipType()))
+						break;
+					SLoadout* tload = new SLoadout(nextFreeId,string(st->_name),*unitTypes[st->_shiptype]->isShipType());
 
 					for(uint32_t i = 0; i< st->_xloaditems;i++){
 						SerialReqCreateLoadItems* st2 = (SerialReqCreateLoadItems*)(buffer+offset+sizeof(SerialReqCreateLoadOut)+(sizeof(SerialReqCreateLoadItems)*i));

@@ -18,9 +18,17 @@ size 50
 targettype lightsupport
 
 {FighterSub}
-fit MWep 400
-baycount 3
+fit HWep 1400
+baycount 2
 
+//M rear
+{sub1}
+type HWep
+mount 1200
+uicord 75 280
+cord 0 0
+firedir FW
+basefit GatlingLaser1 1
 
 {item}
 texture Weapons/FusionCannon

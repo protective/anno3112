@@ -21,7 +21,7 @@ shieldFL 20
 shieldStr 800
 
 
-//M rear
+a//M rear
 {sub1}
 type HWep
 mount 1200

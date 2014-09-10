@@ -15,6 +15,8 @@ SShipTypeSlotData::SShipTypeSlotData(FitTypes::Enum slotType, int32_t gX, int32_
 	_slotType = slotType;
 	_mount = 0;
 	_firedir = FireDir::ALL;
+	_baseItem = NULL;
+	_baseItemCount = 0;
 }
 
 SShipTypeSlotData::SShipTypeSlotData() {
@@ -25,6 +27,8 @@ SShipTypeSlotData::SShipTypeSlotData() {
 	_slotType = FitTypes::Invalid;
 	_mount = 0;
 	_firedir = FireDir::ALL;
+	_baseItem = NULL;
+	_baseItemCount = 0;
 }
 
 SShipTypeSlotData::~SShipTypeSlotData() {

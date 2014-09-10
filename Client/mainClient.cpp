@@ -214,8 +214,9 @@ void DrawScreen(SDL_Surface* screen)
 
 		mainFrame->finalRemove();
 		
+		//uint32_t time = getTime();	
 		DrawScreen(screen);
-		
+		//cerr<<"time="<<getTime() - time<<endl;
 		pthread_mutex_unlock(&lockInput);
 		
 		//end main loop

@@ -8,6 +8,7 @@
 #ifndef SITEMTYPE_H
 #define	SITEMTYPE_H
 #include "../SFunctions.h"
+#include "../Sspacebjects/SShipType.h"
 struct bmaterial{
 	SItemType* _item;
 	uint32_t _quan;

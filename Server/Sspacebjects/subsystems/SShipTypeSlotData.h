@@ -20,7 +20,10 @@ public:
 	FitTypes::Enum slotType(){return _slotType;}
 	uint32_t slotMount(){return _mount;}
 	FireDir::Enum getFireDir(){return this->_firedir;}
-
+	
+	SItemType* getBaseItem(){return _baseItem;}
+	uint32_t getBaseItemCount(){return _baseItemCount;}
+	
 	void setgX(int32_t value){_gX = value;}
 	void setgY(int32_t value){_gY = value;}
 	void setuiX(uint32_t value){_uiX = value;}
@@ -29,7 +32,9 @@ public:
 	void setslotMount(uint32_t value){_mount = value;}
 
 	void setFireDir(FireDir::Enum firedir){this->_firedir = firedir;}
-
+	
+	void setBaseItem(SItemType* baseItem){_baseItem = baseItem;}
+	void setBaseItemCount(uint32_t value){_baseItemCount = value;}
 	virtual ~SShipTypeSlotData();
 private:
 	int32_t _gX;
@@ -39,6 +44,8 @@ private:
 	FitTypes::Enum _slotType;
 	uint32_t _mount;
 	FireDir::Enum _firedir;
+	SItemType* _baseItem;
+	uint32_t _baseItemCount;
 };
 
 #endif	/* SSHIPTYPESLOTDATA_H */

@@ -6,7 +6,7 @@
  */
 
 #include <vector>
-
+#include "SFunctions.h"
 #include "Client.h"
 #include "World/SWorld.h"
 #include "Sspacebjects/SShipType.h"
@@ -14,6 +14,7 @@
 #include "Sspacebjects/subsystems/SSubTypeWep.h"
 #include "Sspacebjects/subsystems/SSubTypeFac.h"
 #include "Sspacebjects/subsystems/SSubTypeBoost.h"
+#include "Sspacebjects/subsystems/SSubTypeFighter.h"
 #include "Sspacebjects/subsystems/SSubSystemBonus.h"
 #include "Sspacebjects/SAstoroidType.h"
 #include "Sspacebjects/SOrdres.h"
@@ -21,7 +22,7 @@
 #include "Sspacebjects/subsystems/SSubTypeRef.h"
 #include "Commands/CommandClientSubscription.h"
 //#include "Sspacebjects/subsystems/SShipTypeSlotData.h"
-
+#include "NetworkLayer/SItemTypeNetworkLayer.h"
 Client::Client(int socket) {
 
 	this->socket = socket;
@@ -60,7 +61,7 @@ void Client::initTransfere(){
 	cerr<<"send itemtypes"<<endl;
 	this->sendItemTypes();
 	cerr<<"send shiptypes"<<endl;
-	this->sendShipTypes();
+	this->sendUnitTypes();
 	cerr<<"send astoroidstype"<<endl;
 	//this->sendAstoroidTypes();
 	cerr<<"send orders"<<endl;
@@ -90,6 +91,7 @@ void Client::sendItemTypes() {
 	
 		//**********************
 		//send subsystemdata
+		SendItemType(this, it->second);//TODO move all to networklayer
 		if (it->second->getSubType()) {
 			if (it->second->getSubType()->isWeapon()) {
 				SSubTypeWep * temp = it->second->getSubType()->isWeapon();
@@ -434,12 +436,12 @@ void Client::sendLoadout(uint32_t id) {
 }
 
 
-void Client::sendShipTypes() {
+void Client::sendUnitTypes() {
 
 
 	//TODO send shiptype
 
-	for (map<uint32_t, SShipType*>::iterator it = shipTypes.begin(); it != shipTypes.end(); it++) {
+	for (map<uint32_t, SUnitType*>::iterator it = unitTypes.begin(); it != unitTypes.end(); it++) {
 
 		uint32_t xmats = 0;
 		SItemType* tempitem = NULL;
@@ -461,10 +463,11 @@ void Client::sendShipTypes() {
 		data2->_item._itemId = 0;
 		data2->_item._matcount = 0;
 
-		data2->_item._itemtex = tempitem->getTexId();
-		data2->_item._itemId = tempitem->getTypeID();
-		data2->_item._matcount = tempitem->getCost().size();
-
+		if(tempitem){
+			data2->_item._itemtex = tempitem->getTexId();
+			data2->_item._itemId = tempitem->getTypeID();
+			data2->_item._matcount = tempitem->getCost().size();
+		}
 		
 		data2->_ShipTypeId = it->second->getId();
 		data2->_texture = it->second->gettexture();

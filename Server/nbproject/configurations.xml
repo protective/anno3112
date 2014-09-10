@@ -50,6 +50,8 @@
         <itemPath>Commands/CommandProcessor.h</itemPath>
         <itemPath>Commands/CommandRemove.cpp</itemPath>
         <itemPath>Commands/CommandRemove.h</itemPath>
+        <itemPath>Commands/CommandSignalFighter.cpp</itemPath>
+        <itemPath>Commands/CommandSignalFighter.h</itemPath>
         <itemPath>Commands/CommandTargetPosUpdate.cpp</itemPath>
         <itemPath>Commands/CommandTargetPosUpdate.h</itemPath>
         <itemPath>Commands/CommandTimedSubscribeUpdate.cpp</itemPath>
@@ -84,6 +86,7 @@
         <itemPath>NetworkLayer/SCargoBayNetworkLayer.h</itemPath>
         <itemPath>NetworkLayer/SFighterNetworkLayer.h</itemPath>
         <itemPath>NetworkLayer/SGridNetworkLayer.h</itemPath>
+        <itemPath>NetworkLayer/SItemTypeNetworkLayer.h</itemPath>
         <itemPath>NetworkLayer/SShipNetworkLayer.h</itemPath>
         <itemPath>NetworkLayer/SShotNetworkLayer.h</itemPath>
         <itemPath>NetworkLayer/SSubSystemNetworkLayer.h</itemPath>
@@ -97,6 +100,56 @@
           <itemPath>Sspacebjects/cargo/SCargoBay.h</itemPath>
         </logicalFolder>
         <logicalFolder name="f3" displayName="Ordres" projectFiles="true">
+          <logicalFolder name="f3" displayName="Compiler" projectFiles="true">
+            <itemPath>Sspacebjects/Ordres/Compiler/CommandCompiler.cpp</itemPath>
+            <itemPath>Sspacebjects/Ordres/Compiler/CommandCompiler.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="f6" displayName="Generated" projectFiles="true">
+            <itemPath>Sspacebjects/Ordres/Generated/Lexer.cpp</itemPath>
+            <itemPath>Sspacebjects/Ordres/Generated/Lexer.h</itemPath>
+            <itemPath>Sspacebjects/Ordres/Generated/Parser.cpp</itemPath>
+            <itemPath>Sspacebjects/Ordres/Generated/Parser.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="f2" displayName="Nodes" projectFiles="true">
+            <itemPath>Sspacebjects/Ordres/Nodes/SOrderNode.h</itemPath>
+            <itemPath>Sspacebjects/Ordres/Nodes/SOrderNodeAssignExpr.h</itemPath>
+            <itemPath>Sspacebjects/Ordres/Nodes/SOrderNodeExpr.h</itemPath>
+            <itemPath>Sspacebjects/Ordres/Nodes/SOrderNodeExprStmt.h</itemPath>
+            <itemPath>Sspacebjects/Ordres/Nodes/SOrderNodeIfStmt.h</itemPath>
+            <itemPath>Sspacebjects/Ordres/Nodes/SOrderNodeLiteralExpr.h</itemPath>
+            <itemPath>Sspacebjects/Ordres/Nodes/SOrderNodeStmt.h</itemPath>
+            <itemPath>Sspacebjects/Ordres/Nodes/SOrderNodeVardeclStmt.h</itemPath>
+            <itemPath>Sspacebjects/Ordres/Nodes/SOrderNodeVariable.h</itemPath>
+            <itemPath>Sspacebjects/Ordres/Nodes/SOrderNodeVariableExpr.h</itemPath>
+            <itemPath>Sspacebjects/Ordres/Nodes/SOrderNodes.h</itemPath>
+            <itemPath>Sspacebjects/Ordres/Nodes/SOrderVisit.cpp</itemPath>
+          </logicalFolder>
+          <logicalFolder name="f5" displayName="Terminals" projectFiles="true">
+            <itemPath>Sspacebjects/Ordres/Terminals/SOrderErrorTerminal.h</itemPath>
+            <itemPath>Sspacebjects/Ordres/Terminals/SOrderIdentifier.h</itemPath>
+            <itemPath>Sspacebjects/Ordres/Terminals/SOrderIntegerLiteral.cpp</itemPath>
+            <itemPath>Sspacebjects/Ordres/Terminals/SOrderIntegerLiteral.h</itemPath>
+            <itemPath>Sspacebjects/Ordres/Terminals/SOrderTerminal.h</itemPath>
+            <itemPath>Sspacebjects/Ordres/Terminals/SOrderTerminals.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="f4" displayName="Tokens" projectFiles="true">
+          </logicalFolder>
+          <logicalFolder name="f1" displayName="Utils" projectFiles="true">
+            <itemPath>Sspacebjects/Ordres/Utils/SOrderDotBuilder.cpp</itemPath>
+            <itemPath>Sspacebjects/Ordres/Utils/SOrderDotBuilder.h</itemPath>
+            <itemPath>Sspacebjects/Ordres/Utils/SOrderNodeNext.h</itemPath>
+            <itemPath>Sspacebjects/Ordres/Utils/SOrderSourcePosition.cpp</itemPath>
+            <itemPath>Sspacebjects/Ordres/Utils/SOrderSourcePosition.h</itemPath>
+            <itemPath>Sspacebjects/Ordres/Utils/SOrderVar.h</itemPath>
+            <itemPath>Sspacebjects/Ordres/Utils/SOrderVarInteger.h</itemPath>
+            <itemPath>Sspacebjects/Ordres/Utils/SOrderVarList.h</itemPath>
+            <itemPath>Sspacebjects/Ordres/Utils/SOrderVarPos.h</itemPath>
+            <itemPath>Sspacebjects/Ordres/Utils/SOrderVarSubSys.h</itemPath>
+            <itemPath>Sspacebjects/Ordres/Utils/SOrderVisitor.cpp</itemPath>
+            <itemPath>Sspacebjects/Ordres/Utils/SOrderVisitor.h</itemPath>
+          </logicalFolder>
+          <itemPath>Sspacebjects/Ordres/CommandOrderThread.cpp</itemPath>
+          <itemPath>Sspacebjects/Ordres/CommandOrderThread.h</itemPath>
           <itemPath>Sspacebjects/Ordres/SOrdreAction.cpp</itemPath>
           <itemPath>Sspacebjects/Ordres/SOrdreAction.h</itemPath>
           <itemPath>Sspacebjects/Ordres/SOrdreActionMoveTo.cpp</itemPath>
@@ -113,6 +166,9 @@
           <itemPath>Sspacebjects/Ordres/SOrdreConditionStatOp.h</itemPath>
           <itemPath>Sspacebjects/Ordres/SOrdreConditionUnitEqTo.cpp</itemPath>
           <itemPath>Sspacebjects/Ordres/SOrdreConditionUnitEqTo.h</itemPath>
+          <itemPath>Sspacebjects/Ordres/SOrdreInstructionSet.h</itemPath>
+          <itemPath>Sspacebjects/Ordres/SOrdreProgram.cpp</itemPath>
+          <itemPath>Sspacebjects/Ordres/SOrdreProgram.h</itemPath>
           <itemPath>Sspacebjects/Ordres/SOrdreRule.cpp</itemPath>
           <itemPath>Sspacebjects/Ordres/SOrdreRule.h</itemPath>
         </logicalFolder>

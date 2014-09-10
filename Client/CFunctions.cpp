@@ -31,6 +31,7 @@
 #include "UI/CUIMainFrame.h"
 #include "spaceobjects/CSubAble.h"
 #include "world/CWorld.h"
+#include "spaceobjects/subsystems/CSubSystemFighter.h"
 
 uint32_t getTime(){
 	return SDL_GetTicks()+Gtime;
@@ -112,18 +113,19 @@ void* Connect(string ip, uint32_t playerid, uint32_t pass){
 
 void* thread_Recive(){
 
-		connection.messagebuffer = (char*)malloc(1024);
-		memset(connection.messagebuffer,0,1024);
+		connection.messagebuffer = (char*)malloc(2048);
+		memset(connection.messagebuffer,0,2048);
 		printf ("recv test....\n");
 		int recsize;
-
+		uint32_t time= getTime();
 		int recived = 0;
 		uint32_t delta = 0;
 
 	
 		while(connection.connected){
 
-			recsize = recv(connection.SocketFD, connection.messagebuffer + recived, 512,0);
+			recsize = recv(connection.SocketFD, connection.messagebuffer + recived, 1024,0);
+			
 
 			if (recsize < 0)
 					fprintf(stderr, "error\n");
@@ -133,9 +135,10 @@ void* thread_Recive(){
 				delta = 1;
 				while (delta){
 					pthread_mutex_lock(&lockInput);
+					
 					delta = parseBuffer(connection.messagebuffer,recived);
 					pthread_mutex_unlock(&lockInput);
-					memmove(connection.messagebuffer, connection.messagebuffer+ delta, 1024- delta);
+					memmove(connection.messagebuffer, connection.messagebuffer+ delta, 2048 - delta);
 					recived -= delta;
 				}
 			}
@@ -269,6 +272,11 @@ uint32_t parseBuffer(char* buffer, uint32_t len){
 									switch(tempId->second->getSubType()->getClass()){
 										case SubSystemClass::Wep :{
 											CSubSystemW* sw = new CSubSystemW(*obj,*subhandle->second,subhandle->first,tempId->second,st->_xitem);
+											subhandle->second->setSS(sw);
+											break;
+										}
+										case SubSystemClass::Fighter :{
+											CSubSystemFighter* sw = new CSubSystemFighter(*obj,*subhandle->second,subhandle->first,tempId->second,st->_xitem);
 											subhandle->second->setSS(sw);
 											break;
 										}
@@ -468,9 +476,34 @@ uint32_t parseBuffer(char* buffer, uint32_t len){
 					
 					break;
 				}
+				case SerialType::SerialTypeFighter:{
+					//TODO
+					SerialTypeFighter* st = (SerialTypeFighter*)(buffer+offset);
+					itemlist[st->_item._itemId] = new CItemType(st->_item._itemId,st->_item._itemtex);
+					string ts(st->_item._name);
+					itemlist[st->_item._itemId]->setName(ts);
+					itemlist[st->_item._itemId]->setMass(st->_item._mass);
+					itemlist[st->_item._itemId]->setBuildTime(st->_item._buildtime);
+					for (uint32_t i = 0; i != st->_item._matcount; i++){
+						SerialPartMat* st2 = (SerialPartMat*)(buffer+offset+ (sizeof(SerialTypeFighter)+ (sizeof(SerialPartMat) * i)));
+						bmaterial temp;
+						temp._item = NULL;
+						temp._quan = st2->_quantity;
+						itemlist[st->_item._itemId]->getCost()[st2->_matid] = temp;
+					}
+					
+					itemlist[st->_item._itemId]->setSubType(new CSubTypeFighter());
+					if(itemlist[st->_item._itemId]->getSubType()->isFighter()){
+						itemlist[st->_item._itemId]->getSubType()->isFighter()->setBayCount(st->_bayCount);
 
-
-
+					}else
+						cerr<<"ERROR CFunctions::Parsing: SerialTypeWeapon subtype is not weapon"<<endl;
+		
+					CDatabase db;
+					db.updateItemRefs();
+					
+					break;
+				}
 				case SerialType::SerialTypeBonus:{
 					//TODO
 					SerialTypeBonus* st = (SerialTypeBonus*)(buffer+offset);
@@ -630,6 +663,7 @@ uint32_t parseBuffer(char* buffer, uint32_t len){
 		}
 	}
 	//updateFrames();
+	//cerr<<"offset="<<offset<<endl;
 	return offset;
 }
 

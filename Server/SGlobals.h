@@ -15,6 +15,8 @@
 #include <pthread.h>
 #include <SDL/SDL.h>
 #include <list>
+#include <vector>
+#include <stack>
 #include <map>
 
 #include "NetworkControler.h"
@@ -30,7 +32,7 @@ using namespace std;
 class SWorld;
 class SSubType;
 class SItemType;
-class SShipType;
+class SUnitType;
 class SAstoroidType;
 class SOrdres;
 class SLoadout;
@@ -42,7 +44,7 @@ extern pthread_mutex_t lockClientList;
 
 extern map<uint32_t,SItemType*> itemlist;
 extern map<string,uint32_t> itemlistFileNames;
-extern map<uint32_t, SShipType*> shipTypes;
+extern map<uint32_t, SUnitType*> unitTypes;
 extern map<uint32_t, SAstoroidType*> astoroidTypes;
 extern map<uint32_t,map<uint32_t,SOrdres*> > globalOrders;
 extern map<uint32_t,map<uint32_t,SLoadout*> > globalLoadout;

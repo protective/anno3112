@@ -469,8 +469,8 @@ void ParseGame(ifstream* file,string filename){
 					getparameter(line, "Unit", 1, &beginint, &lenint);
 					if (itemlistFileNames.find(line.substr(beginint, lenint)) != itemlistFileNames.end()){
 						SShipType* st = NULL;
-						if(shipTypes.find(itemlistFileNames.find(line.substr(beginint, lenint))->second) != shipTypes.end()){
-							st = shipTypes.find(itemlistFileNames.find(line.substr(beginint, lenint))->second)->second;
+						if(unitTypes.find(itemlistFileNames.find(line.substr(beginint, lenint))->second) != unitTypes.end()){
+							st = unitTypes.find(itemlistFileNames.find(line.substr(beginint, lenint))->second)->second->isShipType();
 							getparameter(line, "Unit", 2, &beginint, &lenint);
 							int32_t x = 1000 * strToInt(line.substr(beginint, lenint));
 							getparameter(line, "Unit", 3, &beginint, &lenint);
@@ -558,7 +558,7 @@ void ParseData(ifstream* file,string filename) {
 			parseState = "ShipType";
 			parseSubState = "base";
 			unittype = new SShipType(id);
-			shipTypes[id] = (SShipType*)unittype;
+			unitTypes[id] = unittype;
 			SItemType* itemt = itemlist[id];
 			itemt->setShipType((SShipType*)unittype);
 			itemlist[id] = itemt;
@@ -580,7 +580,7 @@ void ParseData(ifstream* file,string filename) {
 			subtype = new SSubTypeFighter();
 			subtype->isFighter()->setFighterType(fightertype);
 			SItemType* itemt = itemlist[id];
-			
+			unitTypes[id] = fightertype;
 			itemt->setSubType(subtype);
 			itemlist[id] = itemt;
 			
@@ -631,9 +631,9 @@ void ParseData(ifstream* file,string filename) {
 		}
 
 		if (parseState == "ShipType" || parseState == "FighterType") {
-			cerr<<"parstate="<<parseState<<endl;
-			cerr<<"parsubstate="<<parseSubState<<endl;
-			cerr<<"line="<<line<<endl;
+			//cerr<<"parstate="<<parseState<<endl;
+			//cerr<<"parsubstate="<<parseSubState<<endl;
+			//cerr<<"line="<<line<<endl;
 			for (int i = 0; i < 20; i++) {
 				std::stringstream ss;
 				ss << "{sub" << i << "}";
@@ -761,6 +761,16 @@ void ParseData(ifstream* file,string filename) {
 							getparameter(line, "type", 0, &beginint, &lenint);
 							FitTypes::Enum stype = parseSlotType(line.substr(beginint, lenint));
 							unittype->getSlots()[i]->setslotType(stype);
+						}
+						if (line.find("basefit") != string::npos){
+							getparameter(line, "basefit", 0, &beginint, &lenint);
+							map<string,uint32_t>::iterator susi = itemlistFileNames.find(line.substr(beginint, lenint));
+							if(susi != itemlistFileNames.end()){
+								unittype->getSlots()[i]->setBaseItem(itemlist[susi->second]);
+								getparameter(line, "basefit", 1, &beginint, &lenint);
+								unittype->getSlots()[i]->setBaseItemCount(strToInt(line.substr(beginint, lenint)));
+							}
+							
 						}
 						if (line.find("mount") != string::npos){
 							getparameter(line, "mount", 0, &beginint, &lenint);

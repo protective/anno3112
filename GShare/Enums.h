@@ -93,6 +93,15 @@ namespace Visibility{
 	};
 }
 
+namespace FighterSignal{
+	enum Enum{
+		invalid = 0,
+		target = 1,
+		returnToShip = 2,
+		haveReturned = 3,
+	};
+}
+
 namespace SubscriptionLevel{
 	enum Enum{
 		lowFreq = 0,

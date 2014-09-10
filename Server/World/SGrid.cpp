@@ -111,7 +111,7 @@ void SGrid::addUnit(SUnit* unit){
 	*/
 
 void SGrid::addObj(uint32_t obj){
-	cerr<<"SGrid::addObj"<<obj<<endl;
+	//cerr<<"SGrid::addObj"<<obj<<endl;
 	this->objInGrid[obj] = obj;
 	
 	

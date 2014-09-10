@@ -14,7 +14,7 @@
 #include "SSubSystemTargetingI.h"
 
 
-class SSubSystemW : public SSubSystem , public SSubSystemTargetingI {
+class SSubSystemW : public SSubSystem, public SSubSystemTargetingI {
 public:
 	SSubSystemW(SObj& owner,SSlotNode& slotnode,uint32_t id,SItemType* item, uint32_t Xitem);
 	SSubTypeWep* getTypeWep(){return (SSubTypeWep*)this->_type->getSubType();}

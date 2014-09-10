@@ -1,0 +1,14 @@
+graph ""
+{
+#   node [fontsize=10,width=".2", height=".2", margin=0];
+#   graph[fontsize=8];
+label="test Graf"
+n0 ;
+n0 [label="Root"] ;
+n0 -- n1 ;
+n1 [label="VarDeclaration"] ;
+n1 -- n2 ;
+n2 [label="Id: a"] ;
+n1 -- n3 ;
+n3 [label="Int: 1"] ;
+}

@@ -13,6 +13,7 @@ class SFighterType : public SUnitType {
 public:
 	SFighterType(uint32_t id);
 	virtual SUnitType* getUnitType(){return this;}
+	SFighterType* isFighterType(){return this;}
 	virtual ~SFighterType();
 protected:
 
