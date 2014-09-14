@@ -9,18 +9,20 @@
 #define	SORDERVISITOR_H
 
 
-class SOrderVisitor;
+
 
 #include "../Nodes/SOrderNodes.h"
 #include "../Terminals/SOrderTerminals.h"
 
 class SOrderVisitor{
 public:
+	virtual void visit(SOrderTerminal* node) = 0;
 	virtual void visit(SOrderNode* node) = 0;
 	virtual void visit(SOrderNodeAssignExpr* node) = 0;
 	virtual void visit(SOrderNodeExpr* node) = 0;
 	virtual void visit(SOrderNodeExprStmt* node) = 0;
 	virtual void visit(SOrderNodeIfStmt* node) = 0;
+	virtual void visit(SOrderNodeWhileStmt* node) = 0;
 	virtual void visit(SOrderNodeLiteralExpr* node) = 0;
 	virtual void visit(SOrderNodeStmt* node) = 0;
 	virtual void visit(SOrderNodeVardeclStmt* node) = 0;
@@ -28,6 +30,9 @@ public:
 	virtual void visit(SOrderNodeVariableExpr* node) = 0;
 	virtual void visit(SOrderIdentifier* node) = 0;
 	virtual void visit(SOrderIntegerLiteral* node) = 0;
+	virtual void visit(SOrderBinaryOperatorExpr* node) = 0;
+	virtual void visit(SOrderNodeArg* node) = 0;
+	virtual void visit(SOrderNodeCallExpr* node) = 0;
 };
 
 

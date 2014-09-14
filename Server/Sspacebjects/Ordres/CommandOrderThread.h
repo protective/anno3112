@@ -11,6 +11,10 @@
 #include "../../Commands/Command.h"
 #include "SOrdreProgram.h"
 #include "Utils/SOrderVar.h"
+typedef void (*systemCall)(Processor*, void*);
+
+void systemSetSubsystemFlags(void* arg){}
+
 class CommandOrderThread : public Command {
 public:
 	CommandOrderThread(SOrdreProgram* program, OBJID obj);
@@ -19,16 +23,6 @@ public:
 	void pushStack(SOrderVar* var){
 		_stack.push_back(var);
 	}
-	/*
-	SOrderVar* popStack(){
-		SOrderVar* t = _stack.back();
-		_stack.pop_back();
-		return t;
-	}
-	void pushProgramStack(SOrderNode* node){
-		_programStack.push_back(node);
-	}
-	 * */
 	virtual ~CommandOrderThread();
 private:
 
@@ -39,6 +33,11 @@ private:
 	uint32_t _programCounter;
 	//list<SOrderNode*> _programStack;
 	vector<SOrderVar*> _stack;
+	
+
+	vector<systemCall> _systemCalls;
+    /*
+     */
 	
 };
 

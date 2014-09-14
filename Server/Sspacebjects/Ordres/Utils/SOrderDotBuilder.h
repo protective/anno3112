@@ -36,10 +36,12 @@ public:
 		out<<"n"<<myId<<" [label=\"Root\"] ;"<<endl; // Create my node
 	}
 	void visit(SOrderNode* node);
+	void visit(SOrderTerminal* node);
 	void visit(SOrderNodeAssignExpr* node);
 	void visit(SOrderNodeExpr* node);
 	void visit(SOrderNodeExprStmt* node);
 	void visit(SOrderNodeIfStmt* node);
+	void visit(SOrderNodeWhileStmt* node);
 	void visit(SOrderNodeLiteralExpr* node);
 	void visit(SOrderNodeStmt* node);
 	void visit(SOrderNodeVardeclStmt* node);
@@ -47,6 +49,9 @@ public:
 	void visit(SOrderNodeVariableExpr* node);
 	void visit(SOrderIdentifier* node);
 	void visit(SOrderIntegerLiteral* node);
+	void visit(SOrderBinaryOperatorExpr* node);
+	void visit(SOrderNodeArg* node);
+	void visit(SOrderNodeCallExpr* node);
 	void finalise(){
 		out<<"}"<<endl;
 	}

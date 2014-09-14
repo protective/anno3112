@@ -8,15 +8,21 @@
 #ifndef SORDREPROGRAM_H
 #define	SORDREPROGRAM_H
 
-#include "../../SFunctions.h"
-#include "SOrdreInstructionSet.h"
 
+#include "SOrdreInstructionSet.h"
+#include <vector>
+#include <string>
+#include <iostream>
+#include <iomanip>
+#include <inttypes.h>
+using namespace std;
 typedef uint32_t INSTRUCTION;
 #define OPCODE(X) (X & 0x00FF0000)
 #define ARG(X) X & 0x0000FFFF
 typedef vector<INSTRUCTION> PROGRAM;
 class SOrdreProgram {
 public:
+    
 	SOrdreProgram();
 	PROGRAM& program(){return _program;}
 	string name(){return _name;}

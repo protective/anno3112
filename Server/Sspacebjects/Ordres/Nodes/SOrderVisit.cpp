@@ -1,5 +1,8 @@
 
 #include "../Utils/SOrderVisitor.h"
+void SOrderTerminal::accept(SOrderVisitor* v){
+	v->visit(this);
+}
 void SOrderNode::accept(SOrderVisitor* v){
 	v->visit(this);
 }
@@ -34,5 +37,20 @@ void SOrderIdentifier::accept(SOrderVisitor* v){
 	v->visit(this);
 }
 void SOrderIntegerLiteral::accept(SOrderVisitor* v){
+	v->visit(this);
+}
+void SOrderBinaryOperatorExpr::accept(SOrderVisitor* v){
+	v->visit(this);
+}
+
+void SOrderNodeWhileStmt::accept(SOrderVisitor* v){
+	v->visit(this);
+}
+
+void SOrderNodeArg::accept(SOrderVisitor* v){
+	v->visit(this);
+}
+
+void SOrderNodeCallExpr::accept(SOrderVisitor* v){
 	v->visit(this);
 }

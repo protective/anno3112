@@ -46,7 +46,6 @@ void SMetaShot::checkCollisions(Processor* processor){
 			int32_t y1 = temppos.y - oobj->getPos().y;
 			int32_t x2 = temppos.x+movementX - oobj->getPos().x;
 			int32_t y2 = temppos.y+movementY - oobj->getPos().y;
-			//cerr<<"hest2"<<endl;
 			int32_t dx = x2 - x1;
 			int32_t dy = y2 - y1;
 			double dr = sqrt((dx*dx)+(dy*dy));

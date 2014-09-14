@@ -16,6 +16,11 @@ public:
 	SOrderNodeExpr(SOrderSourcePosition pos) : _pos(pos){
 		
 	}
+    	/** Get the position of the expression */
+	SOrderSourcePosition pos(){
+		return _pos;
+	}
+    
 	virtual void accept(SOrderVisitor* v);
 	virtual ~SOrderNodeExpr(){}
 private:

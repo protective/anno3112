@@ -70,11 +70,17 @@ groups:
 
 rules:
 {var} 											{cerr<<"terminal var"<<endl; return new SOrderTerminal(TOKEN_var, pos);}
+{if} 											{cerr<<"terminal if"<<endl; return new SOrderTerminal(TOKEN_if, pos);}
+{while}											{cerr<<"terminal while"<<endl; return new SOrderTerminal(TOKEN_while, pos);}
 {=}												{cerr<<"terminal assignment"<<endl; return new SOrderTerminal(TOKEN_assignment, pos);}
 {,} 											{cerr<<"terminal comma"<<endl;return new SOrderTerminal(TOKEN_comma, pos);}
+{+} 											{cerr<<"terminal plus"<<endl;return new SOrderTerminal(TOKEN_plus, pos);}
+{-} 											{cerr<<"terminal minus"<<endl;return new SOrderTerminal(TOKEN_minus, pos);}
 {;} 											{cerr<<"terminal semicolon"<<endl;return new SOrderTerminal(TOKEN_semicolon, pos);}
 {\(} 											{cerr<<"terminal leftp"<<endl;return new SOrderTerminal(TOKEN_left_p, pos);}
 {\)} 											{cerr<<"terminal rightp"<<endl;return new SOrderTerminal(TOKEN_right_p, pos);}
+{\{} 											{cerr<<"terminal leftcur"<<endl;return new SOrderTerminal(TOKEN_left_c, pos);}
+{\}} 											{cerr<<"terminal rightcur"<<endl;return new SOrderTerminal(TOKEN_right_c, pos);}
 {_?[a-Z](_?([a-Z]|[0-9]))*} 					{cerr<<"terminal id"<<endl;return new SOrderIdentifier(token, toklen, pos);}
 {[0-9]+} 										{cerr<<"terminal int"<<endl;return IntegerFromDecimalString(token, toklen, pos);}
 {\x04}											{cerr<<"terminal eof"<<endl;return new SOrderTerminal(TOKEN_EOF, pos);}

@@ -12,6 +12,7 @@ CommandOrderThread::CommandOrderThread(SOrdreProgram* program, OBJID obj):
 Command(0){
 	_program = program;
 	_obj = obj;
+	_systemCalls.push_back(systemSetSubsystemFlags);
 }
 
 
@@ -26,7 +27,9 @@ uint32_t CommandOrderThread::execute(){
 	return COMMAND_REPEAT;
 }
 
+//void CommandOrderThread::systemSetSubsystemFlags(void* arg){
 
+//}
 CommandOrderThread::~CommandOrderThread() {
 }
 

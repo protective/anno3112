@@ -1,3 +1,63 @@
 Conflict:
-         {expr -> varexpr [assignment] expr ~, [left_p]}
-Choose:  {argblock -> ~ [left_p] args [right_p], [comma]}
+         {expr -> expr [plus] expr ~, [minus]}
+Choose:  {expr -> expr ~ [minus] expr, [plus]}
+Conflict:
+         {expr -> expr ~ [plus] expr, [plus]}
+Choose:  {expr -> expr [plus] expr ~, [plus]}
+Conflict:
+         {expr -> expr ~ [plus] expr, [minus]}
+Choose:  {expr -> expr [plus] expr ~, [plus]}
+Conflict:
+         {expr -> expr ~ [plus] expr, [left_c]}
+Choose:  {expr -> expr [plus] expr ~, [plus]}
+Conflict:
+         {expr -> expr ~ [plus] expr, [right_p]}
+Choose:  {expr -> expr [plus] expr ~, [plus]}
+Conflict:
+         {expr -> expr ~ [plus] expr, [comma]}
+Choose:  {expr -> expr [plus] expr ~, [plus]}
+Conflict:
+         {expr -> expr ~ [plus] expr, [semicolon]}
+Choose:  {expr -> expr [plus] expr ~, [plus]}
+Conflict:
+         {expr -> expr ~ [minus] expr, [plus]}
+Choose:  {expr -> expr [minus] expr ~, [minus]}
+Conflict:
+         {expr -> expr ~ [minus] expr, [minus]}
+Choose:  {expr -> expr [minus] expr ~, [minus]}
+Conflict:
+         {expr -> expr ~ [minus] expr, [left_c]}
+Choose:  {expr -> expr [minus] expr ~, [minus]}
+Conflict:
+         {expr -> expr ~ [minus] expr, [right_p]}
+Choose:  {expr -> expr [minus] expr ~, [minus]}
+Conflict:
+         {expr -> expr ~ [minus] expr, [comma]}
+Choose:  {expr -> expr [minus] expr ~, [minus]}
+Conflict:
+         {expr -> expr ~ [minus] expr, [semicolon]}
+Choose:  {expr -> expr [minus] expr ~, [minus]}
+Conflict:
+         {expr -> expr ~ [plus] expr, [plus]}
+Choose:  {expr -> expr [minus] expr ~, [plus]}
+Conflict:
+         {expr -> expr ~ [plus] expr, [minus]}
+Choose:  {expr -> expr [minus] expr ~, [plus]}
+Conflict:
+         {expr -> expr ~ [plus] expr, [left_c]}
+Choose:  {expr -> expr [minus] expr ~, [plus]}
+Conflict:
+         {expr -> expr ~ [plus] expr, [right_p]}
+Choose:  {expr -> expr [minus] expr ~, [plus]}
+Conflict:
+         {expr -> expr ~ [plus] expr, [comma]}
+Choose:  {expr -> expr [minus] expr ~, [plus]}
+Conflict:
+         {expr -> expr ~ [plus] expr, [semicolon]}
+Choose:  {expr -> expr [minus] expr ~, [plus]}
+Conflict:
+         {expr -> varexpr [assignment] expr ~, [minus]}
+Choose:  {expr -> expr ~ [minus] expr, [plus]}
+Conflict:
+         {expr -> varexpr [assignment] expr ~, [plus]}
+Choose:  {expr -> expr ~ [plus] expr, [plus]}

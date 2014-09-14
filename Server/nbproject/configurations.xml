@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="80">
+<configurationDescriptor version="95">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
@@ -103,6 +103,11 @@
           <logicalFolder name="f3" displayName="Compiler" projectFiles="true">
             <itemPath>Sspacebjects/Ordres/Compiler/CommandCompiler.cpp</itemPath>
             <itemPath>Sspacebjects/Ordres/Compiler/CommandCompiler.h</itemPath>
+            <itemPath>Sspacebjects/Ordres/Compiler/CompilerEmitAssist.cpp</itemPath>
+            <itemPath>Sspacebjects/Ordres/Compiler/SOrderCompilerVisitor.cpp</itemPath>
+            <itemPath>Sspacebjects/Ordres/Compiler/SOrderCompilerVisitor.h</itemPath>
+            <itemPath>Sspacebjects/Ordres/Compiler/SOrderProgramPrinter.cpp</itemPath>
+            <itemPath>Sspacebjects/Ordres/Compiler/SOrderProgramPrinter.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f6" displayName="Generated" projectFiles="true">
             <itemPath>Sspacebjects/Ordres/Generated/Lexer.cpp</itemPath>
@@ -111,8 +116,11 @@
             <itemPath>Sspacebjects/Ordres/Generated/Parser.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f2" displayName="Nodes" projectFiles="true">
+            <itemPath>Sspacebjects/Ordres/Nodes/SOrderBinaryOperatorExpr.h</itemPath>
             <itemPath>Sspacebjects/Ordres/Nodes/SOrderNode.h</itemPath>
+            <itemPath>Sspacebjects/Ordres/Nodes/SOrderNodeArg.h</itemPath>
             <itemPath>Sspacebjects/Ordres/Nodes/SOrderNodeAssignExpr.h</itemPath>
+            <itemPath>Sspacebjects/Ordres/Nodes/SOrderNodeCallExpr.h</itemPath>
             <itemPath>Sspacebjects/Ordres/Nodes/SOrderNodeExpr.h</itemPath>
             <itemPath>Sspacebjects/Ordres/Nodes/SOrderNodeExprStmt.h</itemPath>
             <itemPath>Sspacebjects/Ordres/Nodes/SOrderNodeIfStmt.h</itemPath>
@@ -121,6 +129,7 @@
             <itemPath>Sspacebjects/Ordres/Nodes/SOrderNodeVardeclStmt.h</itemPath>
             <itemPath>Sspacebjects/Ordres/Nodes/SOrderNodeVariable.h</itemPath>
             <itemPath>Sspacebjects/Ordres/Nodes/SOrderNodeVariableExpr.h</itemPath>
+            <itemPath>Sspacebjects/Ordres/Nodes/SOrderNodeWhileStmt.h</itemPath>
             <itemPath>Sspacebjects/Ordres/Nodes/SOrderNodes.h</itemPath>
             <itemPath>Sspacebjects/Ordres/Nodes/SOrderVisit.cpp</itemPath>
           </logicalFolder>
@@ -286,8 +295,9 @@
   <confs>
     <conf name="Debug" type="1">
       <toolsSet>
-        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>GNU|GNU</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <linkerTool>
@@ -298,11 +308,857 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="../GShare/Enums.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../GShare/GFunctions.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../GShare/GFunctions.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../GShare/GGlobals.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../GShare/GGlobals.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../Network/Serialize.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Client.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Client.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/Command.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Commands/Command.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/CommandAdd.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Commands/CommandAdd.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/CommandAddSubscriptions.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Commands/CommandAddSubscriptions.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/CommandClientSubscription.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Commands/CommandClientSubscription.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Commands/CommandEnterGrid.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Commands/CommandEnterGrid.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/CommandExitGrid.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Commands/CommandExitGrid.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/CommandHit.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Commands/CommandHit.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/CommandInitShot.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Commands/CommandInitShot.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/CommandMetaHit.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Commands/CommandMetaHit.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/CommandProcesMetas.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Commands/CommandProcesMetas.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/CommandProcessor.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Commands/CommandProcessor.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/CommandRemove.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Commands/CommandRemove.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/CommandSignalFighter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Commands/CommandSignalFighter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/CommandTargetPosUpdate.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Commands/CommandTargetPosUpdate.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/CommandTimedSubscribeUpdate.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Commands/CommandTimedSubscribeUpdate.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Commands/CommandTransfere.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Commands/CommandTransfere.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/CommandUpdateMetas.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Commands/CommandUpdateMetas.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/Processable.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Commands/Processable.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/Processor.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Commands/Processor.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/inputCommands/CommandIChangeOrders.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Commands/inputCommands/CommandIChangeOrders.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Commands/inputCommands/CommandIChangeSubTG.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Commands/inputCommands/CommandIChangeSubTG.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Commands/inputCommands/CommandIFit.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Commands/inputCommands/CommandIFit.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Commands/inputCommands/CommandISubStatusField.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Commands/inputCommands/CommandISubStatusField.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Commands/inputCommands/CommandIUnfit.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Commands/inputCommands/CommandIUnfit.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="NetworkControler.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="NetworkControler.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NetworkLayer/SAsteroidNetworkLayer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="NetworkLayer/SCargoBayNetworkLayer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="NetworkLayer/SFighterNetworkLayer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="NetworkLayer/SGridNetworkLayer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NetworkLayer/SItemTypeNetworkLayer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="NetworkLayer/SShipNetworkLayer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NetworkLayer/SShotNetworkLayer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NetworkLayer/SSubSystemNetworkLayer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="NetworkLayer/SSubableNetworkLayer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="NetworkLayer/STargetableNetworkLayer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="NetworkLayer/SUnitNetworkLayer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SDatabase.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SDatabase.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SFunctions.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SFunctions.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SGlobals.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SGlobals.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SItems/SItem.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SItems/SItem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SItems/SItemType.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SItems/SItemType.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/CommandOrderThread.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/CommandOrderThread.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Compiler/CommandCompiler.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Compiler/CommandCompiler.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Compiler/CompilerEmitAssist.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Compiler/SOrderCompilerVisitor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Compiler/SOrderCompilerVisitor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Compiler/SOrderProgramPrinter.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Compiler/SOrderProgramPrinter.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Generated/Lexer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Generated/Lexer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Generated/Parser.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Generated/Parser.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Nodes/SOrderBinaryOperatorExpr.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Nodes/SOrderNode.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Nodes/SOrderNodeArg.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Nodes/SOrderNodeAssignExpr.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Nodes/SOrderNodeCallExpr.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Nodes/SOrderNodeExpr.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Nodes/SOrderNodeExprStmt.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Nodes/SOrderNodeIfStmt.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Nodes/SOrderNodeLiteralExpr.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Nodes/SOrderNodeStmt.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Nodes/SOrderNodeVardeclStmt.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Nodes/SOrderNodeVariable.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Nodes/SOrderNodeVariableExpr.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Nodes/SOrderNodeWhileStmt.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Nodes/SOrderNodes.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Nodes/SOrderVisit.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreAction.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreAction.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreActionMoveTo.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreActionMoveTo.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreActionTrasfereCargo.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreActionTrasfereCargo.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreCondition.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreCondition.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreConditionAND.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreConditionAND.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreConditionOR.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreConditionOR.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreConditionStatOp.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreConditionStatOp.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreConditionUnitEqTo.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreConditionUnitEqTo.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreInstructionSet.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreProgram.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreProgram.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreRule.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreRule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Terminals/SOrderErrorTerminal.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Terminals/SOrderIdentifier.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Terminals/SOrderIntegerLiteral.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Terminals/SOrderIntegerLiteral.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Terminals/SOrderTerminal.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Terminals/SOrderTerminals.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Utils/SOrderDotBuilder.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Utils/SOrderDotBuilder.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Utils/SOrderNodeNext.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Utils/SOrderSourcePosition.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Utils/SOrderSourcePosition.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Utils/SOrderVar.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Utils/SOrderVarInteger.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Utils/SOrderVarList.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Utils/SOrderVarPos.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Utils/SOrderVarSubSys.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Utils/SOrderVisitor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Utils/SOrderVisitor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/SAstoroid.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SAstoroid.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SAstoroidBelt.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SAstoroidBelt.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SAstoroidType.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SAstoroidType.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SFighter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SFighter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SFighterType.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SFighterType.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SMetaObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SMetaObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SMetaShot.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SMetaShot.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SMovable.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SMovable.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SOrdres.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SOrdres.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SPos.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SPos.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SShip.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SShip.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SShipType.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SShipType.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SShot.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SShot.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SSubAble.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SSubAble.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/STargetable.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/STargetable.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SUnit.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SUnit.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SUnitType.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SUnitType.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/cargo/SCargoBay.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/cargo/SCargoBay.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SLoadout.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SLoadout.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SShipTypeSlotData.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SShipTypeSlotData.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSingleFac.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSingleFac.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSingleRef.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSingleRef.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSingleWep.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSingleWep.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSlotNode.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSlotNode.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubSystem.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubSystem.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubSystemBonus.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubSystemBonus.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubSystemBoost.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubSystemBoost.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubSystemFac.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubSystemFac.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubSystemFighter.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubSystemFighter.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubSystemRef.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubSystemRef.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubSystemTargetingI.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubSystemW.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubSystemW.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubType.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubType.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubTypeBonus.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubTypeBonus.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubTypeBoost.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubTypeBoost.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubTypeFac.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubTypeFac.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubTypeFighter.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubTypeFighter.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubTypeRef.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubTypeRef.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubTypeWep.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubTypeWep.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="World/SGrid.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="World/SGrid.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="World/SWorld.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="World/SWorld.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="attributeSizeRelation" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="mainServer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
     </conf>
     <conf name="Release" type="1">
       <toolsSet>
-        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>GNU|GNU</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <cTool>
@@ -318,6 +1174,851 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="../GShare/Enums.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../GShare/GFunctions.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../GShare/GFunctions.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../GShare/GGlobals.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../GShare/GGlobals.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../Network/Serialize.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Client.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Client.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/Command.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Commands/Command.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/CommandAdd.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Commands/CommandAdd.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/CommandAddSubscriptions.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Commands/CommandAddSubscriptions.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/CommandClientSubscription.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Commands/CommandClientSubscription.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Commands/CommandEnterGrid.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Commands/CommandEnterGrid.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/CommandExitGrid.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Commands/CommandExitGrid.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/CommandHit.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Commands/CommandHit.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/CommandInitShot.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Commands/CommandInitShot.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/CommandMetaHit.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Commands/CommandMetaHit.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/CommandProcesMetas.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Commands/CommandProcesMetas.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/CommandProcessor.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Commands/CommandProcessor.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/CommandRemove.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Commands/CommandRemove.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/CommandSignalFighter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Commands/CommandSignalFighter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/CommandTargetPosUpdate.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Commands/CommandTargetPosUpdate.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/CommandTimedSubscribeUpdate.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Commands/CommandTimedSubscribeUpdate.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Commands/CommandTransfere.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Commands/CommandTransfere.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/CommandUpdateMetas.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Commands/CommandUpdateMetas.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/Processable.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Commands/Processable.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/Processor.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Commands/Processor.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/inputCommands/CommandIChangeOrders.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Commands/inputCommands/CommandIChangeOrders.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Commands/inputCommands/CommandIChangeSubTG.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Commands/inputCommands/CommandIChangeSubTG.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Commands/inputCommands/CommandIFit.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Commands/inputCommands/CommandIFit.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Commands/inputCommands/CommandISubStatusField.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Commands/inputCommands/CommandISubStatusField.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Commands/inputCommands/CommandIUnfit.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Commands/inputCommands/CommandIUnfit.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="NetworkControler.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="NetworkControler.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NetworkLayer/SAsteroidNetworkLayer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="NetworkLayer/SCargoBayNetworkLayer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="NetworkLayer/SFighterNetworkLayer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="NetworkLayer/SGridNetworkLayer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NetworkLayer/SItemTypeNetworkLayer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="NetworkLayer/SShipNetworkLayer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NetworkLayer/SShotNetworkLayer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="NetworkLayer/SSubSystemNetworkLayer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="NetworkLayer/SSubableNetworkLayer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="NetworkLayer/STargetableNetworkLayer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="NetworkLayer/SUnitNetworkLayer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SDatabase.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SDatabase.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SFunctions.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SFunctions.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SGlobals.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SGlobals.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SItems/SItem.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SItems/SItem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SItems/SItemType.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SItems/SItemType.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/CommandOrderThread.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/CommandOrderThread.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Compiler/CommandCompiler.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Compiler/CommandCompiler.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Compiler/CompilerEmitAssist.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Compiler/SOrderCompilerVisitor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Compiler/SOrderCompilerVisitor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Compiler/SOrderProgramPrinter.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Compiler/SOrderProgramPrinter.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Generated/Lexer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Generated/Lexer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Generated/Parser.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Generated/Parser.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Nodes/SOrderBinaryOperatorExpr.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Nodes/SOrderNode.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Nodes/SOrderNodeArg.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Nodes/SOrderNodeAssignExpr.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Nodes/SOrderNodeCallExpr.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Nodes/SOrderNodeExpr.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Nodes/SOrderNodeExprStmt.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Nodes/SOrderNodeIfStmt.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Nodes/SOrderNodeLiteralExpr.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Nodes/SOrderNodeStmt.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Nodes/SOrderNodeVardeclStmt.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Nodes/SOrderNodeVariable.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Nodes/SOrderNodeVariableExpr.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Nodes/SOrderNodeWhileStmt.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Nodes/SOrderNodes.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Nodes/SOrderVisit.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreAction.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreAction.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreActionMoveTo.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreActionMoveTo.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreActionTrasfereCargo.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreActionTrasfereCargo.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreCondition.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreCondition.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreConditionAND.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreConditionAND.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreConditionOR.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreConditionOR.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreConditionStatOp.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreConditionStatOp.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreConditionUnitEqTo.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreConditionUnitEqTo.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreInstructionSet.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreProgram.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreProgram.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreRule.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdreRule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Terminals/SOrderErrorTerminal.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Terminals/SOrderIdentifier.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Terminals/SOrderIntegerLiteral.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Terminals/SOrderIntegerLiteral.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Terminals/SOrderTerminal.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Terminals/SOrderTerminals.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Utils/SOrderDotBuilder.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Utils/SOrderDotBuilder.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Utils/SOrderNodeNext.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Utils/SOrderSourcePosition.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Utils/SOrderSourcePosition.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Utils/SOrderVar.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Utils/SOrderVarInteger.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Utils/SOrderVarList.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Utils/SOrderVarPos.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Utils/SOrderVarSubSys.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Utils/SOrderVisitor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/Utils/SOrderVisitor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/SAstoroid.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SAstoroid.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SAstoroidBelt.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SAstoroidBelt.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SAstoroidType.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SAstoroidType.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SFighter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SFighter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SFighterType.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SFighterType.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SMetaObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SMetaObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SMetaShot.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SMetaShot.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SMovable.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SMovable.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SOrdres.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SOrdres.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SPos.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SPos.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SShip.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SShip.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SShipType.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SShipType.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SShot.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SShot.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SSubAble.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SSubAble.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/STargetable.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/STargetable.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SUnit.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SUnit.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SUnitType.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SUnitType.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/cargo/SCargoBay.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sspacebjects/cargo/SCargoBay.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SLoadout.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SLoadout.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SShipTypeSlotData.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SShipTypeSlotData.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSingleFac.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSingleFac.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSingleRef.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSingleRef.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSingleWep.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSingleWep.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSlotNode.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSlotNode.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubSystem.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubSystem.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubSystemBonus.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubSystemBonus.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubSystemBoost.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubSystemBoost.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubSystemFac.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubSystemFac.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubSystemFighter.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubSystemFighter.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubSystemRef.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubSystemRef.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubSystemTargetingI.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubSystemW.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubSystemW.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubType.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubType.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubTypeBonus.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubTypeBonus.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubTypeBoost.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubTypeBoost.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubTypeFac.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubTypeFac.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubTypeFighter.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubTypeFighter.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubTypeRef.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubTypeRef.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubTypeWep.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/subsystems/SSubTypeWep.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="World/SGrid.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="World/SGrid.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="World/SWorld.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="World/SWorld.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="attributeSizeRelation" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="mainServer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
     </conf>
   </confs>
 </configurationDescriptor>

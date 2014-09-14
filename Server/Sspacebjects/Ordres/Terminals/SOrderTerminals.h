@@ -10,7 +10,7 @@
 
 #ifndef TERMINALS_H
 #define TERMINALS_H
-
+class SOrderVisitor;
 #include "SOrderTerminal.h"
 #include "SOrderIdentifier.h"
 #include "SOrderIntegerLiteral.h"

@@ -3,36 +3,44 @@
 
 #include "../Nodes/SOrderNodes.h"
 #include "../Terminals/SOrderTerminals.h"
-#define BinOp(a,b,c)		new BinaryOperatorExpr((ExprNode*)a, (Terminal*)b, (ExprNode*)c)
+#define BinOp(a,b,c)		new SOrderBinaryOperatorExpr((SOrderNodeExpr*)a, (SOrderTerminal*)b, (SOrderNodeExpr*)c)
 
 /*** Grammar ***
 
-program		-> stmts					{cerr<<"PARSE stmts"<<endl;result = arg0;}
+program		-> stmts							{cerr<<"PARSE stmts"<<endl;result = arg0;}
 
-stmts		-> stmt semicolon stmts		{cerr<<"PARSE stmt semicolon stmts"<<endl;((SOrderNodeStmt*)arg0)->setNext((SOrderNodeStmt*)arg2); result = arg0;}
-			 | stmt	semicolon			{cerr<<"PARSE stmt"<<endl;result = arg0;}
+stmts		-> stmt semicolon stmts				{cerr<<"PARSE stmt semicolon stmts"<<endl;((SOrderNodeStmt*)arg0)->setNext((SOrderNodeStmt*)arg2); result = arg0;}
+			 | closedStmt stmts					{cerr<<"PARSE stmt semicolon stmts"<<endl;((SOrderNodeStmt*)arg0)->setNext((SOrderNodeStmt*)arg1); result = arg0;}
+			 | stmt	semicolon					{cerr<<"PARSE stmt"<<endl;result = arg0;}
 
-stmt		-> expr						{cerr<<"PARSE expr"<<endl; result = new SOrderNodeExprStmt((SOrderNodeExpr*)arg0);}
-			 | var varDecl				{cerr<<"PARSE var varDecl"<<endl;result = arg1;}
+stmt		-> expr								{cerr<<"PARSE expr"<<endl; result = new SOrderNodeExprStmt((SOrderNodeExpr*)arg0);}
+			 | var varDecl						{cerr<<"PARSE var varDecl"<<endl;result = arg1;}
 			 
-varDecl		-> id 						{cerr<<"PARSE id"<<endl;result = new SOrderNodeVardeclStmt((SOrderIdentifier*)arg0, NULL, NULL);}
-			 | id assignment expr		{cerr<<"PARSE id assignment expr"<<endl;result = new SOrderNodeVardeclStmt((SOrderIdentifier*)arg0,(SOrderNodeExpr*)arg2, NULL);}
+varDecl		-> id 								{cerr<<"PARSE id"<<endl;result = new SOrderNodeVardeclStmt((SOrderIdentifier*)arg0, NULL, NULL);}
+			 | id assignment expr				{cerr<<"PARSE id assignment expr"<<endl;result = new SOrderNodeVardeclStmt((SOrderIdentifier*)arg0,(SOrderNodeExpr*)arg2, NULL);}
 
-varexpr		-> id						{cerr<<"PARSE id"<<endl;result = new SOrderNodeVariable((SOrderIdentifier*)arg0);}
+varexpr		-> id								{cerr<<"PARSE id"<<endl;result = new SOrderNodeVariable((SOrderIdentifier*)arg0);}
+	
+
+block		-> left_c stmts right_c				{cerr<<"PARSE block"<<endl;result = arg1;}
+
+closedStmt	-> if expr block 					{cerr<<"PARSE closedStmt"<<endl; result = new SOrderNodeIfStmt((SOrderNodeExpr*)arg1, (SOrderNodeStmt*)arg2, NULL, NULL);}
+		     | while expr block					{cerr<<"PARSE closedStmt"<<endl; result = new SOrderNodeWhileStmt((SOrderNodeExpr*)arg1, (SOrderNodeStmt*)arg2, NULL);}
+
+argblock	-> left_p args right_p 				{cerr<<"PARSE argblock"<<endl; result = arg1;}
+			 | left_p right_p					{cerr<<"PARSE argblock"<<endl; result = NULL;}
+
+args		-> arg comma args					{cerr<<"PARSE args"<<endl; ((SOrderNodeArg*)arg0)->setNext((SOrderNodeArg*)arg2); result = arg0;}
+			 | arg								{cerr<<"PARSE args"<<endl; result = arg0;}
 			 
-argblock	-> left_p args right_p 		{}
-			 | left_p right_p			{}
+arg			-> expr								{cerr<<"PARSE arg"<<endl; result = new SOrderNodeArg((SOrderNodeExpr*)arg0);}
 
-args		-> arg comma args			{}
-			 | arg						{}
-			 
-arg			-> expr						{}
-
-expr		-> int						{cerr<<"PARSE int"<<endl;result = new SOrderNodeLiteralExpr((SOrderIntegerLiteral*)arg0);}
-			 | varexpr					{cerr<<"PARSE varexpr"<<endl;result = new SOrderNodeVariableExpr((SOrderNodeVariable*)arg0);}	
-			 | varexpr assignment expr	{cerr<<"PARSE varexpr assignment expr"<<endl;result = new SOrderNodeAssignExpr((SOrderNodeVariable*)arg0, (SOrderNodeExpr*)arg2);}	
-			 | expr argblock			{}
-
+expr		-> expr minus expr					{cerr<<"PARSE minus"<<endl; result = BinOp(arg0, arg1, arg2);}
+			 | expr plus expr					{cerr<<"PARSE plus"<<endl; result = BinOp(arg0, arg1, arg2);}
+			 | int								{cerr<<"PARSE int"<<endl;result = new SOrderNodeLiteralExpr((SOrderIntegerLiteral*)arg0);}
+			 | varexpr argblock					{result = new SOrderNodeCallExpr((SOrderNodeVariableExpr*)arg0, (SOrderNodeArg*)arg1);}
+			 | varexpr							{cerr<<"PARSE varexpr"<<endl;result = new SOrderNodeVariableExpr((SOrderNodeVariable*)arg0);}	
+			 | varexpr assignment expr			{cerr<<"PARSE varexpr assignment expr"<<endl;result = new SOrderNodeAssignExpr((SOrderNodeVariable*)arg0, (SOrderNodeExpr*)arg2);}	
 
 */
 

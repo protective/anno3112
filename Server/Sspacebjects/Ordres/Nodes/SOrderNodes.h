@@ -14,10 +14,13 @@
 #include "SOrderNodeLiteralExpr.h"
 #include "SOrderNodeExprStmt.h"
 #include "SOrderNodeIfStmt.h"
+#include "SOrderNodeWhileStmt.h"
 #include "SOrderNodeStmt.h"
 #include "SOrderNodeVardeclStmt.h"
 #include "SOrderNodeVariable.h"
-
+#include "SOrderBinaryOperatorExpr.h"
+#include "SOrderNodeArg.h"
+#include "SOrderNodeCallExpr.h"
 #include "../Terminals/SOrderIdentifier.h"
 
 #endif	/* SORDERNODES_H */

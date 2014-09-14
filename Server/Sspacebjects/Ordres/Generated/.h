@@ -16,12 +16,9 @@ enum Token{
 	TOKEN_left_c,
 	TOKEN_right_c,
 	TOKEN_if,
-	TOKEN_while,
 	TOKEN_left_p,
 	TOKEN_right_p,
 	TOKEN_comma,
-	TOKEN_minus,
-	TOKEN_plus,
 	TOKEN_int
 };
 

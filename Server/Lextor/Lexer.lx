@@ -1,0 +1,123 @@
+#include "../Lexer.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <assert.h>
+
+#define token 	bufstart
+
+Lexer::Lexer(istream* input)
+	: pos(1, 0) {
+	this->input = input;
+	indent = 0;
+	d_indent = 0;
+	buffer = new char[BUF_SIZE];
+	bufstart = buffer;
+	cursor = buffer;
+	limit = buffer;
+	marker = buffer;
+	toklen = 0;
+	fill();
+}
+
+void Lexer::fill(){
+	assert(cursor==limit);
+	//TODO: Handle the case below by extending the buffer
+	assert(!(buffer==bufstart && buffer + BUF_SIZE == limit));
+
+	//Move memory in the buffer
+	int relative = bufstart - buffer;
+	memmove(buffer,bufstart,limit-bufstart);
+	
+	//Move pointers
+	bufstart -= relative;
+	marker -= relative;
+	cursor -= relative;
+	limit -= relative;
+
+	//Read data
+	int reqbyte =  buffer + BUF_SIZE - limit;
+	input->read(limit, reqbyte);
+	limit += input->gcount();
+
+	//Handle EOF and possible errors
+	if(input->eof()){
+		*limit = 0x4; //eof
+		limit++;
+	}else if(input->fail()){
+		//TODO: Handle IO error
+		fprintf(stderr, "Error reading input file!\n");
+		exit(1);		
+	}
+}
+
+Terminal* Lexer::nextToken(){
+
+BEGIN:
+	//Add offset from last token
+	this->pos._col += toklen;
+	//The DFA:
+/*** LX ***
+groups:
+
+[a-z]    {a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z}
+[A-Z]    {A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z}
+[a-Z]    {a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z}
+[0-9]    {0|1|2|3|4|5|6|7|8|9}
+[1-9]    {1|2|3|4|5|6|7|8|9}
+[symbols]	{\x0A|\x20|\x21|\x23|\x24|\x25|\x26|\x28|\x29|\x2A|\x2B|\x2C|\x2D|\x2E|\x2F|\x3A|\x3B|\x3C|\x3D|\x3E|\x3F|\x40|\x5B|\x5C|\x5D|\x5E|\x5F|\x60|\x7B|\x7C|\x7D|\x7E}
+
+rules:
+
+{var}											{return new Terminal(TOKEN_var, pos);}
+{if}   											{return new Terminal(TOKEN_if, pos);}
+{else} 											{return new Terminal(TOKEN_else, pos);}
+{elseif}  										{return new Terminal(TOKEN_elseif, pos);}
+{while} 										{return new Terminal(TOKEN_while, pos);}
+{for}  									  		{return new Terminal(TOKEN_for, pos);}
+{in} 											{return new Terminal(TOKEN_in, pos);}
+{not|!}											{return new Terminal(TOKEN_not, pos);}
+{and|&&} 										{return new Terminal(TOKEN_and, pos);}
+{or|\|\|} 										{return new Terminal(TOKEN_or, pos);}
+{enum} 											{return new Terminal(TOKEN_enum, pos);}
+{class}											{return new Terminal(TOKEN_class, pos);}
+{extends}										{return new Terminal(TOKEN_extends, pos);}
+{return}   										{return new Terminal(TOKEN_return, pos);}
+{:} 											{return new Terminal(TOKEN_colon, pos);}
+{,} 											{return new Terminal(TOKEN_comma, pos);}
+{.}											 	{return new Terminal(TOKEN_dot, pos);}
+{=} 											{return new Terminal(TOKEN_assignment, pos);}
+{==} 											{return new Terminal(TOKEN_equality, pos);}
+{!=}											{return new Terminal(TOKEN_inequality, pos);}
+{<} 											{return new Terminal(TOKEN_less_than, pos);}
+{<=} 											{return new Terminal(TOKEN_less_than_or_equal, pos);}
+{>} 											{return new Terminal(TOKEN_greater_than, pos);}
+{>=} 											{return new Terminal(TOKEN_greater_than_or_equal, pos);}
+{<<} 											{return new Terminal(TOKEN_shift_left, pos);}
+{>>} 											{return new Terminal(TOKEN_shift_right, pos);}
+{\+} 											{return new Terminal(TOKEN_plus, pos);}
+{-} 											{return new Terminal(TOKEN_minus, pos);}
+{->}											{return new Terminal(TOKEN_arrow, pos);}
+{\*} 											{return new Terminal(TOKEN_mul, pos);}
+{/} 											{return new Terminal(TOKEN_div, pos);}
+{%} 											{return new Terminal(TOKEN_modulo, pos);}
+{\(} 											{return new Terminal(TOKEN_left_p, pos);}
+{\)} 											{return new Terminal(TOKEN_right_p, pos);}
+{true}											{return new BooleanLiteral(true, pos);}
+{false}											{return new BooleanLiteral(false, pos);}
+{("([a-Z]|[0-9]|[symbols]|\\"|\\')*")|('([a-Z]|[0-9]|[symbols]|\\"|\\')*')} 	{return new StringLiteral(token, toklen, pos);}
+{_?[a-Z](_?([a-Z]|[0-9]))*} 						{return new Identifier(token, toklen, pos);}
+{[0-9]+} 										{return IntegerFromDecimalString(token, toklen, pos);}
+{[0-9]+.[0-9]+} 								{return new RealLiteral(token, toklen, pos);}
+{\x04}											{return new Terminal(TOKEN_EOF, pos);}
+{ }												{goto BEGIN;}
+{\r}											{goto BEGIN;}
+
+accept:
+	{toklen = marker - bufstart;}
+error:
+	{return new Terminal(TOKEN_error, pos);}
+*** LX ***/
+
+}
+

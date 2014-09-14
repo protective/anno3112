@@ -1,1 +1,4 @@
-var a = 1;
+var a = 2;
+var b = 7;
+var call = 2;
+call ( 4 , b + 1, a);

@@ -8,9 +8,9 @@
 #ifndef SORDERTERMINAL_H
 #define	SORDERTERMINAL_H
 
-#include "../Nodes/SOrderNode.h"
 #include "../Utils/SOrderSourcePosition.h"
 #include "../Generated/Parser.h"
+#include "../Nodes/SOrderNode.h"
 
 /** A simple terminal with any data associated */
 class SOrderTerminal : public SOrderNode{
@@ -24,15 +24,17 @@ public:
 		return this->_token;
 	}
 	
-		/** Gets the source position of this Terminal */
+	/** Gets the source position of this Terminal */
 	SOrderSourcePosition pos() const{
 		return this->_pos;
 	}
-	
-	virtual void visit(CommandCompiler* compiler){
-	
-	}
-
+    
+	/** Convert the token of this Terminal to string */
+	string toString() const {
+		return TokenToString(token());
+	}	
+	/** Accept a visitor */
+	void accept(SOrderVisitor* v);
 private:
 	Token _token;
 	SOrderSourcePosition _pos;

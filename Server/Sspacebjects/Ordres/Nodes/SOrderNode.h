@@ -8,7 +8,7 @@
 #ifndef SORDERNODE_H
 #define	SORDERNODE_H
 
-#include "../Compiler/CommandCompiler.h"
+
 
 class SOrderNodeStmt;
 class SOrderVisitor;
