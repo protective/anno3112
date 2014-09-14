@@ -13,10 +13,18 @@
 #include "../Utils/SOrderDotBuilder.h"
 #include "../Utils/SOrderVisitor.h"
 #include "SOrderProgramPrinter.h"
+#include "../CommandOrderThread.h"
+#include "../../../Commands/Processor.h"
 
 CommandCompiler::CommandCompiler(string programPath) :
 Command(0){
 	_programPath = programPath;
+
+	for(int i = 0; GlobalSystemCallLib[i]._systemCallFunc; i++){
+		vTableEntry temp(GlobalSystemCallLib[i]._name, i, GlobalSystemCallLib[i]._systemCallFunc);
+		_vtable.push_back(temp);
+	}
+
 }
 
 uint32_t CommandCompiler::execute(){
@@ -25,17 +33,21 @@ uint32_t CommandCompiler::execute(){
 	Lexer lexer(&is);
 	
 	SOrderNode* result = parse(&lexer);
+
 	ofstream dotfile(_programPath.append(".dot").c_str());
 	SOrderDotBuilder dot(dotfile);
-	//dot.visit(result);
+	dot.visit(result);
 	result->accept(&dot);
 	dot.finalise();
-        
- 
+
 	_scopeRef.push_back(0);
-        result->accept(this);
-        ofstream asmPrinter(_programPath.append(".asm").c_str());
-        printProgram(asmPrinter,_program);
+
+	result->accept(this);
+	ofstream asmPrinter(_programPath.append(".asm").c_str());
+	printProgram(asmPrinter,_program);
+	SOrdreProgram* p = new SOrdreProgram("test",_program);
+	CommandOrderThread* t = new CommandOrderThread(p,2);
+	networkControl->addCommandToProcesable(t,2);
 	return COMMAND_FINAL;
 }
 vTableEntry* CommandCompiler::vtableFind(string id){
@@ -44,7 +56,7 @@ vTableEntry* CommandCompiler::vtableFind(string id){
             return &(*it);
         }
     }
-	cerr<<"vtable error looking for "<<id<<endl;
+	cerr<<"vtable error looking for ("<<id<<")"<<endl;
 	return NULL;
 }
 void CommandCompiler::visit(SOrderNodeIfStmt* node){
@@ -148,6 +160,7 @@ void CommandCompiler::visit(SOrderNodeVardeclStmt* node){
 void CommandCompiler::visit(SOrderNodeExprStmt* node){
 
     if(node->expr()){
+
         node->expr()->accept(this);
     }
     emitPopStack(1);
@@ -164,7 +177,6 @@ void CommandCompiler::visit(SOrderNodeAssignExpr* node){
     vTableEntry* ve = NULL;
     ve = this->vtableFind(node->assignee()->id()->name());
     if(!ve){
-        cerr<<"ERROR visit SOrderNodeAssignExpr"<<endl;
         return;
     }
     emitTopStackToLoc(ve->pos,1);
@@ -196,10 +208,12 @@ void CommandCompiler::visit(SOrderBinaryOperatorExpr* node){
 }
 
 void CommandCompiler::visit(SOrderNodeVariableExpr* node){
+
 	node->var()->accept(this);
 }
 
 void CommandCompiler::visit(SOrderNodeVariable* node){
+
     vTableEntry* ve = NULL;
     ve = this->vtableFind(node->id()->name());
     if(!ve){
@@ -217,18 +231,21 @@ void CommandCompiler::visit(SOrderNodeArg* node){
 }
 
 void CommandCompiler::visit(SOrderNodeCallExpr* node){
-    
+
 	vTableEntry* ve = NULL;
-    ve = this->vtableFind(node->callee()->var()->id()->name());
-    if(!ve){
-        cerr<<"ERROR visit SOrderNodeCallExpr"<<endl;
+
+	ve = this->vtableFind(node->callee()->var()->id()->name());
+		
+	if(!ve){
         return;
     }
 
-	if(node->callee()){
+	if(ve->systemCall){
+		emitPushStack(0,1);
 		_scopeRef.push_back(_scopeRef.back());
+		uint32_t s = _scopeRef.back();
 		node->args()->accept(this);
-		emitSysCall();
+		emitSysCall(s);
 		uint32_t oldRef = _scopeRef.back();
 		_scopeRef.pop_back();
 		emitPopStack(oldRef - _scopeRef.back());

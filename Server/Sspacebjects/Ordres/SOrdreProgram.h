@@ -18,12 +18,12 @@
 using namespace std;
 typedef uint32_t INSTRUCTION;
 #define OPCODE(X) (X & 0x00FF0000)
-#define ARG(X) X & 0x0000FFFF
+#define ARG(X) (X & 0x0000FFFF)
 typedef vector<INSTRUCTION> PROGRAM;
 class SOrdreProgram {
 public:
     
-	SOrdreProgram();
+	SOrdreProgram(string name, PROGRAM program);
 	PROGRAM& program(){return _program;}
 	string name(){return _name;}
 	virtual ~SOrdreProgram();

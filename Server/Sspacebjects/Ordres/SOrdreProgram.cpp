@@ -7,7 +7,9 @@
 
 #include "SOrdreProgram.h"
 
-SOrdreProgram::SOrdreProgram() {
+SOrdreProgram::SOrdreProgram(string name, PROGRAM program){
+	_name = name;
+	_program = program;
 }
 
 

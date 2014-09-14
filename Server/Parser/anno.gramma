@@ -38,7 +38,7 @@ arg			-> expr								{cerr<<"PARSE arg"<<endl; result = new SOrderNodeArg((SOrde
 expr		-> expr minus expr					{cerr<<"PARSE minus"<<endl; result = BinOp(arg0, arg1, arg2);}
 			 | expr plus expr					{cerr<<"PARSE plus"<<endl; result = BinOp(arg0, arg1, arg2);}
 			 | int								{cerr<<"PARSE int"<<endl;result = new SOrderNodeLiteralExpr((SOrderIntegerLiteral*)arg0);}
-			 | varexpr argblock					{result = new SOrderNodeCallExpr((SOrderNodeVariableExpr*)arg0, (SOrderNodeArg*)arg1);}
+			 | varexpr argblock					{cerr<<"PARSE call"<<endl; result = new SOrderNodeCallExpr(new SOrderNodeVariableExpr((SOrderNodeVariable*)arg0), (SOrderNodeArg*)arg1);}
 			 | varexpr							{cerr<<"PARSE varexpr"<<endl;result = new SOrderNodeVariableExpr((SOrderNodeVariable*)arg0);}	
 			 | varexpr assignment expr			{cerr<<"PARSE varexpr assignment expr"<<endl;result = new SOrderNodeAssignExpr((SOrderNodeVariable*)arg0, (SOrderNodeExpr*)arg2);}	
 

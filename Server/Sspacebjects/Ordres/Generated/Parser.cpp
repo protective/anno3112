@@ -1633,7 +1633,7 @@ Reduce21: //expr -> varexpr argblock
 	states.pop();
 	result = NULL;
 	{
-	result = new SOrderNodeCallExpr((SOrderNodeVariableExpr*)arg0, (SOrderNodeArg*)arg1);
+	cerr<<"PARSE call"<<endl; result = new SOrderNodeCallExpr(new SOrderNodeVariableExpr((SOrderNodeVariable*)arg0), (SOrderNodeArg*)arg1);
 	}
 	symbols.push(result);
 	top_non_terminal = SYMBOL_expr;

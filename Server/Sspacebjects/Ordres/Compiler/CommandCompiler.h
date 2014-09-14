@@ -11,6 +11,8 @@
 #include "../SOrdreProgram.h"
 #include "../Utils/SOrderVisitor.h"
 
+#include "../SOrdersSystemCalls.h"
+
 typedef struct vTableEntry{
     vTableEntry(string p_name, uint32_t p_pos){
 		name = p_name;
@@ -24,9 +26,9 @@ typedef struct vTableEntry{
 		size = p_size;
 		systemCall = NULL;
     }
-	vTableEntry(string p_name, void (*p_systemCall)(void*)){
+	vTableEntry(string p_name, uint32_t p_pos, systemCallFunc p_systemCall){
 		name = p_name;
-		pos = 0;
+		pos = p_pos;
 		size = 0;
 		systemCall = p_systemCall;
     }
@@ -39,7 +41,7 @@ typedef struct vTableEntry{
     string name;
     uint32_t pos;
     uint32_t size;
-	void (*systemCall)(void*); //pointer to systemcall Function
+	systemCallFunc systemCall; //pointer to systemcall Function
 }vTableEntry;
 
 
@@ -48,7 +50,7 @@ public:
 	CommandCompiler(string programPath);
 	virtual uint32_t execute();
 	PROGRAM& program(){return _program;}
-    
+    //list<systemCallFunc> getGlobalSystemCallLibs();
 	virtual void visit(SOrderNode* node){};
 	virtual void visit(SOrderTerminal* node){};
 	virtual void visit(SOrderNodeAssignExpr* node);
@@ -90,11 +92,11 @@ private:
 	void emitBOMinusPush();
 	void emitBOAddPop();
 	void emitBOMinusPop();
-	void emitSysCall();
+	void emitSysCall(uint32_t pos);
 	uint32_t emitJumpToRef();
-        uint32_t emitCondJumpToRef();
+    uint32_t emitCondJumpToRef();
 	uint32_t emitJumpToRef(uint32_t ref);
-        uint32_t emitCondJumpToRef(uint32_t ref);	
+    uint32_t emitCondJumpToRef(uint32_t ref);	
 };
 
 #endif	/* COMMANDCOMPILER_H */

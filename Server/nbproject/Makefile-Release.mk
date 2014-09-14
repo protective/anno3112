@@ -76,6 +76,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Sspacebjects/Ordres/Generated/Lexer.o \
 	${OBJECTDIR}/Sspacebjects/Ordres/Generated/Parser.o \
 	${OBJECTDIR}/Sspacebjects/Ordres/Nodes/SOrderVisit.o \
+	${OBJECTDIR}/Sspacebjects/Ordres/SOrderSystemCalls.o \
 	${OBJECTDIR}/Sspacebjects/Ordres/SOrdreAction.o \
 	${OBJECTDIR}/Sspacebjects/Ordres/SOrdreActionMoveTo.o \
 	${OBJECTDIR}/Sspacebjects/Ordres/SOrdreActionTrasfereCargo.o \
@@ -362,6 +363,11 @@ ${OBJECTDIR}/Sspacebjects/Ordres/Nodes/SOrderVisit.o: Sspacebjects/Ordres/Nodes/
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects/Ordres/Nodes
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sspacebjects/Ordres/Nodes/SOrderVisit.o Sspacebjects/Ordres/Nodes/SOrderVisit.cpp
+
+${OBJECTDIR}/Sspacebjects/Ordres/SOrderSystemCalls.o: Sspacebjects/Ordres/SOrderSystemCalls.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Sspacebjects/Ordres
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sspacebjects/Ordres/SOrderSystemCalls.o Sspacebjects/Ordres/SOrderSystemCalls.cpp
 
 ${OBJECTDIR}/Sspacebjects/Ordres/SOrdreAction.o: Sspacebjects/Ordres/SOrdreAction.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects/Ordres

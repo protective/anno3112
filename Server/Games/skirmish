@@ -8,4 +8,4 @@ grid testgrid 800 300
 {playerUnits}
 
 
-Unit 1 BC1 61 30 1:Fighter1:4 2:Fighter2:4
+Unit 1 BC1 61 30 1:Laser1:4 2:Laser1:4

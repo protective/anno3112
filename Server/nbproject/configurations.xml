@@ -159,6 +159,8 @@
           </logicalFolder>
           <itemPath>Sspacebjects/Ordres/CommandOrderThread.cpp</itemPath>
           <itemPath>Sspacebjects/Ordres/CommandOrderThread.h</itemPath>
+          <itemPath>Sspacebjects/Ordres/SOrderSystemCalls.cpp</itemPath>
+          <itemPath>Sspacebjects/Ordres/SOrdersSystemCalls.h</itemPath>
           <itemPath>Sspacebjects/Ordres/SOrdreAction.cpp</itemPath>
           <itemPath>Sspacebjects/Ordres/SOrdreAction.h</itemPath>
           <itemPath>Sspacebjects/Ordres/SOrdreActionMoveTo.cpp</itemPath>
@@ -678,6 +680,16 @@
       <item path="Sspacebjects/Ordres/Nodes/SOrderVisit.cpp"
             ex="false"
             tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrderSystemCalls.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdersSystemCalls.h"
+            ex="false"
+            tool="3"
             flavor2="0">
       </item>
       <item path="Sspacebjects/Ordres/SOrdreAction.cpp"
@@ -1544,6 +1556,16 @@
       <item path="Sspacebjects/Ordres/Nodes/SOrderVisit.cpp"
             ex="false"
             tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrderSystemCalls.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Sspacebjects/Ordres/SOrdersSystemCalls.h"
+            ex="false"
+            tool="3"
             flavor2="0">
       </item>
       <item path="Sspacebjects/Ordres/SOrdreAction.cpp"

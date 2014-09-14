@@ -40,8 +40,9 @@ void CommandCompiler::emitPushTopStackNtimesToStack( uint32_t size){
     _scopeRef.back()+= size;
 }
 
-void CommandCompiler::emitSysCall(){
+void CommandCompiler::emitSysCall(uint32_t pos){
 	program().push_back(inst::sysCall);
+	program().push_back(relpos(pos));
 }
 
 void CommandCompiler::emitPushLocToTopStack(uint32_t pos, uint32_t size){

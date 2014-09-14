@@ -16,7 +16,6 @@
 #include "CommandProcesMetas.h"
 #include "../Sspacebjects/Ordres/Compiler/CommandCompiler.h"
 #include <sys/time.h>
-
 Processor::Processor() {
 	
 	cerr<<"init processor"<<endl;

@@ -104,7 +104,11 @@ void printProgram(ofstream& out, PROGRAM& p){
             }
  			case inst::sysCall:
             {
+				haveArg = true;
                 name = "sysCall";
+				noParams = 1;
+                param[0] = "Stack";
+
                 break;
             }
 			default:{
