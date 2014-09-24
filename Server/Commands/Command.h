@@ -19,6 +19,7 @@ class Command {
 public:
 	Command(uint32_t time);
 	uint32_t getTime(){return _time;}
+	void setTime(uint32_t time){_time = time;}
 	Processor* getProcessor(){return _processor ;}
 	void setProcessor(Processor* processor){_processor = processor;}
 	virtual Processable* getProcessable(){return NULL;}

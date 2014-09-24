@@ -3,10 +3,10 @@
 #include "../../Commands/Processor.h"
 #include "CommandOrderThread.h"
 #include "../SUnit.h"
+#include "../../World/SWorld.h"
 
 
-
-void systemSetSubsystemFlags(Processor* processor, CommandOrderThread* thread,  OBJID obj, void* arg){
+void systemSetSubsystemFlags(Processor* processor, Command* thread,  OBJID obj, void* arg){
 
 	cerr<<"arg"<<endl;
 	for(int i = 0; i< 5; i++){
@@ -52,14 +52,13 @@ void systemSetSubsystemFlags(Processor* processor, CommandOrderThread* thread,  
 }
 
 
-void systemSleep(Processor* processor, CommandOrderThread* thread,  OBJID obj, void* arg){
+void systemSleep(Processor* processor, Command* thread,  OBJID obj, void* arg){
 
 	cerr<<"arg"<<endl;
 	for(int i = 0; i< 5; i++){
 		cerr<<((uint32_t*)arg)[i]<<" ";
 	}
 	cerr<<endl;
-	cerr<<"systemSleep"<<endl;
-	uint32_t _time = ((uint32_t*)arg)[1];
-	thread->sleep(_time);
+	cerr<<"systemSleep t="<<((uint32_t*)arg)[1]<<endl;
+	thread->setTime(world->getTime() + ((uint32_t*)arg)[1]);
 }

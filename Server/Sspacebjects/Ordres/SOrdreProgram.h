@@ -27,6 +27,7 @@ public:
 	SOrdreProgram(string name, PROGRAM program, map<uint32_t, uint32_t> interruptHandlers);
 	PROGRAM& program(){return _program;}
 	string name(){return _name;}
+	map<uint32_t, uint32_t> getInterruptHandlers(){return _interruptHandlers;}
 	virtual ~SOrdreProgram();
 private:
 	string _name;

@@ -57,8 +57,7 @@ uint32_t CommandCompiler::execute(){
 	ofstream asmPrinter(_programPath.append(".asm").c_str());
 	printProgram(asmPrinter,_program);
 	SOrdreProgram* p = new SOrdreProgram("test",_program, _interruptHandlers);
-	CommandOrderThread* t = new CommandOrderThread(p,2);
-	networkControl->addCommandToProcesable(t,2);
+	_processor->getPrograms()["test"] = p;
 	return COMMAND_FINAL;
 }
 vTableEntry* CommandCompiler::vtableFind(string id){

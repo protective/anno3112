@@ -104,6 +104,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Sspacebjects/SObj.o \
 	${OBJECTDIR}/Sspacebjects/SOrdres.o \
 	${OBJECTDIR}/Sspacebjects/SPos.o \
+	${OBJECTDIR}/Sspacebjects/SProgrammable.o \
 	${OBJECTDIR}/Sspacebjects/SShip.o \
 	${OBJECTDIR}/Sspacebjects/SShipType.o \
 	${OBJECTDIR}/Sspacebjects/SShot.o \
@@ -505,6 +506,11 @@ ${OBJECTDIR}/Sspacebjects/SPos.o: Sspacebjects/SPos.cpp
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sspacebjects/SPos.o Sspacebjects/SPos.cpp
+
+${OBJECTDIR}/Sspacebjects/SProgrammable.o: Sspacebjects/SProgrammable.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Sspacebjects
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sspacebjects/SProgrammable.o Sspacebjects/SProgrammable.cpp
 
 ${OBJECTDIR}/Sspacebjects/SShip.o: Sspacebjects/SShip.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects

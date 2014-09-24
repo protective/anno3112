@@ -78,9 +78,6 @@ public:
 	void ResetLastCombat(){_lastCombat = 0;}
 	bool IsOutOfCombat(){if(_lastCombat > 1000)return true; return false;}
 	
-	void interrupt(uint32_t programId, uint32_t handlerId, uint32_t* payload, uint32_t payloadLen);
-
-	
 	//networking
 	virtual void sendPosUpdate(SubscriptionLevel::Enum level);
 	virtual void sendFull(uint32_t client);

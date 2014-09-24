@@ -259,6 +259,7 @@
         <itemPath>Sspacebjects/SOrdres.h</itemPath>
         <itemPath>Sspacebjects/SPos.cpp</itemPath>
         <itemPath>Sspacebjects/SPos.h</itemPath>
+        <itemPath>Sspacebjects/SProgrammable.cpp</itemPath>
         <itemPath>Sspacebjects/SProgrammable.h</itemPath>
         <itemPath>Sspacebjects/SShip.cpp</itemPath>
         <itemPath>Sspacebjects/SShip.h</itemPath>
@@ -972,6 +973,8 @@
       <item path="Sspacebjects/SPos.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Sspacebjects/SPos.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SProgrammable.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Sspacebjects/SProgrammable.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -1889,6 +1892,8 @@
       <item path="Sspacebjects/SPos.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Sspacebjects/SPos.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sspacebjects/SProgrammable.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Sspacebjects/SProgrammable.h" ex="false" tool="3" flavor2="0">
       </item>

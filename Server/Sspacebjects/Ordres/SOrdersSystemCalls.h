@@ -11,7 +11,7 @@
 #include "../../SFunctions.h"
 
 class CommandOrderThread;
-typedef void (*systemCallFunc)(Processor*,CommandOrderThread*, OBJID obj, void*);
+typedef void (*systemCallFunc)(Processor*,Command*, OBJID obj, void*);
 
 typedef struct systemCallBack_table{
 	uint32_t _id;
@@ -23,8 +23,8 @@ typedef struct systemCallFunc_table{
 	string _name;
 }systemCallFunc_t;
 
-void systemSetSubsystemFlags(Processor*, CommandOrderThread*, OBJID obj, void* arg);
-void systemSleep(Processor*, CommandOrderThread*, OBJID obj, void* arg);
+void systemSetSubsystemFlags(Processor*, Command*, OBJID obj, void* arg);
+void systemSleep(Processor*, Command*, OBJID obj, void* arg);
 
 
 static const systemCallFunc_t GlobalSystemCallLib[] =

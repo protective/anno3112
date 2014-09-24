@@ -15,6 +15,7 @@
 #include "../Sspacebjects/SShot.h"
 #include "CommandProcesMetas.h"
 #include "../Sspacebjects/Ordres/Compiler/CommandCompiler.h"
+#include "../Sspacebjects/Ordres/CommandOrderThread.h"
 #include <sys/time.h>
 Processor::Processor() {
 	
@@ -25,6 +26,8 @@ Processor::Processor() {
 	pthread_mutex_init(&_lockCommands, NULL);
 	addCommand(new CommandTimedSubscribeUpdate(SubscriptionLevel::lowFreq));
 	addCommand(new CommandProcesMetas());
+	addCommand(new CommandCompiler("/home/karsten/anno3112/Server/OrderPrograms/test.aop"));
+
 	_workReady = false;
 	_freeIdCount = 1;
 	_id = 0;
@@ -173,10 +176,12 @@ SShip* Processor::createShip(SPos& pos, SShipType& stype, uint32_t playerId){
 	SShip* ship = new SShip(getFreeID(), pos, stype, playerId);
 	CommandProcessor* proces = new CommandProcessor(ship,1000/FRAMERATE,0);
 	
-	CommandCompiler* compi = new CommandCompiler("/home/karsten/anno3112/Server/OrderPrograms/test.aop");
+	CommandOrderThread* t = new CommandOrderThread(ship->getId());
+	
+
 	list<Command*> cmdlist;
 	cmdlist.push_back(proces);
-	cmdlist.push_back(compi);
+	cmdlist.push_back(t);
 	CommandAdd* add = new CommandAdd(world->getTime(), ship, cmdlist);
 	this->addCommand(add);
 	return ship;

@@ -7,14 +7,29 @@
 
 #ifndef SPROGRAMMABLE_H
 #define	SPROGRAMMABLE_H
-
+#include "../SFunctions.h"
+#include "SObj.h"
+class SOrdreProgram;
 class SProgrammable  {
 public:
-	virtual void interrupt(uint32_t programId, uint32_t handlerId, uint32_t* payload, uint32_t payloadLen) = 0;
-protected:
-	uint32_t _interruptProgramID;
-	uint32_t _interruptcallbackHandler;
-	uint32_t* _interruptpayload;
+	SProgrammable(OBJID obj);
+	virtual uint32_t execute(Command* cmd);
+	uint32_t segfault();
+	void setProgram(SOrdreProgram* program){_program = program;}
+	void dumpStack();
+	virtual void interrupt(uint32_t programId, uint32_t handlerId, uint32_t* payload, uint32_t payloadLen);
+private:
+	uint32_t _registerFlags;
+	uint32_t _mipsCredit;
+	TIME _lastExeTime;
+	OBJID _obj;
+	
+	SOrdreProgram* _program;
+	uint32_t _programCounter;
+	uint32_t _stackTop;
+
+	uint32_t* _stack;
+	uint32_t _stackMax;
 
 };
 

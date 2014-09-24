@@ -18,7 +18,7 @@
 #include "SMetaObj.h"
 
 SUnit::SUnit(uint32_t id, SPos& pos, SUnitType& stype, uint32_t playerId):
-SObj(id, pos,teamlist[playerId],playerId),SSubAble(this,stype.getEnergy(),stype.getRecharge(),stype.getScanRange(),stype.getScanPRange(),stype.getCargo()),STargetable(this),SMovable(this, stype.getTopSpeed(), stype.getAgility()), Processable() {
+SObj(id, pos,teamlist[playerId],playerId),SSubAble(this,stype.getEnergy(),stype.getRecharge(),stype.getScanRange(),stype.getScanPRange(),stype.getCargo()),STargetable(this),SMovable(this, stype.getTopSpeed(), stype.getAgility()), Processable() , SProgrammable(id) {
 	this->_autoMoveCounter = 0;
 	this->_autoMovePoint = 0;
 	this->_targetPos.x = pos.x;
@@ -49,15 +49,10 @@ void SUnit::subscribeClient(uint32_t clientId, SubscriptionLevel::Enum level){
 		this->isShip()->sendFull(clientId);
 	_subscriptions[level].push_back(clientId);
 }
-void SUnit::interrupt(uint32_t programId, uint32_t handlerId, uint32_t* payload, uint32_t payloadLen){
-	_interruptProgramID = programId;
-	_interruptcallbackHandler = handlerId;
-	_interruptpayload = (uint32_t*)malloc(payloadLen);
-	memcpy(_interruptpayload, payload, payloadLen);
-}
 
 void SUnit::proces(uint32_t delta, Processor* processor){
 	postProces(delta);
+	
 	if(_lastCombat < 1000000)
 		_lastCombat++;
 	
@@ -85,6 +80,7 @@ void SUnit::proces(uint32_t delta, Processor* processor){
 		this->addEnergy(_recharge/5);
 	}
 	if (_targetUpdateCounter % 25 == 0){
+		setProgram(_processor->getPrograms()["test"]);
 		updateTargetList(_processor);
 		this->updateAutoMove();
 		sendPosUpdate(SubscriptionLevel::lowFreq);
