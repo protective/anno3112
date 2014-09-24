@@ -1,6 +1,14 @@
 #include "CommandCompiler.h"
 
 
+
+void CommandCompiler::emitNOP(){
+	program().push_back(inst::NOP);
+}
+
+void CommandCompiler::emitEOP(){
+	program().push_back(inst::EOP);
+}
 void CommandCompiler::emitPopStack(uint32_t size){
 	if(size){
 		//coppy top stack to the rel loc 
@@ -11,7 +19,7 @@ void CommandCompiler::emitPopStack(uint32_t size){
 
 void CommandCompiler::emitPopTopStackToLoc(uint32_t pos, uint32_t size){
     //coppy top stack to the rel loc
-    program().push_back(inst::cpN_FT2 | size);
+    program().push_back(inst::cpN_DS2 | size);
     program().push_back(relpos(pos)); //copy to
     program().push_back(0x00); //copy from
     
@@ -20,11 +28,11 @@ void CommandCompiler::emitPopTopStackToLoc(uint32_t pos, uint32_t size){
     this->_scopeRef.back() -= size;
 }
 
-void CommandCompiler::emitTopStackToLoc(uint32_t pos, uint32_t size){
+void CommandCompiler::emitTopStackToLoc(uint32_t pos, bool rel, uint32_t size){
 
     //coppy top stack to the rel loc 
-    program().push_back(inst::cpN_FT2 | size);
-    program().push_back(relpos(pos)); //copy to
+    program().push_back((rel ? inst::cpN_DS2: inst::cpN_DRS2) | size);
+    program().push_back(rel ? relpos(pos): pos); //copy to
     program().push_back(0x00); //copy from
 }
 
@@ -39,20 +47,40 @@ void CommandCompiler::emitPushTopStackNtimesToStack( uint32_t size){
     program().push_back(inst::pushS0N | size);
     _scopeRef.back()+= size;
 }
+uint32_t CommandCompiler::emitCall(){
+	/*
+	 
+	 */
+	_scopeRef.back()+= 0; //push old pc
+	program().push_back(inst::pushPC);
+	program().push_back(inst::jmpA_1);
+	program().push_back(0);
+	return program().size() -1;
 
-void CommandCompiler::emitSysCall(uint32_t pos){
-	program().push_back(inst::sysCall);
+}
+void CommandCompiler::emitReturn(){
+	/*
+	 
+	 */
+	_scopeRef.back()-= 1; //push old pc
+	program().push_back(inst::popPC);
+
+
+}
+
+void CommandCompiler::emitSysCall(uint32_t pos, uint32_t functionId){
+	program().push_back(inst::sysCall | functionId);
 	program().push_back(relpos(pos));
 }
 
-void CommandCompiler::emitPushLocToTopStack(uint32_t pos, uint32_t size){
+void CommandCompiler::emitPushLocToTopStack(uint32_t pos, uint32_t size, bool rel){
     
     //coppy loc to top stact
     program().push_back(inst::pushN | size);
     _scopeRef.back() += size;
-    program().push_back(inst::cpN_FT2 | size);
+    program().push_back( (rel ? inst::cpN_DS2 : inst::cpN_RDS2)  | size);
     program().push_back(size - 1); //copy to
-    program().push_back(relpos(pos)); //copy from
+    program().push_back(rel ? relpos(pos) : pos); //copy from
 }
 
 uint32_t CommandCompiler::emitJumpToRef(){

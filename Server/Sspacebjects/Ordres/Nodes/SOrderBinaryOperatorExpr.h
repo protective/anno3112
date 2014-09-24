@@ -16,6 +16,9 @@ public:
 		this->_secondOperand = secondOperand;
 		this->_appliedOperator = appliedOperator;
 	}
+	
+	virtual TypeDenoter* getType(){return _firstOperand->getType();}
+
 	/** Get the first operand */
 	SOrderNodeExpr* firstOperand(){
 		return _firstOperand;

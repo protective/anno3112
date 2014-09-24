@@ -8,6 +8,7 @@
 #include "SUnit.h"
 #include "SShip.h"
 #include "SFighter.h"
+#include "SProgrammable.h"
 #include "../World/SGrid.h"
 #include "../NetworkLayer/SShipNetworkLayer.h"
 #include "../Commands/CommandRemove.h"
@@ -48,6 +49,13 @@ void SUnit::subscribeClient(uint32_t clientId, SubscriptionLevel::Enum level){
 		this->isShip()->sendFull(clientId);
 	_subscriptions[level].push_back(clientId);
 }
+void SUnit::interrupt(uint32_t programId, uint32_t handlerId, uint32_t* payload, uint32_t payloadLen){
+	_interruptProgramID = programId;
+	_interruptcallbackHandler = handlerId;
+	_interruptpayload = (uint32_t*)malloc(payloadLen);
+	memcpy(_interruptpayload, payload, payloadLen);
+}
+
 void SUnit::proces(uint32_t delta, Processor* processor){
 	postProces(delta);
 	if(_lastCombat < 1000000)

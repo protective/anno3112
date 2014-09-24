@@ -20,3 +20,8 @@ void  SOrderVisitor::visit(SOrderNodeVariableExpr* node){};
 void  SOrderVisitor::visit(SOrderIdentifier* node){};
 void  SOrderVisitor::visit(SOrderIntegerLiteral* node){};
 void  SOrderVisitor::visit(SOrderBinaryOperatorExpr* node){};
+void  SOrderVisitor::visit(TypeDenoter* node){};
+void  SOrderVisitor::visit(NodeTop* node){};
+void  SOrderVisitor::visit(NodeVardecTop* node){};
+void  SOrderVisitor::visit(NodeParam* node){};
+void  SOrderVisitor::visit(NodeMethod* node){};

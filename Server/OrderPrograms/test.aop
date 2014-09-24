@@ -1,4 +1,17 @@
-systemSetFlags( 0 , 0);
-systemSetFlags( 1 , 4+4);
-systemSetFlags( 2 , 0);
-systemSetFlags( 3 , 0);
+
+var int a = 9;
+var int y = 9;
+var int u = 9;
+
+int test(){
+var int b = 5;
+var int c = 5 + 5;
+};
+
+int main(){
+
+y = test();
+test();
+var int t = h;
+};
+

@@ -15,13 +15,14 @@
 #include "SOrderProgramPrinter.h"
 #include "../CommandOrderThread.h"
 #include "../../../Commands/Processor.h"
-
+#include "TypeChecker.h"
 CommandCompiler::CommandCompiler(string programPath) :
 Command(0){
 	_programPath = programPath;
-
+	_inStatic = true;
+	_step = Step::allocation;
 	for(int i = 0; GlobalSystemCallLib[i]._systemCallFunc; i++){
-		vTableEntry temp(GlobalSystemCallLib[i]._name, i, GlobalSystemCallLib[i]._systemCallFunc);
+		vTableEntry temp(GlobalSystemCallLib[i]._name, i,0,false, GlobalSystemCallLib[i]._systemCallFunc);
 		_vtable.push_back(temp);
 	}
 
@@ -34,18 +35,28 @@ uint32_t CommandCompiler::execute(){
 	
 	SOrderNode* result = parse(&lexer);
 
+	//TypeChecker typecheck;
+	
+	//result->accept(&typecheck);
+	
 	ofstream dotfile(_programPath.append(".dot").c_str());
 	SOrderDotBuilder dot(dotfile);
 	dot.visit(result);
 	result->accept(&dot);
 	dot.finalise();
 
-	_scopeRef.push_back(0);
+	_scopeRef.push_back(1);
 
 	result->accept(this);
+	_step = Step::main;
+	_lables[emitCall()] = "main";
+	emitEOP();	
+	result->accept(this);
+	this->finalize();
+	
 	ofstream asmPrinter(_programPath.append(".asm").c_str());
 	printProgram(asmPrinter,_program);
-	SOrdreProgram* p = new SOrdreProgram("test",_program);
+	SOrdreProgram* p = new SOrdreProgram("test",_program, _interruptHandlers);
 	CommandOrderThread* t = new CommandOrderThread(p,2);
 	networkControl->addCommandToProcesable(t,2);
 	return COMMAND_FINAL;
@@ -59,6 +70,16 @@ vTableEntry* CommandCompiler::vtableFind(string id){
 	cerr<<"vtable error looking for ("<<id<<")"<<endl;
 	return NULL;
 }
+
+void CommandCompiler::finalize(){
+	for(map<uint32_t, string>::iterator it = _lables.begin(); it != _lables.end(); it++){
+		if(vtableFind(it->second))
+			_program[it->first] = vtableFind(it->second)->pos;
+		else
+			cerr<<"undeclared function>>"<<it->second<<endl;
+	}
+}
+
 void CommandCompiler::visit(SOrderNodeIfStmt* node){
     
     /*
@@ -143,6 +164,52 @@ void CommandCompiler::visit(SOrderNodeWhileStmt* node){
 	}
 }
 
+void CommandCompiler::visit(NodeMethod* node){
+	if(_step == Step::main){
+		emitNOP();
+		if(node->variable()->name() == "main"){
+			_mainFunctionPC = program().size();
+		}
+		vTableEntry v(node->variable()->name(),program().size(),false);
+		_vtable.push_back(v);
+		
+		for(int i = 0 ; GlobalSystemCallBackLib[i]._id; i++){
+			if (GlobalSystemCallBackLib[i]._name == node->variable()->name()){
+				_interruptHandlers[GlobalSystemCallBackLib[i]._id] = program().size();
+			}
+		}
+		if(node->block()){
+			cerr<<"method visit block"<<endl;
+		   _scopeRef.push_back(_scopeRef.back());
+			node->block()->accept(this);
+		   uint32_t oldRef = _scopeRef.back();
+		   _scopeRef.pop_back();
+		   emitPopStack(oldRef - _scopeRef.back());
+		   emitReturn();
+		}
+	}
+	if(node->next())
+		node->next()->accept(this);
+	
+}
+
+ void CommandCompiler::visit(NodeVardecTop* node){
+	if(_step == Step::allocation){
+		_inStatic = true;
+		if(node->expr()){
+			node->expr()->accept(this);
+		}
+		if(!node->expr()){
+			emitPushStack(0x00, 1);
+		}
+		vTableEntry v(node->variable()->name(),_scopeRef.back()-1,false);
+		_vtable.push_back(v);
+	}
+	if(node->next())
+		node->next()->accept(this);
+	
+}
+
 void CommandCompiler::visit(SOrderNodeVardeclStmt* node){
     
     if(node->expr()){
@@ -151,7 +218,7 @@ void CommandCompiler::visit(SOrderNodeVardeclStmt* node){
     if(!node->expr()){
         emitPushStack(0x00, 1);
     }
-    vTableEntry v(node->variable()->name(),_scopeRef.back());
+    vTableEntry v(node->variable()->name(),_scopeRef.back(), true);
     _vtable.push_back(v);
     if(node->next())
         node->next()->accept(this);
@@ -179,7 +246,7 @@ void CommandCompiler::visit(SOrderNodeAssignExpr* node){
     if(!ve){
         return;
     }
-    emitTopStackToLoc(ve->pos,1);
+    emitTopStackToLoc(ve->pos, ve->rel, 1);
 
 }
 
@@ -220,7 +287,9 @@ void CommandCompiler::visit(SOrderNodeVariable* node){
         cerr<<"ERROR visit SOrderNodeVariable"<<endl;
         return;
     }
-    emitPushLocToTopStack(ve->pos,1);
+	
+	emitPushLocToTopStack(ve->pos,1, ve->rel);
+
 
 }
 
@@ -241,15 +310,30 @@ void CommandCompiler::visit(SOrderNodeCallExpr* node){
     }
 
 	if(ve->systemCall){
-		emitPushStack(0,1);
-		_scopeRef.push_back(_scopeRef.back());
+		emitPushStack(0xEEEE,1);
 		uint32_t s = _scopeRef.back();
-		node->args()->accept(this);
-		emitSysCall(s);
+		
+		_scopeRef.push_back(_scopeRef.back());
 		uint32_t oldRef = _scopeRef.back();
+		node->args()->accept(this);
+		emitSysCall(s, ve->pos);
+
+		emitPopStack(_scopeRef.back() -oldRef);
 		_scopeRef.pop_back();
-		emitPopStack(oldRef - _scopeRef.back());
+	}else{
+		//cerr<<"hest BIGGG"<<endl;
+		emitPushStack(0xFFFF,1);
+		uint32_t s = _scopeRef.back();
+		
+		_scopeRef.push_back(_scopeRef.back());
+		uint32_t oldRef = _scopeRef.back();
+		if(node->args())
+			node->args()->accept(this);
+		_lables[emitCall()] = ve->name;
+		emitPopStack(_scopeRef.back() -oldRef);
+		_scopeRef.pop_back();
 	}
+		
 	
 }
 

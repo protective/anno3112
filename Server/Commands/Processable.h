@@ -20,6 +20,7 @@ class SShip;
 class SFighter;
 class SShot;
 class STargetable;
+class SProgrammable;
 class Processable {
 public:
 	Processable();
@@ -35,6 +36,7 @@ public:
 	virtual SGrid* getGrid() = 0;
 	virtual SShot* isShot(){return NULL;}
 	virtual STargetable* isTargetable(){return NULL;}
+	virtual SProgrammable* isProgrammable(){return NULL;}
 	virtual void getMetaObj(SMetaObj* metaobj){}
 	virtual void proces(uint32_t delta, Processor* processor ) = 0;
 	virtual void subscribeClient(uint32_t clientId, SubscriptionLevel::Enum level) = 0;

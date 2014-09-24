@@ -12,38 +12,49 @@
 #include "../Utils/SOrderVisitor.h"
 
 #include "../SOrdersSystemCalls.h"
-
+using namespace anl;
 typedef struct vTableEntry{
-    vTableEntry(string p_name, uint32_t p_pos){
+    vTableEntry(string p_name, uint32_t p_pos, bool p_rel){
 		name = p_name;
 		pos = p_pos;
+		rel = p_rel;
 		size = 1;
-		systemCall = NULL;
+		systemCall = 0;
     }
-    vTableEntry(string p_name, uint32_t p_pos, uint32_t p_size){
+    vTableEntry(string p_name, uint32_t p_pos, bool p_rel, uint32_t p_size){
 		name = p_name;
 		pos = p_pos;
+		rel = p_rel;
 		size = p_size;
-		systemCall = NULL;
+		systemCall = 0;
     }
-	vTableEntry(string p_name, uint32_t p_pos, systemCallFunc p_systemCall){
+	vTableEntry(string p_name, uint32_t p_pos, bool p_rel, uint32_t p_size, systemCallFunc p_systemCall){
 		name = p_name;
 		pos = p_pos;
-		size = 0;
+		rel = p_rel;
+		size = p_size;
 		systemCall = p_systemCall;
     }
     vTableEntry(const vTableEntry& v){
 		name = v.name;
 		pos = v.pos;
+		rel = v.rel;
 		size = v.size;
 		systemCall = v.systemCall;
     }
     string name;
     uint32_t pos;
+	bool rel;
     uint32_t size;
 	systemCallFunc systemCall; //pointer to systemcall Function
 }vTableEntry;
 
+namespace Step{
+	enum Enum{
+		allocation = 1,
+		main = 2
+	};
+}
 
 class CommandCompiler : public Command, public SOrderVisitor {
 public: 
@@ -68,8 +79,17 @@ public:
 	virtual void visit(SOrderBinaryOperatorExpr* node);
 	virtual void visit(SOrderNodeArg* node);
 	virtual void visit(SOrderNodeCallExpr* node);
+	virtual void visit(TypeDenoter* node){}
+	virtual void visit(NodeTop* node){}
+	virtual void visit(NodeVardecTop* node);
+	virtual void visit(NodeParam* node){}
+	virtual void visit(NodeMethod* node);
+	void finalize();
 	virtual ~CommandCompiler();
 private:
+	uint32_t _mainFunctionPC;
+	Step::Enum _step;
+	bool _inStatic;
 	vTableEntry* vtableFind(string id);
 	string _programPath;
 	PROGRAM _program;
@@ -81,18 +101,23 @@ private:
 	list<uint32_t> _scopeRef;
 	list<vTableEntry> _vtable;
 	//  codepoint, jmppoint
-	map<uint32_t, uint32_t> _lables;
+	map<uint32_t, string> _lables;
+	map<uint32_t, uint32_t> _interruptHandlers;
 	void emitPopStack(uint32_t size);
 	void emitPushStack(uint32_t value, uint32_t size);
 	void emitPopTopStackToLoc(uint32_t pos, uint32_t size);
-	void emitTopStackToLoc(uint32_t pos, uint32_t size);
-	void emitPushLocToTopStack(uint32_t pos, uint32_t size);
+	void emitTopStackToLoc(uint32_t pos, bool rel, uint32_t size);
+	void emitPushLocToTopStack(uint32_t pos, uint32_t size, bool rel);
 	void emitPushTopStackNtimesToStack(uint32_t size);
+	uint32_t emitCall();
+	void emitNOP();
+	void emitEOP();
+	void emitReturn();
 	void emitBOAddPush();
 	void emitBOMinusPush();
 	void emitBOAddPop();
 	void emitBOMinusPop();
-	void emitSysCall(uint32_t pos);
+	void emitSysCall(uint32_t pos, uint32_t functionId);
 	uint32_t emitJumpToRef();
     uint32_t emitCondJumpToRef();
 	uint32_t emitJumpToRef(uint32_t ref);

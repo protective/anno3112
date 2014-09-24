@@ -1,20 +1,20 @@
 /* 
- * File:   SOrderNodeVardecl.h
+ * File:   VardecTop.h
  * Author: karsten
  *
- * Created on 4. september 2014, 22:48
+ * Created on 19. september 2014, 18:39
  */
 
-#ifndef SORDERNODEVARDECLSTMT_H
-#define	SORDERNODEVARDECLSTMT_H
+#ifndef VARDECTOP_H
+#define	VARDECTOP_H
 
-#include "SOrderNodeStmt.h"
 #include "SOrderNodeExpr.h"
-
-class SOrderNodeVardeclStmt : public SOrderNodeStmt {
+#include "NodeTop.h"
+namespace anl {
+class NodeVardecTop : public NodeTop {
 public:
-	SOrderNodeVardeclStmt(TypeDenoter* type, SOrderIdentifier* id, SOrderNodeExpr* expr, SOrderNodeStmt* next):
-	SOrderNodeStmt(next){
+	NodeVardecTop(TypeDenoter* type, SOrderIdentifier* id, SOrderNodeExpr* expr)
+	{
 		_expr = expr;
 		_id = id;
 		_type = type;
@@ -29,12 +29,12 @@ public:
 	virtual void accept(SOrderVisitor* v);
 	virtual TypeDenoter* getType(){return _type;}
 	virtual void setType(TypeDenoter* type){_type = type;}
-	virtual ~SOrderNodeVardeclStmt(){}
+	virtual ~NodeVardecTop(){}
 private:
 	SOrderNodeExpr* _expr;
 	SOrderIdentifier* _id;
 	TypeDenoter* _type;
 };
-
-#endif	/* SORDERNODEVARDECLSTMT_H */
+}
+#endif	/* VARDECTOP_H */
 

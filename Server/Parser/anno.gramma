@@ -3,21 +3,44 @@
 
 #include "../Nodes/SOrderNodes.h"
 #include "../Terminals/SOrderTerminals.h"
+using namespace anl;
 #define BinOp(a,b,c)		new SOrderBinaryOperatorExpr((SOrderNodeExpr*)a, (SOrderTerminal*)b, (SOrderNodeExpr*)c)
 
 /*** Grammar ***
 
-program		-> stmts							{cerr<<"PARSE stmts"<<endl;result = arg0;}
+program		-> newline top_defs					{result = arg1;}
+			 | top_defs							{result = arg0;}
+
+top_defs	-> top_def semicolon top_defs		{((NodeTop*)arg0)->setNext((NodeTop*)arg2); result = arg0;}
+			 | top_def semicolon				{result = arg0;}
+
+top_def		-> var topvardecl					{result = arg1;}
+			 | method							{result = arg0;}
+
+method      -> type id paramsblock block        {cerr<<"PARSE method"<<endl;result = new NodeMethod((TypeDenoter*)arg0, (SOrderIdentifier*)arg1, (NodeParam*)arg2, (SOrderNodeStmt*)arg3);}
+
+topvardecl	-> type id 							{cerr<<"PARSE top id"<<endl;result = new NodeVardecTop(((TypeDenoter*)arg0),(SOrderIdentifier*)arg1, NULL);}
+			 | type id assignment expr			{cerr<<"PARSE top id assignment expr"<<endl;result = new NodeVardecTop(((TypeDenoter*)arg0), (SOrderIdentifier*)arg1,(SOrderNodeExpr*)arg3);}
+
 
 stmts		-> stmt semicolon stmts				{cerr<<"PARSE stmt semicolon stmts"<<endl;((SOrderNodeStmt*)arg0)->setNext((SOrderNodeStmt*)arg2); result = arg0;}
 			 | closedStmt stmts					{cerr<<"PARSE stmt semicolon stmts"<<endl;((SOrderNodeStmt*)arg0)->setNext((SOrderNodeStmt*)arg1); result = arg0;}
 			 | stmt	semicolon					{cerr<<"PARSE stmt"<<endl;result = arg0;}
+			 | closedStmt						{cerr<<"PARSE stmt semicolon stmts"<<endl; result = arg0;}
 
 stmt		-> expr								{cerr<<"PARSE expr"<<endl; result = new SOrderNodeExprStmt((SOrderNodeExpr*)arg0);}
 			 | var varDecl						{cerr<<"PARSE var varDecl"<<endl;result = arg1;}
+
+paramsblock	-> left_p params right_p			{result = arg1;}
+			 | left_p right_p					{result = NULL;}
+params		-> param comma params				{((NodeParam*)arg0)->setNext((NodeParam*)arg2); result = arg0;}
+			 | param							{result = arg0;}
+param		-> type id							{result = new NodeParam((TypeDenoter*)arg0, (SOrderIdentifier*)arg1);}
+
+
 			 
-varDecl		-> id 								{cerr<<"PARSE id"<<endl;result = new SOrderNodeVardeclStmt((SOrderIdentifier*)arg0, NULL, NULL);}
-			 | id assignment expr				{cerr<<"PARSE id assignment expr"<<endl;result = new SOrderNodeVardeclStmt((SOrderIdentifier*)arg0,(SOrderNodeExpr*)arg2, NULL);}
+varDecl		-> type id 							{cerr<<"PARSE id"<<endl;result = new SOrderNodeVardeclStmt(((TypeDenoter*)arg0),(SOrderIdentifier*)arg1, NULL, NULL);}
+			 | type id assignment expr			{cerr<<"PARSE id assignment expr"<<endl;result = new SOrderNodeVardeclStmt(((TypeDenoter*)arg0), (SOrderIdentifier*)arg1,(SOrderNodeExpr*)arg3, NULL);}
 
 varexpr		-> id								{cerr<<"PARSE id"<<endl;result = new SOrderNodeVariable((SOrderIdentifier*)arg0);}
 	
@@ -26,6 +49,8 @@ block		-> left_c stmts right_c				{cerr<<"PARSE block"<<endl;result = arg1;}
 
 closedStmt	-> if expr block 					{cerr<<"PARSE closedStmt"<<endl; result = new SOrderNodeIfStmt((SOrderNodeExpr*)arg1, (SOrderNodeStmt*)arg2, NULL, NULL);}
 		     | while expr block					{cerr<<"PARSE closedStmt"<<endl; result = new SOrderNodeWhileStmt((SOrderNodeExpr*)arg1, (SOrderNodeStmt*)arg2, NULL);}
+
+type		-> id								{result = new TypeDenoter((SOrderIdentifier*)arg0);}
 
 argblock	-> left_p args right_p 				{cerr<<"PARSE argblock"<<endl; result = arg1;}
 			 | left_p right_p					{cerr<<"PARSE argblock"<<endl; result = NULL;}

@@ -19,12 +19,15 @@ public:
 	SOrderTerminal* literal(){
 		return this->_literal;
 	}
-private:
-	SOrderTerminal* _literal;
+	virtual TypeDenoter* getType(){return _type;}
+	void setType(TypeDenoter* type){
+		_type = type;
+	}
 	virtual ~SOrderNodeLiteralExpr(){}
 private:
-SOrderNodeExpr* _expr;
-
+	SOrderTerminal* _literal;
+	SOrderNodeExpr* _expr;
+	TypeDenoter* _type;	
 };
 
 #endif	/* SORDERNODELITERALEXPR_H */

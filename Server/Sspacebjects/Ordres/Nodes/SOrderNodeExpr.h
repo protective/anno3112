@@ -10,21 +10,23 @@
 
 #include "SOrderNode.h"
 #include "../Utils/SOrderSourcePosition.h"
-
+#include "../Types/TypeDenoter.h"
 class SOrderNodeExpr : public SOrderNode {
 public:
 	SOrderNodeExpr(SOrderSourcePosition pos) : _pos(pos){
-		
 	}
     	/** Get the position of the expression */
 	SOrderSourcePosition pos(){
 		return _pos;
 	}
     
+	virtual TypeDenoter* getType(){return NULL;}
+	//virtual void setType(TypeDenoter* type){_type = type;}	
 	virtual void accept(SOrderVisitor* v);
 	virtual ~SOrderNodeExpr(){}
 private:
 	SOrderSourcePosition _pos;
+	//TypeDenoter* _type;
 };
 
 #endif	/* SORDERNODEEXPR_H */

@@ -19,6 +19,8 @@ public:
 		_expresion = expresion;
 	}
 	SOrderNodeExpr* value(){return _expresion;}
+	virtual TypeDenoter* getType(){return _expresion->getType();}
+	
 	SOrderNodeVariable* assignee(){return _assignee;}
 	virtual void accept(SOrderVisitor* v);
 	virtual ~SOrderNodeAssignExpr(){}

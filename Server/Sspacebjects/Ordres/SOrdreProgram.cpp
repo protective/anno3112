@@ -7,9 +7,10 @@
 
 #include "SOrdreProgram.h"
 
-SOrdreProgram::SOrdreProgram(string name, PROGRAM program){
+SOrdreProgram::SOrdreProgram(string name, PROGRAM program, map<uint32_t, uint32_t> interruptHandlers){
 	_name = name;
 	_program = program;
+	_interruptHandlers = interruptHandlers;
 }
 
 

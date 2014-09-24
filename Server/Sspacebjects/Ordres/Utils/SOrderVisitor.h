@@ -13,7 +13,7 @@
 
 #include "../Nodes/SOrderNodes.h"
 #include "../Terminals/SOrderTerminals.h"
-
+using namespace anl;
 class SOrderVisitor{
 public:
 	virtual void visit(SOrderTerminal* node) = 0;
@@ -33,6 +33,11 @@ public:
 	virtual void visit(SOrderBinaryOperatorExpr* node) = 0;
 	virtual void visit(SOrderNodeArg* node) = 0;
 	virtual void visit(SOrderNodeCallExpr* node) = 0;
+	virtual void visit(TypeDenoter* node) = 0;
+	virtual void visit(NodeMethod* node) = 0;
+	virtual void visit(NodeParam* node) = 0;
+	virtual void visit(NodeTop* node) = 0;
+	virtual void visit(NodeVardecTop* node) = 0;
 };
 
 

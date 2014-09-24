@@ -11,6 +11,7 @@
 
 #include "SOrdreInstructionSet.h"
 #include <vector>
+#include <map>
 #include <string>
 #include <iostream>
 #include <iomanip>
@@ -23,12 +24,13 @@ typedef vector<INSTRUCTION> PROGRAM;
 class SOrdreProgram {
 public:
     
-	SOrdreProgram(string name, PROGRAM program);
+	SOrdreProgram(string name, PROGRAM program, map<uint32_t, uint32_t> interruptHandlers);
 	PROGRAM& program(){return _program;}
 	string name(){return _name;}
 	virtual ~SOrdreProgram();
 private:
 	string _name;
+	map<uint32_t, uint32_t> _interruptHandlers;
 	PROGRAM _program;
 };
 

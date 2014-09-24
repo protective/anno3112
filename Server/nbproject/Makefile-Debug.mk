@@ -49,6 +49,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Commands/CommandMetaHit.o \
 	${OBJECTDIR}/Commands/CommandProcesMetas.o \
 	${OBJECTDIR}/Commands/CommandProcessor.o \
+	${OBJECTDIR}/Commands/CommandQueryCmp.o \
 	${OBJECTDIR}/Commands/CommandRemove.o \
 	${OBJECTDIR}/Commands/CommandSignalFighter.o \
 	${OBJECTDIR}/Commands/CommandTargetPosUpdate.o \
@@ -73,6 +74,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Sspacebjects/Ordres/Compiler/CompilerEmitAssist.o \
 	${OBJECTDIR}/Sspacebjects/Ordres/Compiler/SOrderCompilerVisitor.o \
 	${OBJECTDIR}/Sspacebjects/Ordres/Compiler/SOrderProgramPrinter.o \
+	${OBJECTDIR}/Sspacebjects/Ordres/Compiler/TypeChecker.o \
 	${OBJECTDIR}/Sspacebjects/Ordres/Generated/Lexer.o \
 	${OBJECTDIR}/Sspacebjects/Ordres/Generated/Parser.o \
 	${OBJECTDIR}/Sspacebjects/Ordres/Nodes/SOrderVisit.o \
@@ -229,6 +231,11 @@ ${OBJECTDIR}/Commands/CommandProcessor.o: Commands/CommandProcessor.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Commands/CommandProcessor.o Commands/CommandProcessor.cpp
 
+${OBJECTDIR}/Commands/CommandQueryCmp.o: Commands/CommandQueryCmp.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Commands
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Commands/CommandQueryCmp.o Commands/CommandQueryCmp.cpp
+
 ${OBJECTDIR}/Commands/CommandRemove.o: Commands/CommandRemove.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Commands
 	${RM} "$@.d"
@@ -348,6 +355,11 @@ ${OBJECTDIR}/Sspacebjects/Ordres/Compiler/SOrderProgramPrinter.o: Sspacebjects/O
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects/Ordres/Compiler
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sspacebjects/Ordres/Compiler/SOrderProgramPrinter.o Sspacebjects/Ordres/Compiler/SOrderProgramPrinter.cpp
+
+${OBJECTDIR}/Sspacebjects/Ordres/Compiler/TypeChecker.o: Sspacebjects/Ordres/Compiler/TypeChecker.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Sspacebjects/Ordres/Compiler
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sspacebjects/Ordres/Compiler/TypeChecker.o Sspacebjects/Ordres/Compiler/TypeChecker.cpp
 
 ${OBJECTDIR}/Sspacebjects/Ordres/Generated/Lexer.o: Sspacebjects/Ordres/Generated/Lexer.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects/Ordres/Generated

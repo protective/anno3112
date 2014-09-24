@@ -29,6 +29,18 @@ void printProgram(ofstream& out, PROGRAM& p){
         string param[5] = "";
         bool lineAddr[5] = {false};
         switch((instruction & 0xFFFF0000)){
+			case inst::NOP:
+            {
+                name = "...NOP...";
+                haveArg = false;
+                break;
+            }
+			case inst::EOP:
+            {
+                name = "...EOP...";
+                haveArg = false;
+                break;
+            }
             case inst::pushN:
             {
                 name = "pushN";
@@ -55,12 +67,30 @@ void printProgram(ofstream& out, PROGRAM& p){
                 haveArg = true;
                 break;
             }
-            case inst::cpN_FT2:
+            case inst::cpN_DS2:
             {
-                name = "cpN_FT2";
+                name = "cpN_DS2";
                 haveArg = true;
                 noParams = 2;
                 param[0] = "Rel dest"; 
+                param[1] = "Rel src"; 
+                break;
+            }
+            case inst::cpN_RDS2:
+            {
+                name = "cpN_RDS2";
+                haveArg = true;
+                noParams = 2;
+                param[0] = "Rel dest"; 
+                param[1] = "Abs src"; 
+                break;
+            }
+            case inst::cpN_DRS2:
+            {
+                name = "cpN_DRS2";
+                haveArg = true;
+                noParams = 2;
+                param[0] = "Abs dest"; 
                 param[1] = "Rel src"; 
                 break;
             }
@@ -69,7 +99,7 @@ void printProgram(ofstream& out, PROGRAM& p){
                 name = "jmpA_1";
                 haveArg = true;
                 noParams = 1;
-                param[0] = "PC"; 
+                param[0] = "Line"; 
 				lineAddr[0] = true;
                 break;
             }
@@ -78,7 +108,7 @@ void printProgram(ofstream& out, PROGRAM& p){
                 name = "cjmpA_1";
                 haveArg = true;
                 noParams = 1;
-                param[0] = "PC";
+                param[0] = "Line";
 				lineAddr[0] = true;
                 break;
             }
@@ -111,6 +141,16 @@ void printProgram(ofstream& out, PROGRAM& p){
 
                 break;
             }
+ 			case inst::pushPC:
+            {
+                name = "pushPC";
+                break;
+            }
+ 			case inst::popPC:
+            {
+                name = "popPC";
+                break;
+            }			
 			default:{
 				name = "unknown";
 						break;

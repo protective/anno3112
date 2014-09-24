@@ -54,3 +54,23 @@ void SOrderNodeArg::accept(SOrderVisitor* v){
 void SOrderNodeCallExpr::accept(SOrderVisitor* v){
 	v->visit(this);
 }
+
+void TypeDenoter::accept(SOrderVisitor* v){
+	v->visit(this);
+}
+
+void anl::NodeTop::accept(SOrderVisitor* v){
+	v->visit(this);
+}
+
+void anl::NodeVardecTop::accept(SOrderVisitor* v){
+	v->visit(this);
+}
+
+void anl::NodeParam::accept(SOrderVisitor* v){
+	v->visit(this);
+}
+
+void anl::NodeMethod::accept(SOrderVisitor* v){
+	v->visit(this);
+}

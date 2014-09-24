@@ -10,18 +10,24 @@
 
 #include "../../Commands/Command.h"
 #include "SOrdreProgram.h"
-#include "Utils/SOrderVar.h"
 
 #include "SOrdersSystemCalls.h"
-
+namespace registerFlags{
+	enum Enum{
+		Yeld = 0x00000001
+	};
+}
 class CommandOrderThread : public Command {
 public:
 	CommandOrderThread(SOrdreProgram* program, OBJID obj);
 	virtual Processable* getProcessable(){return NULL;} //TODO FIX
 	virtual uint32_t execute();
+	void sleep(uint32_t ms);
 	virtual ~CommandOrderThread();
 private:
-
+	uint32_t segfault();
+	void dumpStack();
+	uint32_t _registerFlags;
 	uint32_t _mipsCredit;
 	TIME _lastExeTime;
 	OBJID _obj;
@@ -32,7 +38,7 @@ private:
 	//list<SOrderNode*> _programStack;
 
 	uint32_t* _stack;
-	
+	uint32_t _stackMax;
     /*
      */
 	

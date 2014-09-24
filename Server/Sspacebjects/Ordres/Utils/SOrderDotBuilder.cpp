@@ -40,6 +40,12 @@ void SOrderDotBuilder::visit(SOrderNodeVardeclStmt* node){
 	//Visit children
 	parentId = myId;
 	node->variable()->accept(this);
+	parentId = myId;
+	if(node->getType()){
+		cerr<<"accept type"<<endl;
+		node->getType()->accept(this);
+	}else
+		cerr<<"ERROR type NULL"<<endl;
 	if(node->expr() != NULL){
 		parentId = myId;
 		node->expr()->accept(this);
@@ -85,11 +91,17 @@ void SOrderDotBuilder::visit(SOrderNodeAssignExpr* node) {
 	parentId = myId;
 	node->assignee()->accept(this);
 	parentId = myId;
+	if(node->getType())
+		node->getType()->accept(this);
+	parentId = myId;
 	node->value()->accept(this);
 }
 void SOrderDotBuilder::visit(SOrderNodeVariableExpr* node) { 
 	int myId = printNode("VariableExpr");
 	//Visit children
+	parentId = myId;
+	if(node->getType())
+		node->getType()->accept(this);
 	parentId = myId;
 	node->var()->accept(this);
 }
@@ -149,4 +161,71 @@ void SOrderDotBuilder::visit(SOrderNodeCallExpr* node) {
 		parentId = myId;
 		node->args()->accept(this);
 	}
+}
+
+void SOrderDotBuilder::visit(TypeDenoter* node) {
+	cerr<<"dot TypeDenoter"<<endl;
+	string msg("type: " + node->toString() + " size: " + node->byteSizeToString());
+	printNode(msg);
+}
+
+void SOrderDotBuilder::visit(NodeMethod* node){
+	int myId = printNode("Method node");
+	//Visit next
+	if(node->next() != NULL)
+		node->next()->accept(this);
+	//Visit children
+	parentId = myId;
+	node->variable()->accept(this);
+	parentId = myId;
+	if(node->getType()){
+		cerr<<"accept type"<<endl;
+		node->getType()->accept(this);
+	}else
+		cerr<<"ERROR NodeMethod type NULL"<<endl;
+	if(node->param() != NULL){
+		parentId = myId;
+		node->param()->accept(this);
+	}
+	if(node->block() != NULL){
+		parentId = myId;
+		node->block()->accept(this);
+	}
+	
+}
+void SOrderDotBuilder::visit(NodeParam* node){
+	int myId = printNode("ParamNode");
+	//Visit next
+	if(node->next() != NULL)
+		node->next()->accept(this);
+	//Visit children
+	parentId = myId;
+	node->id()->accept(this);
+	parentId = myId;
+	node->type()->accept(this);
+}
+void SOrderDotBuilder::visit(NodeTop* node){
+	int myId = printNode("Top Node");
+	if(node->next() != NULL)
+		node->next()->accept(this);
+}
+void SOrderDotBuilder::visit(NodeVardecTop* node){
+	int myId = printNode("TopVarDeclaration");
+	//Visit next
+	if(node->next() != NULL)
+		node->next()->accept(this);
+	//Visit children
+	parentId = myId;
+	node->variable()->accept(this);
+	parentId = myId;
+	if(node->getType()){
+		cerr<<"accept type"<<endl;
+		node->getType()->accept(this);
+	}else
+		cerr<<"ERROR type NULL"<<endl;
+	if(node->expr() != NULL){
+		parentId = myId;
+		node->expr()->accept(this);
+	}
+	
 }

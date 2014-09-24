@@ -26,6 +26,9 @@ public:
 	/** Arguments for the call 
  	 * Note that ArgNode forms a single linked list
 	 */
+	virtual TypeDenoter* getType(){return NULL;}
+
+	
 	SOrderNodeArg* args(){
 		return _args;
 	}

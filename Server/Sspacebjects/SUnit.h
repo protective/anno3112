@@ -12,7 +12,7 @@
 #include "STargetable.h"
 #include "SMovable.h"
 #include "SObj.h"
-
+#include "SProgrammable.h"
 #include "SSubAble.h"
 #include "SUnitType.h"
 #include "SOrdres.h"
@@ -26,7 +26,8 @@
 #include "subsystems/SSubSystemFighter.h"
 #include "subsystems/SSlotNode.h"
 
-class SUnit : public SObj , public SMovable , public STargetable, public SSubAble , public Processable{
+
+class SUnit : public SObj , public SMovable , public STargetable, public SSubAble , public Processable, public SProgrammable{
 public:
 	SUnit(uint32_t id, SPos& pos, SUnitType& stype, uint32_t playerId);
 	virtual uint32_t getId(){return _id;}
@@ -52,6 +53,7 @@ public:
 	virtual SUnit* isUnit(){return this;}
 	virtual SShip* isShip(){return NULL;}
 	virtual SGrid* getGrid(){return _pos.grid;}
+	virtual SProgrammable* isProgrammable(){return this;}
 	virtual bool canBeRemoved();
 	SOrdres* getOrdres(){return this->_order;}
 	void setOrdres(SOrdres* ordres){this->_order = ordres;}
@@ -75,6 +77,9 @@ public:
 	void AddHull(uint32_t value){_hull+=value;if(_hull>_maxhull)_hull= _maxhull;}
 	void ResetLastCombat(){_lastCombat = 0;}
 	bool IsOutOfCombat(){if(_lastCombat > 1000)return true; return false;}
+	
+	void interrupt(uint32_t programId, uint32_t handlerId, uint32_t* payload, uint32_t payloadLen);
+
 	
 	//networking
 	virtual void sendPosUpdate(SubscriptionLevel::Enum level);
@@ -106,6 +111,11 @@ protected:
 	SOrdres* _order;
 	uint32_t _lastCombat;
 
+	//********************
+	
+	
+	//********************
+	
 };
 
 #endif	/* SUNIT_H */

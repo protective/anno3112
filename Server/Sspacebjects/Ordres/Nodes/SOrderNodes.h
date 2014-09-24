@@ -21,7 +21,11 @@
 #include "SOrderBinaryOperatorExpr.h"
 #include "SOrderNodeArg.h"
 #include "SOrderNodeCallExpr.h"
+#include "NodeParam.h"
+#include "NodeMethod.h"
+#include "NodeTop.h"
+#include "NodeVardecTop.h"
 #include "../Terminals/SOrderIdentifier.h"
-
+#include "../Types/TypeDenoter.h"
 #endif	/* SORDERNODES_H */
 

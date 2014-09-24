@@ -85,6 +85,7 @@ rules:
 {[0-9]+} 										{cerr<<"terminal int"<<endl;return IntegerFromDecimalString(token, toklen, pos);}
 {\x04}											{cerr<<"terminal eof"<<endl;return new SOrderTerminal(TOKEN_EOF, pos);}
 { }												{cerr<<"space"<<endl;goto BEGIN;}
+{\t}										    {cerr<<"tab"<<endl;goto BEGIN;}
 {\r}											{cerr<<"newline lf"<<endl;goto BEGIN;}
 {\n}											{cerr<<"newline cr"<<endl;goto BEGIN;}
 

@@ -15,7 +15,7 @@ class DotBuilder;
 #include <string>
 
 using namespace std;
-
+using namespace anl;
 class SOrderDotBuilder : public SOrderVisitor {
 public:
 	SOrderDotBuilder(ostream& output = cout) : out(output){
@@ -52,6 +52,11 @@ public:
 	void visit(SOrderBinaryOperatorExpr* node);
 	void visit(SOrderNodeArg* node);
 	void visit(SOrderNodeCallExpr* node);
+	void visit(TypeDenoter* node);
+	void visit(anl::NodeMethod* node);
+	void visit(anl::NodeParam* node);
+	void visit(anl::NodeTop* node);
+	void visit(anl::NodeVardecTop* node);
 	void finalise(){
 		out<<"}"<<endl;
 	}

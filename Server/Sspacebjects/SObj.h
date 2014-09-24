@@ -18,6 +18,7 @@ class SAstoroid;
 class SSubAble;
 class STargetable;
 class SMovable;
+class SProgrammable;
 class Client;
 class SObj {
 public:
@@ -39,6 +40,7 @@ public:
 	virtual SAstoroid* isAstoroid(){return NULL;}
 	virtual SShot* isShot(){return NULL;}
 	virtual SMovable* isMovable(){return NULL;}
+	virtual SProgrammable* isProgrammable(){return NULL;}
 	virtual uint8_t getTeam(){return _team;}
 	virtual uint32_t getPlayerId(){return _playerId;}
 	virtual SSubAble* getsubable(){return NULL;}
