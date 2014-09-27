@@ -16,6 +16,12 @@ void CommandCompiler::emitPopStack(uint32_t size){
 		this->_scopeRef.back() -= size;
 	}
 }
+void CommandCompiler::emitPopStackIgnore(uint32_t size){
+	if(size){
+		//coppy top stack to the rel loc 
+		program().push_back(inst::popN | size);
+	}
+}
 
 void CommandCompiler::emitPopTopStackToLoc(uint32_t pos, uint32_t size){
     //coppy top stack to the rel loc
@@ -47,16 +53,22 @@ void CommandCompiler::emitPushTopStackNtimesToStack( uint32_t size){
     program().push_back(inst::pushS0N | size);
     _scopeRef.back()+= size;
 }
-uint32_t CommandCompiler::emitCall(){
-	/*
-	 
-	 */
-	_scopeRef.back()+= 0; //push old pc
-	program().push_back(inst::pushPC);
+void CommandCompiler::emitCall(string name){
 	program().push_back(inst::jmpA_1);
 	program().push_back(0);
-	return program().size() -1;
+	_lables[program().size() -1] = name;
+	return;
 
+}
+
+void CommandCompiler::emitPushPC(){
+	program().push_back(inst::pushPC);
+	return;
+}
+uint32_t CommandCompiler::emitPushRPC(){
+	program().push_back(inst::pushRPC);
+	program().push_back(0x00);
+    return program().size() - 1;
 }
 void CommandCompiler::emitReturn(){
 	/*

@@ -11,10 +11,23 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/karsten/anno3112/Server/Sspacebjects/Ordres/CommandOrderThread.cpp</file>
-            <file>file:/home/karsten/anno3112/Server/Sspacebjects/Ordres/Compiler/CommandCompiler.cpp</file>
-            <file>file:/home/karsten/anno3112/Server/Sspacebjects/Ordres/CommandOrderThread.h</file>
+            <file>file:/home/karsten/anno3112/Server/Sspacebjects/Ordres/SOrdersSystemCalls.h</file>
+            <file>file:/home/karsten/anno3112/Server/Commands/inputCommands/CommandIChangeSubTG.cpp</file>
+            <file>file:/home/karsten/anno3112/Server/Commands/Processor.cpp</file>
+            <file>file:/home/karsten/anno3112/Server/Commands/CargoCommands/CommandCargoTransfere.h</file>
+            <file>file:/home/karsten/anno3112/Server/Sspacebjects/SProgrammable.h</file>
+            <file>file:/home/karsten/anno3112/Server/Commands/CargoCommands/CommandCargoTransfere.cpp</file>
+            <file>file:/home/karsten/anno3112/Server/Sspacebjects/SObj.h</file>
+            <file>file:/home/karsten/anno3112/Server/Sspacebjects/Ordres/SOrderSystemCalls.cpp</file>
             <file>file:/home/karsten/anno3112/Server/Sspacebjects/Ordres/Compiler/CommandCompiler.h</file>
+            <file>file:/home/karsten/anno3112/Server/Commands/CargoCommands/CommandCargoTransMsg.h</file>
+            <file>file:/home/karsten/anno3112/Server/Commands/inputCommands/CommandIChangeSubTG.h</file>
+            <file>file:/home/karsten/anno3112/Server/Sspacebjects/Ordres/SOrdreProgram.h</file>
+            <file>file:/home/karsten/anno3112/Server/Sspacebjects/Ordres/CommandOrderThread.cpp</file>
+            <file>file:/home/karsten/anno3112/Server/SFunctions.cpp</file>
+            <file>file:/home/karsten/anno3112/Server/Commands/CargoCommands/CommandCargoTransMsg.cpp</file>
+            <file>file:/home/karsten/anno3112/Server/NetworkControler.h</file>
+            <file>file:/home/karsten/anno3112/Server/Sspacebjects/Ordres/CommandOrderThread.h</file>
         </group>
     </open-files>
 </project-private>

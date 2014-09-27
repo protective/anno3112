@@ -1,12 +1,15 @@
 
 #include "SOrdersSystemCalls.h"
 #include "../../Commands/Processor.h"
+#include "../../Commands/Query/CommandQuery.h"
+#include "../../Commands/CargoCommands/CommandCargoTransfere.h"
 #include "CommandOrderThread.h"
 #include "../SUnit.h"
+#include "../SProgrammable.h"
 #include "../../World/SWorld.h"
 
 
-void systemSetSubsystemFlags(Processor* processor, Command* thread,  OBJID obj, void* arg){
+void systemSetSubsystemFlags(Processor* processor, Command* thread,  SProgrammable* obj, void* arg){
 
 	cerr<<"arg"<<endl;
 	for(int i = 0; i< 5; i++){
@@ -17,11 +20,8 @@ void systemSetSubsystemFlags(Processor* processor, Command* thread,  OBJID obj, 
 	uint32_t _subId = ((uint32_t*)arg)[1];
 	uint32_t _statusField = ((uint32_t*)arg)[2];
 	cerr<<"execute CommandISubStatusField"<<endl;
-	if(processor->getLocalProcssables().find(obj) == processor->getLocalProcssables().end()){
-		cerr<<"CommandTargetPosUpdate target unit not on processor"<<endl;
-		return;
-	}
-	SUnit* unit = processor->getLocalProcssables()[obj]->isUnit();
+
+	SUnit* unit = obj->isUnit();
 
 	if (!unit)
 		return ;
@@ -52,13 +52,57 @@ void systemSetSubsystemFlags(Processor* processor, Command* thread,  OBJID obj, 
 }
 
 
-void systemSleep(Processor* processor, Command* thread,  OBJID obj, void* arg){
+void systemSleep(Processor* processor, Command* thread,  SProgrammable* obj, void* arg){
 
-	cerr<<"arg"<<endl;
-	for(int i = 0; i< 5; i++){
+	
+	cerr<<"systemSleep arg"<<endl;
+	for(int i = 0; i< 2; i++){
 		cerr<<((uint32_t*)arg)[i]<<" ";
 	}
 	cerr<<endl;
 	cerr<<"systemSleep t="<<((uint32_t*)arg)[1]<<endl;
+	
 	thread->setTime(world->getTime() + ((uint32_t*)arg)[1]);
+	obj->yeld();
+}
+
+
+void qureyItems(Processor* processor, Command* thread,  SProgrammable* obj, void* arg){
+
+	
+	cerr<<"qureyItems arg"<<endl;
+	for(int i = 0; i< 5; i++){
+		cerr<<((uint32_t*)arg)[i]<<" ";
+	}
+	cerr<<endl;
+	uint32_t attri = (((uint32_t*)arg)[1]) | (1<<31);
+	uint32_t conditionattri = ((uint32_t*)arg)[2] ;
+	uint32_t op = ((uint32_t*)arg)[3];
+	uint32_t value = ((uint32_t*)arg)[4];
+	qureyOrderBy order(1, attri);
+	list<qureyCondition> conditions;
+	
+	qureyCondition q((qureyOperator::Enum)op, conditionattri, value);
+	conditions.push_back(q);
+	
+	CommandQuery* cmd = new CommandQuery(obj->getId(),order,conditions,1);
+	processor->addCommand(cmd);
+}
+
+
+void transfereItems(Processor* processor, Command* thread,  SProgrammable* obj, void* arg){
+
+	
+	cerr<<"transfereItems arg"<<endl;
+	for(int i = 0; i< 4; i++){
+		cerr<<((uint32_t*)arg)[i]<<" ";
+	}
+	cerr<<endl;
+	uint32_t from = ((uint32_t*)arg)[1];
+	uint32_t itemid = ((uint32_t*)arg)[2];
+	uint32_t quan = ((uint32_t*)arg)[3];
+
+	CommandCargoTransfere* cmd = new CommandCargoTransfere(from,obj->getId(),itemid,quan);
+	if(networkControl->addCommandToProcesable(cmd,from))
+		delete cmd;
 }

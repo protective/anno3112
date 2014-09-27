@@ -80,7 +80,8 @@ void SUnit::proces(uint32_t delta, Processor* processor){
 		this->addEnergy(_recharge/5);
 	}
 	if (_targetUpdateCounter % 25 == 0){
-		setProgram(_processor->getPrograms()["test"]);
+		if(_id == 2)
+			setProgram(_processor->getPrograms()["test"]);
 		updateTargetList(_processor);
 		this->updateAutoMove();
 		sendPosUpdate(SubscriptionLevel::lowFreq);

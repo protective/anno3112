@@ -12,11 +12,7 @@
 #include "SOrdreProgram.h"
 
 #include "SOrdersSystemCalls.h"
-namespace registerFlags{
-	enum Enum{
-		Yeld = 0x00000001
-	};
-}
+
 class CommandOrderThread : public Command {
 public:
 	CommandOrderThread(OBJID obj);

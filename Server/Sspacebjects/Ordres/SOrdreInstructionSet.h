@@ -23,8 +23,10 @@ namespace inst{
 		popN        = 0x00070000, //i
 		call        = 0x00400000, 
 		ret         = 0x00410000,
-		pushPC      = 0x00420000, 
-		popPC       = 0x00430000,
+		popPC       = 0x00420000,
+		pushPC      = 0x00430000, 
+		pushRPC     = 0x00440000, 
+		
 		cmpS0S1     = 0x000A0000,
 		cmpS0R      = 0x000B0000,
 		cmpS0A      = 0x000C0000,		

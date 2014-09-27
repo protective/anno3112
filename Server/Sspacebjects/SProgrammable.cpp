@@ -6,11 +6,6 @@
 #include "Ordres/SOrdersSystemCalls.h"
 #include "../World/SWorld.h"
 
-namespace registerFlags{
-	enum Enum{
-		Yeld = 0x00000001
-	};
-}
 
 SProgrammable::SProgrammable(OBJID obj){
 	_registerFlags = 0;
@@ -21,19 +16,25 @@ SProgrammable::SProgrammable(OBJID obj){
 	_programCounter = 0;
 	_stackTop = 0;
 	_stack = (uint32_t*)malloc(sizeof(uint32_t)* 100);
+	memset(_stack,0,sizeof(uint32_t)* 100);
 	_stackMax = 100;
 }
 
 void SProgrammable::interrupt(uint32_t programId, uint32_t handlerId, uint32_t* payload, uint32_t payloadLen){
+	if(!_program)
+		return;
 	if(_program->getInterruptHandlers().find(handlerId) == _program->getInterruptHandlers().end()){
 		cerr<<"SProgrammable::interrupt ERROR handler not found "<<endl;
 		return;
-	}	
-	memcpy(_stack + _stackTop+1, payload, payloadLen);
-	_stackTop+= payloadLen;
-
+	}
+	//cerr<<"INTERRUPT "<<endl;
 	_stackTop +=1;
 	_stack[_stackTop] = _programCounter;
+	
+	memcpy(_stack + _stackTop+1, payload, payloadLen);
+	_stackTop+= payloadLen / sizeof(uint32_t);
+
+
 	_programCounter = _program->getInterruptHandlers()[handlerId];
 }
 
@@ -47,13 +48,13 @@ uint32_t SProgrammable::segfault(){
 
 void SProgrammable::dumpStack(){
 	for(int i = 0; i <= _stackTop ; i++){
-		cerr<<_stack[i]<<endl;;
+		cerr<<_stack[i]<<" ";
 	}
-	cerr<<"stack end"<<endl;
+	cerr<<endl<<endl;
 }
 
 uint32_t SProgrammable::execute(Command* cmd){
-	cerr<<"execure CommandOrderThread"<<endl;
+	//cerr<<"execure CommandOrderThread"<<endl;
 	_mipsCredit = 10;
 
 	
@@ -62,13 +63,14 @@ uint32_t SProgrammable::execute(Command* cmd){
 		_mipsCredit--;
 		if((_registerFlags & registerFlags::Yeld) > 0){
 			_registerFlags &= ~registerFlags::Yeld;
-			cerr<<"yeld"<<endl;
+			//cerr<<"yeld"<<endl;
 			return COMMAND_REPEAT;
 		}
-		
+		if(_programCounter > _program->program().size())
+			return segfault();
 		uint32_t ins = _program->program()[_programCounter];
-		cerr<<"exe line "<<std::hex<<_programCounter<<std::dec<<" stack top "<<_stackTop<<endl;
-		dumpStack();
+		//cerr<<"exe line "<<std::hex<<_programCounter<<std::dec<<" stack top "<<_stackTop<<endl;
+		//dumpStack();
 		switch(OPCODE(ins)){
 			case inst::pushN_1:{
 				for(int i = 0 ; i < ARG(ins);i++){
@@ -83,7 +85,6 @@ uint32_t SProgrammable::execute(Command* cmd){
 				if(_program->program()[_programCounter+1] >= _program->program().size())
 					return segfault();
 				_programCounter = _program->program()[_programCounter+1];
-				cerr<<"program counter ="<<_programCounter<<endl;
 				break;
 			}
 			case inst::pushPC:{
@@ -92,6 +93,14 @@ uint32_t SProgrammable::execute(Command* cmd){
 				_stack[_stackTop] = _programCounter + 3; //skip next jump
 	
 				_programCounter += 1;
+				break;
+			}
+			case inst::pushRPC:{
+				if(_stackTop++ >= _stackMax)
+					return segfault();			
+				_stack[_stackTop] = _program->program()[_programCounter+1]; 
+	
+				_programCounter += 2;
 				break;
 			}
 			case inst::popPC:{
@@ -126,7 +135,7 @@ uint32_t SProgrammable::execute(Command* cmd){
 			}
 			case inst::sysCall:{
 				uint32_t stackArg = _program->program()[_programCounter+1];
-				GlobalSystemCallLib[ARG(ins)]._systemCallFunc(cmd->getProcessor(),cmd,_obj,(void*)(&_stack[_stackTop - stackArg + 1]));
+				GlobalSystemCallLib[ARG(ins)]._systemCallFunc(cmd->getProcessor(),cmd,this,(void*)(&_stack[_stackTop - stackArg +1]));
 				_programCounter += 2;
 				break;
 			}

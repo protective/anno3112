@@ -7,6 +7,7 @@
 
 #include "CommandCompiler.h"
 #include <fstream>
+#include <vector>
 #include "../Generated/Lexer.h"
 #include "../Generated/Parser.h"
 #include "../Nodes/SOrderNode.h"
@@ -46,10 +47,11 @@ uint32_t CommandCompiler::execute(){
 	dot.finalise();
 
 	_scopeRef.push_back(1);
-
 	result->accept(this);
 	_step = Step::main;
-	_lables[emitCall()] = "main";
+	emitPushStack(0xAAAA,1);
+	emitPushPC();
+	emitCall("main");
 	emitEOP();	
 	result->accept(this);
 	this->finalize();
@@ -85,8 +87,10 @@ void CommandCompiler::visit(SOrderNodeIfStmt* node){
      * 
      *   eval E
      *   conjump <h>
+	 *	 pop E
      *   jump <g>
      *-h
+	 *	 pop E
      *   ifblock   
      *   pop
      *-g 
@@ -101,28 +105,29 @@ void CommandCompiler::visit(SOrderNodeIfStmt* node){
      *   pop
      *-g
      */
-    
+    _scopeRef.push_back(0);
     if(node->condition()){
         node->condition()->accept(this);
     }
+	_scopeRef.pop_back();
     uint32_t h = emitCondJumpToRef();
-  
+	emitPopStackIgnore(1);
     if(node->elseBlock()){
-        _scopeRef.push_back(_scopeRef.back());
+        _scopeRef.push_back(0);
         node->elseBlock()->accept(this);
-        uint32_t oldRef = _scopeRef.back();
+		emitPopStack(_scopeRef.back());
         _scopeRef.pop_back();
-        emitPopStack(oldRef - _scopeRef.back());
+        
 
     }
     uint32_t g = emitJumpToRef();
     program().at(h) = program().size();
+	emitPopStackIgnore(1);
     if(node->ifBlock()){
-       _scopeRef.push_back(_scopeRef.back());
+        _scopeRef.push_back(0);
 		node->ifBlock()->accept(this);
-       uint32_t oldRef = _scopeRef.back();
-	   _scopeRef.pop_back();
-       emitPopStack(oldRef - _scopeRef.back());
+		emitPopStack(_scopeRef.back());
+        _scopeRef.pop_back();
 
     }
 	program().at(g) = program().size();
@@ -136,15 +141,18 @@ void CommandCompiler::visit(SOrderNodeWhileStmt* node){
    /*
      *   jump <g>
      *-h
+	 *   pop E
      *   block   
      *   pop
      *-g 
      *   eval E
      *   conjump <h>
+	 *	 pop E
      */
     
 	uint32_t g = emitJumpToRef();
 	uint32_t h = program().size();
+	emitPopStackIgnore(1);
 	if(node->body()){
 		_scopeRef.push_back(_scopeRef.back());
 		 node->body()->accept(this);
@@ -153,11 +161,13 @@ void CommandCompiler::visit(SOrderNodeWhileStmt* node){
 		emitPopStack(oldRef - _scopeRef.back());	
     }
 	program().at(g) = program().size();
+	_scopeRef.push_back(0);
 	if(node->condition()){
         node->condition()->accept(this);
     }
+	_scopeRef.pop_back();
     emitCondJumpToRef(h);
-  	
+	emitPopStackIgnore(1);
 	if(node->next()){
 		node->next()->accept(this);
 	}
@@ -174,17 +184,18 @@ void CommandCompiler::visit(NodeMethod* node){
 		
 		for(int i = 0 ; GlobalSystemCallBackLib[i]._id; i++){
 			if (GlobalSystemCallBackLib[i]._name == node->variable()->name()){
+				cerr<<"found interrupt handler"<<endl;
 				_interruptHandlers[GlobalSystemCallBackLib[i]._id] = program().size();
 			}
 		}
 		if(node->block()){
-			cerr<<"method visit block"<<endl;
-		   _scopeRef.push_back(_scopeRef.back());
+			_scopeRef.push_back(0);
+			if(node->param())
+				node->param()->accept(this);
 			node->block()->accept(this);
-		   uint32_t oldRef = _scopeRef.back();
-		   _scopeRef.pop_back();
-		   emitPopStack(oldRef - _scopeRef.back());
-		   emitReturn();
+			emitPopStack(_scopeRef.back());
+			_scopeRef.pop_back();
+			emitReturn();
 		}
 	}
 	if(node->next())
@@ -220,6 +231,15 @@ void CommandCompiler::visit(SOrderNodeVardeclStmt* node){
     vTableEntry v(node->variable()->name(),_scopeRef.back(), true);
     _vtable.push_back(v);
     if(node->next())
+        node->next()->accept(this);
+}
+
+void CommandCompiler::visit(NodeParam* node){
+	_scopeRef.back()+=1;
+	vTableEntry v(node->id()->name(),_scopeRef.back(), true);
+    _vtable.push_back(v);
+	cerr<<"paramnode "<<node->id()->name() <<" ref "<< _scopeRef.back()<<endl;
+	if(node->next())
         node->next()->accept(this);
 }
 
@@ -309,32 +329,34 @@ void CommandCompiler::visit(SOrderNodeCallExpr* node){
     }
 
 	if(ve->systemCall){
-		emitPushStack(0xEEEE,1);
 		uint32_t s = _scopeRef.back();
-		
+		emitPushStack(0xEEEE,1);
+		uint32_t oldref = _scopeRef.back();
 		_scopeRef.push_back(_scopeRef.back());
-		uint32_t oldRef = _scopeRef.back();
 		node->args()->accept(this);
 		emitSysCall(s, ve->pos);
-
-		emitPopStack(_scopeRef.back() -oldRef);
+		
+		emitPopStack(_scopeRef.back() - oldref);
 		_scopeRef.pop_back();
+		
 	}else{
-		//cerr<<"hest BIGGG"<<endl;
-		emitPushStack(0xFFFF,1);
-		uint32_t s = _scopeRef.back();
+		emitPushStack(0x00FF,1);
+		uint32_t h = emitPushRPC();
 		
 		_scopeRef.push_back(_scopeRef.back());
-		uint32_t oldRef = _scopeRef.back();
 		if(node->args())
 			node->args()->accept(this);
-		_lables[emitCall()] = ve->name;
-		emitPopStack(_scopeRef.back() -oldRef);
 		_scopeRef.pop_back();
+		emitCall(ve->name);
+		program().at(h) = program().size();
+		//emitPopStack(_scopeRef.back());
+		
 	}
 		
 	
 }
+
+
 
 CommandCompiler::~CommandCompiler() {
 }

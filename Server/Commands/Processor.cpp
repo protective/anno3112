@@ -16,6 +16,7 @@
 #include "CommandProcesMetas.h"
 #include "../Sspacebjects/Ordres/Compiler/CommandCompiler.h"
 #include "../Sspacebjects/Ordres/CommandOrderThread.h"
+#include "CommandQueryCmp.h"
 #include <sys/time.h>
 Processor::Processor() {
 	
@@ -177,11 +178,11 @@ SShip* Processor::createShip(SPos& pos, SShipType& stype, uint32_t playerId){
 	CommandProcessor* proces = new CommandProcessor(ship,1000/FRAMERATE,0);
 	
 	CommandOrderThread* t = new CommandOrderThread(ship->getId());
-	
 
 	list<Command*> cmdlist;
 	cmdlist.push_back(proces);
 	cmdlist.push_back(t);
+
 	CommandAdd* add = new CommandAdd(world->getTime(), ship, cmdlist);
 	this->addCommand(add);
 	return ship;

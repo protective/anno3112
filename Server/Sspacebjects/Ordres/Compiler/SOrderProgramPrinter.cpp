@@ -146,6 +146,14 @@ void printProgram(ofstream& out, PROGRAM& p){
                 name = "pushPC";
                 break;
             }
+ 			case inst::pushRPC:
+            {
+                name = "pushRPC";
+				noParams = 1;
+                param[0] = "Line";
+				lineAddr[0] = true;
+                break;
+            }
  			case inst::popPC:
             {
                 name = "popPC";

@@ -11,7 +11,8 @@
 #include "../../SFunctions.h"
 
 class CommandOrderThread;
-typedef void (*systemCallFunc)(Processor*,Command*, OBJID obj, void*);
+class SProgrammable;
+typedef void (*systemCallFunc)(Processor*,Command*, SProgrammable* obj, void*);
 
 typedef struct systemCallBack_table{
 	uint32_t _id;
@@ -23,20 +24,25 @@ typedef struct systemCallFunc_table{
 	string _name;
 }systemCallFunc_t;
 
-void systemSetSubsystemFlags(Processor*, Command*, OBJID obj, void* arg);
-void systemSleep(Processor*, Command*, OBJID obj, void* arg);
+void systemSetSubsystemFlags(Processor*, Command*, SProgrammable* obj, void* arg);
+void systemSleep(Processor*, Command*, SProgrammable* obj, void* arg);
+void qureyItems(Processor*, Command*, SProgrammable* obj, void* arg);
+void transfereItems(Processor*, Command*, SProgrammable* obj, void* arg);
 
 
 static const systemCallFunc_t GlobalSystemCallLib[] =
 {
 {systemSetSubsystemFlags,"systemSetFlags"},
-{systemSleep,"wait"},
+{systemSleep,"wait"}, //int ms
+{qureyItems,"queryItems"}, //int itemid
+{transfereItems,"transfereItems"}, //int from, int itemid, int quan
 {(systemCallFunc)NULL, "null"}
 };
 
 static const systemCallBack_t GlobalSystemCallBackLib[] =
 {
 {1,"queryComplete"},
+{2,"queryItemsComplete"},
 {0, "null"}
 };
 #endif	/* SORDERSSYSTEMCALLS_H */

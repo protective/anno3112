@@ -19,6 +19,7 @@ public:
 	uint32_t TransfereCargo(SCargoBay* bay,SItemType* item, uint32_t quan);
 	uint32_t TransfereCargo(SCargoBay* bay,SItemType* item);
 	uint32_t GetReturn(SItemType* item, uint32_t quan);
+	uint32_t GetById(uint32_t id);
 	uint32_t GetAddReturn(SItemType* item, uint32_t quan);
 	uint32_t RemoveReturn(SItemType* item, uint32_t quan);
 	uint32_t AddReturn(SItemType* item, uint32_t quan);

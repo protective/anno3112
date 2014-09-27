@@ -38,6 +38,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/2098112761/GFunctions.o \
 	${OBJECTDIR}/_ext/2098112761/GGlobals.o \
 	${OBJECTDIR}/Client.o \
+	${OBJECTDIR}/Commands/CargoCommands/CommandCargoTransMsg.o \
+	${OBJECTDIR}/Commands/CargoCommands/CommandCargoTransfere.o \
 	${OBJECTDIR}/Commands/Command.o \
 	${OBJECTDIR}/Commands/CommandAdd.o \
 	${OBJECTDIR}/Commands/CommandAddSubscriptions.o \
@@ -58,6 +60,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/Commands/CommandUpdateMetas.o \
 	${OBJECTDIR}/Commands/Processable.o \
 	${OBJECTDIR}/Commands/Processor.o \
+	${OBJECTDIR}/Commands/Query/CommandQuery.o \
+	${OBJECTDIR}/Commands/Query/CommandQueryRsp.o \
 	${OBJECTDIR}/Commands/inputCommands/CommandIChangeOrders.o \
 	${OBJECTDIR}/Commands/inputCommands/CommandIChangeSubTG.o \
 	${OBJECTDIR}/Commands/inputCommands/CommandIFit.o \
@@ -177,6 +181,16 @@ ${OBJECTDIR}/Client.o: Client.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Client.o Client.cpp
 
+${OBJECTDIR}/Commands/CargoCommands/CommandCargoTransMsg.o: Commands/CargoCommands/CommandCargoTransMsg.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Commands/CargoCommands
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Commands/CargoCommands/CommandCargoTransMsg.o Commands/CargoCommands/CommandCargoTransMsg.cpp
+
+${OBJECTDIR}/Commands/CargoCommands/CommandCargoTransfere.o: Commands/CargoCommands/CommandCargoTransfere.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Commands/CargoCommands
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Commands/CargoCommands/CommandCargoTransfere.o Commands/CargoCommands/CommandCargoTransfere.cpp
+
 ${OBJECTDIR}/Commands/Command.o: Commands/Command.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Commands
 	${RM} "$@.d"
@@ -276,6 +290,16 @@ ${OBJECTDIR}/Commands/Processor.o: Commands/Processor.cpp
 	${MKDIR} -p ${OBJECTDIR}/Commands
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Commands/Processor.o Commands/Processor.cpp
+
+${OBJECTDIR}/Commands/Query/CommandQuery.o: Commands/Query/CommandQuery.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Commands/Query
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Commands/Query/CommandQuery.o Commands/Query/CommandQuery.cpp
+
+${OBJECTDIR}/Commands/Query/CommandQueryRsp.o: Commands/Query/CommandQueryRsp.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Commands/Query
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Commands/Query/CommandQueryRsp.o Commands/Query/CommandQueryRsp.cpp
 
 ${OBJECTDIR}/Commands/inputCommands/CommandIChangeOrders.o: Commands/inputCommands/CommandIChangeOrders.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Commands/inputCommands

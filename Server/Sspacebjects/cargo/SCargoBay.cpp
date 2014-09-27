@@ -39,7 +39,10 @@ uint32_t SCargoBay::AddReturn(SItemType* item, uint32_t quan){
 		this->_owner->obj()->isShip()->getOrdres()->proces(OrdreEvent::CargoChange,this->_owner->obj());
 	return quan;
 }
-
+uint32_t SCargoBay::GetById(uint32_t id){
+	if(itemlist.find(id) != itemlist.end())
+		return _content[itemlist[id]];
+}
 
 uint32_t SCargoBay::GetAddReturn(SItemType* item, uint32_t quan){
 	if (!item)

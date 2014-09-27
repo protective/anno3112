@@ -14,6 +14,12 @@
                    displayName="Source Files"
                    projectFiles="true">
       <logicalFolder name="f7" displayName="Commands" projectFiles="true">
+        <logicalFolder name="f2" displayName="CargoCommands" projectFiles="true">
+          <itemPath>Commands/CargoCommands/CommandCargoTransMsg.cpp</itemPath>
+          <itemPath>Commands/CargoCommands/CommandCargoTransMsg.h</itemPath>
+          <itemPath>Commands/CargoCommands/CommandCargoTransfere.cpp</itemPath>
+          <itemPath>Commands/CargoCommands/CommandCargoTransfere.h</itemPath>
+        </logicalFolder>
         <logicalFolder name="f1" displayName="InputCommands" projectFiles="true">
           <itemPath>Commands/inputCommands/CommandIChangeOrders.cpp</itemPath>
           <itemPath>Commands/inputCommands/CommandIChangeOrders.h</itemPath>
@@ -25,6 +31,13 @@
           <itemPath>Commands/inputCommands/CommandISubStatusField.h</itemPath>
           <itemPath>Commands/inputCommands/CommandIUnfit.cpp</itemPath>
           <itemPath>Commands/inputCommands/CommandIUnfit.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="f3" displayName="Query" projectFiles="true">
+          <itemPath>Commands/Query/CommandQuery.cpp</itemPath>
+          <itemPath>Commands/Query/CommandQuery.h</itemPath>
+          <itemPath>Commands/Query/CommandQueryRsp.cpp</itemPath>
+          <itemPath>Commands/Query/CommandQueryRsp.h</itemPath>
+          <itemPath>Commands/Query/CommandQueryTable.h</itemPath>
         </logicalFolder>
         <itemPath>Commands/Command.cpp</itemPath>
         <itemPath>Commands/Command.h</itemPath>
@@ -339,6 +352,26 @@
       </item>
       <item path="Client.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Commands/CargoCommands/CommandCargoTransMsg.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Commands/CargoCommands/CommandCargoTransMsg.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Commands/CargoCommands/CommandCargoTransfere.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Commands/CargoCommands/CommandCargoTransfere.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="Commands/Command.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Commands/Command.h" ex="false" tool="3" flavor2="0">
@@ -436,6 +469,16 @@
       <item path="Commands/Processor.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Commands/Processor.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/Query/CommandQuery.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Commands/Query/CommandQuery.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/Query/CommandQueryRsp.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Commands/Query/CommandQueryRsp.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/Query/CommandQueryTable.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Commands/inputCommands/CommandIChangeOrders.cpp"
             ex="false"
@@ -1258,6 +1301,26 @@
       </item>
       <item path="Client.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Commands/CargoCommands/CommandCargoTransMsg.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Commands/CargoCommands/CommandCargoTransMsg.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Commands/CargoCommands/CommandCargoTransfere.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Commands/CargoCommands/CommandCargoTransfere.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="Commands/Command.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Commands/Command.h" ex="false" tool="3" flavor2="0">
@@ -1355,6 +1418,16 @@
       <item path="Commands/Processor.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Commands/Processor.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/Query/CommandQuery.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Commands/Query/CommandQuery.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/Query/CommandQueryRsp.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Commands/Query/CommandQueryRsp.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Commands/Query/CommandQueryTable.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Commands/inputCommands/CommandIChangeOrders.cpp"
             ex="false"

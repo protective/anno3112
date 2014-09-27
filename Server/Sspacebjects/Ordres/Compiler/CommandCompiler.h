@@ -82,7 +82,7 @@ public:
 	virtual void visit(TypeDenoter* node){}
 	virtual void visit(NodeTop* node){}
 	virtual void visit(NodeVardecTop* node);
-	virtual void visit(NodeParam* node){}
+	virtual void visit(NodeParam* node);
 	virtual void visit(NodeMethod* node);
 	void finalize();
 	virtual ~CommandCompiler();
@@ -104,12 +104,16 @@ private:
 	map<uint32_t, string> _lables;
 	map<uint32_t, uint32_t> _interruptHandlers;
 	void emitPopStack(uint32_t size);
+	void emitPopStackIgnore(uint32_t size);
+
 	void emitPushStack(uint32_t value, uint32_t size);
 	void emitPopTopStackToLoc(uint32_t pos, uint32_t size);
 	void emitTopStackToLoc(uint32_t pos, bool rel, uint32_t size);
 	void emitPushLocToTopStack(uint32_t pos, uint32_t size, bool rel);
 	void emitPushTopStackNtimesToStack(uint32_t size);
-	uint32_t emitCall();
+	void emitCall(string name);
+	void emitPushPC();
+	uint32_t emitPushRPC();
 	void emitNOP();
 	void emitEOP();
 	void emitReturn();

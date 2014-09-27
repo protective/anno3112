@@ -20,6 +20,8 @@
 #include "Commands/CommandClientSubscription.h"
 #include "Commands/inputCommands/CommandIChangeOrders.h"
 #include "Commands/inputCommands/CommandIChangeSubTG.h"
+#include "Commands/CommandTransfere.h"
+#include "Commands/CargoCommands/CommandCargoTransfere.h"
 void sendtoC(Client* cli, char* buffer, uint32_t len){
 	pthread_mutex_lock(&cli->networkSendLock);
 		if (cli->networkSendLockBool)
@@ -256,6 +258,11 @@ uint32_t parseBuffer(Client* client, uint32_t len){
 				}
 				case SerialType::SerialReqTransfereCargo:{
 					SerialReqTransfereCargo* st = (SerialReqTransfereCargo*)(buffer+offset);
+					
+					CommandCargoTransfere* t =  new CommandCargoTransfere(st->_FromId, st->_ToId, st->_itemid, st->_quantity);
+					if(networkControl->addCommandToProcesable(t,st->_FromId))
+						delete t;
+					/*
 					SObjI fromit = world->getObjs().find(st->_FromId);
 					SObjI toit = world->getObjs().find(st->_ToId);
 					map<uint32_t,SItemType*>::iterator it3 = itemlist.find(st->_itemid);
@@ -273,6 +280,7 @@ uint32_t parseBuffer(Client* client, uint32_t len){
 						break;
 
 					fromit->second->getsubable()->getCargoBay()->TransfereCargo(toit->second->getsubable()->getCargoBay(),it3->second,st->_quantity);
+					*/
 					break;
 				}
 				case SerialType::SerialReqChangeSubTG:{

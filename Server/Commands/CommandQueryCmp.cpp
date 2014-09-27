@@ -13,7 +13,7 @@
 CommandQueryCmp::CommandQueryCmp(OBJID programmable) :
 Command(0) {
 	_procesable = programmable;
-	_payload = (uint32_t*)malloc(sizeof(uint32_t)*4);
+	_payload = (uint32_t*)malloc(sizeof(uint32_t)*2);
 	_callbackHandler = 1;
 	_callbackProgramID = 1;
 }
@@ -27,7 +27,7 @@ uint32_t CommandQueryCmp::execute() {
 	
 	if(temp->isProgrammable())
 	{
-		temp->isProgrammable()->interrupt(_callbackProgramID,_callbackHandler,_payload, sizeof(uint32_t)*4);
+		temp->isProgrammable()->interrupt(_callbackProgramID,_callbackHandler,_payload, sizeof(uint32_t)*2);
 	}
 	_time = world->getTime() + myrandom(1500,6000);
 	return COMMAND_REPEAT;
