@@ -15,8 +15,12 @@
                    projectFiles="true">
       <logicalFolder name="f7" displayName="Commands" projectFiles="true">
         <logicalFolder name="f2" displayName="CargoCommands" projectFiles="true">
-          <itemPath>Commands/CargoCommands/CommandCargoTransMsg.cpp</itemPath>
-          <itemPath>Commands/CargoCommands/CommandCargoTransMsg.h</itemPath>
+          <itemPath>Commands/CargoCommands/CommandCargoAdd.cpp</itemPath>
+          <itemPath>Commands/CargoCommands/CommandCargoAdd.h</itemPath>
+          <itemPath>Commands/CargoCommands/CommandCargoTransOnReciver.cpp</itemPath>
+          <itemPath>Commands/CargoCommands/CommandCargoTransOnReciver.h</itemPath>
+          <itemPath>Commands/CargoCommands/CommandCargoTransOnSender.cpp</itemPath>
+          <itemPath>Commands/CargoCommands/CommandCargoTransOnSender.h</itemPath>
           <itemPath>Commands/CargoCommands/CommandCargoTransfere.cpp</itemPath>
           <itemPath>Commands/CargoCommands/CommandCargoTransfere.h</itemPath>
         </logicalFolder>
@@ -352,12 +356,32 @@
       </item>
       <item path="Client.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Commands/CargoCommands/CommandCargoTransMsg.cpp"
+      <item path="Commands/CargoCommands/CommandCargoAdd.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="Commands/CargoCommands/CommandCargoTransMsg.h"
+      <item path="Commands/CargoCommands/CommandCargoAdd.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Commands/CargoCommands/CommandCargoTransOnReciver.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Commands/CargoCommands/CommandCargoTransOnReciver.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Commands/CargoCommands/CommandCargoTransOnSender.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Commands/CargoCommands/CommandCargoTransOnSender.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1301,12 +1325,32 @@
       </item>
       <item path="Client.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Commands/CargoCommands/CommandCargoTransMsg.cpp"
+      <item path="Commands/CargoCommands/CommandCargoAdd.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="Commands/CargoCommands/CommandCargoTransMsg.h"
+      <item path="Commands/CargoCommands/CommandCargoAdd.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Commands/CargoCommands/CommandCargoTransOnReciver.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Commands/CargoCommands/CommandCargoTransOnReciver.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Commands/CargoCommands/CommandCargoTransOnSender.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Commands/CargoCommands/CommandCargoTransOnSender.h"
             ex="false"
             tool="3"
             flavor2="0">

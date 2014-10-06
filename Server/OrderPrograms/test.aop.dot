@@ -76,7 +76,7 @@ n34 [label="Id: wait"] ;
 n31 -- n35 ;
 n35 [label="ArgNode"] ;
 n35 -- n36 ;
-n36 [label="Int: 10000"] ;
+n36 [label="Int: 1000"] ;
 n4 -- n37 ;
 n37 [label="Id: queryItemsComplete"] ;
 n4 -- n38 ;

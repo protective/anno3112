@@ -28,6 +28,7 @@ class SAstoroidBelt : public  SObj , public Processable{
 public:
 	SAstoroidBelt(uint32_t id, SPos& pos);
 	virtual uint32_t getId(){return _id;}
+	virtual SPos& getPos(){return _pos;}
 	virtual SObj* isObj(){return this;}
 	virtual void proces(uint32_t delta, Processor* processor );
 	virtual SGrid* getGrid(){return _pos.grid;}

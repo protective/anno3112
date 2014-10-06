@@ -30,8 +30,9 @@ void SSubAble::updateTargetList(Processor* processor){
 	//TODO fix
 	
 	map<uint32_t,SMetaObj*>& targets = processor->getLocalMetas();
+	
+	
 	for(map<uint32_t,SMetaObj*>::iterator it = targets.begin(); it!= targets.end();it++){
-		//if ((it->second->isAstoroid())||(it->second->getTeam() != _obj->getTeam() && it->second->getVisibleTo().find(_obj->getTeam()) != it->second->getVisibleTo().end() && it->second->getVisibleTo()[_obj->getTeam()] == Visibility::Visible)){
 		if ((it->second->isAstoroid())||(it->second->getTeam() != _obj->getTeam())){
 			if(it->second->isTargetable()){
 				if (find(_lockedTargets.begin(),_lockedTargets.end(), it->first) == _lockedTargets.end()){
@@ -93,12 +94,8 @@ void SSubAble::updateTargetsPrio(Processor* processor){
 			break;
 	}
 	for(SSlotNodeI it = slots.begin(); it != slots.end();it++){
-
-		
 		if(!it->second->getSS())
 			continue;
-		
-		
 		SSubSystemTargetingI* subsys = it->second->getSS()->isWeapon();
 		if(!subsys)
 			 subsys = it->second->getSS()->isFighter();

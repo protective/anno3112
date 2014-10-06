@@ -8,6 +8,9 @@
 #include "SAstoroid.h"
 #include "SShot.h"
 #include "../World/SGrid.h"
+#include "../Commands/CommandEnterGrid.h"
+#include "../Commands/CommandExitGrid.h"
+#include "../Commands/CargoCommands/CommandCargoAdd.h"
 #include "../NetworkLayer/SAsteroidNetworkLayer.h"
 
 SAstoroid::SAstoroid(uint32_t id, SPos& pos, SAstoroidType& atype, SAstoroidBelt* belt):
@@ -18,24 +21,27 @@ SObj(id, pos,0,0),STargetable(this), Processable(){
 	this->_type = &atype;
 	this->_size = atype.getSize()* 100;
 	this->_belt = belt;
+	
+	this->addCommand(new CommandEnterGrid(0,pos.grid->getId(),id));
+
 }
 
-void SAstoroid::Hit(SShot* shot, uint32_t dmg, DmgTypes::Enum dmgtype, Shields::Enum impact, int32_t x, int32_t y){
-	pthread_mutex_lock(&this->lockUnit);
-	if (shot->getDmgTypes() == DmgTypes::Mining && shot->getOwner()){
-		if (shot->getOwner()->getCargoBay()){
-			
-			dmg = dmg / this->getAstoroidType()->getItemType()->getMass();
-			dmg = dmg/1000;
-			if (dmg > this->_quan){
-				dmg = this->_quan;
-			}
-			this->_quan -= shot->getOwner()->getCargoBay()->AddReturn(this->getAstoroidType()->getItemType(),dmg);
+
+void SAstoroid::hit(uint32_t shot, OBJID owner, uint32_t dmg, DmgTypes::Enum dmgtype, Shields::Enum impact, int32_t x, int32_t y){
+	if (dmgtype== DmgTypes::Mining && owner){
+
+		dmg = dmg / this->getAstoroidType()->getItemType()->getMass();
+		dmg = dmg/1000;
+		if (dmg > this->_quan){
+			dmg = this->_quan;
 		}
-		//TODO fix report hit
-		//this->_pos.grid->ReportHit(this,shot,ParticalTex::eks1,x,y);
+
+		this->_quan -= dmg;
+		CommandCargoAdd* cmd = new CommandCargoAdd(owner,this->getAstoroidType()->getItemTypeId(), dmg);
+		if (networkControl->addCommandToProcesable(cmd,owner))
+			delete cmd;
+		sendTargetHit(SubscriptionLevel::lowFreq, shot, ParticalTex::eks1, x, y);
 	}
-	pthread_mutex_unlock(&this->lockUnit);
 }
 
 bool SAstoroid::canBeRemoved(){
@@ -51,6 +57,18 @@ void SAstoroid::announceRemovalOf(SObj* obj){
 
 void SAstoroid::sendDepleted(SubscriptionLevel::Enum level){
 	SendAstoroidDestroyd(_subscriptions[level], this, DestroyMode::Depleted);
+}
+
+void SAstoroid::subscribeClient(uint32_t clientId, SubscriptionLevel::Enum level){
+	if(this->isAstoroid())
+		this->isAstoroid()->sendFull(clientId);
+	_subscriptions[level].push_back(clientId);
+}
+
+void SAstoroid::sendFull(uint32_t client){
+	list<uint32_t> temp;
+	temp.push_back(client);
+	SendAstoroidFull(temp,this);
 }
 
 void SAstoroid::sendFull(SubscriptionLevel::Enum level){

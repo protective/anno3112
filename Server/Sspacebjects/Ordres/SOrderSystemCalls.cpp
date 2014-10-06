@@ -54,14 +54,14 @@ void systemSetSubsystemFlags(Processor* processor, Command* thread,  SProgrammab
 
 void systemSleep(Processor* processor, Command* thread,  SProgrammable* obj, void* arg){
 
-	
+	/*
 	cerr<<"systemSleep arg"<<endl;
 	for(int i = 0; i< 2; i++){
 		cerr<<((uint32_t*)arg)[i]<<" ";
 	}
 	cerr<<endl;
 	cerr<<"systemSleep t="<<((uint32_t*)arg)[1]<<endl;
-	
+	*/
 	thread->setTime(world->getTime() + ((uint32_t*)arg)[1]);
 	obj->yeld();
 }
@@ -69,12 +69,13 @@ void systemSleep(Processor* processor, Command* thread,  SProgrammable* obj, voi
 
 void qureyItems(Processor* processor, Command* thread,  SProgrammable* obj, void* arg){
 
-	
+	/*
 	cerr<<"qureyItems arg"<<endl;
 	for(int i = 0; i< 5; i++){
 		cerr<<((uint32_t*)arg)[i]<<" ";
 	}
 	cerr<<endl;
+	 * */
 	uint32_t attri = (((uint32_t*)arg)[1]) | (1<<31);
 	uint32_t conditionattri = ((uint32_t*)arg)[2] ;
 	uint32_t op = ((uint32_t*)arg)[3];
@@ -92,12 +93,13 @@ void qureyItems(Processor* processor, Command* thread,  SProgrammable* obj, void
 
 void transfereItems(Processor* processor, Command* thread,  SProgrammable* obj, void* arg){
 
-	
+	/*
 	cerr<<"transfereItems arg"<<endl;
 	for(int i = 0; i< 4; i++){
 		cerr<<((uint32_t*)arg)[i]<<" ";
 	}
 	cerr<<endl;
+	*/
 	uint32_t from = ((uint32_t*)arg)[1];
 	uint32_t itemid = ((uint32_t*)arg)[2];
 	uint32_t quan = ((uint32_t*)arg)[3];

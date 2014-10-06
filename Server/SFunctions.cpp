@@ -22,6 +22,7 @@
 #include "Commands/inputCommands/CommandIChangeSubTG.h"
 #include "Commands/CommandTransfere.h"
 #include "Commands/CargoCommands/CommandCargoTransfere.h"
+
 void sendtoC(Client* cli, char* buffer, uint32_t len){
 	pthread_mutex_lock(&cli->networkSendLock);
 		if (cli->networkSendLockBool)

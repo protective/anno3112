@@ -78,7 +78,7 @@ uint32_t NetworkControler::sendToC(uint32_t id, void* block, uint32_t len){
 		send(it->second->getSocket(),block, len,MSG_NOSIGNAL);
 		sendt = true;
 	}else
-		cerr<<"ERROR CLIENT NOT FOUND"<<endl;
+		cerr<<"ERROR CLIENT NOT FOUND id="<<id<<endl;
 	pthread_mutex_unlock(&_clientLock);
 	if(sendt)
 		return 0;

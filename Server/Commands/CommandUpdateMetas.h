@@ -11,7 +11,12 @@
 #include "../Sspacebjects/SPos.h"
 
 struct MetaInit{
-	MetaInit(){}
+	MetaInit(){
+		vecX = 0;
+		vecY = 0;
+		vecZ = 0;
+
+	}
 
 	uint32_t id;
 	uint8_t team;
@@ -49,7 +54,11 @@ struct MetaRemove{
 };
 
 struct MetaLow{
-	MetaLow(){}
+	MetaLow(){
+		vecX = 0;
+		vecY = 0;
+		vecZ = 0;
+	}
 
 	uint32_t id;
 	SPos pos;

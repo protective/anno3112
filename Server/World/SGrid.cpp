@@ -163,13 +163,11 @@ void SGrid::Subscribe(Client* cli)
 
 //command call thread safe
 void SGrid::subscribeClient(uint32_t clientId, SubscriptionLevel::Enum level){
-	cerr<<"grid subscribe cli="<<clientId<<endl;
 	_clientSubscriptions[clientId] = level;
 	sendGridFull(clientId, this);
 	
 	for(map<uint32_t, uint32_t>::iterator it = objInGrid.begin(); it != objInGrid.end(); it++){
 		if (it->second){
-			
 			CommandClientSubscription* temp = new CommandClientSubscription(0,clientId, it->second, SubscriptionLevel::lowFreq);
 			if(networkControl->addCommandToProcesable(temp,it->second)){
 				cerr<<"SGrid::subscribeClient warning processer not found"<<endl;

@@ -57,7 +57,7 @@ uint32_t CommandTimedSubscribeUpdate::execute(){
 					MetaInit temp;
 					SObj* obj = NULL;
 					if(_processor->_localObjects.find(*it2) != _processor->_localObjects.end()){
-						if(_processor->_localObjects[*it2]->isUnit() || _processor->_localObjects[*it2]->isShot())
+						if(_processor->_localObjects[*it2]->isUnit() || _processor->_localObjects[*it2]->isAstoroid() || _processor->_localObjects[*it2]->isShot())
 							obj = _processor->_localObjects[*it2]->isObj();
 						
 					}
@@ -69,6 +69,8 @@ uint32_t CommandTimedSubscribeUpdate::execute(){
 							temp.type =  SpaceTypes::Fighter;
 							cerr<<"FIGHTER"<<endl;
 						}
+						if(obj->isAstoroid())
+							temp.type =  SpaceTypes::Astoroid;
 						if(obj->isShot())
 							temp.type =  SpaceTypes::Shot;
 						if(obj->isAstoroid())

@@ -216,7 +216,7 @@ void SShot::Hit(uint32_t target, Shields::Enum shield, int32_t x, int32_t y){
 	if(_resolution > tarRes){
 		mod =  (double)tarRes / _resolution;
 	}
-	CommandHit* cmd = new CommandHit(target, this->getId(), mod * myrandom(_dmgMin, _dmgMax), _dmgType, shield, x, y);;
+	CommandHit* cmd = new CommandHit(target, this->getId(), this->getOwner()->obj()->getId(), mod * myrandom(_dmgMin, _dmgMax), _dmgType, shield, x, y);;
 	if(networkControl->addCommandToProcesable(cmd, this->getId()))
 		delete cmd;
 	//obj->Hit(this, );

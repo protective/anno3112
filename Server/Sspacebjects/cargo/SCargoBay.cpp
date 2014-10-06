@@ -10,11 +10,16 @@
 #include "../SSubAble.h"
 #include "../../World/SGrid.h"
 #include "../SShip.h"
+#include "../../Commands/CargoCommands/CommandCargoTransfere.h"
+#include "../../Commands/CargoCommands/CommandCargoTransOnReciver.h"
 #include "../../NetworkLayer/SCargoBayNetworkLayer.h"
 SCargoBay::SCargoBay(SSubAble* owner, uint32_t maxCargo) {
 	this->_owner = owner;
 	this->_maxCargo = maxCargo;
 	this->_curCargo = 0;
+	this->_procesTimer = 0;
+	this->_outgoingCredit = 0;
+	this->_incommingCredit = 0;
 }
 
 uint32_t SCargoBay::AddReturn(SItemType* item, uint32_t quan){
@@ -39,7 +44,7 @@ uint32_t SCargoBay::AddReturn(SItemType* item, uint32_t quan){
 		this->_owner->obj()->isShip()->getOrdres()->proces(OrdreEvent::CargoChange,this->_owner->obj());
 	return quan;
 }
-uint32_t SCargoBay::GetById(uint32_t id){
+uint32_t SCargoBay::GetCur(uint32_t id){
 	if(itemlist.find(id) != itemlist.end())
 		return _content[itemlist[id]];
 }
@@ -107,9 +112,83 @@ void SCargoBay::sendCargoUpdate(SubscriptionLevel::Enum level, SItemType* item, 
 }
 
 void SCargoBay::sendCargoBay(list<uint32_t>& clients){
-	cerr<<"send cargoBay"<<endl;
 	SendCargoUpdate(clients, this);
 }
+
+uint32_t SCargoBay::sendItem(uint32_t toShip, uint32_t item, uint32_t quan) {
+	
+}
+ 
+void SCargoBay::proces(uint32_t deltaT){
+	_procesTimer += deltaT;
+
+	if(_procesTimer > 1000){
+		_procesTimer -= 1000;
+		_outgoingCredit = 150;
+		_incommingCredit = 150;
+		//addIncommingCredit(10);
+		//addOutgoingCredit(10);
+		for(map<uint32_t, transfereOperation>::iterator it =  _transferes.begin(); it != _transferes.end(); ){
+			
+
+			if(it->second._remaning > 0 && _outgoingCredit > 0){
+				SItemType* item = itemlist[it->second._itemId];
+				
+				
+				if(GetCur(it->second._itemId) < it->second._remaning)
+					it->second._remaning = GetCur(it->second._itemId);
+				
+				uint32_t remaning = it->second._remaning;
+				uint32_t count = 0;
+				cerr<<"out credit="<<_outgoingCredit<< "mass ="<<item->getMass()<<endl;
+				
+				uint32_t mass = max((uint32_t)1, item->getMass());
+				if(_outgoingCredit >= mass * remaning){
+					count = remaning;
+					_outgoingCredit -= mass * remaning;
+				}else if(_outgoingCredit >= mass){
+					count =  _outgoingCredit / mass;
+					_outgoingCredit -= (mass * count);
+				}
+				if(count){
+					it->second._remaning -= count;
+					RemoveReturn(item, count);
+					CommandCargoTransOnReciver* cmd;
+					cmd = new CommandCargoTransOnReciver(it->second._id, _owner->obj()->getId(), it->second._toId, it->second._itemId, count);
+
+					if (networkControl->addCommandToProcesable(cmd,it->second._toId))
+						delete cmd;
+				}	
+			}
+			
+			if(it->second._remaning == 0)
+				_transferes.erase(it++);
+			else
+				it++;
+			
+		}
+		
+	}
+	
+}
+
+void SCargoBay::addTransfere(uint32_t toShipId, uint32_t itemType, uint32_t quan){
+	
+	
+	transfereOperation t;
+	int i = 0;
+	while( _transferes.find(i) != _transferes.end()){
+		i++;
+	}
+
+	cerr<<"add transfere id ="<<i<<endl;
+	t._id = i;
+	t._itemId = itemType;
+	t._remaning = quan;
+	t._toId = toShipId;
+	_transferes[i] = t;
+}
+
 
 SCargoBay::~SCargoBay() {
 }

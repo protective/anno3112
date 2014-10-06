@@ -38,7 +38,9 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/2098112761/GFunctions.o \
 	${OBJECTDIR}/_ext/2098112761/GGlobals.o \
 	${OBJECTDIR}/Client.o \
-	${OBJECTDIR}/Commands/CargoCommands/CommandCargoTransMsg.o \
+	${OBJECTDIR}/Commands/CargoCommands/CommandCargoAdd.o \
+	${OBJECTDIR}/Commands/CargoCommands/CommandCargoTransOnReciver.o \
+	${OBJECTDIR}/Commands/CargoCommands/CommandCargoTransOnSender.o \
 	${OBJECTDIR}/Commands/CargoCommands/CommandCargoTransfere.o \
 	${OBJECTDIR}/Commands/Command.o \
 	${OBJECTDIR}/Commands/CommandAdd.o \
@@ -181,10 +183,20 @@ ${OBJECTDIR}/Client.o: Client.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Client.o Client.cpp
 
-${OBJECTDIR}/Commands/CargoCommands/CommandCargoTransMsg.o: Commands/CargoCommands/CommandCargoTransMsg.cpp 
+${OBJECTDIR}/Commands/CargoCommands/CommandCargoAdd.o: Commands/CargoCommands/CommandCargoAdd.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Commands/CargoCommands
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Commands/CargoCommands/CommandCargoTransMsg.o Commands/CargoCommands/CommandCargoTransMsg.cpp
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Commands/CargoCommands/CommandCargoAdd.o Commands/CargoCommands/CommandCargoAdd.cpp
+
+${OBJECTDIR}/Commands/CargoCommands/CommandCargoTransOnReciver.o: Commands/CargoCommands/CommandCargoTransOnReciver.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Commands/CargoCommands
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Commands/CargoCommands/CommandCargoTransOnReciver.o Commands/CargoCommands/CommandCargoTransOnReciver.cpp
+
+${OBJECTDIR}/Commands/CargoCommands/CommandCargoTransOnSender.o: Commands/CargoCommands/CommandCargoTransOnSender.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Commands/CargoCommands
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Commands/CargoCommands/CommandCargoTransOnSender.o Commands/CargoCommands/CommandCargoTransOnSender.cpp
 
 ${OBJECTDIR}/Commands/CargoCommands/CommandCargoTransfere.o: Commands/CargoCommands/CommandCargoTransfere.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Commands/CargoCommands

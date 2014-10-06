@@ -8,6 +8,8 @@
 #ifndef SASTOROIDTYPE_H
 #define	SASTOROIDTYPE_H
 #include "../SFunctions.h"
+#include "../SItems/SItemType.h"
+
 class SAstoroidType {
 public:
 	SAstoroidType(uint32_t id);
@@ -30,14 +32,13 @@ public:
 	void setMinQuan(uint32_t quan){this->_minQuan = quan;}
 	void setMaxQuan(uint32_t quan){this->_maxQuan = quan;}
 
-	uint32_t getItemTypeId(){return this->_itemTypeId;}
-	void setItemTypeId(uint32_t id){this->_itemTypeId = id;}
+	uint32_t getItemTypeId(){return this->_itemType->getTypeID();}
+	//void setItemTypeId(uint32_t id){this->_itemTypeId = id;}
 
 	virtual ~SAstoroidType();
 private:
 	uint32_t _id;
 	SItemType* _itemType;
-	uint32_t _itemTypeId;
 	uint32_t _size;
 	string _name;
 	uint32_t _texture;

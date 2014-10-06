@@ -35,7 +35,7 @@ line	opcode			arg
 0X0020	0X06 (pushN_1)	0X01
 0X0021		  	(value)        0X0000EEEE
 0X0022	0X06 (pushN_1)	0X01
-0X0023		  	(value)        0X00002710
+0X0023		  	(value)        0X000003E8
 0X0024	0XF0 (sysCall)	0X01
 0X0025		  	(Stack)        0X00000002
 0X0026	0X07 (popN)	0X01

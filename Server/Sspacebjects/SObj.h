@@ -24,7 +24,7 @@ class SObj {
 public:
 	SObj(uint32_t id, SPos& pos, uint8_t team, uint32_t playerId);
 	virtual uint32_t getId() = 0;
-	SPos& getPos();
+	virtual SPos& getPos() = 0;
 	SPos& getOldPos();
 	uint32_t getSize(){return _size;}
 	virtual uint32_t getTargetSize(){return _size;}

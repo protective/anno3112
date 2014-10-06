@@ -7,6 +7,8 @@
 
 #include "SAstoroidBelt.h"
 #include "../World/SWorld.h"
+#include "../NetworkLayer/SAsteroidNetworkLayer.h"
+
 SAstoroidBelt::SAstoroidBelt(uint32_t id, SPos& pos) :
 SObj(id, pos,0,0), Processable(){
 	_size = 1000;

@@ -14,7 +14,10 @@ class STargetable {
 public:
 	STargetable(SObj* obj);
 	SObj* obj(){return this->_obj;}
-	virtual void hit(uint32_t shot, uint32_t dmg, DmgTypes::Enum dmgtype, Shields::Enum impact, int32_t x, int32_t y){}
+	virtual SPos& getPos() = 0;
+	virtual uint32_t getTargetSize() = 0;
+	virtual uint8_t getTeam() = 0;
+	virtual void hit(uint32_t shot, OBJID owner, uint32_t dmg, DmgTypes::Enum dmgtype, Shields::Enum impact, int32_t x, int32_t y){cerr<<"hit targetable ??"<<endl;}
 	virtual TargetType::Enum getTargetType(){return TargetType::Invalid;}
 	virtual void sendTargetHit(SubscriptionLevel::Enum level, uint32_t shot, ParticalTex::Enum tex, int32_t x, int32_t y);
 	virtual map<uint32_t,int8_t>& getprio(){return this->_prio;}

@@ -41,19 +41,18 @@ bool CommandQuery::checkCondition(qureyCondition condition, SObj* obj){
 }
 
 uint32_t CommandQuery::getValue(uint32_t attri, SObj* obj){
-	cerr<<"getvalue "<<attri<<endl;
 	if(attri & (1<<31)){
 		//We are dealing with an item
 		if(obj->getsubable()){
 			uint32_t iType = attri & 0x7FFFFFFF;
-			return obj->getsubable()->getCargoBay()->GetById(iType);
+			return obj->getsubable()->getCargoBay()->GetCur(iType);
 		}
 	}
 	return 0;
 }
 
 uint32_t CommandQuery::execute(){
-	cerr<<"execure CommandQuery"<<endl;
+	//cerr<<"execure CommandQuery"<<endl;
 	list<pair<SObj*, uint32_t> > _results;
 	bool sat;
 	for(map<uint32_t, Processable*>::iterator it = _processor->getLocalProcssables().begin() ; it!= _processor->getLocalProcssables().end(); it++){
@@ -69,7 +68,7 @@ uint32_t CommandQuery::execute(){
 		if(!sat)
 			continue;
 		uint32_t oValue = getValue(_orderby._attri, it->second->isObj());
-		cerr<<"oattri "<<_orderby._attri<<endl;
+		//cerr<<"oattri "<<_orderby._attri<<endl;
 		list<pair<SObj*, uint32_t> >::iterator  it2;
 		for(it2 = _results.begin(); it2 != _results.end(); it2++){
 			if (oValue > it2->second){

@@ -7,7 +7,7 @@ int queryItemsComplete(int pobjId, int pitemId, int pvalue){
 };
 
 int main(){
-	wait(10000);
+	wait(1000);
 	while 1{
 		
 		queryItems(24, 1, 5, 2);

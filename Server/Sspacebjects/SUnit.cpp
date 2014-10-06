@@ -52,6 +52,8 @@ void SUnit::subscribeClient(uint32_t clientId, SubscriptionLevel::Enum level){
 
 void SUnit::proces(uint32_t delta, Processor* processor){
 	postProces(delta);
+	if(_cargoBay)
+		_cargoBay->proces(delta);
 	
 	if(_lastCombat < 1000000)
 		_lastCombat++;
@@ -559,7 +561,7 @@ uint32_t SUnit::RemoveSub(uint32_t slot, uint32_t Xitem){
 	return 0;
 }
 
-void SUnit::hit(uint32_t shot, uint32_t dmg, DmgTypes::Enum dmgtype, Shields::Enum impact, int32_t x, int32_t y){
+void SUnit::hit(uint32_t shot, OBJID owner, uint32_t dmg, DmgTypes::Enum dmgtype, Shields::Enum impact, int32_t x, int32_t y){
 	pthread_mutex_lock(&this->lockUnit);
 	_lastCombat = 0;
 	ParticalTex::Enum tex = ParticalTex::eks1;

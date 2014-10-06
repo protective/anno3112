@@ -23,6 +23,7 @@ public:
 	friend CommandInitShot;
 	SShot(uint32_t id, SPos& pos, SSubAble* owner, uint32_t target, SSubTypeWep* type, Processor* creator);
 	virtual uint32_t getId(){return _id;}
+	virtual SPos& getPos(){return _pos;}
 	virtual void proces(uint32_t delta, Processor* processor);
 	virtual void subscribeClient(uint32_t clientId, SubscriptionLevel::Enum level);
 	void Move(uint32_t deltaT);
@@ -35,6 +36,8 @@ public:
 	virtual bool canBeRemoved();
 	virtual SMovable* isMovable(){return this;}
 	virtual void setTargetPos(SPos& pos);
+	virtual uint32_t getTargetSize(){return _size;}
+	virtual uint8_t getTeam(){return _team;}
 	virtual SSubAble* getOwner(){return this->_owner;}
 	virtual uint32_t getTexId(){return this->_texId;}
 	virtual uint32_t getFlightTime(){return this->_flightTime;}

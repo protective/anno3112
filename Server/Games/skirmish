@@ -3,12 +3,11 @@
 {map}
 grid testgrid 800 300
 
-
+belt 80 30 100 VeldSparRoid:4:6000 NephriteRoid:2:7500
 
 {playerUnits}
 
+Unit 1 Station1 47 30 1:FacShip1:1 2:Refinery1:4 3:FacWep1:1 4:FacModule1:1
 
-Unit 1 BC1 61 30 1:Laser1:4 2:Laser1:4
-Unit 1 BC1 61 60 cargo:Tritanium:540 1:Laser1:4 2:Laser1:4
-Unit 1 BC1 61 80 cargo:Tritanium:560 1:Laser1:4 2:Laser1:4
-Unit 1 BC1 61 90 cargo:Tritanium:545 1:Laser1:4 2:Laser1:4
+Unit 1 Freighter1 61 30 1:Minglaz1:2
+

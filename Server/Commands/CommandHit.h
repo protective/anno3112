@@ -13,12 +13,13 @@
 
 class CommandHit : public Command{
 public:
-	CommandHit(uint32_t target, uint32_t shot, uint32_t dmg, DmgTypes::Enum dmgType, Shields::Enum impact, int32_t x, int32_t y);
+	CommandHit(uint32_t target, uint32_t shot, OBJID owner, uint32_t dmg, DmgTypes::Enum dmgType, Shields::Enum impact, int32_t x, int32_t y);
 	virtual uint32_t execute();
 	virtual ~CommandHit();
 protected:
 	uint32_t _target;
 	uint32_t _shot;
+	OBJID _owner;
 	uint32_t _dmg;
 	DmgTypes::Enum _dmgType;
 	Shields::Enum _impact;

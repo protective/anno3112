@@ -31,6 +31,7 @@ class SUnit : public SObj , public SMovable , public STargetable, public SSubAbl
 public:
 	SUnit(uint32_t id, SPos& pos, SUnitType& stype, uint32_t playerId);
 	virtual uint32_t getId(){return _id;}
+	virtual SPos& getPos(){return _pos;}
 	uint32_t FitAddSub(SItemType* type, uint32_t slot, uint32_t Xitem, SCargoBay* cargobay);
 	uint32_t AddSub(SItemType* type, uint32_t slot, uint32_t Xitem);
 	uint32_t FitRemoveSub(uint32_t slot, uint32_t Xitem, SCargoBay* cargobay);
@@ -45,7 +46,8 @@ public:
 	virtual void setTargetPos(int32_t x, int32_t y);
 	virtual void setTargetPos(int32_t x, int32_t y, int32_t d);
 	virtual SUnitType* getUnitType(){return NULL;}
-	
+	virtual uint32_t getTargetSize(){return _size;}
+	virtual uint8_t getTeam(){return _team;}
 	virtual SMovable* isMovable(){return this;}
 	virtual SObj* isObj(){return this;}
 	virtual SSubAble* getsubable(){return (SSubAble*)this;};
@@ -59,7 +61,7 @@ public:
 	void setOrdres(SOrdres* ordres){this->_order = ordres;}
 	virtual TargetType::Enum getTargetType(){return TargetType::Invalid;}
 
-	virtual void hit(uint32_t shot,uint32_t dmg, DmgTypes::Enum dmgtype, Shields::Enum impact, int32_t x, int32_t y);
+	virtual void hit(uint32_t shot, OBJID owner, uint32_t dmg, DmgTypes::Enum dmgtype, Shields::Enum impact, int32_t x, int32_t y);
 	int32_t getShield(uint16_t index){return _shield[index];}
 	int32_t getDeflector(){return _deflector;}
 	int32_t getArmor(){return _armor;}

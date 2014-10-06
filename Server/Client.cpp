@@ -63,7 +63,7 @@ void Client::initTransfere(){
 	cerr<<"send shiptypes"<<endl;
 	this->sendUnitTypes();
 	cerr<<"send astoroidstype"<<endl;
-	//this->sendAstoroidTypes();
+	this->sendAstoroidTypes();
 	cerr<<"send orders"<<endl;
 	//this->sendOrdres();
 	cerr<<"send loadouts"<<endl;
@@ -73,9 +73,7 @@ void Client::initTransfere(){
 		for(map<uint32_t,SGrid*>::iterator it = world->getGrids().begin(); it != world->getGrids().end();it++){
 			CommandClientSubscription* cmd= new CommandClientSubscription(0,this->getId(),it->second->getId(),SubscriptionLevel::lowFreq);
 			it->second->addCommand(cmd); //TODO FIX This
-		
 		}
-		
 	}
 	cerr<<"data sendt"<<endl;
 }

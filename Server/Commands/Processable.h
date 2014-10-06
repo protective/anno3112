@@ -18,8 +18,10 @@ class Processor;
 class SUnit;
 class SShip;
 class SFighter;
+class SAstoroid;
 class SShot;
 class STargetable;
+class SSubAble;
 class SProgrammable;
 class Processable {
 public:
@@ -30,9 +32,11 @@ public:
 	void setProcessor(Processor* processor){_processor = processor;}
 	virtual bool isMetable(){return false;}
 	virtual SUnit* isUnit(){return NULL;}
+	virtual SAstoroid* isAstoroid(){return NULL;}
 	virtual SShip* isShip(){return NULL;}
 	virtual SFighter* isFighter(){return NULL;}
 	virtual SObj* isObj(){return NULL;}
+	virtual SSubAble* getsubable(){return NULL;}
 	virtual SGrid* getGrid() = 0;
 	virtual SShot* isShot(){return NULL;}
 	virtual STargetable* isTargetable(){return NULL;}

@@ -8,10 +8,11 @@
 #include "CommandHit.h"
 #include "Processor.h"
 #include "../Sspacebjects/STargetable.h"
-CommandHit::CommandHit(uint32_t target, uint32_t shot, uint32_t dmg, DmgTypes::Enum dmgType, Shields::Enum impact, int32_t x, int32_t y) :
+CommandHit::CommandHit(uint32_t target, uint32_t shot, OBJID owner, uint32_t dmg, DmgTypes::Enum dmgType, Shields::Enum impact, int32_t x, int32_t y) :
 Command(0){
 	_target = target;
 	_shot = shot;
+	_owner = owner;
 	_dmg = dmg;
 	_dmgType = dmgType;
 	_impact = impact;
@@ -20,11 +21,10 @@ Command(0){
 }
 
 uint32_t CommandHit::execute(){
-	//cerr<<"execute commandHit"<<endl;
 	Processable* temp = _processor->getLocalProcssable(_target);
 	if (!temp || !temp->isTargetable())
 		return COMMAND_FINAL;
-	temp->isTargetable()->hit(_shot, _dmg, _dmgType, _impact, _x, _y);
+	temp->isTargetable()->hit(_shot, _owner, _dmg, _dmgType, _impact, _x, _y);
 	return COMMAND_FINAL;
 }
 

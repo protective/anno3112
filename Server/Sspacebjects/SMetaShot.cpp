@@ -20,26 +20,21 @@ void SMetaShot::checkCollisions(Processor* processor){
 	//	return;
 	SPos temppos;
 	temppos = this->getRPos();
-	
 	for(map<uint32_t, Processable*>::iterator it = processor->getLocalProcssables().begin(); it != processor->getLocalProcssables().end(); it++){
-		SUnit* oobj = it->second->isUnit();
+		STargetable* oobj = it->second->isTargetable();
 		if(!oobj || oobj->getTeam() == this->getTeam()){
 			continue;
 		}
-		
 		int32_t negsize = 0-oobj->getTargetSize();
 		int32_t possize = oobj->getTargetSize();
 		if(temppos.z > (negsize)/2 && temppos.z < possize/2){
 			double a = 100 * Rangeobj(temppos, oobj->getPos());
-			
 			if(oobj->getTargetType()==TargetType::Invalid){
 				continue;
 			}
-			
 			if(a >= oobj->getTargetSize()/2){
 				continue;
 			}
-			
 			double movementX = this->vecX; //(VektorUnitX(this->pos.d/100) * this->getSpeed());
 			double movementY = this->vecY; // (-(VektorUnitY(this->pos.d/100) * this->getSpeed()));
 			int32_t x1 = temppos.x - oobj->getPos().x;
