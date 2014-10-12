@@ -27,7 +27,7 @@ Processor::Processor() {
 	pthread_mutex_init(&_lockCommands, NULL);
 	addCommand(new CommandTimedSubscribeUpdate(SubscriptionLevel::lowFreq));
 	addCommand(new CommandProcesMetas());
-	addCommand(new CommandCompiler("/home/karsten/anno3112/Server/OrderPrograms/test.aop"));
+	addCommand(new CommandCompiler("mining"));
 
 	_workReady = false;
 	_freeIdCount = 1;
@@ -229,6 +229,19 @@ SGrid* Processor::createGrid(){
 	this->addCommand(add);
 	return grid;
 }
+
+SOrdreProgram* Processor::getProgram(string name){
+	if(_programs.find(name) == _programs.end()){
+		_programs[name] = NULL;
+		CommandCompiler* cmd = new CommandCompiler(name);
+		addCommand(cmd);
+		return NULL;
+	}
+	else
+	{
+		return _programs[name];
+	}
+}	
 
 Processor::~Processor() {
 }

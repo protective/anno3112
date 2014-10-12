@@ -53,6 +53,10 @@ public:
 	uint32_t getAutoMoveRange(){return this->_automoveRange;}
 	void setAutoMoveRange(uint32_t value){this->_automoveRange = value;}
 	string getName(){return this->_name;}
+	
+	string getProgram(){return _program;}
+	void setProgram(string program){_program = program;}
+	
 private:
 	string _name;
 	uint32_t _id;
@@ -63,6 +67,7 @@ private:
 	list<TargetType::Enum> _special;
 	OrdresTactice::Enum _primeOrdre;
 	list<SOrdreRule*> _rules;
+	string _program;
 	map<uint32_t,bool> _unitSet;
 	map<uint32_t,bool> _PosSet;
 

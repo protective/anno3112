@@ -16,6 +16,7 @@
 #include "../Commands/CommandExitGrid.h"
 #include "../Commands/CommandHit.h"
 #include "SMetaObj.h"
+#include "Ordres/SOrdreProgram.h"
 
 SUnit::SUnit(uint32_t id, SPos& pos, SUnitType& stype, uint32_t playerId):
 SObj(id, pos,teamlist[playerId],playerId),SSubAble(this,stype.getEnergy(),stype.getRecharge(),stype.getScanRange(),stype.getScanPRange(),stype.getCargo()),STargetable(this),SMovable(this, stype.getTopSpeed(), stype.getAgility()), Processable() , SProgrammable(id) {
@@ -40,9 +41,15 @@ SObj(id, pos,teamlist[playerId],playerId),SSubAble(this,stype.getEnergy(),stype.
 	this->_maxhull = stype.getHull()*1000;
 	this->_armor = stype.getArmor()*1000;
 	this->_hull = stype.getHull()*1000;
-	this->_order = globalOrders[playerId][0];
+	setOrdres(globalOrders[playerId][0]);
 	_lastCombat = 0;
 }
+
+void SUnit::setOrdres(SOrdres* ordres){
+	_order = ordres;
+
+}
+
 void SUnit::subscribeClient(uint32_t clientId, SubscriptionLevel::Enum level){
 	cerr<<"subscribe unit clid ="<<clientId<<endl;
 	if(this->isShip())
@@ -73,6 +80,14 @@ void SUnit::proces(uint32_t delta, Processor* processor){
 		}
 		if(_targetUpdateCounter % 25 == 0){
 			_order->proces(OrdreEvent::Tick25,this);
+			
+			if (this->getProgram() == NULL || _order->getProgram() != this->getProgram()->name())
+				this->setProgram(NULL);
+			if(!getProgram()
+				&& processor->getPrograms()[_order->getProgram()])
+			{
+				loadProgram(processor->getPrograms()[_order->getProgram()]);
+			}
 		}
 	}
 	_targetUpdateCounter++;

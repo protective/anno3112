@@ -41,6 +41,19 @@ void SAstoroid::hit(uint32_t shot, OBJID owner, uint32_t dmg, DmgTypes::Enum dmg
 		if (networkControl->addCommandToProcesable(cmd,owner))
 			delete cmd;
 		sendTargetHit(SubscriptionLevel::lowFreq, shot, ParticalTex::eks1, x, y);
+	
+		if(this->_quan == 0){
+		
+			sendDepleted(SubscriptionLevel::lowFreq);
+
+			this->addCommand(new CommandExitGrid(0,this->_pos.grid->getId(),_id));
+			this->_pos.grid = NULL;
+			this->addCommand(new CommandRemove(0,this));
+
+		
+		}
+		
+		
 	}
 }
 

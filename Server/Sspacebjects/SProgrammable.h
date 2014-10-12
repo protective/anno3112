@@ -20,6 +20,7 @@ class SOrdreProgram;
 class SProgrammable  {
 public:
 	SProgrammable(OBJID obj);
+	
 	virtual uint32_t execute(Command* cmd);
 	virtual uint32_t getId() = 0;
 	virtual SUnit* isUnit() = 0;
@@ -28,6 +29,10 @@ public:
 	void dumpStack();
 	virtual void interrupt(uint32_t programId, uint32_t handlerId, uint32_t* payload, uint32_t payloadLen);
 	void yeld(){_registerFlags |= registerFlags::Yeld;}
+protected:
+	SOrdreProgram* getProgram(){return _program;}
+
+	void loadProgram(SOrdreProgram* program);
 private:
 	uint32_t _registerFlags;
 	uint32_t _mipsCredit;

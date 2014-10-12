@@ -170,6 +170,7 @@ int main(int argc, char** argv) {
 	globalOrders[2][tempo->getId()] = tempo;
 	globalOrders[3][tempo->getId()] = tempo;
 	globalOrders[4][tempo->getId()] = tempo;
+	tempo->setProgram("mining");
 
 	tempo = new SOrdres("Evasive",1);
 
@@ -245,6 +246,10 @@ int main(int argc, char** argv) {
 	globalOrders[3][tempo->getId()] = tempo;
 	globalOrders[4][tempo->getId()] = tempo;
 
+	
+	tempo->setProgram("mining");
+	
+	
 	tempo = new SOrdres("Frontmin",3);
 
 	tempo->getPrimary().push_back(TargetType::All);

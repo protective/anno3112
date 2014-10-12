@@ -15,10 +15,25 @@ SProgrammable::SProgrammable(OBJID obj){
 	_program = NULL;
 	_programCounter = 0;
 	_stackTop = 0;
+	_stack = NULL;
+	_stackMax = 0;
+}
+
+void SProgrammable::loadProgram(SOrdreProgram* program) {
+	_registerFlags = 0;
+	_mipsCredit = 0;
+	_lastExeTime = 0;
+	_obj = this->getId();
+	_program = program;
+	_programCounter = 0;
+	_stackTop = 0;
+	if(_stack)
+		free(_stack);
 	_stack = (uint32_t*)malloc(sizeof(uint32_t)* 100);
 	memset(_stack,0,sizeof(uint32_t)* 100);
 	_stackMax = 100;
 }
+
 
 void SProgrammable::interrupt(uint32_t programId, uint32_t handlerId, uint32_t* payload, uint32_t payloadLen){
 	if(!_program)

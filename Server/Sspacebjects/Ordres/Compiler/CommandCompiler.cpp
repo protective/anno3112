@@ -31,7 +31,10 @@ Command(0){
 
 uint32_t CommandCompiler::execute(){
 	cerr<<"execute Compiler"<<endl;
-	ifstream is(_programPath.c_str());
+	stringstream s;
+	s<<"OrderPrograms/"<<_programPath<<".aop";
+	cerr<<s.str()<<endl;
+	ifstream is(s.str().c_str());
 	Lexer lexer(&is);
 	
 	SOrderNode* result = parse(&lexer);
@@ -39,8 +42,9 @@ uint32_t CommandCompiler::execute(){
 	//TypeChecker typecheck;
 	
 	//result->accept(&typecheck);
-	
-	ofstream dotfile(_programPath.append(".dot").c_str());
+	s.clear();
+	s<<"OrderPrograms/"<<_programPath<<".dot";
+	ofstream dotfile(s.str().c_str());
 	SOrderDotBuilder dot(dotfile);
 	dot.visit(result);
 	result->accept(&dot);
@@ -56,10 +60,12 @@ uint32_t CommandCompiler::execute(){
 	result->accept(this);
 	this->finalize();
 	
-	ofstream asmPrinter(_programPath.append(".asm").c_str());
+	s.clear();
+	s<<"OrderPrograms/"<<_programPath<<".asm";	
+	ofstream asmPrinter(s.str().c_str());
 	printProgram(asmPrinter,_program);
-	SOrdreProgram* p = new SOrdreProgram("test",_program, _interruptHandlers);
-	_processor->getPrograms()["test"] = p;
+	SOrdreProgram* p = new SOrdreProgram(_programPath,_program, _interruptHandlers);
+	_processor->getPrograms()[_programPath] = p;
 	return COMMAND_FINAL;
 }
 vTableEntry* CommandCompiler::vtableFind(string id){

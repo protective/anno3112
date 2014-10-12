@@ -1,0 +1,18 @@
+var int objId = 0;
+var int itemId = 0;
+var int value = 0;
+
+int queryItemsComplete(int pobjId, int pitemId, int pvalue){
+	transfereItems(pobjId, pitemId,50);
+};
+
+int main(){
+	wait(1000);
+	while 1{
+		
+		queryItems(24, 1, 5, 2);
+		wait(8000);
+
+	}
+};
+

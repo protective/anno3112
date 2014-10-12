@@ -58,7 +58,7 @@ public:
 	virtual SProgrammable* isProgrammable(){return this;}
 	virtual bool canBeRemoved();
 	SOrdres* getOrdres(){return this->_order;}
-	void setOrdres(SOrdres* ordres){this->_order = ordres;}
+	void setOrdres(SOrdres* ordres);
 	virtual TargetType::Enum getTargetType(){return TargetType::Invalid;}
 
 	virtual void hit(uint32_t shot, OBJID owner, uint32_t dmg, DmgTypes::Enum dmgtype, Shields::Enum impact, int32_t x, int32_t y);

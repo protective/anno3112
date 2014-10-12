@@ -11,6 +11,7 @@ SOrdres::SOrdres(string name, uint32_t id) {
 	_automoveRange = 0;
 	_name = name;
 	_id = id;
+	_program = "";
 }
 
 SOrdres::~SOrdres() {

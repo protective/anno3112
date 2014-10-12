@@ -43,6 +43,7 @@ public:
 
 	map<uint32_t, SMetaObj*>& getLocalMetas(){return _metaObjs;}
 	map<string,SOrdreProgram*>& getPrograms(){return _programs;}
+	SOrdreProgram* getProgram(string name);
 	SMetaObj* getMeta(uint32_t id){return _metaObjs.find(id) != _metaObjs.end() ? _metaObjs[id] : NULL;}
 	uint32_t getFreeID();
 	SShot* createShot(SPos& pos, SSubAble* owner, uint32_t target, SSubTypeWep* type);
