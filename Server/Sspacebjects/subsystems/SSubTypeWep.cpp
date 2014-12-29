@@ -20,6 +20,7 @@ SSubTypeWep::SSubTypeWep() {
 	this->_amoRechargeRate = 0;
 	this->_texId = 1;
 	this->_speed = 100;
+	this->_hp = 0;
 	this->_maxseq = 50;
 	this->_dmgType = DmgTypes::normal;
 	this->_range = 10;

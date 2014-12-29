@@ -27,7 +27,7 @@ SObj(id, pos,0,0),STargetable(this), Processable(){
 }
 
 
-void SAstoroid::hit(uint32_t shot, OBJID owner, uint32_t dmg, DmgTypes::Enum dmgtype, Shields::Enum impact, int32_t x, int32_t y){
+uint32_t SAstoroid::hit(uint32_t shot, OBJID owner, uint32_t dmg, DmgTypes::Enum dmgtype, Shields::Enum impact, int32_t x, int32_t y){
 	if (dmgtype== DmgTypes::Mining && owner){
 
 		dmg = dmg / this->getAstoroidType()->getItemType()->getMass();
@@ -55,6 +55,7 @@ void SAstoroid::hit(uint32_t shot, OBJID owner, uint32_t dmg, DmgTypes::Enum dmg
 		
 		
 	}
+	return 0;
 }
 
 bool SAstoroid::canBeRemoved(){

@@ -93,13 +93,14 @@ void SUnit::proces(uint32_t delta, Processor* processor){
 	_targetUpdateCounter++;
 	this->addRecoil(getUnitType()->getRecoilRecharge());
 	if (_targetUpdateCounter % 5 == 0){
+		updateTargetList(_processor);
 		this->updateTargetsPrio(_processor);
 		this->addEnergy(_recharge/5);
 	}
 	if (_targetUpdateCounter % 25 == 0){
 		if(_id == 2)
 			setProgram(_processor->getPrograms()["test"]);
-		updateTargetList(_processor);
+		
 		this->updateAutoMove();
 		sendPosUpdate(SubscriptionLevel::lowFreq);
 
@@ -576,7 +577,7 @@ uint32_t SUnit::RemoveSub(uint32_t slot, uint32_t Xitem){
 	return 0;
 }
 
-void SUnit::hit(uint32_t shot, OBJID owner, uint32_t dmg, DmgTypes::Enum dmgtype, Shields::Enum impact, int32_t x, int32_t y){
+uint32_t  SUnit::hit(uint32_t shot, OBJID owner, uint32_t dmg, DmgTypes::Enum dmgtype, Shields::Enum impact, int32_t x, int32_t y){
 	pthread_mutex_lock(&this->lockUnit);
 	_lastCombat = 0;
 	ParticalTex::Enum tex = ParticalTex::eks1;
@@ -728,14 +729,13 @@ void SUnit::hit(uint32_t shot, OBJID owner, uint32_t dmg, DmgTypes::Enum dmgtype
 			}
 		}
 	}
-	
-	//TODO fix report hit
+
 	sendTargetHit(SubscriptionLevel::lowFreq, shot, tex, x, y);
 	sendHpUdate(SubscriptionLevel::lowFreq);
-	//this->_pos.grid->ReportHit(this,shot,tex,x,y);
+
 
 	pthread_mutex_unlock(&this->lockUnit);
-	
+	return 0;
 }
 
 void SUnit::sendHpUdate(SubscriptionLevel::Enum level){

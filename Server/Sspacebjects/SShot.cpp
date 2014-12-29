@@ -20,10 +20,10 @@
 
 
 SShot::SShot(uint32_t id, SPos& pos, SSubAble* owner, uint32_t target, SSubTypeWep* type, Processor* creator):
-SObj(id, pos,owner->obj()->getTeam(),owner->obj()->getPlayerId()), SMovable(this,0,0), Processable()
+SObj(id, pos,owner->obj()->getTeam(),owner->obj()->getPlayerId()), SMovable(this,0,0), STargetable(this), Processable()
 {
 
-	this->_owner = owner;
+	//this->_owner = owner;
 	this->_target = target;
 	this->_texId = type->getTexId();
 	this->_resolution = type->getResolution(owner->getBonusList());
@@ -32,12 +32,15 @@ SObj(id, pos,owner->obj()->getTeam(),owner->obj()->getPlayerId()), SMovable(this
 	_hasHit = false;
 	_dmgMin = type->getDmgMin(owner->getBonusList());
 	_dmgMax = type->getDmgMax(owner->getBonusList());
+	_hp = type->getHp();
 	_speed = type->getSpeed();
 	_dmgType = type->getDmgTypes();
 	_tracking = type->getTracking();
 	_trackingTime = type->getTrackingTime();
 	_flightTime = 0;
 	_maxFlightTime = (((type->getRange()/type->getSpeed()))+1)*4;
+	_size = 2000;
+	
 	SMetaObj* metaTarget;
 	if(metaTarget = creator->getMeta(this->_target)){
 		SPos deltaPos; deltaPos = metaTarget->getRPos();
@@ -50,7 +53,7 @@ SObj(id, pos,owner->obj()->getTeam(),owner->obj()->getPlayerId()), SMovable(this
 		int32_t ry =  m * MySin[theta];
 		uint32_t gamma = myrandom(0,359);
 		int32_t rz = m * MyCos[gamma];
-		int32_t expFlightTime = (((r*100)/type->getSpeed()))+1;
+		int32_t expFlightTime = (((r*100)/type->getSpeed())) - (((r*100)/10000));
 		int32_t preX = deltaPos.x; 
 		int32_t preY = deltaPos.y;
 
@@ -128,99 +131,49 @@ bool SShot::canBeRemoved(){
 		return false;
 }
 
-void SShot::TestHit(){
-	if (_hasHit){
-		return;
-	}
-	
-	for(map<uint32_t, SMetaObj*>::iterator it = _processor->getLocalMetas().begin(); it !=  _processor->getLocalMetas().end(); it++){
-		SMetaObj* oobj = it->second;
+void SShot::useDamage(uint32_t damage){
+	cerr<<"use min="<<_dmgMin<<" damage="<<damage <<endl;
+	if(damage == 0){
+		_hasHit = true;
+	}else if(damage < _dmgMin){
+		_dmgMin -= damage;
+		_dmgMax -= damage;
+	}else{
+		ParticalTex::Enum tex;
+		tex= ParticalTex::Invalid;
+		sendTargetHit(SubscriptionLevel::lowFreq, _id, tex, 0, 0);
 
-		if(oobj->getTeam() == this->getTeam()){
-			continue;
-		}
-		int32_t negsize = 0-oobj->getTargetSize();
-		int32_t possize = oobj->getTargetSize();
-		if(this->_pos.z > (negsize)/2 && this->_pos.z < possize/2){
-			double a = 100 * Rangeobj(this->_pos,*oobj->getPos());
-			if(oobj->getTargetType()==TargetType::Invalid){
-				continue;
-			}
-			if(a >= oobj->getTargetSize()/2){
-				continue;
-			}
-			double movementX = (VektorUnitX(this->_pos.d/100) * this->getSpeed());
-			double movementY = (-(VektorUnitY(this->_pos.d/100) * this->getSpeed()));
-			int32_t x1 = this->_pos.x - oobj->getPos()->x;
-			int32_t y1 = this->_pos.y - oobj->getPos()->y;
-			int32_t x2 = this->_pos.x+movementX - oobj->getPos()->x;
-			int32_t y2 = this->_pos.y+movementY - oobj->getPos()->y;
-
-			int32_t dx = x2 - x1;
-			int32_t dy = y2 - y1;
-			double dr = sqrt((dx*dx)+(dy*dy));
-			double D = x1*y2 - x2*y1;
-			double dis = ((oobj->getTargetSize()/2)*(oobj->getTargetSize()/2))*(dr*dr)-(D*D);
-
-			if(dis >= 0 || _flightTime <= 1){//hit
-				double hitx = ((D *dy -dx * (sqrt(pow((oobj->getTargetSize()/2),2) * pow(dr,2)- pow(D,2))))/ pow(dr,2));
-				double hity = ((-D *dx -dy * (sqrt(pow((oobj->getTargetSize()/2),2) * pow(dr,2)- pow(D,2))))/ pow(dr,2));
-				double H_x = (oobj->getTargetSize()/2);
-				double H_y = 0;
-
-				double P_x = hitx;
-				double P_y = hity;
-
-				double ph = Rangecord(H_x,H_y,P_x,P_y);
-				double ch =(oobj->getTargetSize()/2);
-				double cp = Rangecord(0,0,P_x,P_y);
-				double rad = 0;
-				if (2*cp*ch)
-					rad = acos(((ch*ch)+(cp*cp)-(ph*ph))/(2*cp*ch));
-				double V = (rad/3.14)*180;
-
-				if( P_y > H_y)
-					V = 360 - V;
-
-				double V2 = V - (oobj->getPos()->d/100);
-
-				if(V2 < 0)
-					V2 = V2 + 360;
-
-				int i = 0;
-				if ((V2 >= 0 && V2 <= 30) ||(V2 >= 330 && V2 <= 360)){
-					i = 0;
-				}else if(V2 >= 31 && V2 <= 90){
-					i = 1;
-				}else if(V2 >= 91 && V2 <= 150){
-					i = 4;
-				}else if(V2 >= 151 && V2 <= 209){
-					i = 3;
-				}else if(V2 >= 210 && V2 <= 269){
-					i = 5;
-				}else if(V2 >= 270 && V2 <= 329){
-					i = 2;
-				}
-
-				Hit(it->first, (Shields::Enum)i,0,0);
-			}
-		}	
+		_hasHit = true;
 	}
 }
 
-void SShot::Hit(uint32_t target, Shields::Enum shield, int32_t x, int32_t y){
+void SShot::applyDamage(uint32_t target, Shields::Enum shield, int32_t x, int32_t y){
 	SMetaObj* obj = _processor->getLocalMetas()[target];
-	_hasHit = true;
 	uint32_t tarRes = obj->getTargetSize()/100;
 	double mod = 1;
 	if(_resolution > tarRes){
 		mod =  (double)tarRes / _resolution;
 	}
-	CommandHit* cmd = new CommandHit(target, this->getId(), this->getOwner()->obj()->getId(), mod * myrandom(_dmgMin, _dmgMax), _dmgType, shield, x, y);;
-	if(networkControl->addCommandToProcesable(cmd, this->getId()))
+	CommandHit* cmd = new CommandHit(target, this->getId(), 0, mod * myrandom(_dmgMin, _dmgMax), _dmgType, shield, x, y);
+	if(networkControl->addCommandToProcesable(cmd, target))
 		delete cmd;
 	//obj->Hit(this, );
 }
+
+uint32_t SShot::hit(uint32_t shot, OBJID owner, uint32_t dmg, DmgTypes::Enum dmgtype, Shields::Enum impact, int32_t x, int32_t y) {
+	//TODO fix report hit
+
+	if(dmg > _hp){
+		_hasHit = true;
+		ParticalTex::Enum tex;
+		tex= ParticalTex::eks7l;
+		sendTargetHit(SubscriptionLevel::lowFreq, _id, tex, x, y);
+	}else{
+		_hp -= dmg;
+	}
+	return min(dmg,_hp);
+}
+
 
 
 void SShot::setTargetPos(SPos& pos){

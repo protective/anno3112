@@ -35,6 +35,7 @@ uint32_t CommandTimedSubscribeUpdate::execute(){
 							temp.vecX = obj->isMovable()->getMoveX();
 							temp.vecY = obj->isMovable()->getMoveY();
 							temp.vecZ = obj->isMovable()->getMoveZ();
+						
 						}
 						temp.procesNodeId = _processor->getId();
 						if(obj->isUnit()){

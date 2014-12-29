@@ -11,14 +11,16 @@
 #include "../Command.h"
 class CommandIFit : public Command {
 public:
-	CommandIFit(uint32_t fromId, uint32_t subid, uint32_t toId, uint32_t quantity, uint32_t clientId);
+	CommandIFit(uint32_t fromId, uint32_t subid, uint32_t toId, uint32_t quantity,uint32_t itemid,  uint32_t clientId);
 	virtual uint32_t execute();
 	virtual ~CommandIFit();
 private:
+	uint32_t _step;
 	uint32_t _fromId;
 	uint32_t _subid;
 	uint32_t _toId;
 	uint32_t _quantity;
+	uint32_t _itemId;
 	uint32_t _clientId;
 };
 

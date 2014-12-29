@@ -20,6 +20,8 @@
 #include "Commands/CommandClientSubscription.h"
 #include "Commands/inputCommands/CommandIChangeOrders.h"
 #include "Commands/inputCommands/CommandIChangeSubTG.h"
+#include "Commands/inputCommands/CommandIFit.h"
+#include "Commands/inputCommands/CommandIUnfit.h"
 #include "Commands/CommandTransfere.h"
 #include "Commands/CargoCommands/CommandCargoTransfere.h"
 
@@ -400,36 +402,14 @@ uint32_t parseBuffer(Client* client, uint32_t len){
 
 				case SerialType::SerialReqFit:{
 					SerialReqFit* st = (SerialReqFit*)(buffer+offset);
-					SObjI fromit = world->getObjs().find(st->_FromId);
-					SObjI toit = world->getObjs().find(st->_ToId);
-					map<uint32_t, SSlotNode*>::iterator slotnode;
-					if(fromit == world->getObjs().end()|| toit == world->getObjs().end())
-						break;
-					if (!toit->second->getsubable())
-						break;
-					if(fromit->second->getTeam() != client->getTeamId())
-						break;
-					if(toit->second->getTeam() != client->getTeamId())
-						break;
-
-					slotnode = toit->second->getsubable()->getSlots().find(st->_subid);
-					if (slotnode == toit->second->getsubable()->getSlots().end())
-						break;
-
-
-					map<uint32_t,SItemType*>::iterator it3 = itemlist.find(st->_itemid);
-					if (it3 == itemlist.end())
-						break;
-
-					if (!fromit->second->getsubable() || !toit->second->getsubable() )
-						break;
-					if(!fromit->second->getsubable()->getCargoBay())
-						break;
+					Processor* processor = networkControl->getProcessor(st->_ToId);
 					
-					SSubAble* toobj = toit->second->getsubable();
-					SCargoBay* frombay = fromit->second->getsubable()->getCargoBay();
-					
-					toobj->FitAddSub(it3->second,slotnode->second->getId(),st->_quantity,frombay);
+					if(!processor){
+						cerr<<"ERROR SFUNCTION SerialType::SerialReqFit processor not found"<<endl;
+						break;
+					}
+					processor->addCommand(new CommandIFit(st->_FromId,st->_subid, st->_ToId, st->_quantity, st->_itemid, client->getId()));
+
 					break;
 				}
 

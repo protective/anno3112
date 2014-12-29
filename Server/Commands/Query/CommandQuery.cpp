@@ -57,6 +57,8 @@ uint32_t CommandQuery::execute(){
 	bool sat;
 	for(map<uint32_t, Processable*>::iterator it = _processor->getLocalProcssables().begin() ; it!= _processor->getLocalProcssables().end(); it++){
 		sat = true;
+		if (it == _processor->getLocalProcssables().end())
+			break;
 		if(!it->second->isObj())
 			continue;
 		for(list<qureyCondition>::iterator it2 = _conditions.begin(); it2 != _conditions.end();it2++){

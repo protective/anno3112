@@ -43,7 +43,7 @@ uint32_t CommandRemove::execute(){
 	
 	_processable->setProcessor(NULL);
 	_processor->getLocalProcssables().erase(_processable->getId());
-	//cerr<<"done exe remove"<<endl;
+
 	delete _processable;
 	return COMMAND_FINAL;
 }

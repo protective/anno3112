@@ -147,6 +147,7 @@ int main(int argc, char** argv) {
 
 	tempo->getSpecial().push_back(TargetType::Astoroid);
 	
+	tempo->getLight().push_back(TargetType::Missel);
 	tempo->getLight().push_back(TargetType::Frigat);
 	tempo->getLight().push_back(TargetType::LightSupport);
 	tempo->getLight().push_back(TargetType::HeavySupport);

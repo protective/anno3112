@@ -69,7 +69,7 @@ public:
 	}
 	
 	DmgTypes::Enum getDmgTypes(){return this->_dmgType;}
-
+	uint32_t getHp(){return this->_hp;}
 	int32_t getMaxCd(){return this->_maxCd;}
 	uint32_t getTexId(){return this->_texId;}
 	uint32_t getamoCost(){return this->_amoCost;}
@@ -83,6 +83,7 @@ public:
 	
 	void setDmgMin(int32_t value){this->_dmgMin = value;}
 	void setDmgMax(int32_t value){this->_dmgMax = value;}
+	void setHp(uint32_t value){this->_hp = value;}
 	void setMaxCd(int32_t value){this->_maxCd = value;}
 	void setTexId(uint32_t value){this->_texId = value;}
 	void setDmgTypes(DmgTypes::Enum dmgtype){this->_dmgType = dmgtype;}
@@ -133,6 +134,7 @@ private:
 	uint32_t _texId;
 	int32_t _dmgMin;
 	int32_t _dmgMax;
+	uint32_t _hp;
 	DmgTypes::Enum _dmgType;
 	int32_t _maxCd;
 	int32_t _speed;

@@ -998,6 +998,9 @@ void ParseData(ifstream* file,string filename) {
 				} else if (line.find("spread") != string::npos) {
 					getparameter(line, "spread", 0, &beginint, &lenint);
 					((SSubTypeWep*)subtype)->setSpread(strToInt(line.substr(beginint, lenint)));
+				} else if (line.find("hp") != string::npos) {
+					getparameter(line, "hp", 0, &beginint, &lenint);
+					((SSubTypeWep*)subtype)->setHp(1000*strToInt(line.substr(beginint, lenint)));
 				}
 			}
 

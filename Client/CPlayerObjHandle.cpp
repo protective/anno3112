@@ -198,6 +198,7 @@ void CPlayerObjHandle::ReciveCargoUpdate(uint32_t id, uint32_t item, uint32_t qu
 
 void CPlayerObjHandle::ReciveShotHit(uint32_t id, uint32_t TargetId, uint32_t textype, CPos& hitPos){
 	CShot* shandle = NULL;
+	cerr<<"hit id="<<id<<" target="<<TargetId<<endl;
 	CobjI temp = this->objs.find(id);
 	if (temp != this->objs.end()){
 		shandle = temp->second->isShot();
@@ -214,15 +215,11 @@ void CPlayerObjHandle::ReciveShotHit(uint32_t id, uint32_t TargetId, uint32_t te
 		cerr<<"WARNING: ReciveShotHit: target not found"<<endl;
 		
 	}
+	
 	CPos temppos =shandle->getPos();
-	//cerr<<"bx "<<temppos.x<<endl;
-	//cerr<<"by "<<temppos.y<<endl;
+
 	temppos.x += (hitPos.x);
 	temppos.y += (hitPos.y);
-
-	//cerr<<"ax "<<temppos.x<<endl;
-	//cerr<<"ay "<<temppos.y<<endl;
-
 
 	ParticalTex::Enum tex = (ParticalTex::Enum)textype;
 

@@ -50,6 +50,7 @@ uint32_t CommandUpdateMetas::execute(){
 	for(list<MetaInit>::iterator it = _objToSendInit.begin(); it != _objToSendInit.end();it++){
 		if(_processor->_metaObjs.find(it->id) == _processor->_metaObjs.end())
 			_processor->_metaObjs[it->id] = it->type != SpaceTypes::Shot ? new SMetaObj(it->id) : new SMetaShot(it->id);
+		
 		_processor->_metaObjs[it->id]->team = it->team;
 		_processor->_metaObjs[it->id]->targetType = it->targetType;
 		_processor->_metaObjs[it->id]->_size = it->size;

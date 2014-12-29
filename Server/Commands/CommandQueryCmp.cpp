@@ -20,6 +20,9 @@ Command(0) {
 
 
 uint32_t CommandQueryCmp::execute() {
+	if(_processor->getLocalProcssables().find(_procesable) == _processor->getLocalProcssables().end())
+		return COMMAND_FINAL;
+	
 	Processable* temp = _processor->getLocalProcssables()[_procesable];
 	
 	if(!temp )

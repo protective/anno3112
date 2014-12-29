@@ -54,7 +54,9 @@ void SSubAble::updateTargetList(Processor* processor){
 			continue;
 		//TODO get prio
 		//GET range
-		uint32_t range = Rangeobj(*processor->getLocalMetas()[*it]->getPos(),this->obj()->getPos());
+		SPos rpos;
+		rpos = processor->getLocalMetas()[*it]->getRPos();
+		uint32_t range = Rangeobj(rpos, this->obj()->getPos());
 		tempsort.push_back(TempSort(*it,0,range,this->obj()->getPlayerId()));
 	}
 	tempsort.sort();
@@ -122,8 +124,10 @@ void SSubAble::updateTargetsPrio(Processor* processor){
 		for(list<TargetType::Enum>::iterator tt = curTargetList.begin(); tt!= curTargetList.end();tt++){
 			for(map<uint32_t, SMetaObj*>::iterator SO = _cache.begin(); SO != _cache.end();SO++){
 				if(subsys->getTargetGroup() != TargetGroup::Primary && ((*tt) == SO->second->getTargetType() || ((*tt) == TargetType::All && SO->second->getTargetType() != TargetType::Astoroid))){
-					if (1000*Rangeobj(this->obj()->getPos(),*SO->second->getPos()) <= subsys->getRange()){
-						int32_t temp = Direction(_obj->getPos(),*SO->second->getPos())-(_obj->getPos().d/100) ;
+					SPos rpos;
+					rpos = SO->second->getRPos();
+					if (1000*Rangeobj(this->obj()->getPos(),rpos) <= subsys->getRange()){
+						int32_t temp = Direction(_obj->getPos(),rpos)-(_obj->getPos().d/100) ;
 						if(temp < 0) temp+=360;
 						if(InAngle(temp,it->second->getST()->getFireDir())){ //found target break
 							subsys->setTarget(SO->first);

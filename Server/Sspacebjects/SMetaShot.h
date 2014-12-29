@@ -16,7 +16,7 @@ public:
 	virtual void checkCollisions(Processor* processor);
 	virtual ~SMetaShot();
 private:
-
+	list<OBJID> _hitlist;
 };
 
 #endif	/* SMETASHOT_H */

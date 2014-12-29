@@ -25,6 +25,15 @@ void SMetaShot::checkCollisions(Processor* processor){
 		if(!oobj || oobj->getTeam() == this->getTeam()){
 			continue;
 		}
+		bool found = false;
+		for(list<OBJID>::iterator it2 = _hitlist.begin(); it2 != _hitlist.end(); it2++){
+			if(*it2 == it->first){
+				found = true;
+				break;
+			}
+		}
+		if(found)
+			continue;
 		int32_t negsize = 0-oobj->getTargetSize();
 		int32_t possize = oobj->getTargetSize();
 		if(temppos.z > (negsize)/2 && temppos.z < possize/2){
@@ -87,6 +96,7 @@ void SMetaShot::checkCollisions(Processor* processor){
 					i = 2;
 				}
 				//cerr<<"meta shot hit"<<endl;
+				_hitlist.push_back(it->first);
 				networkControl->addCommandToProcesable(new CommandMetaHit(_id, it->first,(Shields::Enum)i,0,0), _id);
 				//Hit(it->first, (Shields::Enum)i,0,0);
 			}

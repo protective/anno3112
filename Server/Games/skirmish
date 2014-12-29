@@ -11,3 +11,10 @@ Unit 1 Station1 47 30 1:FacShip1:1 2:Refinery1:4 3:FacWep1:1 4:FacModule1:1
 
 Unit 1 Freighter1 61 30 1:Minglaz1:2
 
+Unit 1 BS1 200 140 1:Missile1:4 cargo:Laser3:8 cargo:Laser2:8 cargo:Missile1:26
+
+Unit 1 HAC 280 30 1:Missile1:4 cargo:Laser3:8 cargo:Laser2:8 cargo:Missile1:26
+
+Unit 2 BS1 201 30
+Unit 2 BS1 231 30 1:GatlingLaser1:4 2:GatlingLaser1:4 cargo:GatlingLaser1:4
+

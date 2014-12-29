@@ -16,7 +16,7 @@
 #include "subsystems/SSingleWep.h"
 #include "subsystems/SSubTypeWep.h"
 #include "SSubAble.h"
-class SShot : public SObj , public SMovable, public Processable{
+class SShot : public SObj , public SMovable, public STargetable, public Processable{
 public:
 	//SShot(uint32_t id, SPos& pos, SSubAble* owner, STargetable* target, uint32_t texId, int32_t speed, uint32_t mindmg, uint32_t maxdmg);
 	//SShot(uint32_t id, SPos& pos, SSubAble* owner, STargetable* target, uint32_t texId, int32_t speed, uint32_t mindmg, uint32_t maxdmg, DmgTypes::Enum);
@@ -28,19 +28,24 @@ public:
 	virtual void subscribeClient(uint32_t clientId, SubscriptionLevel::Enum level);
 	void Move(uint32_t deltaT);
 	void MovePos(int32_t x, int32_t y, int32_t z);
-	void TestHit();
-	void Hit(uint32_t target, Shields::Enum shield, int32_t x, int32_t y);
+	//void TestHit();
+	void applyDamage(uint32_t target, Shields::Enum shield, int32_t x, int32_t y);
+	virtual uint32_t hit(uint32_t shot, OBJID owner, uint32_t dmg, DmgTypes::Enum dmgtype, Shields::Enum impact, int32_t x, int32_t y);
+	void useDamage(uint32_t damage);
 	virtual SShot* isShot(){return this;}
 	virtual SObj* isObj(){return this;}
 	virtual SGrid* getGrid(){return _pos.grid;}
 	virtual bool canBeRemoved();
 	virtual SMovable* isMovable(){return this;}
+	virtual STargetable* isTargetable(){return this;}
 	virtual void setTargetPos(SPos& pos);
 	virtual uint32_t getTargetSize(){return _size;}
+	virtual TargetType::Enum getTargetType(){return _hp > 0 ? TargetType::Missel: TargetType::Invalid;}
 	virtual uint8_t getTeam(){return _team;}
-	virtual SSubAble* getOwner(){return this->_owner;}
+	//virtual SSubAble* getOwner(){return this->_owner;}
 	virtual uint32_t getTexId(){return this->_texId;}
 	virtual uint32_t getFlightTime(){return this->_flightTime;}
+	virtual uint32_t getHp(){return _hp;}
 	virtual uint32_t getMaxFlightTime(){return this->_maxFlightTime;}
 	virtual DmgTypes::Enum getDmgTypes(){return this->_dmgType;}
 	virtual uint32_t getTracking(){return this->_tracking;}
@@ -63,11 +68,11 @@ private:
 	uint32_t _trackingTime;
 	uint32_t _resolution;
 	double _moveZ;
-	SSubAble* _owner;
 	uint32_t _target;
 	uint32_t _texId;
 	uint32_t _dmgMin;
 	uint32_t _dmgMax;
+	uint32_t _hp;
 	DmgTypes::Enum _dmgType;
 	SSubTypeWep* _type;
 	

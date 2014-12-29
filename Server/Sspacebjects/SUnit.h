@@ -61,7 +61,7 @@ public:
 	void setOrdres(SOrdres* ordres);
 	virtual TargetType::Enum getTargetType(){return TargetType::Invalid;}
 
-	virtual void hit(uint32_t shot, OBJID owner, uint32_t dmg, DmgTypes::Enum dmgtype, Shields::Enum impact, int32_t x, int32_t y);
+	virtual uint32_t hit(uint32_t shot, OBJID owner, uint32_t dmg, DmgTypes::Enum dmgtype, Shields::Enum impact, int32_t x, int32_t y);
 	int32_t getShield(uint16_t index){return _shield[index];}
 	int32_t getDeflector(){return _deflector;}
 	int32_t getArmor(){return _armor;}

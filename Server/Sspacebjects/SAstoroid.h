@@ -19,7 +19,7 @@ public:
 	virtual SPos& getPos(){return _pos;}
 	virtual uint8_t getTeam(){return _team;}
 	virtual STargetable* isTargetable(){return (STargetable*)this;}
-	virtual void hit(uint32_t shot, OBJID owner, uint32_t dmg, DmgTypes::Enum dmgtype, Shields::Enum impact, int32_t x, int32_t y);
+	virtual uint32_t hit(uint32_t shot, OBJID owner, uint32_t dmg, DmgTypes::Enum dmgtype, Shields::Enum impact, int32_t x, int32_t y);
 	virtual uint32_t getTargetSize(){return _size+100;}
 	virtual TargetType::Enum getTargetType(){return TargetType::Astoroid;}
 	virtual SAstoroid* isAstoroid(){return this;}

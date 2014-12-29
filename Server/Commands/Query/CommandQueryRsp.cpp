@@ -23,6 +23,8 @@ uint32_t CommandQueryRsp::execute(){
 	}
 	cerr<<endl;
 	
+	if(_processor->getLocalProcssables().find(_reciver) == _processor->getLocalProcssables().end())
+		return COMMAND_FINAL;
 	
 	Processable* temp = _processor->getLocalProcssables()[_reciver];
 	

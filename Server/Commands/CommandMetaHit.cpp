@@ -22,7 +22,7 @@ uint32_t CommandMetaHit::execute(){
 	SShot* shot = NULL;
 	//cerr<<"execure metahit"<<endl;
 	if(_processor->getLocalProcssable(_shot) && (shot = _processor->getLocalProcssable(_shot)->isShot())){
-		shot->Hit(_target,_shield, _x, _y);
+		shot->applyDamage(_target,_shield, _x, _y);
 	}
 	return COMMAND_FINAL;
 }
