@@ -32,20 +32,24 @@
             <file>file:/home/karsten/anno3112/Server/Sspacebjects/SOrdres.h</file>
         </group>
         <group name="anno3112">
-            <file>file:/home/karsten/anno3112/Server/Commands/CommandHit.cpp</file>
-            <file>file:/home/karsten/anno3112/Server/Sspacebjects/SAstoroid.cpp</file>
-            <file>file:/home/karsten/anno3112/Server/Sspacebjects/SAstoroid.h</file>
-            <file>file:/home/karsten/anno3112/Server/Sspacebjects/SShot.h</file>
-            <file>file:/home/karsten/anno3112/Server/Sspacebjects/STargetable.h</file>
-            <file>file:/home/karsten/anno3112/Server/Commands/CommandMetaHit.cpp</file>
-            <file>file:/home/karsten/anno3112/Server/Sspacebjects/SUnit.h</file>
-            <file>file:/home/karsten/anno3112/Server/SDatabase.cpp</file>
             <file>file:/home/karsten/anno3112/Server/Sspacebjects/SShot.cpp</file>
-            <file>file:/home/karsten/anno3112/Server/Commands/CommandTargetPosUpdate.cpp</file>
-            <file>file:/home/karsten/anno3112/Server/Commands/CommandTimedSubscribeUpdate.cpp</file>
             <file>file:/home/karsten/anno3112/Server/Sspacebjects/SUnit.cpp</file>
+            <file>file:/home/karsten/anno3112/Server/Sspacebjects/SMetaShot.h</file>
+            <file>file:/home/karsten/anno3112/Server/Sspacebjects/SAstoroid.cpp</file>
+            <file>file:/home/karsten/anno3112/Server/SDatabase.cpp</file>
             <file>file:/home/karsten/anno3112/Server/SFunctions.h</file>
+            <file>file:/home/karsten/anno3112/Server/SGlobals.h</file>
             <file>file:/home/karsten/anno3112/Server/Sspacebjects/SMetaObj.h</file>
+            <file>file:/home/karsten/anno3112/Server/Sspacebjects/STargetable.h</file>
+            <file>file:/home/karsten/anno3112/Server/Sspacebjects/SMetaObj.cpp</file>
+            <file>file:/home/karsten/anno3112/Server/Sspacebjects/SAstoroid.h</file>
+            <file>file:/home/karsten/anno3112/Server/Commands/CommandTargetPosUpdate.cpp</file>
+            <file>file:/home/karsten/anno3112/Server/Sspacebjects/SShot.h</file>
+            <file>file:/home/karsten/anno3112/Server/Sspacebjects/SUnit.h</file>
+            <file>file:/home/karsten/anno3112/Server/Sspacebjects/Ordres/Generated/Lexer.cpp</file>
+            <file>file:/home/karsten/anno3112/Server/Commands/CommandHit.cpp</file>
+            <file>file:/home/karsten/anno3112/Server/Sspacebjects/SSubAble.cpp</file>
+            <file>file:/home/karsten/anno3112/Server/Commands/CommandTimedSubscribeUpdate.cpp</file>
         </group>
     </open-files>
 </project-private>

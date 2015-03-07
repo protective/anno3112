@@ -18,10 +18,10 @@ Command(0){
 uint32_t CommandQueryRsp::execute(){
 
 
-	for(list<qureyRow>::iterator it = _rspData.begin(); it != _rspData.end();it++){
-		cerr<<"obj="<<(*it).objId<<" attri="<<(*it).attri<<" value="<<(*it).value<<endl;
-	}
-	cerr<<endl;
+	//for(list<qureyRow>::iterator it = _rspData.begin(); it != _rspData.end();it++){
+		//cerr<<"obj="<<(*it).objId<<" attri="<<(*it).attri<<" value="<<(*it).value<<endl;
+	//}
+	//cerr<<endl;
 	
 	if(_processor->getLocalProcssables().find(_reciver) == _processor->getLocalProcssables().end())
 		return COMMAND_FINAL;

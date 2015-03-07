@@ -8,6 +8,8 @@
 //#include <math.h>
 //#include <c++/4.3/cmath>
 
+#include <sys/types.h>
+
 #include "SShot.h"
 #include "SSubAble.h"
 #include "../World/SGrid.h"
@@ -62,16 +64,79 @@ SObj(id, pos,owner->obj()->getTeam(),owner->obj()->getPlayerId()), SMovable(this
 		if(metaTarget->isMoveable()){
 			//int32_t td = metaTarget->getPos().d;  
 			//int32_t tspeed = metaTarget->isMovable()->getSpeed() * expFlightTime;
-			preX += (metaTarget->vecX * expFlightTime) / 1;
-			preY += (metaTarget->vecY * expFlightTime) / 1;
-		}
+			//preX += (metaTarget->vecX * expFlightTime) / 1;
+			//preY += (metaTarget->vecY * expFlightTime) / 1;
+			
+			double v = type->getSpeed();
+			double tx = (deltaPos.x - this->_pos.x) / 1000,
+			ty = (deltaPos.y - this->_pos.y)/ 1000,
+			tvx = metaTarget->vecX,
+			tvy = metaTarget->vecY;
+			cerr<<"v="<<v<<endl;
+			cerr<<"tvx="<<tvx<<" tvy="<<tvy<<endl;
+			// Get quadratic equation components
+			double a = tvx*tvx + tvy*tvy - v*v;
+			double b = 2 * (tvx * tx + tvy * ty);
+			double c = tx*tx + ty*ty; 
+			cerr<<"a="<<a<<" b="<<b<<" c="<<c<<endl;
+			bool solf = false; 
+			double sol[2];
+			sol[0] = deltaPos.x;
+			sol[1] = deltaPos.y;			
+			if (abs(a) < 0.000000f) {
+				if (abs(b) < 0.000000f) {
+					if(c == 0){
+						sol[0] = 0;
+						sol[1] = 0;
+						cerr<<"strange"<<endl;
+						solf = true;
+					}
+				} else {
+					cerr<<"b <00"<<endl;
+					sol[0] = -c/b;
+					sol[1] = -c/b;
+					solf = true;
+				}
+			} else {
+				double disc = b*b - 4*a*c;
+				if (disc >= 0) {
+					disc = sqrt(disc);
+					a = 2*a;
+					cerr<<"a2="<<a<<endl;
+					sol[0] = (-b-disc)/a;
+					sol[1] = (-b+disc)/a;
+					solf = true;
+				}
+			}
+
+			if (solf) {
+				double t0 = sol[0], t1 = sol[1];
+				double t = min(t0, t1);
+				if (t < 0)
+					t = max(t0, t1);    
+				if (t > 0) {
+					cerr<<"t="<<t<<endl;
+					sol[0] = (deltaPos.x) + (t*metaTarget->vecX*1000);
+					sol[1] = (deltaPos.y) + (t*metaTarget->vecY*1000);
+				}
+			}
+			string s = solf ? "found" : "not found" ;
+			cerr<<"solution "<<s<<" x="<<sol[0]<<" y="<<sol[1]<<endl;
+			this->_targetPos.x = (int32_t)sol[0];
+			this->_targetPos.y = (int32_t)sol[1];
+		}else{
 		
 
-		this->_targetPos.x = rx + preX;
-		this->_targetPos.y = ry + preY;
+			this->_targetPos.x = rx + preX;
+			this->_targetPos.y = ry + preY;
+		}
 		
 		this->_targetPos.z = 0;
 		this->_targetPos.grid = metaTarget->getPos()->grid;
+		cerr<<"src x="<<this->_pos.x<<" y="<<this->_pos.y<<endl;
+		cerr<<"des x="<<deltaPos.x/1000<<" y="<<deltaPos.y/1000<<" vx="<<metaTarget->vecX<<" vy="<<metaTarget->vecY<<endl;
+
+		cerr<<"tag x="<<this->_targetPos.x<<" y="<<this->_targetPos.y<<endl;
 		this->_pos.d = 100 * Direction(this->_pos, this->_targetPos);
 		this->_targetPos.d = this->_pos.d;
 		
@@ -132,7 +197,7 @@ bool SShot::canBeRemoved(){
 }
 
 void SShot::useDamage(uint32_t damage){
-	cerr<<"use min="<<_dmgMin<<" damage="<<damage <<endl;
+	//cerr<<"use min="<<_dmgMin<<" damage="<<damage <<endl;
 	if(damage == 0){
 		_hasHit = true;
 	}else if(damage < _dmgMin){
