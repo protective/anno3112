@@ -31,41 +31,80 @@ void SSubAble::updateTargetList(Processor* processor){
 	
 	map<uint32_t,SMetaObj*>& targets = processor->getLocalMetas();
 	
-	
+	_lockedTargets.clear();
 	for(map<uint32_t,SMetaObj*>::iterator it = targets.begin(); it!= targets.end();it++){
 		if ((it->second->isAstoroid())||(it->second->getTeam() != _obj->getTeam())){
 			if(it->second->isTargetable()){
-				if (find(_lockedTargets.begin(),_lockedTargets.end(), it->first) == _lockedTargets.end()){
-					_lockedTargets.push_back(it->first);
-				}
-			}
-		}else{
-			if(it->second->isTargetable()){
-				_lockedTargets.remove(it->first);
+				
+				SPos rpos;
+				rpos = processor->getLocalMetas()[it->first]->getRPos();
+				uint32_t range = Rangeobj(rpos, this->obj()->getPos());
+				LockedTarget t(it->first,0,range,0,this->obj()->getPlayerId());
+				_lockedTargets.insert(make_pair<LockedTarget,OBJID>(t,it->first)) ;
 			}
 		}
-
 	}
-
-	list<TempSort> tempsort;
-	for( list<uint32_t>::iterator it = _lockedTargets.begin(); it != _lockedTargets.end(); it++){
-		
-		if(*processor->getLocalMetas().find(*it) == *processor->getLocalMetas().end())
-			continue;
-		//TODO get prio
-		//GET range
-		SPos rpos;
-		rpos = processor->getLocalMetas()[*it]->getRPos();
-		uint32_t range = Rangeobj(rpos, this->obj()->getPos());
-		tempsort.push_back(TempSort(*it,0,range,this->obj()->getPlayerId()));
-	}
-	tempsort.sort();
-	_lockedTargets.clear();
-	for( list<TempSort>::iterator it = tempsort.begin(); it != tempsort.end(); it++){
-		_lockedTargets.push_back((*it)._target);
-	}
+	cerr<<"t size="<<targets.size()<<endl;
 	
 }
+OBJID SSubAble::getNextTarget(Processor* processor, SSlotNode* st){
+
+	if(!st->getSS() || !(st->getSS()->isWeapon() || st->getSS()->isFighter()))
+		return 0;
+	SSubSystemTargetingI* subsystem = st->getSS()->isWeapon();  
+	list<TargetType::Enum> curTargetList;
+
+	SOrdres* tempO = this->_obj->isUnit()->getOrdres();
+
+	switch(subsystem->getTargetGroup()){
+		case TargetGroup::Primary:{
+			curTargetList = tempO->getPrimary();break;
+		}case TargetGroup::Light:{
+			curTargetList = tempO->getLight();break;
+		}case TargetGroup::Medium:{
+			curTargetList = tempO->getMedium();break;
+		}case TargetGroup::Heavy:{
+			curTargetList = tempO->getHeavy();break;
+		}case TargetGroup::Special:{
+			curTargetList = tempO->getSpecial();break;
+		}
+	}
+	map<LockedTarget, OBJID>::iterator selTarget = _lockedTargets.end();
+	for(list<TargetType::Enum>::iterator tt = curTargetList.begin(); tt!= curTargetList.end();tt++){
+		
+		if(selTarget != _lockedTargets.end())
+			break;
+		for(map<LockedTarget, OBJID>::iterator SO = _lockedTargets.begin(); SO != _lockedTargets.end();SO++){
+			SMetaObj* meta = processor->getMeta(SO->second);
+			if(!meta)
+				continue;
+
+			if(subsystem->getTargetGroup() != TargetGroup::Primary && ((*tt) == meta->getTargetType() || ((*tt) == TargetType::All && meta->getTargetType() != TargetType::Astoroid))){
+				SPos rpos;
+				rpos = meta->getRPos();
+				if (1000*Rangeobj(this->obj()->getPos(),rpos) <= subsystem->getRange()){
+					int32_t temp = Direction(_obj->getPos(),rpos)-(_obj->getPos().d/100) ;
+					if(temp < 0) temp+=360;
+					if(InAngle(temp,st->getST()->getFireDir())){ //found target break
+						//subsys->setTarget(SO->first);
+						selTarget = SO;
+						break;
+					}
+				}
+			}else if(subsystem->getTargetGroup() == TargetGroup::Primary && ( (*tt) == meta->getTargetType() || ((*tt) == TargetType::All && meta->getTargetType() != TargetType::Astoroid))){
+				selTarget = SO;
+				break;
+			}
+		}
+	}
+	OBJID retval = selTarget->second;
+	LockedTarget templ(selTarget->first);
+	_lockedTargets.erase(selTarget);		
+	templ._pdestroyed++;
+	_lockedTargets.insert(make_pair<LockedTarget,OBJID>(templ, selTarget->second));
+	return retval;
+}
+
 
 void SSubAble::updateTargetsPrio(Processor* processor){
 	//TODO FIX
@@ -75,10 +114,10 @@ void SSubAble::updateTargetsPrio(Processor* processor){
 	if (!this->_obj->isUnit()->getOrdres())
 		return;
 	map<uint32_t, SMetaObj*> _cache;
-	for(list<uint32_t>::iterator SO = this->_lockedTargets.begin(); SO != this->_lockedTargets.end();SO++){
-		SMetaObj* tempMeta = processor->getMeta(*SO);
+	for(map<LockedTarget, OBJID>::iterator SO = this->_lockedTargets.begin(); SO != this->_lockedTargets.end();SO++){
+		SMetaObj* tempMeta = processor->getMeta(SO->second);
 		if(tempMeta){
-			_cache[*SO] = tempMeta;
+			_cache[SO->second] = tempMeta;
 		}
 	}
 	
@@ -152,7 +191,6 @@ void SSubAble::updateTargetsPrio(Processor* processor){
 			}
 		}
 	}
-	
 }
 
 void SSubAble::updateSubTarget(SSubSystem* subsys){

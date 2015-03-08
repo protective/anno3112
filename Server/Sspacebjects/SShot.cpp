@@ -72,13 +72,10 @@ SObj(id, pos,owner->obj()->getTeam(),owner->obj()->getPlayerId()), SMovable(this
 			ty = (deltaPos.y - this->_pos.y)/ 1000,
 			tvx = metaTarget->vecX,
 			tvy = metaTarget->vecY;
-			cerr<<"v="<<v<<endl;
-			cerr<<"tvx="<<tvx<<" tvy="<<tvy<<endl;
 			// Get quadratic equation components
 			double a = tvx*tvx + tvy*tvy - v*v;
 			double b = 2 * (tvx * tx + tvy * ty);
 			double c = tx*tx + ty*ty; 
-			cerr<<"a="<<a<<" b="<<b<<" c="<<c<<endl;
 			bool solf = false; 
 			double sol[2];
 			sol[0] = deltaPos.x;
@@ -88,11 +85,9 @@ SObj(id, pos,owner->obj()->getTeam(),owner->obj()->getPlayerId()), SMovable(this
 					if(c == 0){
 						sol[0] = 0;
 						sol[1] = 0;
-						cerr<<"strange"<<endl;
 						solf = true;
 					}
 				} else {
-					cerr<<"b <00"<<endl;
 					sol[0] = -c/b;
 					sol[1] = -c/b;
 					solf = true;
@@ -102,7 +97,6 @@ SObj(id, pos,owner->obj()->getTeam(),owner->obj()->getPlayerId()), SMovable(this
 				if (disc >= 0) {
 					disc = sqrt(disc);
 					a = 2*a;
-					cerr<<"a2="<<a<<endl;
 					sol[0] = (-b-disc)/a;
 					sol[1] = (-b+disc)/a;
 					solf = true;
@@ -115,28 +109,19 @@ SObj(id, pos,owner->obj()->getTeam(),owner->obj()->getPlayerId()), SMovable(this
 				if (t < 0)
 					t = max(t0, t1);    
 				if (t > 0) {
-					cerr<<"t="<<t<<endl;
 					sol[0] = (deltaPos.x) + (t*metaTarget->vecX*1000);
 					sol[1] = (deltaPos.y) + (t*metaTarget->vecY*1000);
 				}
 			}
-			string s = solf ? "found" : "not found" ;
-			cerr<<"solution "<<s<<" x="<<sol[0]<<" y="<<sol[1]<<endl;
 			this->_targetPos.x = (int32_t)sol[0];
 			this->_targetPos.y = (int32_t)sol[1];
 		}else{
-		
-
 			this->_targetPos.x = rx + preX;
 			this->_targetPos.y = ry + preY;
 		}
 		
 		this->_targetPos.z = 0;
 		this->_targetPos.grid = metaTarget->getPos()->grid;
-		cerr<<"src x="<<this->_pos.x<<" y="<<this->_pos.y<<endl;
-		cerr<<"des x="<<deltaPos.x/1000<<" y="<<deltaPos.y/1000<<" vx="<<metaTarget->vecX<<" vy="<<metaTarget->vecY<<endl;
-
-		cerr<<"tag x="<<this->_targetPos.x<<" y="<<this->_targetPos.y<<endl;
 		this->_pos.d = 100 * Direction(this->_pos, this->_targetPos);
 		this->_targetPos.d = this->_pos.d;
 		
@@ -213,7 +198,10 @@ void SShot::useDamage(uint32_t damage){
 }
 
 void SShot::applyDamage(uint32_t target, Shields::Enum shield, int32_t x, int32_t y){
-	SMetaObj* obj = _processor->getLocalMetas()[target];
+	map<uint32_t, SMetaObj*>::iterator found = _processor->getLocalMetas().find(target);
+	if(found == _processor->getLocalMetas().end())
+		return;
+	SMetaObj* obj = found->second;
 	uint32_t tarRes = obj->getTargetSize()/100;
 	double mod = 1;
 	if(_resolution > tarRes){

@@ -17,13 +17,8 @@ Command(time){
 }
 
 uint32_t CommandRemove::execute(){
-	//cerr<<"execure CommandRemove="<<_processable<<" id="<<_processable->getId()<<endl;
-	//if(_processable->getGrid()){
-		//_processable->addCommand(new CommandExitGrid(0,_processable->getGrid()->getId(),_processable->getId()));
-		//_time = 1;
-		//cerr<<"execure CommandRemove wait"<<endl;
-		//return COMMAND_REPEAT;
-	//}
+	cerr<<"execure CommandRemove="<<_processable<<" id="<<_processable->getId()<<endl;
+	
 	_processor->removeByProcessable(_processable);
 	networkControl->deRegisterObj(_processable->getId());
 	

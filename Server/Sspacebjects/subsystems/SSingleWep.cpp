@@ -45,7 +45,7 @@ void SSingleWep::proces(Processor* processor){
 			if(getLockPower() >= this->subsys->getlockingAgainstPower()){//caculate locking power 
 				this->subsys->setfireseq(0); 
 				this->_tempseq = this->subsys->getTypeWep()->fireseq();
-				this->subsys->setSeqTarget(this->subsys->getTarget());
+				this->subsys->setSeqTarget(this->subsys->getOwner().getsubable()->getNextTarget(processor, this->subsys->getSlotNode()));
 				this->_charge-=1;
 				if(countrecoil)
 					this->subsys->getOwner().getsubable()->useRecoil(this->subsys->getTypeWep()->getRecoil());
@@ -57,6 +57,8 @@ void SSingleWep::proces(Processor* processor){
 		
 		if (it != this->_tempseq.end() && (*it) == this->subsys->getfireseq()){
 			this->_tempseq.pop_front();
+			this->subsys->setSeqTarget(this->subsys->getOwner().getsubable()->getNextTarget(processor, this->subsys->getSlotNode()));
+	
 			SMetaObj* tempMeta = processor->getMeta(this->subsys->getSeqTarget());
 			if(tempMeta){
 				SPos tempTargetPos = tempMeta->pos;
@@ -72,7 +74,8 @@ void SSingleWep::proces(Processor* processor){
 					if(this->subsys->getOwner().isShip())
 						this->subsys->getOwner().isShip()->ResetLastCombat();
 				}
-			}
+			}else
+				cerr<<"we got false"<<endl;
 		}
 	}
 	

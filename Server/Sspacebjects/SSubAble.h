@@ -13,32 +13,46 @@
 #include "SObj.h"
 #include "cargo/SCargoBay.h"
 
-struct TempSort{
-	TempSort(uint32_t target, uint8_t prio, uint32_t range, uint32_t playerid){
+struct LockedTarget{
+	LockedTarget(OBJID target, uint8_t prio, uint32_t range, uint32_t pdestroyed, uint32_t playerid){
 		_target = target;
 		_range = range;
 		_playerid = playerid;
 		_prio = prio;
+		_pdestroyed = pdestroyed;
 	}
-	bool operator < (const TempSort& s2)
+	bool operator < (const LockedTarget& s2) const
 	{
 		if(_prio > s2._prio){
 			return true;
-		}
-		if(_prio < s2._prio){
+		}else if (_prio < s2._prio){
 			return false;
 		}
-		if(_prio == s2._prio && _range < s2._range)
+		if( _pdestroyed < s2._pdestroyed)
 			return true;
-		else
+		else if (_pdestroyed > s2._pdestroyed)
 			return false;
+		
+		if(_range < s2._range)
+			return true;
+		else if(_range > s2._range)
+			return false;
+		
+		if(_target < s2._target)
+			return true;
+		else if(_target > s2._target)
+			return false;
+
 		return false;
 	}
-	uint32_t _target;
+	OBJID _target;
 	uint8_t _prio;
 	uint32_t _range;
+	uint32_t _pdestroyed;
 	uint32_t _playerid;
 };
+
+
 
 class SSubAble {
 public:
@@ -56,10 +70,11 @@ public:
 	uint32_t addEnergy(uint32_t energy);
 	uint32_t addRecoil(uint32_t recoil);
 	uint32_t getMaxRecoil();
-	void donelocktarget(uint32_t* target){this->_lockedTargets.push_back(*target);}
+	//void donelocktarget(uint32_t* target){this->_lockedTargets.push_back(*target);}
 	void updateTargetsPrio(Processor* processor);
 	void updateTargetList(Processor* processor);
 	void updateSubTarget(SSubSystem* subsys);
+	OBJID getNextTarget(Processor* processor, SSlotNode* st);
 	map<uint32_t, SSlotNode*>& getSlots(){return this->slots;}
 	SCargoBay* getCargoBay(){return this->_cargoBay;}
 	uint32_t* getPrimeTarget(){return _havePrime ? &_primeTarget : NULL;}
@@ -89,7 +104,7 @@ public:
 	virtual ~SSubAble();
 protected:
 	map<uint32_t, SSlotNode*> slots;
-	list<uint32_t> _lockedTargets;
+	map<LockedTarget, uint32_t> _lockedTargets;
 	SCargoBay* _cargoBay;
 	map<BonusTypes::Enum, int32_t> _bonuslist;
 	uint32_t _primeTarget;
@@ -104,7 +119,7 @@ protected:
 	
 private:
 	SObj* _obj;
-	bool sortTargetsFunction(TempSort s1, TempSort s2);
+	bool sortTargetsFunction(LockedTarget s1, LockedTarget s2);
 };
 //typedef list<STargetable*>::iterator STarI;
 

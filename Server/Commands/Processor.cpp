@@ -49,6 +49,7 @@ list<Command*> Processor::removeByProcessable(Processable* proc){
 		for(list<Command*>::iterator it = _commands.begin(); it != _commands.end();){
 			if((*it)->getProcessable() == proc)
 			{
+				cerr<<"removed cmd"<<endl;
 				temp.push_back(*it);
 				(*it)->setProcessor(NULL);
 				_commands.erase(it++);
@@ -145,7 +146,6 @@ uint32_t Processor::addCommand(Command* cmd){
 }
 
 uint32_t Processor::removeCommand(Command* cmd){
-	cerr<<"remove command"<<endl;
 	pthread_mutex_lock(&this->_lockCommands);
 	list<Command*>::iterator it = _commands.begin();
 	while(it != _commands.end()){

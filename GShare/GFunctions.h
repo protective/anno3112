@@ -24,6 +24,7 @@
 #include <algorithm>
 #include "Enums.h"
 #include <math.h>
+#include <queue>
 #include "GCommands.h"
 #include "GGlobals.h"
 using namespace std;
