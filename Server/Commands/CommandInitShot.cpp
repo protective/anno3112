@@ -17,7 +17,7 @@ Command(0){
 }
 
 uint32_t CommandInitShot::execute(){
-	//cerr<<"execute init shot"<<endl;
+	cerr<<"execute init shot"<<endl;
 	Processable* temp = _processor->getLocalProcssable(_shot);
 	if (!temp || !temp->isShot())
 		return COMMAND_FINAL;

@@ -49,7 +49,6 @@ list<Command*> Processor::removeByProcessable(Processable* proc){
 		for(list<Command*>::iterator it = _commands.begin(); it != _commands.end();){
 			if((*it)->getProcessable() == proc)
 			{
-				cerr<<"removed cmd"<<endl;
 				temp.push_back(*it);
 				(*it)->setProcessor(NULL);
 				_commands.erase(it++);
@@ -80,6 +79,7 @@ void Processor::work(){
 			else if(result == COMMAND_REPEAT)
 				this->addCommand(tempCommand);
 		}else{
+			cerr<<"sleep"<<endl;
 			clock_gettime(CLOCK_REALTIME, &timeToWait);
 			timeToWait.tv_nsec+=25000000;  //25ms
 			if(timeToWait.tv_nsec >= 1000000000) {
@@ -117,7 +117,7 @@ uint32_t Processor::addCommand(Command* cmd){
 	
 	while (true){
 		if(it != _commands.end()){
-			if (cmd->getTime() <= (*it)->getTime()){
+			if (cmd->getTime() < (*it)->getTime()){
 				cmd->setProcessor(this);
 				_commands.insert(it,cmd);
 				break;

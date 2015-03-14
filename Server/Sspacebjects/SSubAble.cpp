@@ -97,6 +97,8 @@ OBJID SSubAble::getNextTarget(Processor* processor, SSlotNode* st){
 			}
 		}
 	}
+	if(selTarget == _lockedTargets.end())
+		return 0;
 	OBJID retval = selTarget->second;
 	LockedTarget templ(selTarget->first);
 	_lockedTargets.erase(selTarget);		

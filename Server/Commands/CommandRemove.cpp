@@ -17,8 +17,7 @@ Command(time){
 }
 
 uint32_t CommandRemove::execute(){
-	cerr<<"execure CommandRemove="<<_processable<<" id="<<_processable->getId()<<endl;
-	
+
 	_processor->removeByProcessable(_processable);
 	networkControl->deRegisterObj(_processable->getId());
 	
