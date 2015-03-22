@@ -7,9 +7,9 @@
 
 #include "CommandAdd.h"
 #include "Processor.h"
-
+#include "../World/SWorld.h"
 CommandAdd::CommandAdd(uint32_t time, Processable* processable,list<Command*> commands) : 
-Command(time){
+Command(world->getTime()){
 	_commands = commands;
 	_processable = processable;
 	//cerr<<"create cmd add id="<<_processable->getId()<<endl;

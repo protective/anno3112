@@ -9,9 +9,10 @@
 #include "Processor.h"
 #include "../Sspacebjects/STargetable.h"
 #include "../Sspacebjects/SShot.h"
+#include "../World/SWorld.h"
 
 CommandHit::CommandHit(uint32_t target, uint32_t shot, OBJID owner, uint32_t dmg, DmgTypes::Enum dmgType, Shields::Enum impact, int32_t x, int32_t y) :
-Command(0){
+Command(world->getTime()){
 	_target = target;
 	_shot = shot;
 	_owner = owner;

@@ -8,9 +8,10 @@
 #include "CommandMetaHit.h"
 #include "Processor.h"
 #include "../Sspacebjects/SShot.h"
+#include "../World/SWorld.h"
 
 CommandMetaHit::CommandMetaHit(uint32_t shot, uint32_t target, Shields::Enum shield, int32_t x, int32_t y):
-Command(0){
+Command(world->getTime()){
 	_shot = shot;
 	_target = target;
 	_shield = shield;

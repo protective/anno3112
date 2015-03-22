@@ -43,6 +43,8 @@ SObj(id, pos,owner->obj()->getTeam(),owner->obj()->getPlayerId()), SMovable(this
 	_maxFlightTime = (((type->getRange()/type->getSpeed()))+1)*4;
 	_size = 2000;
 	
+	uint32_t time = SDL_GetTicks();
+	
 	SMetaObj* metaTarget;
 	if(metaTarget = creator->getMeta(this->_target)){
 		SPos deltaPos; deltaPos = metaTarget->getRPos();
@@ -129,7 +131,8 @@ SObj(id, pos,owner->obj()->getTeam(),owner->obj()->getPlayerId()), SMovable(this
 		this->_moveZ = Deg(r*100,rz);
 	
 	}
-	
+	if(SDL_GetTicks() - time > 0)
+		cerr<<"dtime ="<<SDL_GetTicks() - time<<endl;
 	//this->addCommand(new CommandInitShot(id));
 	SGrid* tempgrid =  world->getGrids().begin()->second;
 	this->addCommand(new CommandEnterGrid(0,tempgrid->getId(),id));

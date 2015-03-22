@@ -9,8 +9,11 @@
 #include "Processor.h"
 #include "../Sspacebjects/SPos.h"
 #include "../Sspacebjects/SUnit.h"
+
+#include "../World/SWorld.h"
+
 CommandTargetPosUpdate::CommandTargetPosUpdate(uint32_t time, SerialPCShipTargetPosUpdate* message, uint32_t clientId):
-Command(time){
+Command(world->getTime()){
 	_message = (SerialPCShipTargetPosUpdate*)malloc(sizeof(SerialPCShipTargetPosUpdate));
 	memcpy(_message,message,sizeof(SerialPCShipTargetPosUpdate));
 	_clientId = clientId;

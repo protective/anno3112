@@ -26,6 +26,7 @@ private:
 	map<uint32_t, SGrid*> grids;
 	map<uint32_t, SObj*> objInWorld;
 	uint32_t _time;
+	uint32_t _slowTime;
 	Processor* _processors;
 };
 

@@ -12,6 +12,7 @@
 #include "../Commands/CommandAdd.h"
 SWorld::SWorld(Processor* processors) {
 	_processors = processors;
+	_slowTime = 0;
 }
 
 void SWorld::addGrid(SGrid* grid){
@@ -35,7 +36,15 @@ void SWorld::add(SUnit* unit){
 
 
 void SWorld::proces(uint32_t deltaT){
-	_time = SDL_GetTicks();
+	
+	deltaT =  (SDL_GetTicks() - _slowTime) - _time;
+	uint32_t oldslow = _slowTime;
+	if(deltaT > 1000 / FRAMERATE){
+		_slowTime += deltaT - (1000 / FRAMERATE);
+		//cerr<<"time dir "<<_slowTime- oldslow<<endl;
+	}
+	_time = SDL_GetTicks() - _slowTime;
+	
 	
 }
 /*

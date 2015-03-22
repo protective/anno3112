@@ -12,7 +12,7 @@
 
 #include "../World/SWorld.h"
 CommandTimedSubscribeUpdate::CommandTimedSubscribeUpdate(SubscriptionLevel::Enum freq):
-Command(0) {
+Command(world->getTime()) {
 	_freq = freq;
 }
 

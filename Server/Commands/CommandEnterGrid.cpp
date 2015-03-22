@@ -7,8 +7,10 @@
 
 #include "CommandEnterGrid.h"
 #include "../World/SGrid.h"
+#include "../World/SWorld.h"
+
 CommandEnterGrid::CommandEnterGrid(uint32_t time, uint32_t grid, uint32_t obj): 	
-Command(time){
+Command(world->getTime()){
 	_grid = grid;
 	_obj = obj;
 }

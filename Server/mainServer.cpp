@@ -75,7 +75,12 @@ int main(int argc, char** argv) {
 		processors.push_back(temp);
 	}	
 	world = new SWorld(processors.front());
-	
+	list<Processor*>::iterator it = processors.begin();
+	while (it != processors.end()){
+		(*it)->init();
+		it++;
+	}
+
 	SDL_Init(SDL_INIT_TIMER);
 
 	pthread_t listenThread;
@@ -317,7 +322,7 @@ int main(int argc, char** argv) {
 	//INIT GAME
 
 	//tempU->ActivateAI();
-	list<Processor*>::iterator it = processors.begin();
+	it = processors.begin();
 	for (int i = 0 ; i< NRTHREADS; i++){
 		Processor* temp = *it++;
 		pthread_create(&procesThreads[i], NULL, &Processor::workThreadFunction, temp);
@@ -339,7 +344,7 @@ int main(int argc, char** argv) {
 			cerr<<"fps "<<fpscounter/10<<endl;
 			fpscounter = 0;
 		}
-		world->proces(0);
+		//world->proces(0);
 		while (SDL_GetTicks() < timer+fpswait)
 			usleep(100);
 		//*************

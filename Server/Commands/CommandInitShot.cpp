@@ -10,9 +10,11 @@
 #include "../Sspacebjects/subsystems/SSubTypeWep.h"
 #include "CommandProcessor.h"
 #include "../Sspacebjects/SMetaObj.h"
+#include "../World/SWorld.h"
+
 
 CommandInitShot::CommandInitShot(uint32_t shotid) :
-Command(0){
+Command(world->getTime()){
 	_shot = shotid;
 }
 

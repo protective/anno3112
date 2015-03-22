@@ -25,15 +25,17 @@ Processor::Processor() {
 	pthread_mutex_init(&_workMutex,NULL);
 	pthread_mutex_init(&_lockFreeID, NULL);
 	pthread_mutex_init(&_lockCommands, NULL);
-	addCommand(new CommandTimedSubscribeUpdate(SubscriptionLevel::lowFreq));
-	addCommand(new CommandProcesMetas());
-	addCommand(new CommandCompiler("mining"));
+
 
 	_workReady = false;
 	_freeIdCount = 1;
 	_id = 0;
 }
-
+void Processor::init(){
+	addCommand(new CommandTimedSubscribeUpdate(SubscriptionLevel::lowFreq));
+	addCommand(new CommandProcesMetas());
+	addCommand(new CommandCompiler("mining"));
+}
 uint32_t Processor::getFreeID(){
 	uint32_t ret;
 	pthread_mutex_lock(&_lockFreeID);
@@ -46,11 +48,11 @@ uint32_t Processor::getFreeID(){
 list<Command*> Processor::removeByProcessable(Processable* proc){
 	list<Command*> temp;
 	pthread_mutex_lock(&this->_lockCommands);
-		for(list<Command*>::iterator it = _commands.begin(); it != _commands.end();){
-			if((*it)->getProcessable() == proc)
+		for(multimap<uint32_t, Command*>::iterator it = _commands.begin(); it != _commands.end();){
+			if(it->second->getProcessable() == proc)
 			{
-				temp.push_back(*it);
-				(*it)->setProcessor(NULL);
+				temp.push_back(it->second);
+				it->second->setProcessor(NULL);
 				_commands.erase(it++);
 			}else
 				 it++;
@@ -73,15 +75,16 @@ void Processor::work(){
 		//get next command that are ready
 		tempCommand = procesFirstReadyCommand(); 
 		if(tempCommand){
+			
 			uint32_t result  = tempCommand->execute();
 			if (result == COMMAND_FINAL)
 				delete tempCommand;  //comand return 0 (DONE) delete it
 			else if(result == COMMAND_REPEAT)
 				this->addCommand(tempCommand);
 		}else{
-			cerr<<"sleep"<<endl;
+			world->proces(0);
 			clock_gettime(CLOCK_REALTIME, &timeToWait);
-			timeToWait.tv_nsec+=25000000;  //25ms
+			timeToWait.tv_nsec+=01000000;  //25ms
 			if(timeToWait.tv_nsec >= 1000000000) {
 				timeToWait.tv_nsec -= 1000000000;
 				timeToWait.tv_sec++;
@@ -98,9 +101,9 @@ Command* Processor::procesFirstReadyCommand(){
 		//lock commandList
 		pthread_mutex_lock(&this->_lockCommands);
 		if(_commands.size()){
-			if(_commands.front()->getTime() <= world->getTime()){
-				temp = _commands.front();
-				_commands.pop_front();
+			if(_commands.begin()->first <= world->getTime()){
+				temp = _commands.begin()->second;
+				_commands.erase(_commands.begin());
 			}
 		}
 		//we are done Unlock list
@@ -112,30 +115,10 @@ Command* Processor::procesFirstReadyCommand(){
 uint32_t Processor::addCommand(Command* cmd){
 	//lock commandlist
 	pthread_mutex_lock(&this->_lockCommands);
-	list<Command*>::iterator it = _commands.begin();
-	//cerr<<"insert ="<<cmd<<endl;
 	
-	while (true){
-		if(it != _commands.end()){
-			if (cmd->getTime() < (*it)->getTime()){
-				cmd->setProcessor(this);
-				_commands.insert(it,cmd);
-				break;
-			}else{
-				it++;
-			}
-		}else{
-			cmd->setProcessor(this);
-			_commands.push_back(cmd);
-			break;
-		}
-	}
-	//cerr<<"content=";
-	//for(list<Command*>::iterator it = _commands.begin(); it!=_commands.end(); it++){
-	//	cerr<<*it<<" "<<(*it)->getTime()<<" ";
-	//}
-	//cerr<<endl;
-	//we are done adding
+	_commands.insert(make_pair(cmd->getTime(),cmd));
+	cmd->setProcessor(this);
+
 	pthread_mutex_unlock(&this->_lockCommands);
 	//we have work to do signal! 
 	pthread_mutex_lock(&_workMutex);
@@ -147,11 +130,11 @@ uint32_t Processor::addCommand(Command* cmd){
 
 uint32_t Processor::removeCommand(Command* cmd){
 	pthread_mutex_lock(&this->_lockCommands);
-	list<Command*>::iterator it = _commands.begin();
+	multimap<uint32_t, Command*>::iterator it = _commands.begin();
 	while(it != _commands.end()){
-		if(*it == cmd){
+		if(it->second == cmd){
 			cmd->setProcessor(NULL);
-			_commands.remove(cmd);
+			_commands.erase(it);
 			pthread_mutex_unlock(&this->_lockCommands);
 			return 1;
 		}

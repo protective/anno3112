@@ -24,9 +24,11 @@ Command(firstExecuteTime){
 uint32_t CommandProcessor::execute(){
 	
 	uint32_t time = world->getTime();
+	//cerr<<"processor time"<<time<<endl;
 	_processable->proces(_time - _lastExecuteTime, _processor);
 	_lastExecuteTime = _time;
 	_time += _interval;
+	//cerr<<"new time"<<_time<<endl;
 	_processable->addCommand(this);
 	return COMMAND_CONTINUE;
 }

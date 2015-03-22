@@ -44,11 +44,10 @@ void SSubAble::updateTargetList(Processor* processor){
 			}
 		}
 	}
-	cerr<<"t size="<<targets.size()<<endl;
-	
 }
 OBJID SSubAble::getNextTarget(Processor* processor, SSlotNode* st){
 
+	int32_t i= 0;
 	if(!st->getSS() || !(st->getSS()->isWeapon() || st->getSS()->isFighter()))
 		return 0;
 	SSubSystemTargetingI* subsystem = st->getSS()->isWeapon();  
@@ -78,7 +77,7 @@ OBJID SSubAble::getNextTarget(Processor* processor, SSlotNode* st){
 			SMetaObj* meta = processor->getMeta(SO->second);
 			if(!meta)
 				continue;
-
+			i++;
 			if(subsystem->getTargetGroup() != TargetGroup::Primary && ((*tt) == meta->getTargetType() || ((*tt) == TargetType::All && meta->getTargetType() != TargetType::Astoroid))){
 				SPos rpos;
 				rpos = meta->getRPos();
@@ -97,8 +96,10 @@ OBJID SSubAble::getNextTarget(Processor* processor, SSlotNode* st){
 			}
 		}
 	}
-	if(selTarget == _lockedTargets.end())
+	if(selTarget == _lockedTargets.end()){
+		cerr<<"no target"<<endl;
 		return 0;
+	}
 	OBJID retval = selTarget->second;
 	LockedTarget templ(selTarget->first);
 	_lockedTargets.erase(selTarget);		

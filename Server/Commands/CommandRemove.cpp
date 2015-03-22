@@ -10,9 +10,10 @@
 #include "CommandExitGrid.h"
 #include "CommandUpdateMetas.h"
 #include "../World/SGrid.h"
+#include "../World/SWorld.h"
 
 CommandRemove::CommandRemove(uint32_t time, Processable* processable) :
-Command(time){
+Command(world->getTime()){
 	_processable = processable;
 }
 

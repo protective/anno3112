@@ -32,6 +32,8 @@ public:
 	friend CommandUpdateMetas;
 	friend CommandRemove;
 	Processor();
+	void init();
+	
 	uint8_t getId(){return _id;}
 	uint32_t addCommand(Command* cmd);
 	uint32_t removeCommand(Command* cmd);
@@ -62,7 +64,7 @@ private:
 	pthread_cond_t _workCond;   //workReady condition
 	pthread_mutex_t _workMutex; //protect the workReady signal
 	bool _workReady;
-	list<Command*> _commands;
+	multimap<uint32_t, Command*> _commands;
 	
 	//processor Data
 	uint8_t _id;
