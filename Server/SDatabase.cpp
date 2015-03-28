@@ -297,8 +297,8 @@ FitTypes::Enum parseSlotType(string str){
 		return FitTypes::ShEl;
 	if (str.find("Engi")!= string::npos)
 		return FitTypes::Engi;
-	if (str.find("Figh")!= string::npos)
-		return FitTypes::Figh;
+	if (str.find("LFig")!= string::npos)
+		return FitTypes::LFig;
 	if (str.find("LWep")!= string::npos)
 		return FitTypes::Lwep;
 	if (str.find("MWep")!= string::npos)
@@ -313,6 +313,7 @@ FitTypes::Enum parseSlotType(string str){
 		return FitTypes::Hfac;
 	if (str.find("Mini")!= string::npos)
 		return FitTypes::Mini;
+
 	cerr<<"WARNING SDatabase::parseSlotType Error type not found got "<<str<<endl;
 
 	return FitTypes::Invalid;

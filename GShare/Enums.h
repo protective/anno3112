@@ -150,7 +150,7 @@ namespace FitTypes{
 		MwEl = 8,
 		ShEl = 9,
 		Engi = 10,
-		Figh = 11,
+		LFig = 11,
 		Lwep = 12,
 		Mwep = 13,
 		Hwep = 14,

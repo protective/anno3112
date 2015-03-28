@@ -313,7 +313,7 @@ void DrawScreen(SDL_Surface* screen)
 				
 				CObj* oldid = it->second;
 				if(it->second->isShot()){
-
+					
 					mainFrame->remove(*it->second->isShot());
 					toberemoved[it->first] =it->second;
 				}if(it->second->isShip()){

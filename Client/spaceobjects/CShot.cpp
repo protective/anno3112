@@ -60,7 +60,7 @@ void CShot::Draw(){
 	
 	double a = 1;
 	if (_flightTime > _maxFlightTime){
-		a = 1-((double)(_flightTime-_maxFlightTime)/3);
+		a = 1-((double)(_flightTime-_maxFlightTime)/500);
 	}
 	glColor4f(1, 1, 1, a);
 	glBindTexture( GL_TEXTURE_2D, textures[Textures::ShotSheet] );
@@ -110,8 +110,9 @@ void CShot::Proces(uint32_t DTime){
 				this->_pos.turn((int32_t)this->_tracking);
 		}
 
-		_flightTime++;
+		
 	}
+	_flightTime +=DTime;
 	this->Move(getTime() - this->_lastUpdate);
 	switch (this->_texId){
 		case 7:{//missile
@@ -130,14 +131,15 @@ void CShot::Proces(uint32_t DTime){
 }
 
 bool CShot::canBeRemoved(){
-	if(_flightTime >= _maxFlightTime+3){
+	if(_flightTime >= _maxFlightTime+500){
 		return true;
 	}else
 		return false;
 }
 
 void CShot::finishMe(){
-	this->_flightTime = _maxFlightTime+3 - ((double)_length*100/_speed);
+	cerr<<"finishMe"<<endl;
+	this->_flightTime = _maxFlightTime+500 - ((double)_length*100/_speed);
 	_finalmovedis = this->_movedis;
 	this->_ending = true;
 }

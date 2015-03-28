@@ -415,35 +415,14 @@ uint32_t parseBuffer(Client* client, uint32_t len){
 
 				case SerialType::SerialReqUnfit:{
 					SerialReqUnfit* st = (SerialReqUnfit*)(buffer+offset);
-					SObjI fromit = world->getObjs().find(st->_FromId);
-					SObjI toit = world->getObjs().find(st->_ToId);
-					map<uint32_t, SSlotNode*>::iterator slotnode;
-					if(fromit == world->getObjs().end()|| toit == world->getObjs().end())
-						break;
-
-					if(fromit->second->getTeam() != client->getTeamId())
-						break;
-					if(toit->second->getTeam() != client->getTeamId())
-						break;
-					if (!toit->second->getsubable())
-						break;
+					Processor* processor = networkControl->getProcessor(st->_FromId);
 					
-					if (!fromit->second->getsubable() || !toit->second->getsubable() )
+					if(!processor){
+						cerr<<"ERROR SFUNCTION SerialType::SerialReqFit processor not found"<<endl;
+						
 						break;
-					slotnode = fromit->second->getsubable()->getSlots().find(st->_subid);
-					if (slotnode == fromit->second->getsubable()->getSlots().end())
-						break;
-					if(!slotnode->second->getSS())
-						break;
-
-					if(!toit->second->getsubable()->getCargoBay())
-						break;
-					SSubAble* toobj = toit->second->getsubable();
-					SSubAble* fromobj = fromit->second->getsubable();
-					SCargoBay* tobay = toobj->getCargoBay();
-
-					fromobj->FitRemoveSub(st->_subid,st->_quantity,tobay);
-					
+					}
+					processor->addCommand(new CommandIUnfit(st->_FromId,st->_subid, st->_ToId, st->_quantity, client->getId()));
 					break;
 				}
 

@@ -13,7 +13,7 @@ sequencemax 5
 cooldown 30
 
 damage 8 11
-range 1500
+range 2500
 resolution 50
 
 trackingtime 15

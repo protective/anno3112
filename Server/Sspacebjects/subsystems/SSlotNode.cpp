@@ -23,7 +23,7 @@ bool SSlotNode::CanFit(FitTypes::Enum type, FitTypes::Enum on){
 		case FitTypes::Elec: {if(on == FitTypes::Elec || on == FitTypes::ElMe || on == FitTypes::MwEl || on == FitTypes::ShEl)return true; else return false;}
 		case FitTypes::Mech: {if(on == FitTypes::Mech || on == FitTypes::ElMe)return true; else return false;}
 		case FitTypes::Engi: {if(on == FitTypes::Engi)return true; else return false;}
-		case FitTypes::Figh: {if(on == FitTypes::Figh)return true; else return false;}
+		case FitTypes::LFig: {if(on == FitTypes::LFig)return true; else return false;}
 		case FitTypes::Lwep: {if(on == FitTypes::Lwep || on == FitTypes::Mwep || on == FitTypes::MwSh || on == FitTypes::MwEl || on == FitTypes::Hwep)return true; else return false;}
 		case FitTypes::Mwep: {if(on == FitTypes::Mwep || on == FitTypes::MwSh || on == FitTypes::MwEl || on == FitTypes::Hwep)return true; else return false;}
 		case FitTypes::Hwep: {if(on == FitTypes::Hwep)return true; else return false;}

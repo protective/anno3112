@@ -1,6 +1,6 @@
 import Image, ImageDraw, os
 
-effects =["Armo","Shie","Elec","Mech","MeEl","ShAr","MwSh","MwEl","ShEl","Engi","Figh","Lw","Mw","Hw","Lfac","Mfac","Hfac","Mini"]
+effects =["Armo","Shie","Elec","Mech","MeEl","ShAr","MwSh","MwEl","ShEl","Engi","LFig","Lw","Mw","Hw","Lfac","Mfac","Hfac","Mini"]
 
 
 

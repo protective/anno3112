@@ -24,7 +24,7 @@ Command(0){
 uint32_t CommandIFit::execute(){
 	cerr<<"execute CommandIFit"<<endl;
 	if(_processor->getLocalProcssables().find(_toId) == _processor->getLocalProcssables().end()){
-		cerr<<"CommandTargetPosUpdate target unit not on processor"<<endl;
+		cerr<<"CommandIFit target unit not on processor"<<endl;
 		return COMMAND_FINAL;
 	}
 	
@@ -35,7 +35,7 @@ uint32_t CommandIFit::execute(){
 			return COMMAND_FINAL;
 		SItemType* item = itemlist[_itemId];
 		SCargoBay* bay = from->getsubable()->getCargoBay();
-		_quantity = bay->RemoveReturn(item, max((uint32_t)4 ,_quantity));
+		_quantity = bay->RemoveReturn(item, min((uint32_t)4 ,_quantity));
 		if(_quantity > 0){
 			_step = 1;
 			networkControl->addCommandToProcesable(this,_toId);

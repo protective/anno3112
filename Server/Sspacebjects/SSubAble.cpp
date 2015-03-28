@@ -97,13 +97,14 @@ OBJID SSubAble::getNextTarget(Processor* processor, SSlotNode* st){
 		}
 	}
 	if(selTarget == _lockedTargets.end()){
-		cerr<<"no target"<<endl;
 		return 0;
 	}
 	OBJID retval = selTarget->second;
 	LockedTarget templ(selTarget->first);
-	_lockedTargets.erase(selTarget);		
-	templ._pdestroyed++;
+	_lockedTargets.erase(selTarget);
+	
+	if(templ._pdestroyed < 3)
+		templ._pdestroyed++;
 	_lockedTargets.insert(make_pair<LockedTarget,OBJID>(templ, selTarget->second));
 	return retval;
 }

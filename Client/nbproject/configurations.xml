@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="80">
+<configurationDescriptor version="95">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
@@ -217,8 +217,9 @@
   <confs>
     <conf name="Debug" type="1">
       <toolsSet>
-        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>GNU|GNU</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <ccTool>
@@ -238,11 +239,450 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="../GShare/Enums.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../GShare/GCommands.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../GShare/GCommands.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../GShare/GFunctions.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../GShare/GFunctions.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../GShare/GGlobals.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../GShare/GGlobals.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../Network/Serialize.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CDatabase.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CDatabase.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CFunctions.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CFunctions.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CGlobals.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CGlobals.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CPlayerObjHandle.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CPlayerObjHandle.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Grafic/CEmitter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Grafic/CEmitter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Grafic/CPartical.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Grafic/CPartical.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Grafic/Grafic.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Grafic/Grafic.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Items/CItemType.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Items/CItemType.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Textures/obj/cords.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/Build/CUIBuildFrame.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/Build/CUIBuildFrame.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonBuild.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonBuild.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonCancel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonCancel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonChangeOrdre.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonChangeOrdre.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonChangeTG.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonChangeTG.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonChangeView.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonChangeView.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonCreateFit.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonCreateFit.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonFitLoadout.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonFitLoadout.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonItem.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonItem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonOK.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonOK.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonOpenCargo.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonOpenCargo.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonSetUnitPos.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonSetUnitPos.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/CUIBaseFrame.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/CUIBaseFrame.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/CUIButton.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/CUIButton.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/CUIButtonFrame.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/CUIButtonFrame.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/CUICargoViewer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/CUICargoViewer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/CUIComboBox.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/CUIComboBox.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/CUIDragDrop.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/CUIDragDrop.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/CUIFrame.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/CUIFrame.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/CUIMainFrame.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/CUIMainFrame.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/CUIMoveCloseBar.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/CUIMoveCloseBar.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/CUIRightClickMenu.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/CUIRightClickMenu.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/CUIShipDetailFrame.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/CUIShipDetailFrame.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/CUISubSystem.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/CUISubSystem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/CUITextInputField.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/CUITextInputField.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/ComboBox/CUIComboOrdreChange.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="UI/ComboBox/CUIComboOrdreChange.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/ComboBox/CUIComboTgChange.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/ComboBox/CUIComboTgChange.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/Forms/CUICreateFitForm.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/Forms/CUICreateFitForm.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/ListBox/CUIListBox.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/ListBox/CUIListBox.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/RightClickMenus/CUIRCMenuLoadout.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="UI/RightClickMenus/CUIRCMenuLoadout.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="UI/Scrolls/CUIVScroll.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/Scrolls/CUIVScroll.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="mainClient.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="spaceobjects/CAstoroid.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="spaceobjects/CAstoroid.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="spaceobjects/CAstoroidType.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="spaceobjects/CAstoroidType.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="spaceobjects/CMovable.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="spaceobjects/CMovable.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="spaceobjects/CObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="spaceobjects/CObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="spaceobjects/COrdres.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="spaceobjects/COrdres.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="spaceobjects/CPos.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="spaceobjects/CPos.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="spaceobjects/CShip.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="spaceobjects/CShip.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="spaceobjects/CShipType.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="spaceobjects/CShipType.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="spaceobjects/CShot.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="spaceobjects/CShot.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="spaceobjects/CSubAble.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="spaceobjects/CSubAble.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="spaceobjects/CTargetable.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="spaceobjects/CTargetable.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="spaceobjects/cargo/CCargoBay.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="spaceobjects/cargo/CCargoBay.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CLoadout.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CLoadout.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CShipTypeSlotData.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CShipTypeSlotData.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSingleFac.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSingleFac.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSingleRef.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSingleRef.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSingleWep.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSingleWep.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSlotNode.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSlotNode.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubSystem.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubSystem.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubSystemBonus.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubSystemBonus.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubSystemBoost.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubSystemBoost.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubSystemFac.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubSystemFac.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubSystemFighter.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubSystemFighter.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubSystemRef.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubSystemRef.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubSystemW.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubSystemW.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubType.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubType.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubTypeBonus.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubTypeBonus.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubTypeBoost.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubTypeBoost.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubTypeFac.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubTypeFac.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubTypeFighter.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubTypeFighter.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubTypeRef.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubTypeRef.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubTypeWep.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubTypeWep.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="world/CGrid.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="world/CGrid.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="world/CWorld.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="world/CWorld.h" ex="false" tool="3" flavor2="0">
+      </item>
     </conf>
     <conf name="Release" type="1">
       <toolsSet>
-        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>GNU|GNU</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <cTool>
@@ -258,6 +698,444 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="../GShare/Enums.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../GShare/GCommands.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../GShare/GCommands.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../GShare/GFunctions.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../GShare/GFunctions.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../GShare/GGlobals.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../GShare/GGlobals.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../Network/Serialize.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CDatabase.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CDatabase.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CFunctions.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CFunctions.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CGlobals.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CGlobals.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CPlayerObjHandle.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CPlayerObjHandle.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Grafic/CEmitter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Grafic/CEmitter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Grafic/CPartical.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Grafic/CPartical.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Grafic/Grafic.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Grafic/Grafic.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Items/CItemType.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Items/CItemType.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Textures/obj/cords.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/Build/CUIBuildFrame.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/Build/CUIBuildFrame.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonBuild.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonBuild.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonCancel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonCancel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonChangeOrdre.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonChangeOrdre.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonChangeTG.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonChangeTG.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonChangeView.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonChangeView.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonCreateFit.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonCreateFit.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonFitLoadout.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonFitLoadout.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonItem.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonItem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonOK.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonOK.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonOpenCargo.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonOpenCargo.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonSetUnitPos.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/Buttons/CUIButtonSetUnitPos.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/CUIBaseFrame.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/CUIBaseFrame.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/CUIButton.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/CUIButton.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/CUIButtonFrame.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/CUIButtonFrame.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/CUICargoViewer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/CUICargoViewer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/CUIComboBox.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/CUIComboBox.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/CUIDragDrop.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/CUIDragDrop.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/CUIFrame.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/CUIFrame.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/CUIMainFrame.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/CUIMainFrame.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/CUIMoveCloseBar.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/CUIMoveCloseBar.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/CUIRightClickMenu.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/CUIRightClickMenu.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/CUIShipDetailFrame.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/CUIShipDetailFrame.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/CUISubSystem.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/CUISubSystem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/CUITextInputField.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/CUITextInputField.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/ComboBox/CUIComboOrdreChange.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="UI/ComboBox/CUIComboOrdreChange.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/ComboBox/CUIComboTgChange.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/ComboBox/CUIComboTgChange.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/Forms/CUICreateFitForm.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/Forms/CUICreateFitForm.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/ListBox/CUIListBox.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/ListBox/CUIListBox.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UI/RightClickMenus/CUIRCMenuLoadout.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="UI/RightClickMenus/CUIRCMenuLoadout.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="UI/Scrolls/CUIVScroll.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="UI/Scrolls/CUIVScroll.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="mainClient.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="spaceobjects/CAstoroid.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="spaceobjects/CAstoroid.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="spaceobjects/CAstoroidType.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="spaceobjects/CAstoroidType.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="spaceobjects/CMovable.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="spaceobjects/CMovable.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="spaceobjects/CObj.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="spaceobjects/CObj.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="spaceobjects/COrdres.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="spaceobjects/COrdres.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="spaceobjects/CPos.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="spaceobjects/CPos.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="spaceobjects/CShip.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="spaceobjects/CShip.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="spaceobjects/CShipType.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="spaceobjects/CShipType.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="spaceobjects/CShot.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="spaceobjects/CShot.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="spaceobjects/CSubAble.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="spaceobjects/CSubAble.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="spaceobjects/CTargetable.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="spaceobjects/CTargetable.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="spaceobjects/cargo/CCargoBay.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="spaceobjects/cargo/CCargoBay.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CLoadout.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CLoadout.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CShipTypeSlotData.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CShipTypeSlotData.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSingleFac.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSingleFac.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSingleRef.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSingleRef.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSingleWep.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSingleWep.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSlotNode.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSlotNode.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubSystem.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubSystem.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubSystemBonus.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubSystemBonus.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubSystemBoost.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubSystemBoost.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubSystemFac.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubSystemFac.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubSystemFighter.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubSystemFighter.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubSystemRef.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubSystemRef.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubSystemW.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubSystemW.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubType.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubType.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubTypeBonus.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubTypeBonus.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubTypeBoost.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubTypeBoost.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubTypeFac.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubTypeFac.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubTypeFighter.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubTypeFighter.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubTypeRef.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubTypeRef.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubTypeWep.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="spaceobjects/subsystems/CSubTypeWep.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="world/CGrid.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="world/CGrid.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="world/CWorld.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="world/CWorld.h" ex="false" tool="3" flavor2="0">
+      </item>
     </conf>
   </confs>
 </configurationDescriptor>

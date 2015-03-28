@@ -76,6 +76,11 @@ public:
 	void updateSubTarget(SSubSystem* subsys);
 	OBJID getNextTarget(Processor* processor, SSlotNode* st);
 	map<uint32_t, SSlotNode*>& getSlots(){return this->slots;}
+	SSubSystem* getSubsystem(uint32_t id){
+		return this->slots.find(id) != this->slots.end()
+			? this->slots.find(id)->second->getSS()
+			: NULL;
+		}
 	SCargoBay* getCargoBay(){return this->_cargoBay;}
 	uint32_t* getPrimeTarget(){return _havePrime ? &_primeTarget : NULL;}
 	void setPrimeTarget(uint32_t target){_primeTarget = target; _havePrime = true;}

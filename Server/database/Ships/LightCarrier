@@ -89,6 +89,23 @@ uicord 60 320
 cord -2800 500
 firedir FW
 
+//Figh L
+{sub10}
+type LFig
+mount 200
+uicord 110 280
+cord -2000 -500
+firedir ALL
+
+//Figh R
+{sub11}
+type LFig
+mount 200
+uicord 110 320
+cord -2000 500
+firedir ALL
+
+
 {item}
 buildtime 40
 texture Ships/LightCarrier

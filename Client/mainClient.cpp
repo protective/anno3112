@@ -181,7 +181,7 @@ void DrawScreen(SDL_Surface* screen)
 				
 				CObj* oldid = it->second;
 				if(it->second->isShot()){
-
+					cerr<<"remove shot "<<it->first<<endl;
 					mainFrame->remove(*it->second->isShot());
 					toberemoved[it->first] =it->second;
 				}if(it->second->isShip()){
@@ -198,6 +198,7 @@ void DrawScreen(SDL_Surface* screen)
 			}
 		}
 		for(map<uint32_t,CObj*>::iterator it = toberemoved.begin(); it!= toberemoved.end(); it++ ){
+			cerr<<"delete shot "<<it->first<<endl;
 			delete playerObj->getObjs()[it->first];
 			playerObj->getObjs().erase(it->first);
 		}

@@ -37,6 +37,17 @@ void SMetaShot::checkCollisions(Processor* processor){
 		int32_t negsize = 0-oobj->getTargetSize();
 		int32_t possize = oobj->getTargetSize();
 		if(temppos.z > (negsize)/2 && temppos.z < possize/2){
+			
+			int32_t size = (oobj->getTargetSize()/2);
+			//cerr<<"size="<<size<<endl;
+			//cerr<<"oobj->getPos().x="<<oobj->getPos().x<<"oobj->getPos().y="<<oobj->getPos().y<<endl;
+			//cerr<<"temppos.x="<<temppos.x<<"temppos.y="<<temppos.y<<endl;
+			if (!(oobj->getPos().x > temppos.x - size && oobj->getPos().x < temppos.x + size
+			&& oobj->getPos().y > temppos.y - size && oobj->getPos().y < temppos.y + size)){
+				//cerr<<"cont"<<endl;
+				continue;
+			}
+			
 			double a = 100 * Rangeobj(temppos, oobj->getPos());
 			if(oobj->getTargetType()==TargetType::Invalid){
 				continue;

@@ -33,18 +33,13 @@
         </group>
         <group name="anno3112">
             <file>file:/home/karsten/anno3112/Server/Sspacebjects/SShot.cpp</file>
-            <file>file:/home/karsten/anno3112/Server/Commands/Processor.cpp</file>
-            <file>file:/home/karsten/anno3112/Server/Commands/Processor.h</file>
-            <file>file:/home/karsten/anno3112/Server/SFunctions.h</file>
-            <file>file:/home/karsten/anno3112/Server/Sspacebjects/SMetaObj.cpp</file>
-            <file>file:/home/karsten/anno3112/Server/World/SWorld.cpp</file>
-            <file>file:/home/karsten/anno3112/Server/Sspacebjects/SMetaShot.cpp</file>
-            <file>file:/home/karsten/anno3112/Server/Commands/Command.h</file>
-            <file>file:/home/karsten/anno3112/Server/Commands/CommandProcessor.cpp</file>
-            <file>file:/home/karsten/anno3112/Server/Commands/CommandProcesMetas.cpp</file>
+            <file>file:/home/karsten/anno3112/Server/Sspacebjects/subsystems/SSubSystemFighter.cpp</file>
+            <file>file:/home/karsten/anno3112/Server/Sspacebjects/subsystems/SSingleWep.cpp</file>
             <file>file:/home/karsten/anno3112/Server/Sspacebjects/SShot.h</file>
             <file>file:/home/karsten/anno3112/Server/Sspacebjects/SUnit.h</file>
-            <file>file:/home/karsten/anno3112/Server/Commands/CommandUpdateMetas.cpp</file>
+            <file>file:/home/karsten/anno3112/Server/NetworkLayer/SShotNetworkLayer.h</file>
+            <file>file:/home/karsten/anno3112/Server/Sspacebjects/SMetaObj.cpp</file>
+            <file>file:/home/karsten/anno3112/Server/World/SWorld.cpp</file>
             <file>file:/home/karsten/anno3112/Server/Sspacebjects/SSubAble.cpp</file>
         </group>
     </open-files>

@@ -15,13 +15,14 @@ cooldown 50
 
 damage 2 3
 
-range 11600
+range 700
 resolution 5
 
 keys turret beam laser
 
 {projectile}
 speed 2300
+spread 40
 texture laser1
 
 

@@ -62,6 +62,7 @@ public:
 	virtual ~SShot();
 private:
 	bool _hasHit;
+	OBJID _owner;
 	uint32_t _flightTime;
 	uint32_t _maxFlightTime;
 	uint32_t _tracking;

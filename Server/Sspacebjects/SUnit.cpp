@@ -86,7 +86,7 @@ void SUnit::proces(uint32_t delta, Processor* processor){
 			if(!getProgram()
 				&& processor->getPrograms()[_order->getProgram()])
 			{
-				loadProgram(processor->getPrograms()[_order->getProgram()]);
+				//loadProgram(processor->getPrograms()[_order->getProgram()]);
 			}
 		}
 	}

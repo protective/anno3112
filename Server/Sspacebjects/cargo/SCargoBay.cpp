@@ -140,7 +140,7 @@ void SCargoBay::proces(uint32_t deltaT){
 				
 				uint32_t remaning = it->second._remaning;
 				uint32_t count = 0;
-				cerr<<"out credit="<<_outgoingCredit<< "mass ="<<item->getMass()<<endl;
+				//cerr<<"out credit="<<_outgoingCredit<< "mass ="<<item->getMass()<<endl;
 				
 				uint32_t mass = max((uint32_t)1, item->getMass());
 				if(_outgoingCredit >= mass * remaning){
@@ -181,7 +181,6 @@ void SCargoBay::addTransfere(uint32_t toShipId, uint32_t itemType, uint32_t quan
 		i++;
 	}
 
-	cerr<<"add transfere id ="<<i<<endl;
 	t._id = i;
 	t._itemId = itemType;
 	t._remaning = quan;

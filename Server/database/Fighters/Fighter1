@@ -18,7 +18,7 @@ size 50
 targettype lightsupport
 
 {FighterSub}
-fit HWep 1400
+fit LFig 100
 baycount 2
 
 //M rear

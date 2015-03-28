@@ -74,8 +74,7 @@ void SSingleWep::proces(Processor* processor){
 					if(this->subsys->getOwner().isShip())
 						this->subsys->getOwner().isShip()->ResetLastCombat();
 				}
-			}else
-				cerr<<"we got false"<<endl;
+			}
 		}
 	}
 	

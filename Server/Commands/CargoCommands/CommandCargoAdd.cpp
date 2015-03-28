@@ -22,16 +22,11 @@ Command(0){
 
 uint32_t CommandCargoAdd::execute(){
 	
-	cerr<<"execute CommandCargoAdd toshipid = "<<_toShipId<<endl;
-
 	Processable *tproc = _processor->getLocalProcssable(_toShipId);
 
-	uint32_t retMsg = 0;
-	cerr<<"hest temtype="<<_itemType<<endl;
 	if (!itemlist[_itemType])
 		return COMMAND_FINAL;
 
-	cerr<<"hest1 "<<tproc<<endl;
 	SCargoBay* targetBay = NULL;
 	if(!tproc)
 		return COMMAND_FINAL;
@@ -40,9 +35,7 @@ uint32_t CommandCargoAdd::execute(){
 
 	targetBay = tproc->getsubable()->getCargoBay();
 	
-	cerr<<"hest2"<<endl;
 	if(targetBay){
-		cerr<<"hest3"<<endl;
 		targetBay->AddReturn(itemlist[_itemType], _quan);	
 	}
 	return COMMAND_FINAL;

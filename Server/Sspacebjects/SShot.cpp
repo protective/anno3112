@@ -25,7 +25,8 @@ SShot::SShot(uint32_t id, SPos& pos, SSubAble* owner, uint32_t target, SSubTypeW
 SObj(id, pos,owner->obj()->getTeam(),owner->obj()->getPlayerId()), SMovable(this,0,0), STargetable(this), Processable()
 {
 
-	//this->_owner = owner;
+	this->_owner = owner->obj()->getId();
+	cerr<<"SShot::SShot"<<this->_owner<<endl;
 	this->_target = target;
 	this->_texId = type->getTexId();
 	this->_resolution = type->getResolution(owner->getBonusList());
@@ -37,13 +38,12 @@ SObj(id, pos,owner->obj()->getTeam(),owner->obj()->getPlayerId()), SMovable(this
 	_hp = type->getHp();
 	_speed = type->getSpeed();
 	_dmgType = type->getDmgTypes();
+	cerr<<"dmgtt ="<<_dmgType<<endl;
 	_tracking = type->getTracking();
 	_trackingTime = type->getTrackingTime();
 	_flightTime = 0;
-	_maxFlightTime = (((type->getRange()/type->getSpeed()))+1)*4;
+	_maxFlightTime = (((type->getRange()/type->getSpeed()))+1) * 4;
 	_size = 2000;
-	
-	uint32_t time = SDL_GetTicks();
 	
 	SMetaObj* metaTarget;
 	if(metaTarget = creator->getMeta(this->_target)){
@@ -60,7 +60,7 @@ SObj(id, pos,owner->obj()->getTeam(),owner->obj()->getPlayerId()), SMovable(this
 		int32_t expFlightTime = (((r*100)/type->getSpeed())) - (((r*100)/10000));
 		int32_t preX = deltaPos.x; 
 		int32_t preY = deltaPos.y;
-
+		//_maxFlightTime = expFlightTime;
 		//TODO HMM problem
 		
 		if(metaTarget->isMoveable()){
@@ -115,8 +115,8 @@ SObj(id, pos,owner->obj()->getTeam(),owner->obj()->getPlayerId()), SMovable(this
 					sol[1] = (deltaPos.y) + (t*metaTarget->vecY*1000);
 				}
 			}
-			this->_targetPos.x = (int32_t)sol[0];
-			this->_targetPos.y = (int32_t)sol[1];
+			this->_targetPos.x = (int32_t)sol[0] + rx;
+			this->_targetPos.y = (int32_t)sol[1] + ry;
 		}else{
 			this->_targetPos.x = rx + preX;
 			this->_targetPos.y = ry + preY;
@@ -131,8 +131,6 @@ SObj(id, pos,owner->obj()->getTeam(),owner->obj()->getPlayerId()), SMovable(this
 		this->_moveZ = Deg(r*100,rz);
 	
 	}
-	if(SDL_GetTicks() - time > 0)
-		cerr<<"dtime ="<<SDL_GetTicks() - time<<endl;
 	//this->addCommand(new CommandInitShot(id));
 	SGrid* tempgrid =  world->getGrids().begin()->second;
 	this->addCommand(new CommandEnterGrid(0,tempgrid->getId(),id));
@@ -177,10 +175,10 @@ void SShot::Move(uint32_t deltaT){
 }
 
 bool SShot::canBeRemoved(){
-
-	if (_hasHit || _flightTime >= _maxFlightTime)
+	
+	if (_hasHit || _flightTime >= _maxFlightTime){
 		return true;
-	else
+	}else
 		return false;
 }
 
@@ -210,7 +208,8 @@ void SShot::applyDamage(uint32_t target, Shields::Enum shield, int32_t x, int32_
 	if(_resolution > tarRes){
 		mod =  (double)tarRes / _resolution;
 	}
-	CommandHit* cmd = new CommandHit(target, this->getId(), 0, mod * myrandom(_dmgMin, _dmgMax), _dmgType, shield, x, y);
+	
+	CommandHit* cmd = new CommandHit(target, this->getId(), _owner, mod * myrandom(_dmgMin, _dmgMax), _dmgType, shield, x, y);
 	if(networkControl->addCommandToProcesable(cmd, target))
 		delete cmd;
 	//obj->Hit(this, );
