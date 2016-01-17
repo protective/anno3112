@@ -8,6 +8,7 @@
 #include "CommandUpdateMetas.h"
 #include "../World/SWorld.h"
 #include "../Sspacebjects/SMetaShot.h"
+/*
 CommandUpdateMetas::CommandUpdateMetas(uint8_t freq, list<MetaLow> objToSend):
 Command(world->getTime()){
 	_freq = freq;
@@ -80,3 +81,4 @@ uint32_t CommandUpdateMetas::execute(){
 CommandUpdateMetas::~CommandUpdateMetas() {
 }
 
+*/

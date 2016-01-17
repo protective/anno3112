@@ -9,7 +9,7 @@
 #define	COMMANDADDSUBSCRIPTIONS_H
 
 #include "Command.h"
-
+/*
 class Processor;
 class CommandAddSubscriptions : public Command {
 public:
@@ -22,6 +22,6 @@ private:
 	SubscriptionLevel::Enum _level;
 	list<uint32_t> _procesables;
 };
-
+*/
 #endif	/* COMMANDADDSUBSCRIPTIONS_H */
 

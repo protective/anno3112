@@ -9,10 +9,10 @@
 #include "../World/SGrid.h"
 #include "../World/SWorld.h"
 
-CommandEnterGrid::CommandEnterGrid(uint32_t time, uint32_t grid, uint32_t obj): 	
+CommandEnterGrid::CommandEnterGrid(uint32_t time, uint32_t grid, SMetaObj* meta): 	
 Command(world->getTime()){
 	_grid = grid;
-	_obj = obj;
+	_meta = meta;
 }
 
 uint32_t CommandEnterGrid::execute(){
@@ -20,7 +20,7 @@ uint32_t CommandEnterGrid::execute(){
 	Processable* temp = _processor->getLocalProcssable(_grid);
 	if (!temp || !temp->getGrid())
 		return COMMAND_FINAL;
-	temp->getGrid()->addObj(_obj);
+	temp->getGrid()->addObj(_meta);
 	return COMMAND_FINAL;
 }
 

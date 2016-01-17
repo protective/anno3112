@@ -27,6 +27,7 @@ uint32_t CommandInitShot::execute(){
 	SShot* shot  = temp->isShot();
 	SSubTypeWep* type = temp->isShot()->getType();
 	SMetaObj* metaTarget;
+	/*
 	if(metaTarget = _processor->getMeta(shot->_target)){
 		uint32_t r = Rangeobj(shot->_pos,*(metaTarget->getPos()));
 		uint32_t m = (r * type->getSpread()*50)/(type->getRange()/1000);
@@ -41,7 +42,7 @@ uint32_t CommandInitShot::execute(){
 		int32_t expFlightTime = (((r*100)/type->getSpeed()))+1;
 		int32_t preX = metaTarget->getPos()->x; 
 		int32_t preY = metaTarget->getPos()->y;
-
+*/
 		//TODO HMM problem
 		/*
 		if(metaTarget->isMovable()){
@@ -50,7 +51,7 @@ uint32_t CommandInitShot::execute(){
 			preX += (VektorUnitX(td/100) * tspeed)/100;
 			preY += -((VektorUnitY(td/100)* tspeed)/100);
 		}
-		*/
+		
 
 		shot->_targetPos.x = rx + preX;
 		shot->_targetPos.y = ry + preY;
@@ -65,6 +66,7 @@ uint32_t CommandInitShot::execute(){
 		shot->_moveZ = Deg(r*100,rz);
 
 	}
+		 * */
 	return COMMAND_FINAL;
 }
 

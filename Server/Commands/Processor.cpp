@@ -32,8 +32,7 @@ Processor::Processor() {
 	_id = 0;
 }
 void Processor::init(){
-	addCommand(new CommandTimedSubscribeUpdate(SubscriptionLevel::lowFreq));
-	addCommand(new CommandProcesMetas());
+
 	addCommand(new CommandCompiler("mining"));
 }
 uint32_t Processor::getFreeID(){
@@ -147,7 +146,7 @@ uint32_t Processor::removeCommand(Command* cmd){
 
 SShot* Processor::createShot(SPos& pos, SSubAble* owner, uint32_t target, SSubTypeWep* type){
 	SShot* shot = new SShot(getFreeID(), pos, owner, target, type, this);
-	CommandProcessor* proces = new CommandProcessor(shot,200/FRAMERATE,0);
+	CommandProcessor* proces = new CommandProcessor(shot,2000/FRAMERATE,0);
 	list<Command*> cmdlist;
 	cmdlist.push_back(proces);
 	CommandAdd* add = new CommandAdd(world->getTime(), shot, cmdlist);

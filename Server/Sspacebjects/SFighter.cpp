@@ -20,7 +20,9 @@ SUnit(id,pos, stype, playerId){
 	_motherShipSub = motherShipSub;
 	_motherShipTarget = 0;
 	_curSignal = FighterSignal::target;
-	this->addCommand(new CommandEnterGrid(0,pos.grid->getId(),id));
+	
+	SMetaObj* meta = new SMetaObj(id,this->getTeam(), this->getSize(), this->getTargetType(), playerId);
+	this->addCommand(new CommandEnterGrid(0,pos.grid->getId(),meta));
 }
 
 void SFighter::setFighterSignal(FighterSignal::Enum signal){
@@ -29,8 +31,8 @@ void SFighter::setFighterSignal(FighterSignal::Enum signal){
 		cerr<<"set signal id ="<<this->_id<<" signal return"<<endl;
 		this->setOrdres(globalOrders[this->_playerId][0]);
 		
-		SMetaObj* mothership = NULL;
-		mothership = _processor->getMeta(_motherShip);
+		//SMetaObj* mothership = NULL;
+		//mothership = _processor->getMeta(_motherShip);
 	}
 }
 
@@ -39,13 +41,16 @@ void SFighter::proces(uint32_t delta, Processor* processor){
 	
 	if(_targetUpdateCounter % 25 == 0 && _curSignal == FighterSignal::returnToShip){
 		SMetaObj* mothership = NULL;
-		mothership = processor->getMeta(_motherShip);
-		if(mothership){
 		
+		mothership = this->getPos().grid->getMetaInGrid(_motherShip);
+		if(mothership){
+			Destiny* destiny = this->getPos().grid->getDestiny();
+			SPos mothershipPos;
+			destiny->getPos(mothershipPos, _motherShip);
 			if(this->_curSignal == FighterSignal::returnToShip){
-				this->setTargetPos(mothership->getPos()->x,mothership->getPos()->y );
+				this->setTargetPos(mothershipPos.x, mothershipPos.y);
 			}
-			if(Rangeobj(*mothership->getPos(), this->_pos) < 50){
+			if(Rangeobj(mothershipPos, this->_pos) < 50){
 				CommandSignalFighter* cmd = new CommandSignalFighter(_motherShip,_id, FighterSignal::haveReturned,_motherShipSub);
 				if(networkControl->addCommandToProcesable(cmd,_motherShip))
 					delete cmd;
@@ -53,7 +58,7 @@ void SFighter::proces(uint32_t delta, Processor* processor){
 				
 				cerr<<"fighter dock id="<<_id<<" subid ="<<_motherShipSub<<endl;
 				sendRemoved(SubscriptionLevel::lowFreq, DestroyMode::Vanish);
-				
+				this->_pos.grid->getDestiny()->remove(this);
 				this->addCommand(new CommandExitGrid(0,this->_pos.grid->getId(),_id));
 				this->_pos.grid = NULL;
 				this->addCommand(new CommandRemove(0,this));

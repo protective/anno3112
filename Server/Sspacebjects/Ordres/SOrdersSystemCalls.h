@@ -34,7 +34,7 @@ static const systemCallFunc_t GlobalSystemCallLib[] =
 {
 {systemSetSubsystemFlags,"systemSetFlags"},
 {systemSleep,"wait"}, //int ms
-{qureyItems,"queryItems"}, //int itemid
+{qureyItems,"queryItems"}, //int itemid, conditionAttribute, op, value
 {transfereItems,"transfereItems"}, //int from, int itemid, int quan
 {(systemCallFunc)NULL, "null"}
 };

@@ -256,11 +256,13 @@ uint32_t parseBuffer(char* buffer, uint32_t len){
 					if(subs){
 						map<uint32_t, CSlotNode*>::iterator subhandle = subs->find(st->_subId);
 						if (subhandle != subs->end()){
-							if(!subhandle->second->getSS() || (subhandle->second->getSS()->getItemType()->getTypeID() != st->_itemType)){
+							if(!subhandle->second->getSS() || (subhandle->second->getSS()->getItemType()->getTypeID() != st->_itemType || st->_xitem == 0  )){
 								if(subhandle->second->getSS())
 									delete subhandle->second->getSS();
 								subhandle->second->setSS(NULL);
 								//SUB REMAKE
+								if(st->_xitem == 0)
+									break;
 								map<uint32_t,CItemType*>::iterator tempId = itemlist.find(st->_itemType);
 								if (tempId == itemlist.end()){
 									cerr<<"WARNING CFunctions::Parsing: itemType not found"<<endl;

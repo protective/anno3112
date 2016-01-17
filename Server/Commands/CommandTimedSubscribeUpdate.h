@@ -8,7 +8,7 @@
 #ifndef COMMANDTIMEDSUBSCRIBEUPDATE_H
 #define	COMMANDTIMEDSUBSCRIBEUPDATE_H
 #include "Command.h"
-
+/*
 class CommandTimedSubscribeUpdate : public Command{
 public:
 	CommandTimedSubscribeUpdate(SubscriptionLevel::Enum freq);
@@ -17,6 +17,6 @@ public:
 private:
 	SubscriptionLevel::Enum _freq;
 };
-
+*/
 #endif	/* COMMANDTIMEDSUBSCRIBEUPDATE_H */
 

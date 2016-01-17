@@ -276,10 +276,10 @@ void SUnit::updateAutoMove(){
 				}
 				if(!this->_processor)
 					return;
-				SMetaObj* metaPrime = this->_processor->getMeta(this->_primeTarget);
-				
-				if (metaPrime){
-					SPos metaPrimePos; metaPrimePos = metaPrime->getRPos();
+				//SMetaObj* metaPrime = this->getPos().grid->getMetaInGrid(this->_primeTarget);
+				Destiny* destiny = this->getPos().grid->getDestiny();
+				SPos metaPrimePos;
+				if (destiny->getPos(metaPrimePos, this->_primeTarget)){
 					_MovementStatus |= MoveBitF::TargetPosLock;
 					int32_t tarx;
 					int32_t tary;
@@ -422,6 +422,7 @@ void SUnit::Move(uint32_t deltaT){
 	
 	this->MovePos((VektorUnitX(this->_pos.d/100) * _speed)/100 ,-((VektorUnitY(this->_pos.d/100)* _speed)/100));
 
+	this->_pos.grid->getDestiny()->update(this);
 }
 
 void SUnit::MovePos(int32_t x, int32_t y){
@@ -722,7 +723,7 @@ uint32_t  SUnit::hit(uint32_t shot, OBJID owner, uint32_t dmg, DmgTypes::Enum dm
 				_hull = 0;
 				cerr<<"ship dead !!!!!!!!!!!!!"<<endl;
 				sendRemoved(SubscriptionLevel::lowFreq, DestroyMode::Destroy);
-				
+				this->_pos.grid->getDestiny()->remove(this);
 				this->addCommand(new CommandExitGrid(0,this->_pos.grid->getId(),_id));
 				this->_pos.grid = NULL;
 				this->addCommand(new CommandRemove(0,this));

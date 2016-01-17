@@ -6,6 +6,7 @@
  */
 
 #include "SShip.h"
+#include "SMetaObj.h"
 #include "../World/SGrid.h"
 #include "../Commands/CommandEnterGrid.h"
 #include "../Commands/CommandExitGrid.h"
@@ -13,7 +14,8 @@
 SShip::SShip(uint32_t id, SPos& pos, SShipType& stype, uint32_t playerId) :
 SUnit(id,pos, stype, playerId){
 	_sType = &stype;
-	this->addCommand(new CommandEnterGrid(0,pos.grid->getId(),id));
+	SMetaObj* meta = new SMetaObj(id,this->getTeam(), this->getSize(), this->getTargetType(), playerId);
+	this->addCommand(new CommandEnterGrid(0, pos.grid->getId(), meta));
 }
 
 void SShip::proces(uint32_t delta, Processor* processor){

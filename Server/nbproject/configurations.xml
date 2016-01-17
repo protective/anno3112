@@ -294,6 +294,12 @@
         <itemPath>Sspacebjects/SUnitType.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f3" displayName="World" projectFiles="true">
+        <logicalFolder name="f1" displayName="Destiny" projectFiles="true">
+          <itemPath>World/Destiny/Destiny.cpp</itemPath>
+          <itemPath>World/Destiny/Destiny.h</itemPath>
+          <itemPath>World/Destiny/QTreeIndex.cpp</itemPath>
+          <itemPath>World/Destiny/QTreeIndex.h</itemPath>
+        </logicalFolder>
         <itemPath>World/SGrid.cpp</itemPath>
         <itemPath>World/SGrid.h</itemPath>
         <itemPath>World/SWorld.cpp</itemPath>
@@ -1276,6 +1282,14 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="World/Destiny/Destiny.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="World/Destiny/Destiny.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="World/Destiny/QTreeIndex.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="World/Destiny/QTreeIndex.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="World/SGrid.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="World/SGrid.h" ex="false" tool="3" flavor2="0">
@@ -2244,6 +2258,14 @@
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="World/Destiny/Destiny.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="World/Destiny/Destiny.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="World/Destiny/QTreeIndex.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="World/Destiny/QTreeIndex.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="World/SGrid.cpp" ex="false" tool="1" flavor2="0">
       </item>

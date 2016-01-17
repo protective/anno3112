@@ -8,11 +8,12 @@
 #ifndef SPOS_H
 #define	SPOS_H
 #include "../SFunctions.h"
+#include "../World/Destiny/QTreeIndex.h"
 class SGrid;
 class SPos {
 public:
 	SPos();
-	SPos(SPos& pos);
+	SPos(const SPos& pos);
 	SPos(int32_t x, int32_t y, int32_t d);
 	SPos(SGrid* grid,int32_t x, int32_t y, int32_t d);
 	void turn(int32_t deg);
@@ -21,9 +22,9 @@ public:
 	int32_t z;
 	int32_t d;
 	SGrid* grid;
+	QTreePoints* _boundPoints;
 	virtual ~SPos();
 private:
-
 };
 
 #endif	/* SPOS_H */

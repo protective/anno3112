@@ -48,7 +48,7 @@ void SSubSystemW::reset(){
 	
 	if(this->getTarget()){
 		double res = (double)this->getTypeWep()->getResolution(getOwner().getsubable()->getBonusList());
-		uint32_t size = this->getOwner().isUnit()->getProcessor()->getMeta(this->getTarget())->getTargetSize();
+		uint32_t size = this->getOwner().getPos().grid->getMetaInGrid(this->getTarget())->getTargetSize();
 		double sig = size/100;
 		if(res <= sig)
 			_lockingAgainstPower = 0;

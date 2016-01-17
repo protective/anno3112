@@ -11,6 +11,7 @@
 #include "../Commands/Processor.h"
 #include "../Sspacebjects/SUnit.h"
 
+/*
 SMetaShot::SMetaShot(uint32_t id ) :
 SMetaObj(id){
 	
@@ -117,4 +118,4 @@ void SMetaShot::checkCollisions(Processor* processor){
 
 SMetaShot::~SMetaShot() {
 }
-
+*/

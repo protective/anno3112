@@ -21,7 +21,8 @@ uint32_t CommandRemove::execute(){
 
 	_processor->removeByProcessable(_processable);
 	networkControl->deRegisterObj(_processable->getId());
-	
+//TODO remove meta from grid
+	/*
 	list<MetaRemove> templist;
 	MetaRemove temp;
 	temp.id = _processable->getId();
@@ -30,11 +31,9 @@ uint32_t CommandRemove::execute(){
 		_processor->_lowFrec[it->first].remove(_processable->getId());
 		it->first->addCommand(new CommandUpdateMetas(1,templist));
 	}
-	
-	
-	//_processor->_lowFrec.erase(_processable->getId());
-	//_processor->_medFrec.erase(_processable->getId());
-	//_processor->_highFrec.erase(_processable->getId());	
+	*/
+	if (_processable->getGrid())
+		_processable->getGrid()->getDestiny()->remove(_processable->isObj());
 	
 	_processable->setProcessor(NULL);
 	_processor->getLocalProcssables().erase(_processable->getId());

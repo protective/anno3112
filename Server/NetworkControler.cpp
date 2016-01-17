@@ -29,8 +29,8 @@ void NetworkControler::registerObj(uint32_t objId, Processor* processor){
 		//cerr<<"networkcontroler::register obj_id="<<objId<<" processerid="<<(uint32_t)processor->getId()<<endl;
 		//TODO GET all processores dealing with the active grid here
 		//cerr<<"register id="<<objId<<endl;
-		processor->addCommand(new CommandAddSubscriptions(processor,SubscriptionLevel::lowFreq,objId));
-		processor->addCommand(new CommandAddSubscriptions(processor,SubscriptionLevel::Init,objId));
+		//processor->addCommand(new CommandAddSubscriptions(processor,SubscriptionLevel::lowFreq,objId));
+		//processor->addCommand(new CommandAddSubscriptions(processor,SubscriptionLevel::Init,objId));
 	pthread_mutex_unlock(&_objRegistrationListLock);
 }
 

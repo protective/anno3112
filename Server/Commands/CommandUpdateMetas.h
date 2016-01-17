@@ -9,7 +9,7 @@
 #define	COMMANDUPDATEMETAS_H
 #include "Command.h"
 #include "../Sspacebjects/SPos.h"
-
+/*
 struct MetaInit{
 	MetaInit(){
 		vecX = 0;
@@ -92,6 +92,6 @@ private:
 	list<MetaRemove> _objToSendRemove;
 	list<MetaLow> _objToSendLow;
 };
-
+*/
 #endif	/* COMMANDUPDATEMETAS_H */
 

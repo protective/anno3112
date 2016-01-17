@@ -29,7 +29,7 @@ public:
 	virtual void setTargetPos(SPos& pos);
 	virtual ~SMovable();
 protected:
-	SObj* _obj;
+
 	SPos _targetPos;
 	uint32_t _MovementStatus;
 	uint32_t _rangeToTargetPos;
@@ -37,7 +37,8 @@ protected:
 	int32_t _maxSpeed;
 	int32_t _topSpeed;
 	uint32_t _agility;
-
+private:
+	SObj* _obj;
 };
 
 #endif	/* SMOVABLE_H */

@@ -9,7 +9,7 @@
 #define	SMETASHOT_H
 
 #include "SMetaObj.h"
-
+/*
 class SMetaShot : public SMetaObj {
 public:
 	SMetaShot(uint32_t id);
@@ -18,6 +18,6 @@ public:
 private:
 	list<OBJID> _hitlist;
 };
-
+*/
 #endif	/* SMETASHOT_H */
 

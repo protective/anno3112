@@ -33,14 +33,15 @@
         </group>
         <group name="anno3112">
             <file>file:/home/karsten/anno3112/Server/Sspacebjects/SShot.cpp</file>
-            <file>file:/home/karsten/anno3112/Server/Sspacebjects/subsystems/SSubSystemFighter.cpp</file>
-            <file>file:/home/karsten/anno3112/Server/Sspacebjects/subsystems/SSingleWep.cpp</file>
+            <file>file:/home/karsten/anno3112/Server/Sspacebjects/SUnit.cpp</file>
+            <file>file:/home/karsten/anno3112/Server/World/Destiny/Destiny.cpp</file>
+            <file>file:/home/karsten/anno3112/Server/Sspacebjects/SPos.h</file>
+            <file>file:/home/karsten/anno3112/Server/Commands/Processor.cpp</file>
+            <file>file:/home/karsten/anno3112/Server/Commands/CommandProcessor.cpp</file>
             <file>file:/home/karsten/anno3112/Server/Sspacebjects/SShot.h</file>
-            <file>file:/home/karsten/anno3112/Server/Sspacebjects/SUnit.h</file>
-            <file>file:/home/karsten/anno3112/Server/NetworkLayer/SShotNetworkLayer.h</file>
-            <file>file:/home/karsten/anno3112/Server/Sspacebjects/SMetaObj.cpp</file>
-            <file>file:/home/karsten/anno3112/Server/World/SWorld.cpp</file>
-            <file>file:/home/karsten/anno3112/Server/Sspacebjects/SSubAble.cpp</file>
+            <file>file:/home/karsten/anno3112/Server/World/Destiny/QTreeIndex.cpp</file>
+            <file>file:/home/karsten/anno3112/Server/Sspacebjects/SObj.h</file>
+            <file>file:/home/karsten/anno3112/Server/World/Destiny/Destiny.h</file>
         </group>
     </open-files>
 </project-private>

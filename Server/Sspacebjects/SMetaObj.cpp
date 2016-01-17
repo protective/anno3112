@@ -9,14 +9,26 @@
 
 #include "SMetaObj.h"
 #include "../World/SWorld.h"
-SMetaObj::SMetaObj(uint32_t id) {
+SMetaObj::SMetaObj(uint32_t id, uint8_t team, uint32_t size, TargetType::Enum targetType) {
 	_id = id;
-	_size = 0;
+	_size = size;
 	owner = 0;
-	team = 0;
+	this->team = team;
 	procesNodeId = 0;
-//	posValid = false;
+	//this->pos = pos;
+	this->targetType = targetType;
 }
+
+SMetaObj::SMetaObj(uint32_t id, uint8_t team, uint32_t size, TargetType::Enum targetType, uint32_t owner) {
+	_id = id;
+	_size = size;
+	owner = owner;
+	this->team = team;
+	procesNodeId = 0;
+	//this->pos = pos;
+	this->targetType = targetType;
+}
+/*
 SPos SMetaObj::getRPos(){
 	int32_t delta = world->getTime() - _timerLowFeq;
 	SPos temp;
@@ -25,9 +37,9 @@ SPos SMetaObj::getRPos(){
 	temp.y = pos.y + ((vecY * delta)/40);
 	temp.z = pos.z + ((vecZ * delta)/40);
 	
-	return temp;
+	return pos;
 }
-
+*/
 
 bool SMetaObj::isMoveable(){
 	switch(targetType){

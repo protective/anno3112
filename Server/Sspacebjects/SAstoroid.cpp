@@ -8,6 +8,7 @@
 #include "SAstoroid.h"
 #include "SShot.h"
 #include "../World/SGrid.h"
+#include "SMetaObj.h"
 #include "../Commands/CommandEnterGrid.h"
 #include "../Commands/CommandExitGrid.h"
 #include "../Commands/CargoCommands/CommandCargoAdd.h"
@@ -21,8 +22,8 @@ SObj(id, pos,0,0),STargetable(this), Processable(){
 	this->_type = &atype;
 	this->_size = atype.getSize()* 100;
 	this->_belt = belt;
-	
-	this->addCommand(new CommandEnterGrid(0,pos.grid->getId(),id));
+	SMetaObj* meta = new SMetaObj(id,0,this->getSize(), this->getTargetType());
+	this->addCommand(new CommandEnterGrid(0,pos.grid->getId(),meta));
 
 }
 
@@ -43,7 +44,7 @@ uint32_t SAstoroid::hit(uint32_t shot, OBJID owner, uint32_t dmg, DmgTypes::Enum
 		if(this->_quan == 0){
 			
 			sendDepleted(SubscriptionLevel::lowFreq);
-
+			this->_pos.grid->getDestiny()->remove(this);
 			this->addCommand(new CommandExitGrid(0,this->_pos.grid->getId(),_id));
 			this->_pos.grid = NULL;
 			this->addCommand(new CommandRemove(0,this));

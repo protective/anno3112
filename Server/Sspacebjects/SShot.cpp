@@ -12,21 +12,21 @@
 
 #include "SShot.h"
 #include "SSubAble.h"
+#include "SMetaObj.h"
 #include "../World/SGrid.h"
 #include "../World/SWorld.h"
 #include "../NetworkLayer/SShotNetworkLayer.h"
-#include "SMetaObj.h"
+
 #include "../Commands/CommandRemove.h"
 #include "../Commands/CommandEnterGrid.h"
 #include "../Commands/CommandHit.h"
-
+#include "../Commands/CommandMetaHit.h"
 
 SShot::SShot(uint32_t id, SPos& pos, SSubAble* owner, uint32_t target, SSubTypeWep* type, Processor* creator):
 SObj(id, pos,owner->obj()->getTeam(),owner->obj()->getPlayerId()), SMovable(this,0,0), STargetable(this), Processable()
 {
 
 	this->_owner = owner->obj()->getId();
-	cerr<<"SShot::SShot"<<this->_owner<<endl;
 	this->_target = target;
 	this->_texId = type->getTexId();
 	this->_resolution = type->getResolution(owner->getBonusList());
@@ -38,16 +38,19 @@ SObj(id, pos,owner->obj()->getTeam(),owner->obj()->getPlayerId()), SMovable(this
 	_hp = type->getHp();
 	_speed = type->getSpeed();
 	_dmgType = type->getDmgTypes();
-	cerr<<"dmgtt ="<<_dmgType<<endl;
 	_tracking = type->getTracking();
 	_trackingTime = type->getTrackingTime();
 	_flightTime = 0;
-	_maxFlightTime = (((type->getRange()/type->getSpeed()))+1) * 4;
+	_maxFlightTime = (((type->getRange() / type->getSpeed())) + 1) * 4;
 	_size = 2000;
 	
 	SMetaObj* metaTarget;
-	if(metaTarget = creator->getMeta(this->_target)){
-		SPos deltaPos; deltaPos = metaTarget->getRPos();
+	Destiny* destiny = pos.grid->getDestiny();
+	if(metaTarget = pos.grid->getMetaInGrid(this->_target)){
+		//cerr<<"target found"<<endl;
+		SPos deltaPos;
+		destiny->getPos(deltaPos, this->_target);
+
 		uint32_t r = Rangeobj(this->_pos, deltaPos);
 		uint32_t m = (r * type->getSpread()*50)/(type->getRange()/1000);
 
@@ -123,23 +126,32 @@ SObj(id, pos,owner->obj()->getTeam(),owner->obj()->getPlayerId()), SMovable(this
 		}
 		
 		this->_targetPos.z = 0;
-		this->_targetPos.grid = metaTarget->getPos()->grid;
+		this->_targetPos.grid = deltaPos.grid;
 		this->_pos.d = 100 * Direction(this->_pos, this->_targetPos);
 		this->_targetPos.d = this->_pos.d;
 		
 				//(100 * Deg(shot->_targetPos.x-shot->_pos.x,shot->_targetPos.y-shot->_pos.y));
-		this->_moveZ = Deg(r*100,rz);
+		this->_moveZ = Deg(r*100, rz);
 	
 	}
 	//this->addCommand(new CommandInitShot(id));
 	SGrid* tempgrid =  world->getGrids().begin()->second;
-	this->addCommand(new CommandEnterGrid(0,tempgrid->getId(),id));
+	SMetaObj* meta = new SMetaObj(id, this->getTeam(), this->getSize(), this->getTargetType(), this->_owner);
+	this->addCommand(new CommandEnterGrid(0,tempgrid->getId(), meta));
 					
 }
 
 void SShot::proces(uint32_t delta, Processor* processor){
-	//cerr<<"proces shot"<<endl;
+	//cerr<<"proces shot delta="<<delta<<endl;
 	this->Move(delta);
+	
+	list<OBJID> tmp = this->_pos.grid->getDestiny()->inRange(this, this->getSize() / 2);
+	
+	if (tmp.size() > 0 ) {
+		//cerr<<"HIT size "<<tmp.size()<<endl;
+		this->checkCollisions(tmp);
+		
+	}
 	if(canBeRemoved())
 		this->addCommand(new CommandRemove(0,this));
 }
@@ -152,24 +164,28 @@ void SShot::subscribeClient(uint32_t clientId, SubscriptionLevel::Enum level){
 
 
 void SShot::Move(uint32_t deltaT){
-	SMetaObj* targetMeta = NULL;
-	if(_trackingTime && (targetMeta = _processor->getMeta(_target))){
+
+	if(_trackingTime){
 		int32_t targetDir = 0;
 		int32_t b;
-		targetDir = 100* Direction(this->_pos,*targetMeta->getPos());
-		//targetDir = (100 * Deg(targetMeta->getPos()->x - this->_pos.x, targetMeta->getPos()->y - this->_pos.y));
-		if (targetDir >= this->_pos.d)
-			b = targetDir - this->_pos.d;
-		else
-			b = targetDir + 36000 - this->_pos.d;
-		if (b > 18000)
-			this->_pos.turn((int32_t)-this->_tracking);
-		else
-			this->_pos.turn((int32_t)this->_tracking);
-		
+		Destiny* destiny = this->getPos().grid->getDestiny();
+		SPos targetPos;
+		if (destiny->getPos(targetPos, _target)){
+			targetDir = 100* Direction(this->_pos, targetPos);
+			//targetDir = (100 * Deg(targetMeta->getPos()->x - this->_pos.x, targetMeta->getPos()->y - this->_pos.y));
+			if (targetDir >= this->_pos.d)
+				b = targetDir - this->_pos.d;
+			else
+				b = targetDir + 36000 - this->_pos.d;
+			if (b > 18000)
+				this->_pos.turn((int32_t)-this->_tracking);
+			else
+				this->_pos.turn((int32_t)this->_tracking);
+		}
 	}
 	this->MovePos((VektorUnitX(this->_pos.d/100) * _speed * deltaT)/40,-(VektorUnitY(this->_pos.d/100)* _speed* deltaT)/40,(VektorUnitY(this->_moveZ)*_speed*deltaT)/40);
 	_flightTime+=deltaT;
+	this->_pos.grid->getDestiny()->update(this);
 	//if(deltaT)
 		//this->TestHit();
 }
@@ -199,8 +215,8 @@ void SShot::useDamage(uint32_t damage){
 }
 
 void SShot::applyDamage(uint32_t target, Shields::Enum shield, int32_t x, int32_t y){
-	map<uint32_t, SMetaObj*>::iterator found = _processor->getLocalMetas().find(target);
-	if(found == _processor->getLocalMetas().end())
+	map<uint32_t, SMetaObj*>::iterator found = this->getPos().grid->getMetaInGrid().find(target);
+	if(found == this->getPos().grid->getMetaInGrid().end())
 		return;
 	SMetaObj* obj = found->second;
 	uint32_t tarRes = obj->getTargetSize()/100;
@@ -228,6 +244,115 @@ uint32_t SShot::hit(uint32_t shot, OBJID owner, uint32_t dmg, DmgTypes::Enum dmg
 	}
 	return min(dmg,_hp);
 }
+
+void SShot::checkCollisions(list<OBJID> objs){
+
+	SGrid* grid = this->getPos().grid;
+	Destiny* destiny = grid->getDestiny();
+	//cerr<<"HIT "<<endl;
+	for (list<OBJID>::iterator it = objs.begin(); it != objs.end(); it++) {
+		SMetaObj* target = grid->getMetaInGrid(*it);
+		SPos targetPos;
+
+
+		if(!target || target->getTeam() == this->getTeam()){
+			continue;
+		}
+		bool found = false;
+		for (list<OBJID>::iterator it2 = _hitlist.begin(); it2 != _hitlist.end(); it2++) {
+			if(*it2 == *it){
+				found = true;
+				break;
+			}
+		}
+		if (found)
+			continue;
+		
+		destiny->getPos(targetPos, *it);
+		int32_t negsize = 0-target->getTargetSize();
+		int32_t possize = target->getTargetSize();
+		if (this->getPos().z > (negsize)/2 && this->getPos().z < possize/2) {
+			
+			int32_t size = (target->getTargetSize()/2);
+			//cerr<<"size="<<size<<endl;
+			//cerr<<"oobj->getPos().x="<<oobj->getPos().x<<"oobj->getPos().y="<<oobj->getPos().y<<endl;
+			//cerr<<"temppos.x="<<temppos.x<<"temppos.y="<<temppos.y<<endl;
+			if (!(targetPos.x > this->getPos().x - size && targetPos.x < this->getPos().x + size
+			&& targetPos.y > this->getPos().y - size && targetPos.y < this->getPos().y + size)) {
+				//cerr<<"cont"<<endl;
+				continue;
+			}
+			
+			double a = 100 * Rangeobj(this->getPos(), this->getPos());
+			if (target->getTargetType() == TargetType::Invalid) {
+				continue;
+			}
+			if (a >= target->getTargetSize() / 2) {
+				continue;
+			}
+			double movementX = 0; //this->vecX; //(VektorUnitX(this->pos.d/100) * this->getSpeed());
+			double movementY = 0; //this->vecY; // (-(VektorUnitY(this->pos.d/100) * this->getSpeed()));
+			int32_t x1 = this->getPos().x - targetPos.x;
+			int32_t y1 = this->getPos().y - targetPos.y;
+			int32_t x2 = this->getPos().x + movementX - targetPos.x;
+			int32_t y2 = this->getPos().y + movementY - targetPos.y;
+			int32_t dx = x2 - x1;
+			int32_t dy = y2 - y1;
+			double dr = sqrt((dx*dx)+(dy*dy));
+			double D = x1*y2 - x2*y1;
+			double dis = ((target->getTargetSize() / 2)*  (target->getTargetSize() / 2)) * (dr * dr) - (D * D);
+
+			if (dis >= 0 ) {// || _flightTime <= 1){//hit
+				double hitx = ((D *dy -dx * (sqrt(pow((target->getTargetSize()/2),2) * pow(dr,2)- pow(D,2))))/ pow(dr,2));
+				double hity = ((-D *dx -dy * (sqrt(pow((target->getTargetSize()/2),2) * pow(dr,2)- pow(D,2))))/ pow(dr,2));
+				double H_x = (target->getTargetSize()/2);
+				double H_y = 0;
+
+				double P_x = hitx;
+				double P_y = hity;
+
+				double ph = Rangecord(H_x,H_y,P_x,P_y);
+				double ch =(target->getTargetSize()/2);
+				double cp = Rangecord(0,0,P_x,P_y);
+				double rad = 0;
+				if (2*cp*ch)
+					rad = acos(((ch*ch)+(cp*cp)-(ph*ph))/(2*cp*ch));
+				double V = (rad/3.14)*180;
+
+				if( P_y > H_y)
+					V = 360 - V;
+
+				double V2 = V - (targetPos.d / 100);
+
+				if(V2 < 0)
+					V2 = V2 + 360;
+
+				int i = 0;
+				if ((V2 >= 0 && V2 <= 30) ||(V2 >= 330 && V2 <= 360)){
+					i = 0;
+				}else if(V2 >= 31 && V2 <= 90){
+					i = 1;
+				}else if(V2 >= 91 && V2 <= 150){
+					i = 4;
+				}else if(V2 >= 151 && V2 <= 209){
+					i = 3;
+				}else if(V2 >= 210 && V2 <= 269){
+					i = 5;
+				}else if(V2 >= 270 && V2 <= 329){
+					i = 2;
+				}
+				cerr<<"hit i="<<i<<endl;
+				//cerr<<"meta shot hit"<<endl;
+				_hitlist.push_back(*it);
+				networkControl->addCommandToProcesable(new CommandMetaHit(_id, *it,(Shields::Enum)i,0,0), _id);
+				//Hit(it->first, (Shields::Enum)i,0,0);
+			}
+		}	
+	}
+}
+
+
+
 
 
 

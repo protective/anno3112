@@ -12,6 +12,7 @@
 #include "SDatabase.h"
 #include "Sspacebjects/SShipType.h"
 #include "Sspacebjects/SShip.h"
+#include "Sspacebjects/SMetaObj.h"
 #include "Sspacebjects/SFighterType.h"
 #include "Sspacebjects/SFighter.h"
 #include "Sspacebjects/subsystems/SSubTypeWep.h"
@@ -480,7 +481,8 @@ void ParseGame(ifstream* file,string filename){
 							temppos.grid = world->getGrids().begin()->second; //TODO FIX
 							
 							SShip* ship = world->getProcessor()->createShip(temppos, *st,team);
-							CommandEnterGrid* tempCmd = new CommandEnterGrid(0,temppos.grid->getId(),ship->getId());
+							SMetaObj* meta = new SMetaObj(ship->getId(), team, ship->getSize(), ship->getTargetType());
+							CommandEnterGrid* tempCmd = new CommandEnterGrid(0, temppos.grid->getId(), meta);
 							temppos.grid->addCommand(tempCmd);
 							//world->getGrids()[1]->addUnit(ship);
 							for (int i = 4; i < 30; i++){

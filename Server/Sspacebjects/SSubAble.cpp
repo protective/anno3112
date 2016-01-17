@@ -29,17 +29,20 @@ SSubAble::SSubAble(SObj* obj, uint32_t energy, uint32_t recharge, uint32_t scanR
 void SSubAble::updateTargetList(Processor* processor){
 	//TODO fix
 	
-	map<uint32_t,SMetaObj*>& targets = processor->getLocalMetas();
+	map<uint32_t,SMetaObj*>& targets = this->obj()->getPos().grid->getMetaInGrid();
 	
 	_lockedTargets.clear();
+	Destiny* destiny = this->obj()->getPos().grid->getDestiny();
+	
+	//destiny->inRange(this->obj(),11000000);
+
 	for(map<uint32_t,SMetaObj*>::iterator it = targets.begin(); it!= targets.end();it++){
-		if ((it->second->isAstoroid())||(it->second->getTeam() != _obj->getTeam())){
+		if ((it->second->isAstoroid()) || (it->second->getTeam() != _obj->getTeam())){
 			if(it->second->isTargetable()){
-				
 				SPos rpos;
-				rpos = processor->getLocalMetas()[it->first]->getRPos();
+				destiny->getPos(rpos,it->first);
 				uint32_t range = Rangeobj(rpos, this->obj()->getPos());
-				LockedTarget t(it->first,0,range,0,this->obj()->getPlayerId());
+				LockedTarget t(it->first, 0, range, 0, this->obj()->getPlayerId());
 				_lockedTargets.insert(make_pair<LockedTarget,OBJID>(t,it->first)) ;
 			}
 		}
@@ -69,18 +72,20 @@ OBJID SSubAble::getNextTarget(Processor* processor, SSlotNode* st){
 		}
 	}
 	map<LockedTarget, OBJID>::iterator selTarget = _lockedTargets.end();
+	Destiny* destiny = this->_obj->getPos().grid->getDestiny();
 	for(list<TargetType::Enum>::iterator tt = curTargetList.begin(); tt!= curTargetList.end();tt++){
-		
+
 		if(selTarget != _lockedTargets.end())
 			break;
+
 		for(map<LockedTarget, OBJID>::iterator SO = _lockedTargets.begin(); SO != _lockedTargets.end();SO++){
-			SMetaObj* meta = processor->getMeta(SO->second);
+			SMetaObj* meta =this->_obj->getPos().grid->getMetaInGrid(SO->second);
 			if(!meta)
 				continue;
 			i++;
 			if(subsystem->getTargetGroup() != TargetGroup::Primary && ((*tt) == meta->getTargetType() || ((*tt) == TargetType::All && meta->getTargetType() != TargetType::Astoroid))){
 				SPos rpos;
-				rpos = meta->getRPos();
+				destiny->getPos(rpos, SO->second);
 				if (1000*Rangeobj(this->obj()->getPos(),rpos) <= subsystem->getRange()){
 					int32_t temp = Direction(_obj->getPos(),rpos)-(_obj->getPos().d/100) ;
 					if(temp < 0) temp+=360;
@@ -119,7 +124,7 @@ void SSubAble::updateTargetsPrio(Processor* processor){
 		return;
 	map<uint32_t, SMetaObj*> _cache;
 	for(map<LockedTarget, OBJID>::iterator SO = this->_lockedTargets.begin(); SO != this->_lockedTargets.end();SO++){
-		SMetaObj* tempMeta = processor->getMeta(SO->second);
+		SMetaObj* tempMeta = this->_obj->getPos().grid->getMetaInGrid(SO->second);
 		if(tempMeta){
 			_cache[SO->second] = tempMeta;
 		}
@@ -138,6 +143,7 @@ void SSubAble::updateTargetsPrio(Processor* processor){
 		if(this->getPrimeTarget())
 			break;
 	}
+	Destiny* destiny = this->_obj->getPos().grid->getDestiny();
 	for(SSlotNodeI it = slots.begin(); it != slots.end();it++){
 		if(!it->second->getSS())
 			continue;
@@ -168,7 +174,7 @@ void SSubAble::updateTargetsPrio(Processor* processor){
 			for(map<uint32_t, SMetaObj*>::iterator SO = _cache.begin(); SO != _cache.end();SO++){
 				if(subsys->getTargetGroup() != TargetGroup::Primary && ((*tt) == SO->second->getTargetType() || ((*tt) == TargetType::All && SO->second->getTargetType() != TargetType::Astoroid))){
 					SPos rpos;
-					rpos = SO->second->getRPos();
+					destiny->getPos(rpos, SO->first);
 					if (1000*Rangeobj(this->obj()->getPos(),rpos) <= subsys->getRange()){
 						int32_t temp = Direction(_obj->getPos(),rpos)-(_obj->getPos().d/100) ;
 						if(temp < 0) temp+=360;

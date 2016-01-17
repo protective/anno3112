@@ -10,7 +10,7 @@
 #include "../World/SWorld.h"
 #include "../Sspacebjects/SMetaObj.h"
 #include "../World/SWorld.h"
-
+/*
 CommandProcesMetas::CommandProcesMetas() : 
 Command(world->getTime()){
 }
@@ -26,4 +26,4 @@ uint32_t CommandProcesMetas::execute(){
 
 CommandProcesMetas::~CommandProcesMetas() {
 }
-
+*/

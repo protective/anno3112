@@ -11,6 +11,7 @@
 #include "../Sspacebjects/SUnit.h"
 
 #include "../World/SWorld.h"
+/*
 CommandTimedSubscribeUpdate::CommandTimedSubscribeUpdate(SubscriptionLevel::Enum freq):
 Command(world->getTime()) {
 	_freq = freq;
@@ -46,7 +47,7 @@ uint32_t CommandTimedSubscribeUpdate::execute(){
 						templist.push_back(temp);
 					}
 				}
-				it->first->addCommand(new CommandUpdateMetas(1,templist));
+				//it->first->addCommand(new CommandUpdateMetas(1,templist));
 			}
 			_time += 5000;
 			break;
@@ -94,7 +95,7 @@ uint32_t CommandTimedSubscribeUpdate::execute(){
 						templist.push_back(temp);
 					}
 				}
-				it->first->addCommand(new CommandUpdateMetas(1,templist));
+				//it->first->addCommand(new CommandUpdateMetas(1,templist));
 			}
 			_processor->_initsFrec.clear();
 			return COMMAND_FINAL;
@@ -108,3 +109,4 @@ uint32_t CommandTimedSubscribeUpdate::execute(){
 CommandTimedSubscribeUpdate::~CommandTimedSubscribeUpdate() {
 }
 
+*/

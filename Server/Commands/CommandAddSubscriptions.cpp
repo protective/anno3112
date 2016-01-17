@@ -8,7 +8,7 @@
 #include "CommandAddSubscriptions.h"
 #include "Processor.h"
 #include "../World/SWorld.h"
-
+/*
 CommandAddSubscriptions::CommandAddSubscriptions(Processor* subscriber, SubscriptionLevel::Enum level, list<uint32_t> procesables):
 Command(world->getTime()){
 	_subscriber = subscriber;
@@ -47,3 +47,4 @@ uint32_t CommandAddSubscriptions::execute(){
 CommandAddSubscriptions::~CommandAddSubscriptions() {
 }
 
+*/

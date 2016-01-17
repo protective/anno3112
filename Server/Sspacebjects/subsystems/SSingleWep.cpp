@@ -54,21 +54,23 @@ void SSingleWep::proces(Processor* processor){
 	}
 	if (this->subsys->getSeqTarget() && this->subsys->getfireseq() < this->subsys->getTypeWep()->getmaxseq()){
 		list<uint32_t>::iterator it = this->_tempseq.begin();
-		
-		if (it != this->_tempseq.end() && (*it) == this->subsys->getfireseq()){
+
+		if (it != this->_tempseq.end() && (*it) == this->subsys->getfireseq()) {
 			this->_tempseq.pop_front();
 			this->subsys->setSeqTarget(this->subsys->getOwner().getsubable()->getNextTarget(processor, this->subsys->getSlotNode()));
-	
-			SMetaObj* tempMeta = processor->getMeta(this->subsys->getSeqTarget());
-			if(tempMeta){
-				SPos tempTargetPos = tempMeta->pos;
+
+			SMetaObj* tempMeta = this->subsys->getOwner().getPos().grid->getMetaInGrid(this->subsys->getSeqTarget());
+			Destiny* destiny = this->subsys->getOwner().getPos().grid->getDestiny();
+			SPos tempTargetPos;
+			if (destiny->getPos(tempTargetPos, this->subsys->getSeqTarget())) {
+
 				int32_t temp = Direction(this->subsys->getOwner().getPos(),tempTargetPos)-(this->subsys->getOwner().getPos().d/100) ;
 				if(temp < 0) temp+=360;
 				if(InAngle(temp,this->subsys->getSlotNode()->getST()->getFireDir())){//TODO fix
 					SPos* owner = &this->subsys->getOwner().getPos();
 					int32_t x = owner->x+ ((this->subsys->getSlotNode()->getST()->gX()*(VektorUnitX(owner->d/100)) + (this->subsys->getSlotNode()->getST()->gY()*(VektorUnitY(owner->d/100)))));
 					int32_t y = owner->y+ ((this->subsys->getSlotNode()->getST()->gX()*(-VektorUnitY(owner->d/100)) + (this->subsys->getSlotNode()->getST()->gY()*(VektorUnitX(owner->d/100)))));
-					SPos temppos(x,y,0);
+					SPos temppos(owner->grid,x,y,0);
 					processor->createShot(temppos,this->subsys->getOwner().getsubable(), this->subsys->getSeqTarget(), this->subsys->getTypeWep());
 					
 					if(this->subsys->getOwner().isShip())

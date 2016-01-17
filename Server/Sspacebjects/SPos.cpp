@@ -8,6 +8,7 @@
 #include "SPos.h"
 #include "../World/SGrid.h"
 SPos::SPos() {
+	_boundPoints = NULL;
 }
 
 SPos::SPos(int32_t x, int32_t y, int32_t d) {
@@ -16,6 +17,7 @@ SPos::SPos(int32_t x, int32_t y, int32_t d) {
 	this->d = d;
 	this->z = 0;
 	this->grid = NULL;
+	_boundPoints = NULL;
 }
 SPos::SPos(SGrid* grid, int32_t x, int32_t y, int32_t d) {
 	this->x = x;
@@ -23,7 +25,9 @@ SPos::SPos(SGrid* grid, int32_t x, int32_t y, int32_t d) {
 	this->d = d;
 	this->z = 0;
 	this->grid = grid;
+	_boundPoints = NULL;
 }
+
 
 void SPos::turn(int32_t deg){
 	this->d += deg;
@@ -35,14 +39,17 @@ void SPos::turn(int32_t deg){
 	}
 }
 
-SPos::SPos(SPos& pos) {
+SPos::SPos(const SPos& pos) {
 	this->x = pos.x;
 	this->y = pos.y;
 	this->d = pos.d;
 	this->z = pos.z;
 	this->grid = pos.grid;
+
 }
 
 SPos::~SPos() {
+
+
 }
 

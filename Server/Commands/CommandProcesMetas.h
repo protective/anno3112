@@ -10,7 +10,7 @@
 
 #include "Command.h"
 
-
+/*
 class CommandProcesMetas : public Command {
 public:
 	CommandProcesMetas();
@@ -19,6 +19,6 @@ public:
 private:
 
 };
-
+*/
 #endif	/* COMMANDPROCESMETAS_H */
 

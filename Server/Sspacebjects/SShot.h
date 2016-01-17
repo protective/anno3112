@@ -28,7 +28,7 @@ public:
 	virtual void subscribeClient(uint32_t clientId, SubscriptionLevel::Enum level);
 	void Move(uint32_t deltaT);
 	void MovePos(int32_t x, int32_t y, int32_t z);
-	//void TestHit();
+	void checkCollisions(list<OBJID> objs);
 	void applyDamage(uint32_t target, Shields::Enum shield, int32_t x, int32_t y);
 	virtual uint32_t hit(uint32_t shot, OBJID owner, uint32_t dmg, DmgTypes::Enum dmgtype, Shields::Enum impact, int32_t x, int32_t y);
 	void useDamage(uint32_t damage);
@@ -74,6 +74,7 @@ private:
 	uint32_t _dmgMin;
 	uint32_t _dmgMax;
 	uint32_t _hp;
+	list<OBJID> _hitlist;
 	DmgTypes::Enum _dmgType;
 	SSubTypeWep* _type;
 	

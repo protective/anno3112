@@ -7,7 +7,14 @@ belt 80 30 100 VeldSparRoid:4:6000 NephriteRoid:2:7500
 
 {playerUnits}
 
-Unit 1 Station1 47 30 1:FacShip1:1 2:Refinery1:4 3:FacWep1:1 4:FacModule1:1
+Unit 1 Station1 47 30 1:FacShip1:1 2:Refinery1:4 3:FacWep1:1 4:FacModule1:1 cargo:Fighter2:26 cargo:Engine1:22 cargo:Laser1:8 cargo:RailGun1:8 cargo:Torpedo1:26 cargo:FusionGun1:26 cargo:PlasmaGun1:26 cargo:ShieldBoost1:12 cargo:DeflectorBoost1:12
 
 Unit 1 Freighter1 61 30 1:Minglaz1:2
+
+Unit 1 LightCarrier 220 140 cargo:Laser3:8 cargo:Laser2:8 cargo:Missile1:26
+Unit 1 HAC 250 140 cargo:Laser1:8 cargo:RailGun1:8 cargo:Torpedo1:26 cargo:FusionGun1:26 cargo:PlasmaGun1:26 cargo:ShieldBoost1:12 cargo:DeflectorBoost1:12 cargo:GatlingLaser1:22 cargo:ArmorRep1:12
+Unit 1 BS1 210 140 1:Missile1:4 2:Missile1:4 3:Missile1:4 4:Missile1:4 5:Missile1:4 cargo:Missile1:22
+
+Unit 2 BS1 301 -50 1:Missile1:4 2:Missile1:4 3:Missile1:4 4:Missile1:4 5:Missile1:4 cargo:GatlingLaser1:22
+
 

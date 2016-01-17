@@ -9,6 +9,7 @@
 #define	SGRID_H
 #include "../SFunctions.h"
 #include "../Commands/Processor.h"
+#include "Destiny/Destiny.h"
 //#include "../Sspacebjects/SObj.h"
 //#include "../Sspacebjects/SShot.h"
 //#include "../Sspacebjects/SShip.h"
@@ -16,13 +17,14 @@
 //#include "../Sspacebjects/subsystems/SSubSystem.h"
 
 class Client;
+class SMetaObj;
 class SGrid : public Processable{
 public:
 	SGrid(uint32_t id);
 	SGrid(uint32_t id, uint32_t spaceWight, uint32_t spaceHight);
 	virtual uint32_t getId(){return _id;}
 	virtual SGrid* getGrid(){return this;}
-	void addObj(uint32_t obj);
+	void addObj(SMetaObj* meta);
 	void removeObj(uint32_t obj);
 	
 	/*
@@ -33,6 +35,8 @@ public:
 	*/
 	uint32_t _id;
 	map<uint32_t,uint32_t>& getObjInGrid(){return objInGrid;}
+	map<uint32_t, SMetaObj*>& getMetaInGrid(){return _metaInGrid;}
+	SMetaObj* getMetaInGrid(uint32_t id);
 	
 	virtual void proces(uint32_t delta, Processor* processor );
 	virtual void subscribeClient(uint32_t clientId, SubscriptionLevel::Enum);
@@ -56,6 +60,7 @@ public:
 	void Subscribe(Client* cli);
 	void UnSubscribe(Client* cli);
 
+	Destiny* getDestiny(){return _destiny;}
 	uint32_t getWight(){return this->_spaceWight;}
 	uint32_t getHight(){return this->_spaceHight;}
 	void setWight(uint32_t value){this->_spaceWight = value;}
@@ -71,6 +76,8 @@ private:
 	map<uint32_t , SubscriptionLevel::Enum> _clientSubscriptions;
 	uint32_t _spaceWight;
 	uint32_t _spaceHight;
+	Destiny* _destiny;
+	map<uint32_t, SMetaObj*> _metaInGrid;
 };
 
 typedef map<uint32_t,SGrid*>::iterator SGridI;

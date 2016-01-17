@@ -139,6 +139,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSubTypeFighter.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSubTypeRef.o \
 	${OBJECTDIR}/Sspacebjects/subsystems/SSubTypeWep.o \
+	${OBJECTDIR}/World/Destiny/Destiny.o \
+	${OBJECTDIR}/World/Destiny/QTreeIndex.o \
 	${OBJECTDIR}/World/SGrid.o \
 	${OBJECTDIR}/World/SWorld.o \
 	${OBJECTDIR}/mainServer.o
@@ -687,6 +689,16 @@ ${OBJECTDIR}/Sspacebjects/subsystems/SSubTypeWep.o: Sspacebjects/subsystems/SSub
 	${MKDIR} -p ${OBJECTDIR}/Sspacebjects/subsystems
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sspacebjects/subsystems/SSubTypeWep.o Sspacebjects/subsystems/SSubTypeWep.cpp
+
+${OBJECTDIR}/World/Destiny/Destiny.o: World/Destiny/Destiny.cpp 
+	${MKDIR} -p ${OBJECTDIR}/World/Destiny
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/World/Destiny/Destiny.o World/Destiny/Destiny.cpp
+
+${OBJECTDIR}/World/Destiny/QTreeIndex.o: World/Destiny/QTreeIndex.cpp 
+	${MKDIR} -p ${OBJECTDIR}/World/Destiny
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/World/Destiny/QTreeIndex.o World/Destiny/QTreeIndex.cpp
 
 ${OBJECTDIR}/World/SGrid.o: World/SGrid.cpp 
 	${MKDIR} -p ${OBJECTDIR}/World

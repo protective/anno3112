@@ -7,15 +7,16 @@
 
 #ifndef SMETAOBJ_H
 #define	SMETAOBJ_H
-
-#include "SPos.h"
+#include "../SFunctions.h"
 
 class Processor;
 class SMetaObj {
 public:
-	SMetaObj(uint32_t id);
-	SPos* getPos(){return &pos;}
-	SPos getRPos();
+	SMetaObj(uint32_t id, uint8_t team, uint32_t size, TargetType::Enum targetType);
+	SMetaObj(uint32_t id, uint8_t team, uint32_t size, TargetType::Enum targetType, uint32_t owner);
+
+	//SPos* getPos(){return &pos;}
+	//SPos getRPos();
 	TargetType::Enum getTargetType(){return targetType;}
 	uint8_t getTeam(){return team;}
 	map<uint8_t,Visibility::Enum> getVisibleTo(){}//TODO fix
@@ -38,7 +39,7 @@ public:
 	uint8_t team;
 	//variable
 	//bool posValid;
-	SPos pos;
+	//SPos pos;
 	int32_t vecX;
 	int32_t vecY;
 	int32_t vecZ;
